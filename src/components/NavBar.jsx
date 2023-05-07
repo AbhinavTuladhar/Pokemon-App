@@ -7,7 +7,8 @@ const NavBar = () => {
     { path: '/gen-2', name: 'Generation 2'},
     { path: '/gen-3', name: 'Generation 3'},
     { path: '/gen-4', name: 'Generation 4'},
-    { path: '/gen-5', name: 'Generation 5'}
+    { path: '/gen-5', name: 'Generation 5'},
+    { path: '/gen-6', name: 'Generation 6'}
   ]
 
   const navElements = linkData.map(data => {
