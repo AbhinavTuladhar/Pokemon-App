@@ -48,9 +48,9 @@ const MainPage = ({ idRange }) => {
   }
 
   return (
-    <>
+    <div className='flex flex-wrap gap-4 pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900'>
       {cardList}
-    </>  
+    </div>  
   )
 }
 
