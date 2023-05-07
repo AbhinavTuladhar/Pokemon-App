@@ -6,6 +6,12 @@ import ReactDOM from 'react-dom'
 import './style.css'
 import './index.css'
 import App from './App'
+import { BrowserRouter } from 'react-router-dom'
 
 const rootElement = document.querySelector('#root')
-ReactDOM.render(<App />, rootElement)
+ReactDOM.render(
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+, rootElement)
+// ReactDOM.render(<App />, rootElement)
