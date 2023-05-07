@@ -1,24 +1,6 @@
 import { React, useEffect, useState} from 'react';
 import axios from 'axios'
-
-// const PokeCard = (props) => {
-//   const [data, setData] = useState('')
-//   const fetchData = async () => {
-//     const response = await axios.get(url)
-//     setData(response.data)
-//     console.log(response.data)
-//   }
-
-//   useEffect(() => {
-//     fetchData()
-//   }, [])
-
-//   return (
-//     <pre>
-//       {JSON.stringify(data, null, 2)}
-//     </pre>
-//   )
-// }
+import { NavLink } from 'react-router-dom'
 
 const PokeCard = ({ data }) => {
   const {
@@ -28,9 +10,14 @@ const PokeCard = ({ data }) => {
     sprites: { other : { 'official-artwork' : { front_default }}}
   } = data
 
+  if (id % 100 === 0)
+    console.log(data)
+
   const properName = name.charAt(0).toUpperCase() + name.slice(1);
-  
-  const image = <img src={front_default} className='h-[100px]' />
+
+  const finalName = properName.split('-').length > 1 ?
+    properName.split('-')[0] :
+    properName
 
   let typeList = types.map(type => {
     return type.type.name
@@ -38,16 +25,18 @@ const PokeCard = ({ data }) => {
 
   typeList = typeList.join(', ')
 
+  const targetLink = `/pokemon/${id}`
+
   return (
-    <div className='border border-slate-200 flex flex-col justify-center items-center md:w-2/12 sm:w-1/3 mx-auto'>
+    <div className='border border-slate-200 flex flex-col justify-center items-center md:w-2/12 sm:w-1/3 mx-auto py-2'>
       <div className='font-bold'>
         #{id}
       </div>
-      <div className='font-extrabold text-xl'>
-        {properName}
-      </div>
+      <NavLink to={targetLink} className='font-extrabold text-xl'>
+        {finalName}
+      </NavLink>
       <div>
-        {image}
+        <img src={front_default} className='h-[100px]' alt={name} />
       </div>
       <div>
         {typeList}
