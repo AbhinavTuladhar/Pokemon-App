@@ -1,10 +1,10 @@
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './index.css'
 import NavBar from './components/NavBar'
 import MainPage from './components/MainPage'
 import WelcomePage from './components/WelcomePage'
-import PokemonDetail from './components/PokemonDetail'
+import PokemonDetail from './components/PokemonDetail/PokemonDetail'
 
 const App = () => {
   return (
