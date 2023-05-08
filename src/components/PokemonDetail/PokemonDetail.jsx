@@ -72,6 +72,10 @@ const PokemonDetail = () => {
     setLoading(false);
   };
 
+  const extractInformation = (data) => {
+    
+  }
+
   useEffect(() => {
     fetchData();
   }, [id]);
