@@ -5,6 +5,7 @@ import NavBar from './components/NavBar'
 import MainPage from './components/MainPage'
 import WelcomePage from './components/WelcomePage'
 import PokemonDetail from './components/PokemonDetail/PokemonDetail'
+import TypeDetail from './components/OtherDetails/TypeDetail'
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/pokemon/generation-5' element={<MainPage idRange={[494, 649]} />} />
         <Route path='/pokemon/generation-6' element={<MainPage idRange={[650, 721]} />} />
         <Route path='/pokemon/:id' element={<PokemonDetail />} />
+        <Route path='/types/:type' element={<TypeDetail />} />
       </Routes>
     </>  
   )

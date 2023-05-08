@@ -22,7 +22,7 @@ const NavBar = () => {
   return (
     <nav className='bg-green-400'>
       <div className='bg-slate-900 text-white py-4'>
-        Test
+        <NavLink to='/'> Test </NavLink>
       </div>
       <ul className='flex justify-left list-none py-4 px-2 gap-16'>
         {navElements}

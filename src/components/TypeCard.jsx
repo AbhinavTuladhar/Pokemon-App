@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const TypeCard = ( { typeName }) => {
   const typeMapping = {
@@ -24,11 +25,14 @@ const TypeCard = ( { typeName }) => {
 
   const typeKey = typeName.toLowerCase(); // convert typeName to lowercase
   const backgroundColour = 'bg-' + typeMapping[typeKey]
-  const divStyle = `${backgroundColour} p-2 flex justify-center items-center rounded-xl my-4 mx-2`;
+  const divStyle = `${backgroundColour} p-2 flex justify-center items-center rounded-xl my-4 mx-2 hover:brightness-105 hover:scale-105 duration-200`;
+  const targetLink = `/types/${typeName}`
 
   return(
     <div className={divStyle}>
-      {typeName.toUpperCase()}
+      <NavLink to={targetLink}>
+        {typeName.toUpperCase()}
+      </NavLink>
     </div>
   )
 }
