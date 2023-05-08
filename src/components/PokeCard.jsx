@@ -1,6 +1,7 @@
 import { React, useEffect, useState} from 'react';
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
+import TypeCard from './TypeCard';
 
 const PokeCard = ({ data }) => {
   const {
@@ -15,15 +16,19 @@ const PokeCard = ({ data }) => {
 
   const properName = name.charAt(0).toUpperCase() + name.slice(1);
 
-  const finalName = properName.split('-').length > 1 ?
-    properName.split('-')[0] :
-    properName
+  // const finalName = properName.split('-').length > 1 ?
+  //   properName.split('-')[0] :
+  //   properName
 
   let typeList = types.map(type => {
     return type.type.name
   })
 
-  typeList = typeList.join(', ')
+  const typeListText = typeList.join(', ')
+
+  const typeDivs = typeList.map(type => {
+    return <TypeCard typeName={type} />
+  })
 
   const targetLink = `/pokemon/${id}`
 
@@ -33,13 +38,13 @@ const PokeCard = ({ data }) => {
         #{id}
       </div>
       <NavLink to={targetLink} className='font-extrabold text-xl'>
-        {finalName}
+        {properName}
       </NavLink>
       <div>
         <img src={front_default} className='h-[100px]' alt={name} />
       </div>
-      <div>
-        {typeList}
+      <div className='flex flex-row'>
+        {typeDivs}
       </div>
     </div>
   )

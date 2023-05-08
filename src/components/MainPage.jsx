@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react'
+import { React, useEffect, useState, useMemo } from 'react'
 import axios from 'axios'
 import NavBar from './NavBar'
 import PokeCard from './PokeCard'
@@ -35,23 +35,18 @@ const MainPage = ({ idRange }) => {
     fetchData()
   }, [idRange])
 
-  const nameList = data.map(pokemon => {
-    return <div> {pokemon.name} </div>
-  })
-
-  const cardList = data.map(pokemon => {
-    return <PokeCard data={pokemon} />
-  })
+  const cachedData = useMemo(() => {
+    const cardList = data.map(pokemon => {
+      return <PokeCard data={pokemon} />
+    })
+    return cardList
+  }, [data])
 
   const loadingText = <div> Please wait, data is loading... </div>
 
-  // if (loading) {
-  //   return (<p> Please wait, data is loading... </p>)
-  // }
-
   return (
     <div className='flex flex-wrap gap-x-2 gap-y-3 pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
-      {loading ? loadingText : cardList}
+      {loading ? loadingText : cachedData}
     </div>  
   )
 }
