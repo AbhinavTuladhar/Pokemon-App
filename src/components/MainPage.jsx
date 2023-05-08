@@ -42,10 +42,13 @@ const MainPage = ({ idRange }) => {
     return cardList
   }, [data])
 
-  const loadingText = <div> Please wait, data is loading... </div>
+  const loadingText = (
+    <div className='justify-center items-center text-5xl'> 
+      Please wait, data is loading... 
+    </div>)
 
   return (
-    <div className='flex flex-wrap gap-x-2 gap-y-3 pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
+    <div className='flex flex-wrap justify-center items-center gap-x-2 gap-y-3 pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
       {loading ? loadingText : cachedData}
     </div>  
   )
