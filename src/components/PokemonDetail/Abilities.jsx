@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react'
+import { React, useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
 
 const Abilities = ( { data } ) => {
@@ -12,7 +12,7 @@ const Abilities = ( { data } ) => {
     return ability.ability.url
   })
   
-  const fetchDescriptions = async () => {
+  const fetchDescriptions = useCallback(async () => {
     const responses = await Promise.all(abilityLinks.map(url => {
       return axios.get(url)
     }))
@@ -26,12 +26,11 @@ const Abilities = ( { data } ) => {
         };
       });
     });
-    
-  }
+  }, [abilityLinks])
 
   useEffect(() => {
     fetchDescriptions()
-  }, [data])
+  }, [fetchDescriptions])
 
   if (!abilityDetails)
     return
