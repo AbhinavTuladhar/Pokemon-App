@@ -87,18 +87,20 @@ const PokemonDetail = () => {
       <div className='text-xl flex justify-center my-4'>
         {speciesData.genus}
       </div>
-      <div className='grid grid-cols-4 grid-rows-6 auto-rows-min'>
-        <div className='col-start-1 col-end-4 row-start-1 row-end-5 my-4 h-auto'>
+      <div className='grid grid-cols-4 auto-rows-auto'>
+        <div className='col-start-1 col-end-4 my-4 h-auto'>
           <PokeDexEntry data={dexEntry} />
         </div>
-        <div className='col-start-1 col-end-4 row-start-6'>
+        <div className='col-start-1 col-end-4'>
           <Abilities data={abilityData} />
         </div>
         <div className='h-auto col-start-4 row-start-1 row-end-3'>
-          <img src={imageSource.default} alt={idInfo} />
-        </div>
-        <div className='h-auto col-start-4 row-start-3 row-end-5'>
-          <img src={imageSource.shiny} alt={idInfo} />
+          <div className='flex flex-col'>
+            <img src={imageSource.default} alt={idInfo} />
+            <p className='text-center'> Normal version </p>
+            <img src={imageSource.shiny} alt={idInfo} />
+            <p className='text-center'> Shiny version </p>
+          </div>
         </div>
       </div>
       {/* <img src={imageSource} />
