@@ -90,7 +90,7 @@ const PokemonDetail = () => {
       {/* <div className='text-xl flex justify-center my-4'>
         {speciesData.genus}
       </div> */}
-      <div className='grid grid-cols-3'>
+      <div className='grid grid-cols-3 gap-x-16 my-10'>
         <div className='col-start-1 col-end-2'>
           <ImageTile imageSources={imageSource} />
         </div>

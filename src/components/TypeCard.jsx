@@ -25,7 +25,7 @@ const TypeCard = ( { typeName }) => {
 
   const typeKey = typeName.toLowerCase(); // convert typeName to lowercase
   const backgroundColour = 'bg-' + typeMapping[typeKey]
-  const divStyle = `${backgroundColour} p-2 flex justify-center items-center rounded-xl my-4 mx-2 hover:brightness-105 hover:scale-105 duration-200`;
+  const divStyle = `${backgroundColour} px-4 py-0 flex justify-center items-center rounded-md my-2 mr-2 hover:brightness-125 duration-200`;
   const targetLink = `/types/${typeName}`
 
   return(
