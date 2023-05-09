@@ -30,17 +30,21 @@ const MainPage = ({ idRange }) => {
   }, [urlList])
 
   useEffect(() => {
-    setData([])
+    // setData([])
     setLoading(true)
     fetchData()
   }, [idRange, fetchData])
 
   const cachedData = useMemo(() => {
+    if (data.length === 0) {
+      return <div>Loading...</div>
+    }
     const cardList = data.map(pokemon => {
       return <PokeCard data={pokemon} />
     })
     return cardList
   }, [data])
+  
 
   const loadingText = (
     <div className='justify-center items-center text-5xl'> 
