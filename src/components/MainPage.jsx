@@ -52,9 +52,9 @@ const MainPage = ({ idRange }) => {
     </div>)
 
   return (
-    <>
+    <div className='gap-x-2 gap-y-3 px-2 py-4 flex flex-wrap justify-center items-center '>
       {loading ? loadingText : cachedData}
-    </>  
+    </div>  
   )
 }
 

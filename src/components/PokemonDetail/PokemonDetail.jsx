@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Abilities from './Abilities';
 import PokeDexEntry from './PokeDexEntry';
+import ImageTile from './ImageTile';
+import PokeDexData from './PokeDexData';
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -33,7 +35,7 @@ const PokemonDetail = () => {
       sprites: { other : { 'official-artwork' : { front_default, front_shiny }}} 
     } = data;
     setAbilityData(abilities);
-    setImageSource({default: front_default, shiny: front_shiny})
+    setImageSource({defaultSprite: front_default, shinySprite: front_shiny})
     setIdInfo(() => {
       const properName = name.charAt(0).toUpperCase() + name.slice(1);
       return {
@@ -66,6 +68,7 @@ const PokemonDetail = () => {
     if (pokemon) {
       extractGeneralInformation(pokemon);
     }
+    console.log(pokemon)
     if (speciesData)
     extractSpeciesInformation(speciesData)
     console.log(speciesData)
@@ -78,6 +81,25 @@ const PokemonDetail = () => {
       </>
     );
   }
+
+  return (
+    <div className='flex flex-col justify-center'>
+      <div className="text-4xl font-bold flex justify-center">
+        {idInfo.name}
+      </div>
+      {/* <div className='text-xl flex justify-center my-4'>
+        {speciesData.genus}
+      </div> */}
+      <div className='grid grid-cols-3'>
+        <div className='col-start-1 col-end-2'>
+          <ImageTile imageSources={imageSource} />
+        </div>
+        <div className='col-start-2 col-end-3'>
+          <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <div className='gap-x-2 gap-y-3 pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
@@ -95,16 +117,9 @@ const PokemonDetail = () => {
           <Abilities data={abilityData} />
         </div>
         <div className='h-auto col-start-4 row-start-1 row-end-3'>
-          <div className='flex flex-col'>
-            <img src={imageSource.default} alt={idInfo} />
-            <p className='text-center'> Normal version </p>
-            <img src={imageSource.shiny} alt={idInfo} />
-            <p className='text-center'> Shiny version </p>
-          </div>
+          <ImageTile />
         </div>
       </div>
-      {/* <img src={imageSource} />
-      <Abilities data={abilityData} /> */}
     </div>
   );
 };

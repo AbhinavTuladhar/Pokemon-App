@@ -11,7 +11,7 @@ const App = () => {
   return (
     <>
       <NavBar />
-      <div className='flex flex-wrap justify-center items-center gap-x-2 gap-y-3 pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
+      <div className='pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
         <Routes>
           <Route path='' element={<WelcomePage />} />
           <Route path='/pokemon/generation-1' element={<MainPage idRange={[1, 151]} />} />
