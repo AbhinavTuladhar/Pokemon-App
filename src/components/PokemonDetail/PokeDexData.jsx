@@ -17,12 +17,6 @@ const PokeDexData = ({ pokemonData }) => {
   const typeDiv = typeNames.map(typeName => <TypeCard typeName={typeName} />)
   const abilityList = abilityNames.map(ability => <li> {ability} </li>)
 
-  const labelCol = 'col-start-1 justify-end items-center flex text-right pr-2 border-t-[1px] border-gray-400';
-  const nationalNumberCol = 'col-start-1 justify-end items-center flex text-right pr-2 border-t-[1px] border-gray-400';
-  const infoCol = 'col-start-2 items-center flex pl-2 border-t-[1px] border-gray-400';
-  const abilitiesCol = 'col-start-2 items-center flex pl-2 border-y-[1px] border-gray-400';
-  const pokemonDataGrid = 'grid grid-cols-2 auto-rows-fr gap-y-0 py-4';
-
   const rowStyle = 'flex flex-row border-t-[1px] border-gray-200 py-2'
   const leftColStyle = 'flex justify-end items-center w-3/12'
   const rightColStyle = 'flex justify-start pl-4 w-9/12'
