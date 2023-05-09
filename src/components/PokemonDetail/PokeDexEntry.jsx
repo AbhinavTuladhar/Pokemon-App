@@ -12,18 +12,31 @@ const PokeDexEntry = ( { data }) => {
     const cleanedStr = rawText.replace(/\\n|\\r/g, '');
     const versionName = entry.version.name
     const properVersionName = versionName.charAt(0).toUpperCase() + versionName.slice(1)
+    return {
+      versionName: properVersionName,
+      description: cleanedStr
+    }
+  })
+
+  const entryRows = englishInfo.map((entry, i) => {
+    const leftColStyle = 'flex justify-end items-center w-2/12'
+    const rightColStyle = 'flex justify-start pl-4 w-10/12'
+
     return (
-      <div> 
-        <span className='font-bold'> {properVersionName} </span> - {cleanedStr} 
+      <div className='flex flex-row border-t-[1px] border-gray-200 py-2'>
+        <div className={leftColStyle}> {entry.versionName} </div>
+        <div className={rightColStyle}> {entry.description} </div>
       </div>
     )
   })
 
   return (
-    <div>
-      <h1 className='text-xl font-bold'> Pokedex Entries </h1>
-      {englishInfo}
-    </div>
+    <>
+      <div className='font-bold text-3xl mb-10'> Pokédex Entry </div>
+      <div className='flex flex-col border-b-[1px] border-gray-200'>
+        {entryRows}
+      </div>
+    </>
   )
 }
 

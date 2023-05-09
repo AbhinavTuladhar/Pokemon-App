@@ -83,14 +83,11 @@ const PokemonDetail = () => {
   }
 
   return (
-    <div className='flex flex-col justify-center'>
+    <div className='flex flex-col justify-center gap-y-10 mx-10 pb-4'>
       <div className="text-4xl font-bold flex justify-center">
         {idInfo.name}
       </div>
-      {/* <div className='text-xl flex justify-center my-4'>
-        {speciesData.genus}
-      </div> */}
-      <div className='flex flex-row flex-wrap gap-x-10 my-10 mx-10'>
+      <div className='flex flex-row flex-wrap gap-x-10'>
         <div className='flex-grow w-1/4'>
           <ImageTile imageSources={imageSource} />
         </div>
@@ -101,30 +98,11 @@ const PokemonDetail = () => {
           <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
         </div>
       </div>
+      <div>
+        <PokeDexEntry data={dexEntry} />
+      </div>
     </div>
   )
-
-  return (
-    <div className='gap-x-2 gap-y-3 pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
-      <div className="text-4xl font-bold flex justify-center">
-        #{idInfo.id}: {idInfo.name}
-      </div>
-      <div className='text-xl flex justify-center my-4'>
-        {speciesData.genus}
-      </div>
-      <div className='grid grid-cols-4 auto-rows-auto'>
-        <div className='col-start-1 col-end-4 my-4 h-auto'>
-          <PokeDexEntry data={dexEntry} />
-        </div>
-        <div className='col-start-1 col-end-4'>
-          <Abilities data={abilityData} />
-        </div>
-        <div className='h-auto col-start-4 row-start-1 row-end-3'>
-          <ImageTile />
-        </div>
-      </div>
-    </div>
-  );
 };
 
 export default PokemonDetail;
