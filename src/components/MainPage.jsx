@@ -1,6 +1,5 @@
-import { React, useEffect, useState, useMemo } from 'react'
+import { React, useEffect, useState, useMemo, useCallback } from 'react'
 import axios from 'axios'
-import NavBar from './NavBar'
 import PokeCard from './PokeCard'
 
 const MainPage = ({ idRange }) => {
@@ -8,14 +7,15 @@ const MainPage = ({ idRange }) => {
   const [loading, setLoading] = useState(true)
   
   // Find the list of urls.
-  let urlList = []
-  for (let i = idRange[0]; i <= idRange[1]; i++) {
-    urlList.push(`https://pokeapi.co/api/v2/pokemon/${i}/`)
-  }
+  const urlList = useMemo(() => {
+    let urls = []
+    for (let i = idRange[0]; i <= idRange[1]; i++) {
+      urls.push(`https://pokeapi.co/api/v2/pokemon/${i}/`)
+    }
+    return urls
+  }, [idRange])
 
-  const fetchData = async () => {
-    // const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=20')
-    // const response = await axios.get('https://pokeapi.co/api/v2/pokemon/1/')
+  const fetchData = useCallback(async () => {
     try {
       const responses = await Promise.all(urlList.map(
         url => axios.get(url)
@@ -27,13 +27,13 @@ const MainPage = ({ idRange }) => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [urlList])
 
   useEffect(() => {
     setData([])
     setLoading(true)
     fetchData()
-  }, [idRange])
+  }, [idRange, fetchData])
 
   const cachedData = useMemo(() => {
     const cardList = data.map(pokemon => {
@@ -48,9 +48,9 @@ const MainPage = ({ idRange }) => {
     </div>)
 
   return (
-    <div className='flex flex-wrap justify-center items-center gap-x-2 gap-y-3 pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
+    <>
       {loading ? loadingText : cachedData}
-    </div>  
+    </>  
   )
 }
 
