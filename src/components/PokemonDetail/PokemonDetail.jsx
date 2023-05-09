@@ -90,11 +90,14 @@ const PokemonDetail = () => {
       {/* <div className='text-xl flex justify-center my-4'>
         {speciesData.genus}
       </div> */}
-      <div className='grid grid-cols-3 gap-x-16 my-10'>
-        <div className='col-start-1 col-end-2'>
+      <div className='flex flex-row flex-wrap gap-x-10 my-10 mx-10'>
+        <div className='flex-grow w-1/4'>
           <ImageTile imageSources={imageSource} />
         </div>
-        <div className='col-start-2 col-end-3'>
+        <div className='flex-grow w-1/4'>
+          <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
+        </div>
+        <div className='flex-grow w-1/4'>
           <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
         </div>
       </div>
