@@ -2,6 +2,7 @@ import { React, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Abilities from './Abilities';
+import PokeDexEntry from './PokeDexEntry';
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -10,6 +11,7 @@ const PokemonDetail = () => {
   const [abilityData, setAbilityData] = useState([]);
   const [imageSource, setImageSource] = useState('')
   const [speciesData, setSpeciesData] = useState({})
+  const [dexEntry, setDexEntry] = useState({})
 
   const fetchData = useCallback(async () => {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`);
@@ -28,10 +30,10 @@ const PokemonDetail = () => {
       id,
       name,
       abilities, 
-      sprites: { other : { 'official-artwork' : { front_default }}} 
+      sprites: { other : { 'official-artwork' : { front_default, front_shiny }}} 
     } = data;
     setAbilityData(abilities);
-    setImageSource(front_default)
+    setImageSource({default: front_default, shiny: front_shiny})
     setIdInfo(() => {
       const properName = name.charAt(0).toUpperCase() + name.slice(1);
       return {
@@ -45,8 +47,9 @@ const PokemonDetail = () => {
     if (!data || !data.genera)
       return
     console.log(data)
-    const  { genera } = data
+    const  { genera, flavor_text_entries } = data
     const englishData = genera.find(entry => entry.language.name === 'en')
+    setDexEntry(flavor_text_entries)
     setSpeciesData((prevState) => {
       return {
         genus: englishData.genus
@@ -57,7 +60,7 @@ const PokemonDetail = () => {
   useEffect(() => {
     fetchData();
     fetchSpeciesData();
-  }, [id, fetchData, fetchSpeciesData]);
+  }, [fetchData, fetchSpeciesData]);
 
   useEffect(() => {
     if (pokemon) {
@@ -68,11 +71,11 @@ const PokemonDetail = () => {
     console.log(speciesData)
   }, [pokemon, speciesData]);
 
-  if (!pokemon && !speciesData) {
+  if (!pokemon || !speciesData) {
     return (
-      <div className='text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
+      <>
         Loading...
-      </div>
+      </>
     );
   }
 
@@ -82,17 +85,20 @@ const PokemonDetail = () => {
         #{idInfo.id}: {idInfo.name}
       </div>
       <div className='text-xl flex justify-center my-4'>
-        {
-          speciesData && 
-          speciesData.genus
-        }
+        {speciesData.genus}
       </div>
-      <div className='grid grid-cols-4'>
-        <div className='col-start-1 col-end-4'>
+      <div className='grid grid-cols-4 grid-rows-6 auto-rows-min'>
+        <div className='col-start-1 col-end-4 row-start-1 row-end-5 my-4 h-auto'>
+          <PokeDexEntry data={dexEntry} />
+        </div>
+        <div className='col-start-1 col-end-4 row-start-6'>
           <Abilities data={abilityData} />
         </div>
-        <div className='h-[500px] col-start-4'>
-          <img src={imageSource} alt={idInfo} />
+        <div className='h-auto col-start-4 row-start-1 row-end-3'>
+          <img src={imageSource.default} alt={idInfo} />
+        </div>
+        <div className='h-auto col-start-4 row-start-3 row-end-5'>
+          <img src={imageSource.shiny} alt={idInfo} />
         </div>
       </div>
       {/* <img src={imageSource} />
