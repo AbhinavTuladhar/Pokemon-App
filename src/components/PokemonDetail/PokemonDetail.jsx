@@ -50,15 +50,21 @@ const PokemonDetail = () => {
     if (!data || !data.genera)
       return
     console.log(data)
-    const  { genera, flavor_text_entries, base_happiness, capture_rate, growth_rate } = data
+    const  { 
+      genera, 
+      flavor_text_entries, 
+      base_happiness, 
+      capture_rate, 
+      growth_rate : {name: growthRateType}
+    } = data
     const englishGenus = genera.find(entry => entry.language.name === 'en')
     setDexEntry(flavor_text_entries)
-    setSpeciesData((prevState) => {
+    setSpeciesData(() => {
       return {
         genus: englishGenus.genus,
         base_happiness: base_happiness,
         capture_rate: capture_rate,
-        growth_rate: growth_rate,
+        growth_rate: growthRateType
       }
     })
   }
