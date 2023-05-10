@@ -5,7 +5,6 @@ const PokeDexEntry = ( { data }) => {
 
   // Let's find all the English entries first.
   const englishEntries = data.filter(entry => entry.language.name === 'en')
-  console.log(englishEntries)
   
   const englishInfo = englishEntries.map(entry => {
     const rawText = entry.flavor_text
@@ -19,7 +18,7 @@ const PokeDexEntry = ( { data }) => {
   })
 
   const entryRows = englishInfo.map((entry, i) => {
-    const leftColStyle = 'flex justify-end items-center w-2/12'
+    const leftColStyle = 'flex justify-end items-center w-2/12 text-right'
     const rightColStyle = 'flex justify-start pl-4 w-10/12'
 
     return (

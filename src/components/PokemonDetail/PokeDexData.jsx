@@ -17,9 +17,10 @@ const PokeDexData = ({ pokemonData }) => {
   const typeDiv = typeNames.map(typeName => <TypeCard typeName={typeName} />)
   const abilityList = abilityNames.map(ability => <li> {ability} </li>)
 
-  const rowStyle = 'flex flex-row border-t-[1px] border-gray-200 py-2'
+  const rowStyle = 'flex flex-row border-t-[1px] border-gray-200 py-2 h-14 max-h-24'
+  const lastRowStyle = 'flex flex-row border-t-[1px] border-gray-200 py-2 min-h-14 max-h-24'
   const leftColStyle = 'flex justify-end items-center w-3/12'
-  const rightColStyle = 'flex justify-start pl-4 w-9/12'
+  const rightColStyle = 'flex justify-start pl-4 w-9/12 items-center'
 
   return (
     <>
@@ -47,7 +48,7 @@ const PokeDexData = ({ pokemonData }) => {
           <div className={leftColStyle}> Weight </div>
           <div className={rightColStyle}> {formattedWeight} </div>
         </div>
-        <div className={`${rowStyle} border-b-[1px]`}>
+        <div className={`${lastRowStyle} border-b-[1px]`}>
           <div className={leftColStyle}> Abilities </div>
           <div className={rightColStyle}>
             <ol className='list-inside list-decimal'>

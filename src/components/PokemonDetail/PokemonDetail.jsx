@@ -5,6 +5,7 @@ import Abilities from './Abilities';
 import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile';
 import PokeDexData from './PokeDexData';
+import TrainingInfo from './TrainingInfo';
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -49,12 +50,15 @@ const PokemonDetail = () => {
     if (!data || !data.genera)
       return
     console.log(data)
-    const  { genera, flavor_text_entries } = data
-    const englishData = genera.find(entry => entry.language.name === 'en')
+    const  { genera, flavor_text_entries, base_happiness, capture_rate, growth_rate } = data
+    const englishGenus = genera.find(entry => entry.language.name === 'en')
     setDexEntry(flavor_text_entries)
     setSpeciesData((prevState) => {
       return {
-        genus: englishData.genus
+        genus: englishGenus.genus,
+        base_happiness: base_happiness,
+        capture_rate: capture_rate,
+        growth_rate: growth_rate,
       }
     })
   }
@@ -69,9 +73,10 @@ const PokemonDetail = () => {
       extractGeneralInformation(pokemon);
     }
     console.log(pokemon)
-    if (speciesData)
-    extractSpeciesInformation(speciesData)
-    console.log(speciesData)
+    if (speciesData) {
+      extractSpeciesInformation(speciesData)
+      console.log(speciesData)
+    }
   }, [pokemon, speciesData]);
 
   if (!pokemon || !speciesData) {
@@ -95,7 +100,7 @@ const PokemonDetail = () => {
           <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
         </div>
         <div className='flex-grow w-1/4'>
-          <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
+          <TrainingInfo data={{...pokemon, ...speciesData}} />
         </div>
       </div>
       <div>
