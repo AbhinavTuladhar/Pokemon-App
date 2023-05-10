@@ -1,12 +1,14 @@
-import { React, useEffect, useState, useMemo, useCallback } from 'react'
+import { React, useMemo } from 'react'
 import axios from 'axios'
+import { useQuery } from 'react-query'
 import PokeCard from './PokeCard'
 
 const MainPage = ({ idRange }) => {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
-  
-  // Find the list of urls.
+  const fetchPokemonData = async (url) => {
+    const response = await axios.get(url)
+    return response.data
+  }
+
   const urlList = useMemo(() => {
     let urls = []
     for (let i = idRange[0]; i <= idRange[1]; i++) {
@@ -15,36 +17,13 @@ const MainPage = ({ idRange }) => {
     return urls
   }, [idRange])
 
-  const fetchData = useCallback(async () => {
-    try {
-      const responses = await Promise.all(urlList.map(
-        url => axios.get(url)
-      ))
-      const newData = responses.map(response => response.data)
-      setData(newData)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
-  }, [urlList])
+  const { data: pokemonData, isLoading } = useQuery(
+    ['pokemonData', idRange],
+    () => Promise.all(urlList.map(fetchPokemonData)),
+    { staleTime: Infinity }
+  )
 
-  useEffect(() => {
-    // setData([])
-    setLoading(true)
-    fetchData()
-  }, [idRange, fetchData])
-
-  const cachedData = useMemo(() => {
-    if (data.length === 0) {
-      return <div>Loading...</div>
-    }
-    const cardList = data.map(pokemon => {
-      return <PokeCard data={pokemon} />
-    })
-    return cardList
-  }, [data])
-  
+  const pokemonBoxes = pokemonData?.map(pokemon => <PokeCard key={pokemon.id} data={pokemon} />)
 
   const loadingText = (
     <div className='justify-center items-center text-5xl'> 
@@ -52,12 +31,10 @@ const MainPage = ({ idRange }) => {
     </div>)
 
   return (
-    <div className='gap-x-2 gap-y-3 px-2 py-4 flex flex-wrap justify-center items-center '>
-      {loading ? loadingText : cachedData}
-    </div>  
+    <div className='gap-x-2 gap-y-3 px-2 py-4 flex flex-wrap justify-center items-center'>
+      {isLoading ? loadingText : pokemonBoxes}
+    </div>
   )
 }
-
-// test comment
 
 export default MainPage;
