@@ -31,7 +31,7 @@ const ImageTile = ({ imageSources }) => {
         </button>
       </div>
       <div className='flex flex-row justify-center'>
-        <img src={imageSrc} className='min-h-full' />
+        <img src={imageSrc} className='min-h-full' alt={'pokemon'} />
       </div>
     </div>
   )
