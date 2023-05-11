@@ -6,6 +6,7 @@ import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile';
 import PokeDexData from './PokeDexData';
 import TrainingInfo from './TrainingInfo';
+import BaseStat from './BaseStat';
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -107,6 +108,9 @@ const PokemonDetail = () => {
         </div>
         <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
           <TrainingInfo data={{...pokemon, ...speciesData}} />
+        </div>
+        <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
+          <BaseStat data={{...pokemon, ...speciesData}} />
         </div>
       </div>
       <div>
