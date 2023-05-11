@@ -109,7 +109,7 @@ const PokemonDetail = () => {
         <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
           <TrainingInfo data={{...pokemon, ...speciesData}} />
         </div>
-        <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
+        <div className='w-full md:w-2/3 sm:w-full py-4'>
           <BaseStat data={{...pokemon, ...speciesData}} />
         </div>
       </div>
