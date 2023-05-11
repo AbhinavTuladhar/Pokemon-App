@@ -28,7 +28,7 @@ const MainPage = ({ idRange }) => {
   const { data: pokemonData, isLoading } = useQuery(
     ['pokemonData', idRange],
     () => Promise.all(urlList.map(fetchPokemonData)),
-    { staleTime: Infinity }
+    { staleTime: Infinity, cacheTime: Infinity }
   )
 
   const pokemonBoxes = pokemonData?.map(pokemon => <PokeCard key={pokemon.id} data={pokemon} />)
