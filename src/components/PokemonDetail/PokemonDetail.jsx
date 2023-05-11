@@ -99,13 +99,13 @@ const PokemonDetail = () => {
         {idInfo.name}
       </div>
       <div className='flex flex-row flex-wrap gap-x-10'>
-        <div className='flex-grow w-1/4 md:w-1/4 sm:w-full py-4'>
+        <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
           <ImageTile imageSources={imageSource} />
         </div>
-        <div className='flex-grow w-1/4 md:w-1/4 sm:w-full py-4'>
+        <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
           <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
         </div>
-        <div className='flex-grow w-1/4 md:w-1/4 sm:w-full py-4'>
+        <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
           <TrainingInfo data={{...pokemon, ...speciesData}} />
         </div>
       </div>
