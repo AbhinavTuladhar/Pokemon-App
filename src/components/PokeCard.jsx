@@ -42,7 +42,7 @@ const PokeCard = ({ data }) => {
       <div>
         <img src={front_default} className='h-[100px]' alt={name} />
       </div>
-      <div className='flex flex-row'>
+      <div className='flex flex-row mt-4 mb-2'>
         {typeDivs}
       </div>
     </div>

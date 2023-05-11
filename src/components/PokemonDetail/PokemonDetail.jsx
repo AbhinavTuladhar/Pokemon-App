@@ -56,7 +56,8 @@ const PokemonDetail = () => {
       flavor_text_entries, 
       base_happiness, 
       capture_rate, 
-      growth_rate : {name: growthRateType}
+      growth_rate : {name: growthRateType},
+      pokedex_numbers
     } = data
     const englishGenus = genera.find(entry => entry.language.name === 'en')
     setDexEntry(flavor_text_entries)
@@ -65,7 +66,8 @@ const PokemonDetail = () => {
         genus: englishGenus.genus,
         base_happiness: base_happiness,
         capture_rate: capture_rate,
-        growth_rate: growthRateType
+        growth_rate: growthRateType,
+        pokedex_numbers: pokedex_numbers
       }
     })
   }
