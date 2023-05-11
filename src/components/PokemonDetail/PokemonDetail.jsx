@@ -73,6 +73,11 @@ const PokemonDetail = () => {
   }
 
   useEffect(() => {
+    const correctTitle = idInfo.name ? `${idInfo.name} Pokedex` : '...'
+    document.title = correctTitle
+  }, [idInfo])
+
+  useEffect(() => {
     fetchData();
     fetchSpeciesData();
   }, [fetchData, fetchSpeciesData]);
