@@ -15,7 +15,7 @@ const App = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <NavBar />
-        <div className='pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen'>
+        <div className='pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen pb-4'>
           <ScrollToTop />
           <Routes>
             <Route path='' element={<WelcomePage />} />

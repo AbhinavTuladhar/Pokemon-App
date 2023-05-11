@@ -21,8 +21,10 @@ const NavBar = () => {
 
   return (
     <nav className='bg-green-400'>
-      <div className='bg-slate-900 text-white py-4'>
-        <NavLink to='/'> Test </NavLink>
+      <div className='bg-slate-900 text-yellow-400 py-2 text-center text-3xl font-extrabold tracking-widest'>
+        <NavLink to='/'> 
+          PokéDex
+        </NavLink>
       </div>
       <ul className='flex justify-left list-none py-4 px-2 gap-16'>
         {navElements}
