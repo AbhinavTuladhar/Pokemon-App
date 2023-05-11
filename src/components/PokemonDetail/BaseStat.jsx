@@ -25,8 +25,12 @@ const BaseStat = ({ data }) => {
       colour = '#ff7f0f'
     else if (statValue >= 60 && statValue < 90)
       colour = '#ffdd57'
-    else
+    else if (statValue >= 90 && statValue < 120)
       colour = '#a0e515'
+    else if (statValue >= 120 && statValue < 150)
+      colour = '#23cd5e'
+    else 
+      colour = '#00c2b8'
     return { name: properStatName, value: statValue, width: widthValue, colour: colour }
   })
 
