@@ -1,9 +1,17 @@
-import { React, useMemo } from 'react'
+import { React, useMemo, useEffect } from 'react'
 import axios from 'axios'
 import { useQuery } from 'react-query'
+import { useLocation } from 'react-router-dom'
 import PokeCard from './PokeCard'
 
 const MainPage = ({ idRange }) => {
+  const currentLocation = useLocation()
+  const generationNumber = currentLocation.pathname.slice(-1)
+
+  useEffect(() => {
+    document.title = `Gen ${generationNumber}`
+  }, [currentLocation])
+
   const fetchPokemonData = async (url) => {
     const response = await axios.get(url)
     return response.data
