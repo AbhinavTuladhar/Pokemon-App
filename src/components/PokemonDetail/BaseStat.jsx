@@ -1,46 +1,46 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useMemo } from 'react'
 import statCalculator from '../../utils/StatCalculation'
 
-const BaseStat = ({ data }) => {
-  const { stats } = data
+
+const useStatDetail = (stats) => {
   const maxStatValue = 200
-  const [ statDetail, setStatDetail ] = useState([])
-
-  const statMapping = {
-    "hp": "HP",
-    "attack": "Attack",
-    "defense": "Defense",
-    "special-attack": "Sp. Atk",
-    "special-defense": "Sp. Def",
-    "speed": "Speed"
-  }
-
-  const statValues = stats.map(stat => {
-    const statValue = stat.base_stat
-    const statName = stat.stat.name
-    const properStatName = statMapping[statName]
-    const widthValue = `${(statValue / maxStatValue) * 100}%`
-    let colour
-    if (statValue >= 0 && statValue < 30)
-      colour = '#f34444'
-    else if (statValue >= 30 && statValue < 60)
-      colour = '#ff7f0f'
-    else if (statValue >= 60 && statValue < 90)
-      colour = '#ffdd57'
-    else if (statValue >= 90 && statValue < 120)
-      colour = '#a0e515'
-    else if (statValue >= 120 && statValue < 150)
-      colour = '#23cd5e'
-    else if (statValue >= 150)
-      colour = '#00c2b8'
-    else {
-      colour = 'transparent'
+  const statMapping = useMemo(() => {
+    return {
+      "hp": "HP",
+      "attack": "Attack",
+      "defense": "Defense",
+      "special-attack": "Sp. Atk",
+      "special-defense": "Sp. Def",
+      "speed": "Speed"
     }
-    return { name: properStatName, value: statValue, width: widthValue, colour: colour }
-  })
-
+  }, [])
+  const [ statDetail, setStatDetail ] = useState([])
   // Finding the maximum and minimum values of each stat.
   useEffect(() => {
+    const statValues = stats.map(stat => {
+      const statValue = stat.base_stat
+      const statName = stat.stat.name
+      const properStatName = statMapping[statName]
+      const widthValue = `${(statValue / maxStatValue) * 100}%`
+      let colour
+      if (statValue >= 0 && statValue < 30)
+        colour = '#f34444'
+      else if (statValue >= 30 && statValue < 60)
+        colour = '#ff7f0f'
+      else if (statValue >= 60 && statValue < 90)
+        colour = '#ffdd57'
+      else if (statValue >= 90 && statValue < 120)
+        colour = '#a0e515'
+      else if (statValue >= 120 && statValue < 150)
+        colour = '#23cd5e'
+      else if (statValue >= 150)
+        colour = '#00c2b8'
+      else {
+        colour = 'transparent'
+      }
+      return { name: properStatName, value: statValue, width: widthValue, colour: colour }
+    })
+
     const temp = statCalculator(statValues)
     setStatDetail(() => {
       const details =  statValues.map(obj1 => {
@@ -61,7 +61,15 @@ const BaseStat = ({ data }) => {
       })
       return details
     })
-  }, [statCalculator])
+  }, [stats, statMapping])
+
+  return statDetail
+}
+
+const BaseStat = ({ data }) => {
+  const { stats } = data
+
+  const statDetail = useStatDetail(stats)
 
   const rowValues = statDetail?.map((stat, index) => {
     // Checking for the last index to make the sum of the base stats bold.

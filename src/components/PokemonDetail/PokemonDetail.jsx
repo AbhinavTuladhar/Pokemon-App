@@ -1,7 +1,6 @@
 import { React, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Abilities from './Abilities';
 import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile';
 import PokeDexData from './PokeDexData';
@@ -12,7 +11,6 @@ const PokemonDetail = () => {
   const { id } = useParams();
   const [idInfo, setIdInfo] = useState({})
   const [pokemon, setPokemon] = useState(null);
-  const [abilityData, setAbilityData] = useState([]);
   const [imageSource, setImageSource] = useState('')
   const [speciesData, setSpeciesData] = useState({})
   const [dexEntry, setDexEntry] = useState({})
@@ -33,10 +31,8 @@ const PokemonDetail = () => {
     const { 
       id,
       name,
-      abilities, 
       sprites: { other : { 'official-artwork' : { front_default, front_shiny }}} 
     } = data;
-    setAbilityData(abilities);
     setImageSource({defaultSprite: front_default, shinySprite: front_shiny})
     setIdInfo(() => {
       const properName = name.charAt(0).toUpperCase() + name.slice(1);
@@ -50,7 +46,6 @@ const PokemonDetail = () => {
   const extractSpeciesInformation = ( data ) => {
     if (!data || !data.genera)
       return
-    // console.log(data)
     const  { 
       genera, 
       flavor_text_entries, 
@@ -89,7 +84,6 @@ const PokemonDetail = () => {
     console.log(pokemon)
     if (speciesData) {
       extractSpeciesInformation(speciesData)
-      // console.log(speciesData)
     }
   }, [pokemon, speciesData]);
 

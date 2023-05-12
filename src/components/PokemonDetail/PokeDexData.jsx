@@ -5,8 +5,6 @@ import axios from 'axios'
 const PokeDexData = ({ pokemonData }) => {
   const { id, types, genus, height, weight, abilities, pokedex_numbers } = pokemonData
   const [gameData, setGameData] = useState([])
-  const [gameDataLoaded, setGameDataLoaded] = useState(false)
-  const [regionalData, setRegionalData] = useState([])
 
   // This is for omitting specific entries in the national number list.
   const excludedRegions = useMemo(() => {
@@ -44,7 +42,6 @@ const PokeDexData = ({ pokemonData }) => {
       ))
       const newData = responses.map(response => response.data)
       setGameData(newData)
-      setGameDataLoaded(true)
     } catch (error) {
       console.log(error)
     }
@@ -58,7 +55,7 @@ const PokeDexData = ({ pokemonData }) => {
   const typeDiv = typeNames.map(typeName => <TypeCard typeName={typeName} />)
 
   // Mkaing an actual list of all the abilities.
-  const abilityList = abilityNames.map(ability => <li> {ability} </li>)
+  const abilityList = abilityNames.map((ability, index) => <li key={index}> {ability} </li>)
   const abilityListFinal = (
     <ol className='list-inside list-decimal'>
       {abilityList}
