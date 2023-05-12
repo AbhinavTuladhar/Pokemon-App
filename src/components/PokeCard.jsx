@@ -10,25 +10,20 @@ const PokeCard = ({ data }) => {
     sprites: { other : { 'official-artwork' : { front_default }}}
   } = data
 
-  if (id % 100 === 0)
-    console.log(data)
-
+  // For capitalising the first letter.
   const properName = name.charAt(0).toUpperCase() + name.slice(1);
 
-  // const finalName = properName.split('-').length > 1 ?
-  //   properName.split('-')[0] :
-  //   properName
-
+  // Get a list of all the types of the Pokemon.
   let typeList = types.map(type => {
     return type.type.name
   })
 
-  const typeListText = typeList.join(', ')
-
+  // Now map each type to its corresponding type card.
   const typeDivs = typeList.map(type => {
     return <TypeCard typeName={type} />
   })
 
+  // When the user clickso n the Pokemon name, they are brought to the detail page.
   const targetLink = `/pokemon/${id}`
 
   return (

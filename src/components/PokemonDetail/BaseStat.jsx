@@ -1,9 +1,18 @@
 import { React, useState, useEffect, useMemo } from 'react'
 import statCalculator from '../../utils/StatCalculation'
 
-
+/*
+Here, we define a custom hook for returning an aray of objects containing:
+1. The name of the state,
+2. The base value,
+3. The maximum value,
+4. The minimum value.
+*/
 const useStatDetail = (stats) => {
+  // The max stat value is for the bar graph.
   const maxStatValue = 200
+
+  // Now define a dictionary for mapping the unformatted stat name to its proper name.
   const statMapping = useMemo(() => {
     return {
       "hp": "HP",
@@ -14,15 +23,22 @@ const useStatDetail = (stats) => {
       "speed": "Speed"
     }
   }, [])
+  
+  // This state variable is for storing the stat details.
   const [ statDetail, setStatDetail ] = useState([])
-  // Finding the maximum and minimum values of each stat.
+
   useEffect(() => {
+    // Finding the maximum and minimum values of each stat.
     const statValues = stats.map(stat => {
+      let colour
       const statValue = stat.base_stat
       const statName = stat.stat.name
       const properStatName = statMapping[statName]
+
+      // This is for determining the width of the bar graph.
       const widthValue = `${(statValue / maxStatValue) * 100}%`
-      let colour
+
+      // Now provide a colour to the bar graph depending on the value of the base stat.
       if (statValue >= 0 && statValue < 30)
         colour = '#f34444'
       else if (statValue >= 30 && statValue < 60)
@@ -41,16 +57,30 @@ const useStatDetail = (stats) => {
       return { name: properStatName, value: statValue, width: widthValue, colour: colour }
     })
 
-    const temp = statCalculator(statValues)
+    // Now calculate the minimum and maximum stat values using an imported functin.
+    const minMaxValues = statCalculator(statValues)
+
+    /*
+    This function combines two objects.
+    The first object contains the name of the stat and the base stat value -> statValues
+    The second object contains the name of the stat and the maximum and minimum values -> minMaxValues.
+    These objects are joined using the stat name as the common key-value pair.
+    */
     setStatDetail(() => {
       const details =  statValues.map(obj1 => {
-        const obj2 = temp.find(obj => obj.name === obj1.name)
+        const obj2 = minMaxValues.find(obj => obj.name === obj1.name)
         return {...obj1, ...obj2}
       })
-      // This is for dealing with the final row.
-      // Find the sum of the base stats
+
+      /*
+      This next bit for dealing with the final row. 
+      In the final row, we want the form - 'Total' - (sum of base stats) - transparent bar graph - 'min' - 'max'
+      */
+ 
+      // First we find the sum of the base stats.
       const baseStatTotal = details.reduce((acc, stat) => acc + stat.value, 0)
-      // Push the details of the final row in the array.
+
+      // Push the aforementioned details of the final row in the array.
       details.push({ 
         name: 'Total', 
         value: baseStatTotal, 
@@ -62,13 +92,13 @@ const useStatDetail = (stats) => {
       return details
     })
   }, [stats, statMapping])
-
   return statDetail
 }
 
 const BaseStat = ({ data }) => {
   const { stats } = data
 
+  // Fetch the ready-to-use array containing the objects of the stat details.
   const statDetail = useStatDetail(stats)
 
   const rowValues = statDetail?.map((stat, index) => {

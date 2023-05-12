@@ -9,10 +9,10 @@ import BaseStat from './BaseStat';
 
 const PokemonDetail = () => {
   const { id } = useParams();
-  const [idInfo, setIdInfo] = useState({})
-  const [pokemon, setPokemon] = useState(null);
-  const [imageSource, setImageSource] = useState('')
-  const [speciesData, setSpeciesData] = useState({})
+  const [idInfo, setIdInfo] = useState({})            // defines the ID number and name of the pokemon
+  const [pokemon, setPokemon] = useState(null);       // the data that is obtained from the entry of the 'mon.
+  const [imageSource, setImageSource] = useState('')  // for storing the normal and shiny sprites.
+  const [speciesData, setSpeciesData] = useState({})  // defines the species information of the 'mon.
   const [dexEntry, setDexEntry] = useState({})
 
   const fetchData = useCallback(async () => {
@@ -27,6 +27,7 @@ const PokemonDetail = () => {
     setSpeciesData(responseData)
   }, [id])
 
+  // For extracting information from the 'pokemon' object.
   const extractGeneralInformation = (data) => {
     const { 
       id,
@@ -43,6 +44,7 @@ const PokemonDetail = () => {
     })
   };
 
+  // same as above, but for speciesData.
   const extractSpeciesInformation = ( data ) => {
     if (!data || !data.genera)
       return
@@ -54,6 +56,7 @@ const PokemonDetail = () => {
       growth_rate : {name: growthRateType},
       pokedex_numbers
     } = data
+    // Find only the English genus name of the 'mon.
     const englishGenus = genera.find(entry => entry.language.name === 'en')
     setDexEntry(flavor_text_entries)
     setSpeciesData(() => {
@@ -67,26 +70,29 @@ const PokemonDetail = () => {
     })
   }
 
+  // Fpr a dynamic title.
   useEffect(() => {
     const correctTitle = idInfo.name ? `${idInfo.name} Pokedex` : '...'
     document.title = correctTitle
   }, [idInfo])
 
+  // Fetch the individual Pokemon and then the species data.
   useEffect(() => {
     fetchData();
     fetchSpeciesData();
   }, [fetchData, fetchSpeciesData]);
 
+  // For extracting the information from the fetched 
   useEffect(() => {
     if (pokemon) {
       extractGeneralInformation(pokemon);
     }
-    console.log(pokemon)
     if (speciesData) {
       extractSpeciesInformation(speciesData)
     }
   }, [pokemon, speciesData]);
 
+  // Render a simple loading page if both the dat hasn't been fetched.
   if (!pokemon || !speciesData) {
     return (
       <>

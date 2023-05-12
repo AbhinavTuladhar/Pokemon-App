@@ -11,6 +11,7 @@ const NavBar = () => {
     { path: '/pokemon/generation-6', name: 'Generation 6'}
   ]
 
+  // For making the navigation bar.
   const navElements = linkData.map((data, index) => {
     return (
       <li className='hover:brightness-110 duration-500 text-white' key={index}>
@@ -21,12 +22,12 @@ const NavBar = () => {
 
   return (
     <nav className='bg-green-400'>
-      <div className='bg-slate-900 text-yellow-400 py-2 text-center text-3xl font-extrabold tracking-widest'>
+      <div className='bg-slate-900 text-yellow-400 py-2 text-center text-6xl font-extrabold tracking-widest'>
         <NavLink to='/'> 
           PokéDex
         </NavLink>
       </div>
-      <ul className='flex justify-left list-none py-4 px-2 gap-16'>
+      <ul className='flex justify-left list-none py-4 px-2 gap-8'>
         {navElements}
       </ul>
     </nav>

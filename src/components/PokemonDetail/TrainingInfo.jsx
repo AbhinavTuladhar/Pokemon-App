@@ -21,23 +21,21 @@ const TrainingInfo = ({ data }) => {
   }
 
   // Format the growth rate field
-  let growth = growth_rate === undefined ? '' : formatField(growth_rate.toString())
+  const growth = growth_rate === undefined ? '' : formatField(growth_rate.toString())
 
   // Find the stats that give EVs
   const evStats = stats.filter(stat => stat.effort > 0)
   const evFormatted = evStats.map(stat => {
-    // First format the stat field.
+    // First format the stat field. hp -> HP, rest => special-attack => Special Attack
     const statName = stat.stat.name
     const formattedStatName = statName === 'hp' ? 'HP': formatField(stat.stat.name.toString())
     return {name: formattedStatName, value: stat.effort}
   })
   
+  // Joining all the EV stats given by commas.
   const evString = evFormatted.map(obj => `${obj.value} ${obj.name}`).join(', ');
 
-  const leftColStyle = 'flex justify-end items-center w-4/12 text-right'
-  const rightColStyle = 'flex justify-start pl-4 w-8/12 items-center'
-  const rowStyle = 'flex flex-row border-t-[1px] border-gray-200 py-2 h-12'
-
+  // Define all the things that is to be displayed.
   const tableData = [
     { label: "EV Yield", value: evString},
     { label: "Capture Rate", value: capture_rate},
@@ -48,9 +46,9 @@ const TrainingInfo = ({ data }) => {
 
   const tableDiv = tableData.map(row => {
     return (
-      <div className={rowStyle}>
-        <div className={leftColStyle}> {row.label} </div>
-        <div className={rightColStyle}> {row.value} </div>
+      <div className='flex flex-row border-t-[1px] border-gray-200 py-2 h-12'>
+        <div className='flex justify-end items-center w-4/12 text-right'> {row.label} </div>
+        <div className='flex justify-start pl-4 w-8/12 items-center'> {row.value} </div>
       </div>
     )
   })

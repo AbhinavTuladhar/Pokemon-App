@@ -6,7 +6,11 @@ const PokeDexData = ({ pokemonData }) => {
   const { id, types, genus, height, weight, abilities, pokedex_numbers } = pokemonData
   const [gameData, setGameData] = useState([])
 
-  // This is for omitting specific entries in the national number list.
+  /*
+  This is for omitting entries for national dex and conquest gallery.
+  Reasoning: national number is equivalent to the id.
+  Conquest gallery doesn't have a game name.
+  */
   const excludedRegions = useMemo(() => {
     return ['national', 'conquest-gallery']
   }, [])
@@ -27,14 +31,13 @@ const PokeDexData = ({ pokemonData }) => {
 
   // Now we find the corresponding URLs of the regions.
   // This is for extracting the names of the corresponding games.
-  // Omit the national pokedex entry.
+  // Omit the national and conquest gallery pokedex entries.
   const versionURLs = useMemo(() => {
     const urlList = pokedex_numbers?.filter(entry => !excludedRegions.includes(entry.pokedex.name)).map(entry => entry.pokedex.url)
     return urlList ? urlList : {}
   }, [pokedex_numbers, excludedRegions])
 
-  if (versionURLs) console.log(versionURLs)
-
+  // This is for fetching the names of the games.
   const fetchGameData = useCallback(async () => {
     try {
       const responses = await Promise.all(versionURLs?.map(
@@ -51,10 +54,10 @@ const PokeDexData = ({ pokemonData }) => {
     fetchGameData()
   }, [fetchGameData])
 
-  // Convert the type into its corresponding component.
+  // Convert the types of the Pokemon into its corresponding component.
   const typeDiv = typeNames.map(typeName => <TypeCard typeName={typeName} />)
 
-  // Mkaing an actual list of all the abilities.
+  // Making an actual list of all the abilities.
   const abilityList = abilityNames.map((ability, index) => <li key={index}> {ability} </li>)
   const abilityListFinal = (
     <ol className='list-inside list-decimal'>
@@ -63,7 +66,7 @@ const PokeDexData = ({ pokemonData }) => {
   )
 
   // Now dealing with the Pokedex numbers for each region.
-  // Omit the national region number ssince it has already been covered.
+  // Omit the national region number and conquest gallery numbers, for the reasons specified before.
   const nonNationalValues = pokedex_numbers?.filter(entry => !excludedRegions.includes(entry.pokedex.name))
   const regionNumberValues = nonNationalValues?.map((entry, index) => {
     const regionName = entry.pokedex.name
@@ -71,7 +74,10 @@ const PokeDexData = ({ pokemonData }) => {
     return { id: index, number: entryNumber, region: regionName }
   })
 
-  // Now combining the regionNumberValues and gameData
+  /*
+  Now combining the regionNumberValues and gameData.
+  This will combine two objects: one object contains the name of the region, while the other contains the name of the games.
+  */
   const properGameData = regionNumberValues?.map(obj1 => {
     const obj2 = gameData.find(obj2 => obj2.name === obj1.region)
     return {
@@ -95,9 +101,8 @@ const PokeDexData = ({ pokemonData }) => {
   })
   
   // This is for rendering tha actual regional pokdex numbers.
-  const regionNumberList2 = finalGameData?.map(number => {
+  const regionNumberList = finalGameData?.map(number => {
     return (
-      // This is for the left column
       <div className='flex flex-row'>
         <div className='flex flex-row justify-start w-2/12'>
           { number.dexNumber }
@@ -108,9 +113,9 @@ const PokeDexData = ({ pokemonData }) => {
       </div>
     )
   })
-  const regionNumberListFinal2 = (
+  const regionNumberListFinal = (
     <div className='flex flex-col w-full'>
-      {regionNumberList2}
+      {regionNumberList}
     </div>
   )
 
@@ -122,9 +127,10 @@ const PokeDexData = ({ pokemonData }) => {
     { label: 'Height', value: formattedHeight },
     { label: 'Weight', value: formattedWeight },
     { label: 'Abilities', value: abilityListFinal },
-    { label: 'Regional no.', value: regionNumberListFinal2 }
+    { label: 'Regional no.', value: regionNumberListFinal }
   ]
 
+  // Now define the JSX component for all the entries.
   const tableEntries = tableData.map(row => {
     const spacing = row.label === 'Abilities' || row.label === 'Regional no.'? 'min-h-14' : 'h-12'
     return (
