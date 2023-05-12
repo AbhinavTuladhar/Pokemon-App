@@ -8,7 +8,7 @@ const PokeDexEntry = ( { data }) => {
   
   const englishInfo = englishEntries.map(entry => {
     const rawText = entry.flavor_text
-    const cleanedStr = rawText.replace(/\\n|\\r/g, '');
+    const cleanedStr = rawText.replace(/\f/g, ' ').replace(/\n/g, ' ')
     const versionName = entry.version.name
     const properVersionName = versionName.charAt(0).toUpperCase() + versionName.slice(1)
     return {

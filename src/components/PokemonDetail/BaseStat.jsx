@@ -77,20 +77,20 @@ const BaseStat = ({ data }) => {
 
     return (
       <div className='flex flex-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-2'> 
-        <div className='flex justify-end text-right items-center w-1/12 flex-shrink-0'>
+        <div className='flex justify-end text-right items-center w-1/12 min-w-2/12 flex-none' >
           {stat.name}
         </div>
-        <div className='flex justify-end pr-4 pl-2 w-1/12 items-center flex-shrink-0'>
+        <div className='flex justify-end pr-4 pl-2 w-1/12 min-w-2/12 items-center flex-none' >
           <span className={stringDecoration}> {stat.value} </span>
         </div>
         <div className='w-full flex flex-row justify-start items-center'>
           <div className='my-0 h-1/3 rounded-md ml-2' style={{width: stat.width, minWidth: '2%', backgroundColor: stat.colour}}>
           </div>
         </div>
-        <div className='flex justify-end pl-4 w-1/12 items-center'>
+        <div className='flex justify-end pl-4 w-1/12 items-center flex-auto'>
           {stat.min}
         </div>
-        <div className='flex justify-end pl-4 w-1/12 items-center'>
+        <div className='flex justify-end pl-4 w-1/12 items-center flex-auto'>
           {stat.max}
         </div>
       </div>
