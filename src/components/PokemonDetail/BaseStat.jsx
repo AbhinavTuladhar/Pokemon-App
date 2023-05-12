@@ -1,8 +1,10 @@
-import react from 'react'
+import { React, useState, useEffect } from 'react'
+import statCalculator from '../../utils/StatCalculation'
 
 const BaseStat = ({ data }) => {
   const { stats } = data
-  const maxStatValue = 180
+  const maxStatValue = 200
+  const [ statDetail, setStatDetail ] = useState([])
 
   const statMapping = {
     "hp": "HP",
@@ -29,23 +31,59 @@ const BaseStat = ({ data }) => {
       colour = '#a0e515'
     else if (statValue >= 120 && statValue < 150)
       colour = '#23cd5e'
-    else 
+    else if (statValue >= 150)
       colour = '#00c2b8'
+    else {
+      colour = 'transparent'
+    }
     return { name: properStatName, value: statValue, width: widthValue, colour: colour }
   })
 
-  const rowValues = statValues.map(stat => {
+  // Finding the maximum and minimum values of each stat.
+  useEffect(() => {
+    const temp = statCalculator(statValues)
+    setStatDetail(() => {
+      const details =  statValues.map(obj1 => {
+        const obj2 = temp.find(obj => obj.name === obj1.name)
+        return {...obj1, ...obj2}
+      })
+      // This is for dealing with the final row.
+      // Find the sum of the base stats
+      const baseStatTotal = details.reduce((acc, stat) => acc + stat.value, 0)
+      // Push the details of the final row in the array.
+      details.push({ 
+        name: 'Total', 
+        value: baseStatTotal, 
+        width: '100%', 
+        colour: 'transparent', 
+        min: 'Min', 
+        max: 'Max'
+      })
+      return details
+    })
+  }, [statCalculator])
+
+  const rowValues = statDetail?.map((stat, index) => {
+    // Checking for the last index to make the sum of the base stats bold.
+    const stringDecoration = index === statDetail.length - 1 ? 'font-bold' : ''
+
     return (
-      <div className='flex flex-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24'> 
-        <div className='flex justify-end text-right items-center w-2/12'>
+      <div className='flex flex-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-2'> 
+        <div className='flex justify-end text-right items-center w-1/12 flex-shrink-0'>
           {stat.name}
         </div>
-        <div className='flex justify-start pl-4 w-1/12 items-center'>
-          {stat.value}
+        <div className='flex justify-end pr-4 pl-2 w-1/12 items-center flex-shrink-0'>
+          <span className={stringDecoration}> {stat.value} </span>
         </div>
         <div className='w-full flex flex-row justify-start items-center'>
           <div className='my-0 h-1/3 rounded-md ml-2' style={{width: stat.width, minWidth: '2%', backgroundColor: stat.colour}}>
           </div>
+        </div>
+        <div className='flex justify-end pl-4 w-1/12 items-center'>
+          {stat.min}
+        </div>
+        <div className='flex justify-end pl-4 w-1/12 items-center'>
+          {stat.max}
         </div>
       </div>
     )
@@ -58,6 +96,10 @@ const BaseStat = ({ data }) => {
       </div>
       <div className='border-gray-200 border-b-[1px]'>
         {rowValues}
+      </div>
+      {/* This is just some informative text. */}
+      <div className='mt-4 font-extralight'>
+        The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a beneficial nature, 252 EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs, 0 IVs.
       </div>
     </>
   )
