@@ -98,18 +98,23 @@ const PokeDexData = ({ pokemonData }) => {
   })
   
   // This is for rendering tha actual regional pokdex numbers.
-  const regionNumberList2 = finalGameData?.map((number, index) => {
+  const regionNumberList2 = finalGameData?.map(number => {
     return (
-      <li key={index}> 
-        <span className='font-bold'> {number.dexNumber} </span> 
-        <span className='brightness-90'> ({number.game}) </span>
-      </li>
+      // This is for the left column
+      <div className='flex flex-row'>
+        <div className='flex flex-row justify-start w-2/12'>
+          { number.dexNumber }
+        </div>
+        <div className='flex flex-row justify-start w-10/12 brightness-90'>
+          { number.game }
+        </div>
+      </div>
     )
   })
   const regionNumberListFinal2 = (
-    <ul className='list-inside list-none'>
+    <div className='flex flex-col w-full'>
       {regionNumberList2}
-    </ul>
+    </div>
   )
 
   // This is for storing the things to be displayed in each row.

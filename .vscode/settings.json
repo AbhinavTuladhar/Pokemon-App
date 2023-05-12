@@ -4,7 +4,10 @@
     "javascript": "javascript",
     "css": "css"
   },
-  "editor.quickSuggestions": { "strings": true },
+  "tailwindCSS.emmetCompletions": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
   "css.validate": false,
-  "editor.inlineSuggest.enabled": true
 }
