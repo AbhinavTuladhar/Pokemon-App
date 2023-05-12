@@ -50,7 +50,7 @@ const PokemonDetail = () => {
   const extractSpeciesInformation = ( data ) => {
     if (!data || !data.genera)
       return
-    console.log(data)
+    // console.log(data)
     const  { 
       genera, 
       flavor_text_entries, 
@@ -89,7 +89,7 @@ const PokemonDetail = () => {
     console.log(pokemon)
     if (speciesData) {
       extractSpeciesInformation(speciesData)
-      console.log(speciesData)
+      // console.log(speciesData)
     }
   }, [pokemon, speciesData]);
 
