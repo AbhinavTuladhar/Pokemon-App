@@ -11,9 +11,9 @@ const NavBar = () => {
     { path: '/pokemon/generation-6', name: 'Generation 6'}
   ]
 
-  const navElements = linkData.map(data => {
+  const navElements = linkData.map((data, index) => {
     return (
-      <li className='hover:brightness-110 duration-500 text-white'>
+      <li className='hover:brightness-110 duration-500 text-white' key={index}>
         <NavLink to={data.path}> {data.name} </NavLink>
       </li>
     )
