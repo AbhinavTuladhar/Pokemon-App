@@ -41,8 +41,7 @@ Platinum - route 202
 Becomes
 Platinum - route 201, route 202
 */
-
-const groupData = data => {
+const groupByGame = data => {
   const info = data?.reduce((acc, current) => {
     const { versionName } = current
     const index = acc.findIndex(item => item.versionName === versionName)
@@ -51,6 +50,23 @@ const groupData = data => {
     } else {
       acc.push({
         versionName: current.versionName,
+        locationName: current.locationName
+      })
+    }
+    return acc
+  }, [])
+  return info
+}
+
+const groupByLocation = data => {
+  const info = data?.reduce((acc, current) => {
+    const { locationName } = current
+    const index = acc.findIndex(item => item.locationName === locationName)
+    if (index !== -1) {
+      acc[index].versionName.push(current.versionName)
+    } else {
+      acc.push({
+        versionName: [current.versionName],
         locationName: current.locationName
       })
     }
@@ -80,15 +96,28 @@ const Locations = ({ id, name }) => {
     if (locationData) {
       const information = extractInformation(locationData)
       setFinalData(() => [...information])
-      setFinalData(prevState => groupData(prevState))
+      setFinalData(prevState => {
+        const groupedByGame = groupByGame(prevState)
+        const groupedByLocation = groupByLocation(groupedByGame)
+        return [...groupedByLocation]
+      })
     }
   }, [locationData])
 
+  // some formatting of the data
+  const preFinalTable = finalData?.map(entry => {
+    const listItems = entry.versionName.map((version, index) => {
+      return <li key={index}> {version} </li>
+    })
+    const gameList = (<ul className='list-none list-inside'> { listItems } </ul>)
+    return { versionName: gameList, locationName: entry.locationName }
+  })
+
   // Now render the final data.
-  const finalTable = finalData?.map(row => {
+  const finalTable = preFinalTable?.map(row => {
     return (
       <div className={`flex flex-row py-2 border-gray-200 border-t-[1px] px-2 mx-2`}>
-        <div className='flex w-2/12 justify-end items-center mx-4'> {row.versionName} </div>
+        <div className='flex w-2/12 justify-end items-center mx-4 text-right'> {row.versionName} </div>
         <div className='flex w-10/12 justify-start items-center mx-4'> {row.locationName} </div>
       </div>
     )
@@ -98,7 +127,7 @@ const Locations = ({ id, name }) => {
     return <h1> Loading </h1>
   }
 
-  // If there is no encounte r data, then nothing is rendered.
+  // If there is no encounter data, then nothing is rendered.
   return (
     <>
       {
