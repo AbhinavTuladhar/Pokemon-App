@@ -28,11 +28,15 @@ const Locations = ({ id }) => {
 
   const extractInformation = (data) => {
     const information = data?.flatMap(encounter => {
-      const locationName = encounter.location_area.name;
-      const encounterList = encounter.version_details;
+      const { 
+        location_area: { name: locationName }, 
+        version_details: encounterList 
+      } = encounter
       const encounterData = encounterList?.map(version => {
-        const versionName = version.version.name;
-        const encounterDetails = version.encounter_details;
+        const { 
+          version: {name: versionName}, 
+          encounter_details: encounterDetails 
+        } = version
         const specificEncounterData = encounterDetails?.map((encounter) => {
           const level = Math.floor((encounter?.max_level + encounter?.min_level) / 2)
           return {
@@ -48,8 +52,6 @@ const Locations = ({ id }) => {
       });
       return encounterData;
     });
-    console.log("Logging informatin|")
-    console.log(information)
     return information;
   };
 
