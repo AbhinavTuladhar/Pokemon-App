@@ -59,7 +59,7 @@ const groupData = data => {
   return info
 }
 
-const Locations = ({ id }) => {
+const Locations = ({ id, name }) => {
   const [locationData, setLocationData] = useState([]);
   const [finalData, setFinalData] = useState([])
 
@@ -118,12 +118,17 @@ const Locations = ({ id }) => {
 
   return (
     <>
-      <div className='font-bold text-3xl mb-10'>
-        Locations
-      </div>
-      <div className='border-gray-200 border-b-[1px]'>
-        {finalTable}
-      </div>
+      {
+        finalTable.length > 0 &&
+        <>
+          <div className='font-bold text-3xl mb-10'>
+            Where to find { name }
+          </div>
+          <div className='border-gray-200 border-b-[1px]'>
+            {finalTable}
+          </div>
+        </>
+      }
     </>
   )
 }

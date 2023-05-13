@@ -125,7 +125,7 @@ const PokemonDetail = () => {
         <PokeDexEntry data={dexEntry} />
       </div>
       <div>
-        <Locations id={idInfo.id} />
+        <Locations id={idInfo.id} name={idInfo.name} />
       </div>
     </div>
   )
