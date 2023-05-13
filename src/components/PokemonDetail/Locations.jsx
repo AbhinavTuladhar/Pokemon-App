@@ -12,6 +12,7 @@ function formatFields(data) {
   return formattedWords.join(' ')
 }
 
+// For extracting the information from the complex object.
 function extractInformation(data) {
   const information = data?.flatMap(encounter => {
     const { 
@@ -21,19 +22,10 @@ function extractInformation(data) {
     const encounterData = encounterList?.map(version => {
       const { 
         version: {name: versionName}, 
-        encounter_details: encounterDetails 
       } = version
-      // const specificEncounterData = encounterDetails?.map((encounter) => {
-      //   const level = Math.floor((encounter?.max_level + encounter?.min_level) / 2)
-      //   return {
-      //     level: level,
-      //     encounterMethod: formatFields(encounter?.method.name),
-      //   };
-      // });
       return {
         locationName: formatFields(locationName).trim(),
         versionName: formatFields(versionName),
-        // ...specificEncounterData[0],
       };
     });
     return encounterData;
@@ -41,7 +33,15 @@ function extractInformation(data) {
   return information;
 }
 
-// This is a function to group the locations by games.
+/*
+For grouping the locations by games.
+So, if a Pokemon can be found in multiple locations in the same game, they are grouped together, separated by commas
+Platinum - route 201
+Platinum - route 202
+Becomes
+Platinum - route 201, route 202
+*/
+
 const groupData = data => {
   const info = data?.reduce((acc, current) => {
     const { versionName } = current
@@ -79,35 +79,17 @@ const Locations = ({ id, name }) => {
   useEffect(() => {
     if (locationData) {
       const information = extractInformation(locationData)
-      setFinalData(() => [
-        // { 
-        //   versionName: 'Version name', 
-        //   locationName: 'Location', 
-        //   // level: 'Level', 
-        //   // encounterMethod: 'Method' 
-        // },
-        ...information
-      ])
+      setFinalData(() => [...information])
       setFinalData(prevState => groupData(prevState))
     }
   }, [locationData])
 
-  useEffect(() => {
-    // const test = groupData(finalData)
-    // console.log(test)
-    if (finalData) {
-      console.log(finalData)
-    }
-  }, [finalData])
-
   // Now render the final data.
-  const finalTable = finalData?.map((row, index) => {
+  const finalTable = finalData?.map(row => {
     return (
       <div className={`flex flex-row py-2 border-gray-200 border-t-[1px] px-2 mx-2`}>
         <div className='flex w-2/12 justify-end items-center mx-4'> {row.versionName} </div>
         <div className='flex w-10/12 justify-start items-center mx-4'> {row.locationName} </div>
-        {/* <div className='flex w-1/12'> {row.level} </div>
-        <div className='flex w-1/12'> {row.encounterMethod} </div> */}
       </div>
     )
   })
@@ -116,6 +98,7 @@ const Locations = ({ id, name }) => {
     return <h1> Loading </h1>
   }
 
+  // If there is no encounte r data, then nothing is rendered.
   return (
     <>
       {
