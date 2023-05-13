@@ -6,6 +6,7 @@ import ImageTile from './ImageTile';
 import PokeDexData from './PokeDexData';
 import TrainingInfo from './TrainingInfo';
 import BaseStat from './BaseStat';
+import Locations from './Locations';
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -122,6 +123,9 @@ const PokemonDetail = () => {
       </div>
       <div>
         <PokeDexEntry data={dexEntry} />
+      </div>
+      <div>
+        <Locations id={idInfo.id} />
       </div>
     </div>
   )
