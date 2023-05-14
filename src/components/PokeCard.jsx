@@ -27,7 +27,7 @@ const PokeCard = ({ data }) => {
   const targetLink = `/pokemon/${id}`
 
   return (
-    <div className='border border-slate-200 flex flex-col flex-grow justify-center items-center md:w-2/12 sm:w-1/3 mx-auto py-2'>
+    <div className='border border-slate-200 flex flex-col justify-center items-center w-full smmd:w-2/12 sm:w-1/3 md:w-1/4 mx-1 py-2'>
       <div className='font-bold'>
         #{id}
       </div>
