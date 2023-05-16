@@ -1,6 +1,5 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query'
 import axios from 'axios';
 import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile';
@@ -11,23 +10,23 @@ import Locations from './Locations';
 
 const PokemonDetail = () => {
   const { id } = useParams();
-  const [idInfo, setIdInfo] = useState({})                    // defines the ID number and name of the pokemon
-  const [pokemonData, setPokemonData] = useState(null);       // the data that is obtained from the entry of the 'mon.
-  const [imageSource, setImageSource] = useState('')          // for storing the normal and shiny sprites.
-  const [speciesData, setSpeciesData] = useState({})          // defines the species information of the 'mon.
+  const [idInfo, setIdInfo] = useState({})            // defines the ID number and name of the pokemon
+  const [pokemon, setPokemon] = useState(null);       // the data that is obtained from the entry of the 'mon.
+  const [imageSource, setImageSource] = useState('')  // for storing the normal and shiny sprites.
+  const [speciesData, setSpeciesData] = useState({})  // defines the species information of the 'mon.
   const [dexEntry, setDexEntry] = useState({})
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`);
     const responseData = await response.data;
-    return responseData
-  }
+    setPokemon(responseData);
+  }, [id])
 
-  const fetchSpeciesData = async () => {
+  const fetchSpeciesData = useCallback(async () => {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
     const responseData = await response.data
-    return responseData
-  }
+    setSpeciesData(responseData)
+  }, [id])
 
   // For extracting information from the 'pokemon' object.
   const extractGeneralInformation = (data) => {
@@ -78,33 +77,24 @@ const PokemonDetail = () => {
     document.title = correctTitle
   }, [idInfo])
 
-  // Fetch the pokemon data using react query
-  const { data: pokemon } = useQuery('individual pokemon data', fetchData)
-  const { data: species } = useQuery('species data', fetchSpeciesData)
-
-  // Now set the fetched data to the respective state variables
+  // Fetch the individual Pokemon and then the species data.
   useEffect(() => {
-    if (pokemon)
-      setPokemonData(pokemon)
-  }, [pokemon])
-
-  useEffect(() => {
-    if (species)
-      setSpeciesData(species)
-  }, [species])
+    fetchData();
+    fetchSpeciesData();
+  }, [fetchData, fetchSpeciesData]);
 
   // For extracting the information from the fetched 
   useEffect(() => {
-    if (pokemonData) {
-      extractGeneralInformation(pokemonData);
+    if (pokemon) {
+      extractGeneralInformation(pokemon);
     }
     if (speciesData) {
       extractSpeciesInformation(speciesData)
     }
-  }, [pokemonData, speciesData]);
+  }, [pokemon, speciesData]);
 
   // Render a simple loading page if both the dat hasn't been fetched.
-  if (!pokemonData || !speciesData) {
+  if (!pokemon || !speciesData) {
     return (
       <>
         Loading...
@@ -122,13 +112,13 @@ const PokemonDetail = () => {
           <ImageTile imageSources={imageSource} />
         </div>
         <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
-          <PokeDexData pokemonData={{...pokemonData, ...speciesData}} />
+          <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
         </div>
         <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
-          <TrainingInfo data={{...pokemonData, ...speciesData}} />
+          <TrainingInfo data={{...pokemon, ...speciesData}} />
         </div>
         <div className='w-full md:w-2/3 sm:w-full py-4'>
-          <BaseStat data={{...pokemonData, ...speciesData}} />
+          <BaseStat data={{...pokemon, ...speciesData}} />
         </div>
       </div>
       <div>
