@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import axios from 'axios'
+import { useQuery } from 'react-query'
 
 function formatFields(data) {
   const newData = data.endsWith('area') ? data.replace('area', '') : data
@@ -79,18 +80,19 @@ const Locations = ({ id, name }) => {
   const [locationData, setLocationData] = useState([]);
   const [finalData, setFinalData] = useState([])
 
+  const fetchLocationData = async () => {
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`);
+    const data = await response.data;
+    return data
+  };
+
+  // Fetch the data using useQuery
+  const { data: locations } = useQuery('location data', fetchLocationData)
+
   useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`);
-        const data = await response.data;
-        setLocationData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchLocationData();
-  }, [id]);
+    if (locations)
+      setLocationData(locations);
+  }, [locations]);
 
   useEffect(() => {
     if (locationData) {

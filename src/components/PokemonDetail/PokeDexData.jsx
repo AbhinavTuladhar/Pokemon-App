@@ -1,4 +1,5 @@
-import { React, useMemo, useEffect, useCallback, useState } from 'react'
+import { React, useMemo, useEffect, useState } from 'react'
+import  { useQuery } from 'react-query'
 import TypeCard from '../TypeCard'
 import axios from 'axios'
 
@@ -38,21 +39,25 @@ const PokeDexData = ({ pokemonData }) => {
   }, [pokedex_numbers, excludedRegions])
 
   // This is for fetching the names of the games.
-  const fetchGameData = useCallback(async () => {
-    try {
-      const responses = await Promise.all(versionURLs?.map(
-        url => axios.get(url)
-      ))
-      const newData = responses.map(response => response.data)
-      setGameData(newData)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [versionURLs])
+  const fetchGameData = async () => {
+    const responses = await Promise.all(versionURLs?.map(
+      url => axios.get(url)
+    ))
+    const newData = responses.map(response => response.data)
+    return newData
+  }
 
+  // Using react query to fetch the data
+  const { data: dexData } = useQuery('pokedex data', fetchGameData, { staleTime: Infinity, cacheTime: Infinity })
+
+  // Now set the data.
   useEffect(() => {
-    fetchGameData()
-  }, [fetchGameData])
+    if (dexData) {
+      setGameData(dexData)
+      console.log('THis is for the regional numbers')
+      console.log(dexData)
+    }
+  }, [dexData])
 
   // Convert the types of the Pokemon into its corresponding component.
   const typeDiv = typeNames.map(typeName => <TypeCard typeName={typeName} />)
