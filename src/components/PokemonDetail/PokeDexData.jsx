@@ -40,15 +40,11 @@ const PokeDexData = ({ pokemonData }) => {
 
   // This is for fetching the names of the games.
   const fetchGameData = async () => {
-    try {
-      const responses = await Promise.all(versionURLs?.map(
-        url => axios.get(url)
-      ))
-      const newData = responses.map(response => response.data)
-      return newData
-    } catch (error) {
-      console.log(error)
-    }
+    const responses = await Promise.all(versionURLs?.map(
+      url => axios.get(url)
+    ))
+    const newData = responses.map(response => response.data)
+    return newData
   }
 
   // Using react query to fetch the data
@@ -56,8 +52,11 @@ const PokeDexData = ({ pokemonData }) => {
 
   // Now set the data.
   useEffect(() => {
-    if (dexData)
+    if (dexData) {
       setGameData(dexData)
+      console.log('THis is for the regional numbers')
+      console.log(dexData)
+    }
   }, [dexData])
 
   // Convert the types of the Pokemon into its corresponding component.
