@@ -8,6 +8,7 @@ import WelcomePage from './components/WelcomePage'
 import PokemonDetail from './components/PokemonDetail/PokemonDetail'
 import TypeDetail from './components/OtherDetails/TypeDetail'
 import ScrollToTop from './components/ScrollToTop'
+import TypeListing from './components/TypeListing'
 
 const App = () => {
   const queryClient = new QueryClient()
@@ -32,9 +33,10 @@ const App = () => {
           <ScrollToTop />
           <Routes>
             <Route path='' element={<WelcomePage />} />
-            {generationRoutes}
             <Route path='/pokemon/:id' element={<PokemonDetail />} />
             <Route path='/types/:type' element={<TypeDetail />} />
+            <Route path='/types' element={<TypeListing />} />
+            {generationRoutes}
           </Routes>
         </div>
       </QueryClientProvider>
