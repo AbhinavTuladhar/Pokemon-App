@@ -14,6 +14,7 @@ const PokemonDetail = () => {
   const [pokemon, setPokemon] = useState(null);       // the data that is obtained from the entry of the 'mon.
   const [imageSource, setImageSource] = useState('')  // for storing the normal and shiny sprites.
   const [speciesData, setSpeciesData] = useState({})  // defines the species information of the 'mon.
+  const [speciesURL, setSpeciesURL] = useState('')
   const [dexEntry, setDexEntry] = useState({})
 
   const fetchData = useCallback(async () => {
@@ -23,19 +24,22 @@ const PokemonDetail = () => {
   }, [id])
 
   const fetchSpeciesData = useCallback(async () => {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    // const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    const response = await axios.get(speciesURL)
     const responseData = await response.data
     setSpeciesData(responseData)
-  }, [id])
+  }, [speciesURL])
 
   // For extracting information from the 'pokemon' object.
   const extractGeneralInformation = (data) => {
     const { 
       id,
       name,
-      sprites: { other : { 'official-artwork' : { front_default, front_shiny }}} 
+      sprites: { other : { 'official-artwork' : { front_default, front_shiny }}} ,
+      species: { url: speciesLink}
     } = data;
     setImageSource({defaultSprite: front_default, shinySprite: front_shiny})
+    setSpeciesURL(speciesLink)
     setIdInfo(() => {
       const properName = name.charAt(0).toUpperCase() + name.slice(1);
       return {
