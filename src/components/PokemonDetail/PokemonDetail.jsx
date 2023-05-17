@@ -7,6 +7,7 @@ import PokeDexData from './PokeDexData';
 import TrainingInfo from './TrainingInfo';
 import BaseStat from './BaseStat';
 import Locations from './Locations';
+import formatName from '../../utils/NameFormatting';
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -41,7 +42,7 @@ const PokemonDetail = () => {
     setImageSource({defaultSprite: front_default, shinySprite: front_shiny})
     setSpeciesURL(speciesLink)
     setIdInfo(() => {
-      const properName = name.charAt(0).toUpperCase() + name.slice(1);
+      const properName = formatName(name)
       return {
         id: id,
         name: properName

@@ -1,6 +1,7 @@
 import { React } from 'react';
 import { NavLink } from 'react-router-dom'
 import TypeCard from './TypeCard';
+import formatName from '../utils/NameFormatting';
 
 const PokeCard = ({ data }) => {
   const {
@@ -11,7 +12,7 @@ const PokeCard = ({ data }) => {
   } = data
 
   // For capitalising the first letter.
-  const properName = name.charAt(0).toUpperCase() + name.slice(1);
+  const properName = formatName(name)
 
   // Get a list of all the types of the Pokemon.
   let typeList = types.map(type => {
