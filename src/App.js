@@ -19,6 +19,7 @@ const App = () => {
     { path: '/pokemon/generation-4', idRange: [387, 493]},
     { path: '/pokemon/generation-5', idRange: [494, 649]},
     { path: '/pokemon/generation-6', idRange: [650, 721]},
+    { path: '/pokemon/forms', idRange: [10001, 10271]},
   ]
   const generationRoutes = generationRouteData.map(gen => {
     return (
