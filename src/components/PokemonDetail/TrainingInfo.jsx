@@ -54,7 +54,7 @@ const TrainingInfo = ({ data }) => {
   })
 
   return (
-    <div className='border-b-[1px]'>
+    <div className='border-b-[1px] w-full'>
       <div className='font-bold text-3xl mb-10'> Training data </div>
         {tableDiv}
     </div>

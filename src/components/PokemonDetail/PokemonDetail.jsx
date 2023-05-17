@@ -7,6 +7,7 @@ import PokeDexData from './PokeDexData';
 import TrainingInfo from './TrainingInfo';
 import BaseStat from './BaseStat';
 import Locations from './Locations';
+import BreedingInfo from './BreedingInfo';
 import formatName from '../../utils/NameFormatting';
 
 const PokemonDetail = () => {
@@ -60,7 +61,10 @@ const PokemonDetail = () => {
       base_happiness, 
       capture_rate, 
       growth_rate : {name: growthRateType},
-      pokedex_numbers
+      pokedex_numbers,
+      gender_rate,
+      egg_groups,
+      hatch_counter
     } = data
     // Find only the English genus name of the 'mon.
     const englishGenus = genera.find(entry => entry.language.name === 'en')
@@ -71,7 +75,10 @@ const PokemonDetail = () => {
         base_happiness: base_happiness,
         capture_rate: capture_rate,
         growth_rate: growthRateType,
-        pokedex_numbers: pokedex_numbers
+        pokedex_numbers: pokedex_numbers,
+        gender_rate: gender_rate,
+        egg_groups: egg_groups,
+        hatch_counter: hatch_counter
       }
     })
   }
@@ -119,8 +126,13 @@ const PokemonDetail = () => {
         <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
           <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
         </div>
-        <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
-          <TrainingInfo data={{...pokemon, ...speciesData}} />
+        <div className='flex flex-col flex-grow w-full md:w-1/4 sm:w-full py-4 gap-y-10'>
+          <div className='flex w-full'>
+            <TrainingInfo data={{...pokemon, ...speciesData}} />
+          </div>
+          <div className='flex w-full'>
+            <BreedingInfo data={{...pokemon, ...speciesData}} />
+          </div>
         </div>
         <div className='w-full md:w-2/3 sm:w-full py-4'>
           <BaseStat data={{...pokemon, ...speciesData}} />
