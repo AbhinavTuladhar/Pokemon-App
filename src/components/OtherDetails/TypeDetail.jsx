@@ -49,7 +49,6 @@ const TypeDetail = ( ) => {
     }
     if (Object.keys(typeData).length !== 0) {
       const managedInformation = extractInformation(typeData)
-      console.log(managedInformation)
       setExtractedInformation(managedInformation)
     }
   }, [typeData])
