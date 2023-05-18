@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import axios from 'axios'
+import useFetch from '../../utils/useFetch'
 
 function formatFields(data) {
   const newData = data.endsWith('area') ? data.replace('area', '') : data
@@ -79,18 +79,14 @@ const Locations = ({ id, name }) => {
   const [locationData, setLocationData] = useState([]);
   const [finalData, setFinalData] = useState([])
 
+  // fetch the data using custom hook
+  const { data: fetchedData } = useFetch(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`)
+
   useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`);
-        const data = await response.data;
-        setLocationData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchLocationData();
-  }, [id]);
+    if (fetchedData) {
+      setLocationData(fetchedData)
+    }
+  }, [fetchedData]);
 
   useEffect(() => {
     if (locationData) {
