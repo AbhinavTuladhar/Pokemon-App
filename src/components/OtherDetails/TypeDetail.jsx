@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from 'react'
-import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { AiFillCheckCircle, AiFillCloseCircle }  from 'react-icons/ai'
 import TypeCard from '../TypeCard'
+import useFetch from '../../utils/useFetch'
 
 const TypeDetail = ( ) => {
   const { type } = useParams()
@@ -10,19 +10,13 @@ const TypeDetail = ( ) => {
   const [typeData, setTypeData] = useState({})
   const [extractedInformation, setExtractedInformation] = useState({})
 
-  // For fetching data about the type.
+  const { data: fetchedData, loading: dataLoading } = useFetch(typeURL)
+  
   useEffect(() => {
-    const fetchTypeData = async () => {
-      try {
-        const response = await axios.get(typeURL);
-        const data = await response.data;
-        setTypeData(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchTypeData();
-  }, [typeURL]);
+    if (fetchedData) {
+      setTypeData(fetchedData);
+    }
+  }, [fetchedData])
 
   useEffect(() => {
     const extractInformation = data => {
@@ -158,7 +152,7 @@ const TypeDetail = ( ) => {
     </div>
   )
 
-  if (Object.keys(typeData).length === 0) {
+  if (dataLoading || Object.keys(typeData).length === 0) {
     return <div className='flex justify-center items-center text-4xl h-screen'> Loading... </div>
   }
 
