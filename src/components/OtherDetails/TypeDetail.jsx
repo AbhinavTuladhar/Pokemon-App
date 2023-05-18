@@ -158,6 +158,10 @@ const TypeDetail = ( ) => {
     </div>
   )
 
+  if (Object.keys(typeData).length === 0) {
+    return <div className='flex justify-center items-center text-4xl h-screen'> Loading... </div>
+  }
+
   return (
     <div className='mx-2'>
       { titleDiv }
