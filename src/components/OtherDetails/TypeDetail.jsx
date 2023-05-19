@@ -10,16 +10,8 @@ const TypeDetail = ( ) => {
   const [typeData, setTypeData] = useState({})
   const [extractedInformation, setExtractedInformation] = useState({})
 
-  // Now format the data for rendering purposes.
-  // Capitalise the first name
-  const formattedType = type.charAt(0).toUpperCase() + type.slice(1)
-
-  // For setting the document title
-  useEffect(() => {
-    document.title = `${formattedType} type`
-  }, [type])
-
-  // For fetching data about the type.
+  const { data: fetchedData, loading: dataLoading } = useFetch(typeURL)
+  
   useEffect(() => {
     if (fetchedData) {
       setTypeData(fetchedData);
@@ -60,6 +52,10 @@ const TypeDetail = ( ) => {
       setExtractedInformation(managedInformation)
     }
   }, [typeData])
+
+  // Now format the data for rendering purposes.
+  // Capitalise the first name
+  const formattedType = type.charAt(0).toUpperCase() + type.slice(1)
 
   // Prepare the type effectiveness list
   const doubleDamageFromList = extractedInformation?.doubleDamageFrom?.map(type => <TypeCard typeName={type} />)
