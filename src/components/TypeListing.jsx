@@ -1,4 +1,4 @@
-import { React, useMemo } from 'react'
+import { React, useMemo, useEffect } from 'react'
 import TypeCard from './TypeCard'
 
 const TypeListing = () => {
@@ -9,6 +9,10 @@ const TypeListing = () => {
   }, [])
 
   const typeCardList = typeList.map(type => <TypeCard typeName={type } />)
+
+  useEffect(() => {
+    document.title = 'Pokemon Types'
+  }, [])
 
   return (
     <div className='w-7/12 mx-auto p-4'>
