@@ -11,6 +11,13 @@ const TypeDetail = ( ) => {
   const [extractedInformation, setExtractedInformation] = useState({})
 
   const { data: fetchedData, loading: dataLoading } = useFetch(typeURL)
+
+  // Capitalise the first name
+  const formattedType = type.charAt(0).toUpperCase() + type.slice(1)
+
+  useEffect(() => {
+    document.title = `${formattedType} type Pokemon`
+  }, [])
   
   useEffect(() => {
     if (fetchedData) {
@@ -54,9 +61,6 @@ const TypeDetail = ( ) => {
   }, [typeData])
 
   // Now format the data for rendering purposes.
-  // Capitalise the first name
-  const formattedType = type.charAt(0).toUpperCase() + type.slice(1)
-
   // Prepare the type effectiveness list
   const doubleDamageFromList = extractedInformation?.doubleDamageFrom?.map(type => <TypeCard typeName={type} />)
   const doubleDamageToList = extractedInformation?.doubleDamageTo?.map(type => <TypeCard typeName={type} />)
