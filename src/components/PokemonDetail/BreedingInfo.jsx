@@ -14,9 +14,6 @@ const generateGenderInfo = genderRate => {
 const BreedingInfo = ({ data }) => {
   if (!data) return
 
-  console.log('From breeding')
-  console.log(data)
-
   const { egg_groups, gender_rate, hatch_counter } = data
 
   // List the egg groups

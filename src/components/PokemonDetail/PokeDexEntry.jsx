@@ -36,8 +36,6 @@ const PokeDexEntry = ( { data }) => {
   })
 
   const englishInfoByDescription = groupByDescription(englishInfo)
-  console.log('From dex entry')
-  console.log(englishInfoByDescription)
 
   // Now making a list for each version
   const finalEntry = englishInfoByDescription.map(entry => {

@@ -26,7 +26,6 @@ const PokemonDetail = () => {
   }, [id])
 
   const fetchSpeciesData = useCallback(async () => {
-    // const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
     const response = await axios.get(speciesURL)
     const responseData = await response.data
     setSpeciesData(responseData)
