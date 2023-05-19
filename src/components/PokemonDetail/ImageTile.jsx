@@ -1,4 +1,4 @@
-import { React, useState} from 'react'
+import { React, useState } from 'react'
 
 const ImageTile = ({ imageSources }) => {
   const [selectedImage, setSelectedImage] = useState('normal')

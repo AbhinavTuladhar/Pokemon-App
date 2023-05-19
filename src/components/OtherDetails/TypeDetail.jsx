@@ -17,7 +17,7 @@ const TypeDetail = ( ) => {
 
   useEffect(() => {
     document.title = `${formattedType} type Pokemon`
-  }, [])
+  }, [formattedType])
   
   useEffect(() => {
     if (fetchedData) {
