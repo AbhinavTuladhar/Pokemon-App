@@ -1,6 +1,7 @@
 import { React, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { motion } from 'framer-motion'
 import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile';
 import PokeDexData from './PokeDexData';
@@ -106,15 +107,17 @@ const PokemonDetail = () => {
 
   // Render a simple loading page if both the dat hasn't been fetched.
   if (!pokemon || !speciesData) {
-    return (
-      <>
-        Loading...
-      </>
-    );
+    return
   }
 
   return (
-    <div className='flex flex-col justify-center gap-y-10 mx-10'>
+    <motion.div 
+      className='flex flex-col justify-center gap-y-10 mx-10'
+      initial={{ y: '100%', scale: 0.8, opacity: 0 }}
+      animate={{ y: 0, scale: 1, opacity: 1 }}
+      exit={{ y: '100%', scale: 0.8, opacity: 0 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+    >
       <div className="text-4xl font-bold flex justify-center">
         {idInfo.name}
       </div>
@@ -143,7 +146,7 @@ const PokemonDetail = () => {
       <div>
         <Locations id={idInfo.id} name={idInfo.name} />
       </div>
-    </div>
+    </motion.div>
   )
 };
 

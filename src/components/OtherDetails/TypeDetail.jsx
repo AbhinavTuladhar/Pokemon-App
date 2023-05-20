@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { AiFillCheckCircle, AiFillCloseCircle }  from 'react-icons/ai'
+import { motion } from 'framer-motion'
 import TypeCard from '../TypeCard'
 import useFetch from '../../utils/useFetch'
 
@@ -156,11 +157,23 @@ const TypeDetail = ( ) => {
   )
 
   if (dataLoading || Object.keys(typeData).length === 0) {
-    return <div className='flex justify-center items-center text-4xl h-screen'> Loading... </div>
+    return <div className='flex justify-center items-center text-4xl h-screen'>  </div>
   }
 
   return (
-    <div className='mx-2'>
+    <motion.div 
+      className='mx-2'
+      // initial={{ opacity: 0, scale: 0.95 }}
+      // animate={{ opacity: 1, scale: 1 }}
+      // exit={{ opacity: 0, scale: 0.95 }}
+      initial={{ x: '-100%', scale: 0.25, opacity: 0 }}
+      animate={{ x: 0, scale: 1, opacity: 1 }}
+      exit={{ x: '100%', scale: 0.25, opacity: 0 }}
+      // initial={{ x: '-100%', opacity: 0 }}
+      // animate={{ x: 0, opacity: 1 }}
+      // exit={{ x: '100%', opacity: 0 }}
+      transition={{ duration: 0.5, ease: 'easeIn' }}
+    >
       { titleDiv }
       <div className='gap-y-4'>
         {offensiveDiv}
@@ -168,7 +181,7 @@ const TypeDetail = ( ) => {
       <div className='gap-y-4 my-4'>
         {defensiveDiv}
       </div>
-    </div>
+    </motion.div>
   )
 }
 

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 import { useLocation } from 'react-router-dom'
 import PokeCard from './PokeCard'
+import { motion } from 'framer-motion'
 
 const MainPage = ({ idRange }) => {
   // This is for setting the title of the page.
@@ -44,9 +45,18 @@ const MainPage = ({ idRange }) => {
     </div>)
 
   return (
-    <div className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'>
+    <motion.div 
+      className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'
+      // initial={{ opacity: 0 }}
+      // animate={{ opacity: 1 }}
+      // exit={{ opacity: 0 }}
+      initial={{ x: '-100%', opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: '100%', opacity: 0 }}
+      transition={{ ease: 'easeInOut'}}
+    >
       {isLoading ? loadingText : pokemonBoxes}
-    </div>
+    </motion.div>
   )
 }
 
