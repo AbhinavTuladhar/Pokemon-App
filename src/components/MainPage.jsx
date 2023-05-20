@@ -47,13 +47,10 @@ const MainPage = ({ idRange }) => {
   return (
     <motion.div 
       className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'
-      // initial={{ opacity: 0 }}
-      // animate={{ opacity: 1 }}
-      // exit={{ opacity: 0 }}
       initial={{ x: '-100%', opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: '100%', opacity: 0 }}
-      transition={{ ease: 'easeInOut'}}
+      animate={{ x: 0, opacity: 1, transitionDuration: '0.3s' }}
+      exit={{ x: '100%', opacity: 0, transitionDuration: '0.5s' }}
+      transition={{ ease: 'easeIn'}}
     >
       {isLoading ? loadingText : pokemonBoxes}
     </motion.div>
