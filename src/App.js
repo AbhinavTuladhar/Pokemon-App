@@ -12,7 +12,7 @@ const App = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <NavBar />
-        <div className='pt-4 text-white bg-gradient-to-br from-slate-600 to-slate-900 min-h-screen max-w-screen-2xl min-w-min pb-4'>
+        <div className='pt-4 text-white bg-gray-800 min-h-screen max-w-screen-2xl min-w-min pb-4'>
           <ScrollToTop />
           <AnimatedRoutes />
         </div>

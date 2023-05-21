@@ -166,9 +166,9 @@ const TypeDetail = ( ) => {
       // initial={{ opacity: 0, scale: 0.95 }}
       // animate={{ opacity: 1, scale: 1 }}
       // exit={{ opacity: 0, scale: 0.95 }}
-      initial={{ x: '-100%', scale: 0.25, opacity: 0 }}
-      animate={{ x: 0, scale: 1, opacity: 1 }}
-      exit={{ x: '100%', scale: 0.25, opacity: 0 }}
+      initial={{ x: '-100%', opacity: 0 }}
+      animate={{ x: 0, scale: 1, opacity: 1, transitionDuration: '0.25s' }}
+      exit={{ x: '100%', opacity: 0, transitionDuration: '0.25s' }}
       // initial={{ x: '-100%', opacity: 0 }}
       // animate={{ x: 0, opacity: 1 }}
       // exit={{ x: '100%', opacity: 0 }}
