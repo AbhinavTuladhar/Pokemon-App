@@ -9,6 +9,7 @@ import TrainingInfo from './TrainingInfo';
 import BaseStat from './BaseStat';
 import Locations from './Locations';
 import BreedingInfo from './BreedingInfo';
+import MovesLearned from './MovesLearned';
 import formatName from '../../utils/NameFormatting';
 
 const PokemonDetail = () => {
@@ -145,6 +146,9 @@ const PokemonDetail = () => {
       </div>
       <div>
         <Locations id={idInfo.id} name={idInfo.name} />
+      </div>
+      <div>
+        <MovesLearned data={{ ...pokemon }} />
       </div>
     </motion.div>
   )
