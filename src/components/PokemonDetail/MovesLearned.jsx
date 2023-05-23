@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react'
+import formatName from '../../utils/NameFormatting'
 
 const separateMoves = ({ data, learnMethod }) => {
   const movesLearnt = data.map(move => {
@@ -7,7 +8,8 @@ const separateMoves = ({ data, learnMethod }) => {
       version.move_learn_method.name === learnMethod
     )
     return {
-      ...move,
+      name: formatName(move.move.name),
+      moveURL: move.move.url,
       version_group_details: filteredMoves
     }
   })
@@ -21,7 +23,7 @@ const MovesLearned = ({ data }) => {
   const [moveDetails, setMoveDetails] = useState({
     level: [],
     machine: [],
-    egg: [],
+    tutor: []
   })
 
   useEffect(() => {
@@ -49,10 +51,25 @@ const MovesLearned = ({ data }) => {
     const levelUpMoves = separateMoves({data: moveData, learnMethod: 'level-up'})
     const machineMoves = separateMoves({data: moveData, learnMethod: 'machine'})
     const eggMoves = separateMoves({data: moveData, learnMethod: 'egg'})
+    const tutorMoves = separateMoves({data: moveData, learnMethod: 'tutor'})
+
+    // Now sort the moves by some conditions.
+    // sort level up moves by the level learnt.
+    const sortedLevelMoves = levelUpMoves.sort((curr, next) => {
+      const levelLearntCurrent = curr.version_group_details[0].level_learned_at
+      const levelLearntNext = next.version_group_details[0].level_learned_at
+      if (levelLearntCurrent < levelLearntNext) 
+        return -1
+      else if (levelLearntCurrent > levelLearntNext)
+        return 1
+      else
+        return (curr.name < next.name ? -1 : 1)
+    })
     setMoveDetails({
-      level: levelUpMoves,
+      level: sortedLevelMoves,
       egg: eggMoves,
-      machine: machineMoves
+      machine: machineMoves,
+      tutor: tutorMoves
     })
   }, [moveData])
 
@@ -60,9 +77,16 @@ const MovesLearned = ({ data }) => {
     if (moveDetails) console.log(moveDetails)
   }, [moveDetails])
 
+  if (!moveDetails) return
+
+  const levelUpDiv = moveDetails?.level?.map(move => {
+    return <div> {move.name} </div>
+  })
 
   return (
-    <pre> {JSON.stringify(moveData, null, 2)} </pre>
+    <div className='test'>
+      {levelUpDiv}
+    </div>
   )
 }
 
