@@ -2,15 +2,15 @@ import { React, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { motion } from 'framer-motion'
-import PokeDexEntry from './PokeDexEntry';
-import ImageTile from './ImageTile';
-import PokeDexData from './PokeDexData';
-import TrainingInfo from './TrainingInfo';
-import BaseStat from './BaseStat';
-import Locations from './Locations';
-import BreedingInfo from './BreedingInfo';
-import MovesLearned from './MovesLearned';
-import formatName from '../../utils/NameFormatting';
+import PokeDexEntry from '../components/PokemonDetail/PokeDexEntry'
+import ImageTile from '../components/PokemonDetail/ImageTile'
+import PokeDexData from '../components/PokemonDetail/PokeDexData'
+import TrainingInfo from '../components/PokemonDetail/TrainingInfo'
+import BaseStat from '../components/PokemonDetail/BaseStat'
+import Locations from '../components/PokemonDetail/Locations'
+import BreedingInfo from '../components/PokemonDetail/BreedingInfo'
+import MovesLearned from '../components/PokemonDetail/MovesLearned'
+import formatName from '../utils/NameFormatting';
 
 const PokemonDetail = () => {
   const { id } = useParams();
