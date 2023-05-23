@@ -1,5 +1,6 @@
 // This is for extracting the information of the moves
 const extractMoveInformation = move => {
+  if (!move) return
   const { 
     accuracy,
     damage_class: { name: damageClass},

@@ -148,7 +148,7 @@ const PokemonDetail = () => {
         <Locations id={idInfo.id} name={idInfo.name} />
       </div>
       <div>
-        <MovesLearned data={{ ...pokemon }} />
+        <MovesLearned data={{ ...pokemon }} id={idInfo.id} />
       </div>
     </motion.div>
   )

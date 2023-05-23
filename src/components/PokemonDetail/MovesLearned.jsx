@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 import formatName from '../../utils/NameFormatting'
 import extractMoveInformation from '../../utils/extractMoveInfo'
+import TypeCard from '../TypeCard'
 
 
 const separateMoves = ({ data, learnMethod }) => {
@@ -21,7 +22,7 @@ const separateMoves = ({ data, learnMethod }) => {
   return finalFilteredMoves
 }
 
-const MovesLearned = ({ data }) => {
+const MovesLearned = ({ data, id }) => {
   const { moves } = data;
   const [moveData, setMoveData] = useState([])
   const [moveInfo, setMoveInfo] = useState({
@@ -29,6 +30,7 @@ const MovesLearned = ({ data }) => {
     machine: [],
     tutor: []
   })
+  const [finalMoveDetails, setFinalMoveDetails] = useState([])
 
   useEffect(() => {
     // Consider that the latest gen is ORAS
@@ -77,10 +79,6 @@ const MovesLearned = ({ data }) => {
     })
   }, [moveData])
 
-  // useEffect(() => {
-  //   if (moveInfo) console.log(moveInfo)
-  // }, [moveInfo])
-
   // Now query the moveURLs to obtain their details
   const fetchData = async (url) => {
     const response = await axios.get(url)
@@ -88,32 +86,62 @@ const MovesLearned = ({ data }) => {
   }
 
   const { data: moveDetails} = useQuery(
-    'moveDetails', 
+    ['moveDetails', id], 
     () => {
       const levelURLs = moveInfo.level.map(move => move.moveURL)
       return Promise.all(levelURLs.map(fetchData))
     },
-    { enabled: true }
   )
 
+  // For extracting information from the move details
   useEffect(() => {
-    if (moveDetails.length > 0) {
-      console.log('querying the urls')
-      console.log(moveDetails)
+    if (moveDetails?.length > 0) {
       const extracted = moveDetails.map(move => extractMoveInformation(move))
-      console.log(extracted)
+      setFinalMoveDetails(() => {
+        const firstRow = {
+          moveName: 'Name',
+          moveType: 'Type',
+          damageClass: 'Class',
+          power: "Power",
+          accuracy: "Accuracy",
+        }
+        return [firstRow, ...extracted]
+      })
     }
   }, [moveDetails])
 
-  if (!moveInfo) return
+  if (finalMoveDetails?.length === 0) return
 
-  const levelUpDiv = moveInfo?.level?.map(move => {
-    return <div> {move.name} </div>
+  const levelUpRow = finalMoveDetails?.map((move, index) => {
+    const stringDecoration = index === 0 ? 'font-bold bg-[#1a1a1a]' : ''
+    return (
+      <div className={`${stringDecoration} flex flex-row gap-x-4 h-12 border border-slate-400 items-center px-4`}>
+        <div className='w-4/12'> 
+          {formatName(move.moveName)} 
+        </div>
+        <div className='w-2/12'>
+          {
+            index === 0 ? 
+            'Type' :
+            <TypeCard typeName={move.moveType} />
+          }
+        </div>
+        <div className='w-1/12'> 
+          {move.damageClass} 
+        </div>
+        <div className='w-1/12'> 
+          {move.power} 
+        </div>
+        <div className='w-1/12'> 
+          {move.accuracy} 
+        </div>
+      </div>
+    )
   })
 
   return (
     <div className='test'>
-      {levelUpDiv}
+      {levelUpRow}
     </div>
   )
 }
