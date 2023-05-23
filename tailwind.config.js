@@ -8,6 +8,9 @@ module.exports = {
       screens: {
         'smmd': '1070px',
       },
+      width: {
+        '475/1000': '47.5%',
+      },
     },
   },
   plugins: [],

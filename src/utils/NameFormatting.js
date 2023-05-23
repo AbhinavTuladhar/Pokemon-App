@@ -15,7 +15,7 @@ const formatName = name => {
     }
     return properWordList.reverse().join(' ')
   }
-  return properWordList.join('-')
+  return properWordList.join(' ')
 }
 
 export default formatName

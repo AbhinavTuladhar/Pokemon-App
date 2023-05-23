@@ -28,6 +28,7 @@ const extractMoveInformation = move => {
     entry.language.name === 'en' && entry.version_group.name === 'omega-ruby-alpha-sapphire'
   )
   const realAccuracy = accuracy === null ? '-' : accuracy
+  const realPower = power === null ? '-' : power
   return {
     accuracy: realAccuracy,
     damageClass,
@@ -40,7 +41,7 @@ const extractMoveInformation = move => {
     flinchChance,
     statChance,
     moveName,
-    power,
+    power: realPower,
     PP,
     priority,
     targetType,

@@ -2,12 +2,19 @@ import { React, useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import formatName from '../../utils/NameFormatting'
-import extractMoveInformation from '../../utils/extractMoveInfo'
 import TypeCard from '../TypeCard'
+import extractMoveInformation from '../../utils/extractMoveInfo'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
 import moveStatus from '../../images/move-status.png'
 
+const firstRow = {
+  moveName: 'Name',
+  moveType: 'Type',
+  damageClass: 'Class',
+  power: "Power",
+  accuracy: "Acc.",
+}
 
 const separateMoves = ({ data, learnMethod }) => {
   const movesLearnt = data.map(move => {
@@ -16,7 +23,7 @@ const separateMoves = ({ data, learnMethod }) => {
       version.move_learn_method.name === learnMethod
     )
     return {
-      name: formatName(move.move.name),
+      name: move.move.name,
       moveURL: move.move.url,
       version_group_details: filteredMoves
     }
@@ -25,8 +32,24 @@ const separateMoves = ({ data, learnMethod }) => {
   return finalFilteredMoves
 }
 
+const returnMoveImage = damageClass => {
+  if (damageClass === 'physical')
+    return movePhysical
+  else if (damageClass === 'special')
+    return moveSpecial
+  else if (damageClass === 'status')
+    return moveStatus
+  else
+    return ''
+}
+
 const MovesLearned = ({ data, id }) => {
   const { moves } = data;
+  const [moveURLs, setMoveURLs] = useState({
+    level: [],
+    machine: [],
+    tutor: []
+  })
   const [moveData, setMoveData] = useState([])
   const [moveInfo, setMoveInfo] = useState({
     level: [],
@@ -74,6 +97,12 @@ const MovesLearned = ({ data, id }) => {
       else
         return (curr.name < next.name ? -1 : 1)
     })
+    setMoveURLs({
+      level: sortedLevelMoves?.map(move => move.moveURL),
+      machine: machineMoves?.map(move => move.moveURL),
+      egg: eggMoves?.map(move => move.moveURL),
+      tutor: tutorMoves?.map(move => move.moveURL),
+    })
     setMoveInfo({
       level: sortedLevelMoves,
       egg: eggMoves,
@@ -82,83 +111,115 @@ const MovesLearned = ({ data, id }) => {
     })
   }, [moveData])
 
+  useEffect(() => {
+    if (moveURLs) {
+      console.log('printing move urls')
+      console.log(moveURLs)
+    }
+  }, [moveURLs])
+
   // Now query the moveURLs to obtain their details
-  const fetchData = async (url) => {
-    const response = await axios.get(url)
-    return response.data
+  const fetchData = async (urls) => {
+    const responses = await Promise.all(urls.map(url => axios.get(url)));
+    return responses.map(response => response.data);
   }
 
-  const { data: moveDetails} = useQuery(
-    ['moveDetails', id], 
-    () => {
-      const levelURLs = moveInfo.level.map(move => move.moveURL)
-      return Promise.all(levelURLs.map(fetchData))
-    },
+  const { data: levelMoveDetails } = useQuery(
+    ['levelDetails', moveURLs.level], 
+    () => fetchData(moveURLs.level),
+    { enabled: true }
+  )
+
+  const { data: tutorMoveDetails } = useQuery(
+    ['tutorDetails', moveURLs.tutor], 
+    () => fetchData(moveURLs.tutor),
+    { enabled: true }
+  )
+
+  const { data: machineMoveDetails } = useQuery(
+    ['machineDetails', moveURLs.machine], 
+    () => fetchData(moveURLs.machine),
+    { enabled: true }
   )
 
   // For extracting information from the move details
   useEffect(() => {
-    if (moveDetails?.length > 0) {
-      const extracted = moveDetails.map(move => extractMoveInformation(move))
-      setFinalMoveDetails(() => {
-        const firstRow = {
-          moveName: 'Name',
-          moveType: 'Type',
-          damageClass: 'Class',
-          power: "Power",
-          accuracy: "Accuracy",
-        }
-        return [firstRow, ...extracted]
-      })
+    let levelExtracted = []
+    let tutorExtracted = []
+    let machineExtracted = []
+    if (levelMoveDetails?.length > 0)
+      levelExtracted = levelMoveDetails?.map(move => extractMoveInformation(move))
+    if (tutorMoveDetails?.length > 0)
+      tutorExtracted = tutorMoveDetails?.map(move => extractMoveInformation(move))
+    if (machineMoveDetails?.length > 0)
+      machineExtracted = machineMoveDetails?.map(move => extractMoveInformation(move))
+    setFinalMoveDetails(() => {
+      return {
+        level: [firstRow, ...levelExtracted],
+        tutor: [firstRow, ...tutorExtracted],
+        machine: [firstRow, ...machineExtracted],
+      }
+    })
+  }, [levelMoveDetails, tutorMoveDetails, machineMoveDetails])
+  
+  useEffect(() => {
+    if (finalMoveDetails) {
+      console.log('printing final move details')
+      console.log(finalMoveDetails)
     }
-  }, [moveDetails])
+  }, [finalMoveDetails])
 
-  if (finalMoveDetails?.length === 0) return
+  // if (finalMoveDetails?.length === 0) return
 
-  const levelUpRow = finalMoveDetails?.map((move, index) => {
-    const stringDecoration = index === 0 ? 'font-bold bg-[#1a1a1a]' : ''
-    let moveClassImage = ''
-    if (move.damageClass === 'physical')
-      moveClassImage = movePhysical
-    else if (move.damageClass === 'special')
-      moveClassImage = moveSpecial
-    else if (move.damageClass === 'status')
-      moveClassImage = moveStatus
+  // Return a tabular form of the levelup, machine, egg and tutor moves data.
+  const returnMoveTable = data => {
+    return data?.map((move, index) => {
+      const stringDecoration = index === 0 ? 'font-bold bg-[#1a1a1a]' : ''
+      const moveClassImage = returnMoveImage(move.damageClass)
+  
+      return (
+        <div className={`${stringDecoration} flex flex-row gap-x-4 h-12 border-t-[1px] border-slate-400 items-center px-4`}>
+          <div className='w-3/12'> 
+            {formatName(move.moveName)} 
+          </div>
+          <div className='w-2/12'>
+            {
+              index === 0 ? 
+              'Type' :
+              <TypeCard typeName={move.moveType} />
+            }
+          </div>
+          <div className='w-1/12'> 
+            {
+              moveClassImage === '' 
+              ?
+              move.damageClass
+              :
+              <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move.damageClass} />
+            }
+          </div>
+          <div className='w-1/12 justify-end flex'> 
+            {move.power} 
+          </div>
+          <div className='w-1/12 justify-end flex'> 
+            {move.accuracy} 
+          </div>
+        </div>
+      )
+    })
+  }
 
-    return (
-      <div className={`${stringDecoration} flex flex-row gap-x-4 h-12 border-t-[1px] border-slate-400 items-center px-4`}>
-        <div className='w-4/12'> 
-          {formatName(move.moveName)} 
-        </div>
-        <div className='w-2/12'>
-          {
-            index === 0 ? 
-            'Type' :
-            <TypeCard typeName={move.moveType} />
-          }
-        </div>
-        <div className='w-1/12'> 
-          {
-            moveClassImage === '' 
-            ?
-            move.damageClass
-            :
-            <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move.damageClass} />
-          }
-        </div>
-        <div className='w-1/12'> 
-          {move.power} 
-        </div>
-        <div className='w-1/12'> 
-          {move.accuracy} 
-        </div>
-      </div>
-    )
-  })
+  const levelUpRow = returnMoveTable(finalMoveDetails?.level)
+  const tutorRow = returnMoveTable(finalMoveDetails?.tutor)
 
   return (
-    <div className='border-b-[1px] border-slate-400'>
-      {levelUpRow}
+    <div className='flex flex-row justify-between'>
+      <div className='border-b-[1px] border-slate-400 w-475/1000'>
+        {levelUpRow}
+      </div>
+      <div className='border-b-[1px] border-slate-400 w-475/1000'>
+        {tutorRow}
+      </div>
     </div>
   )
 }
