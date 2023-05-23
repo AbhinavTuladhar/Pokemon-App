@@ -4,6 +4,9 @@ import axios from 'axios'
 import formatName from '../../utils/NameFormatting'
 import extractMoveInformation from '../../utils/extractMoveInfo'
 import TypeCard from '../TypeCard'
+import movePhysical from '../../images/move-physical.png'
+import moveSpecial from '../../images/move-special.png'
+import moveStatus from '../../images/move-status.png'
 
 
 const separateMoves = ({ data, learnMethod }) => {
@@ -114,8 +117,16 @@ const MovesLearned = ({ data, id }) => {
 
   const levelUpRow = finalMoveDetails?.map((move, index) => {
     const stringDecoration = index === 0 ? 'font-bold bg-[#1a1a1a]' : ''
+    let moveClassImage = ''
+    if (move.damageClass === 'physical')
+      moveClassImage = movePhysical
+    else if (move.damageClass === 'special')
+      moveClassImage = moveSpecial
+    else if (move.damageClass === 'status')
+      moveClassImage = moveStatus
+
     return (
-      <div className={`${stringDecoration} flex flex-row gap-x-4 h-12 border border-slate-400 items-center px-4`}>
+      <div className={`${stringDecoration} flex flex-row gap-x-4 h-12 border-t-[1px] border-slate-400 items-center px-4`}>
         <div className='w-4/12'> 
           {formatName(move.moveName)} 
         </div>
@@ -127,7 +138,13 @@ const MovesLearned = ({ data, id }) => {
           }
         </div>
         <div className='w-1/12'> 
-          {move.damageClass} 
+          {
+            moveClassImage === '' 
+            ?
+            move.damageClass
+            :
+            <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move.damageClass} />
+          }
         </div>
         <div className='w-1/12'> 
           {move.power} 
@@ -140,7 +157,7 @@ const MovesLearned = ({ data, id }) => {
   })
 
   return (
-    <div className='test'>
+    <div className='border-b-[1px] border-slate-400'>
       {levelUpRow}
     </div>
   )
