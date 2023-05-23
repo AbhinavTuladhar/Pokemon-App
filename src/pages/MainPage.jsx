@@ -2,7 +2,7 @@ import { React, useMemo, useEffect } from 'react'
 import axios from 'axios'
 import { useQuery } from 'react-query'
 import { useLocation } from 'react-router-dom'
-import PokeCard from './PokeCard'
+import PokeCard from '../components/PokeCard'
 import { motion } from 'framer-motion'
 
 const MainPage = ({ idRange }) => {
