@@ -1,5 +1,9 @@
 import { React, useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
+import axios from 'axios'
 import formatName from '../../utils/NameFormatting'
+import extractMoveInformation from '../../utils/extractMoveInfo'
+
 
 const separateMoves = ({ data, learnMethod }) => {
   const movesLearnt = data.map(move => {
@@ -20,7 +24,7 @@ const separateMoves = ({ data, learnMethod }) => {
 const MovesLearned = ({ data }) => {
   const { moves } = data;
   const [moveData, setMoveData] = useState([])
-  const [moveDetails, setMoveDetails] = useState({
+  const [moveInfo, setMoveInfo] = useState({
     level: [],
     machine: [],
     tutor: []
@@ -65,7 +69,7 @@ const MovesLearned = ({ data }) => {
       else
         return (curr.name < next.name ? -1 : 1)
     })
-    setMoveDetails({
+    setMoveInfo({
       level: sortedLevelMoves,
       egg: eggMoves,
       machine: machineMoves,
@@ -73,13 +77,37 @@ const MovesLearned = ({ data }) => {
     })
   }, [moveData])
 
+  // useEffect(() => {
+  //   if (moveInfo) console.log(moveInfo)
+  // }, [moveInfo])
+
+  // Now query the moveURLs to obtain their details
+  const fetchData = async (url) => {
+    const response = await axios.get(url)
+    return response.data
+  }
+
+  const { data: moveDetails} = useQuery(
+    'moveDetails', 
+    () => {
+      const levelURLs = moveInfo.level.map(move => move.moveURL)
+      return Promise.all(levelURLs.map(fetchData))
+    },
+    { enabled: true }
+  )
+
   useEffect(() => {
-    if (moveDetails) console.log(moveDetails)
+    if (moveDetails.length > 0) {
+      console.log('querying the urls')
+      console.log(moveDetails)
+      const extracted = moveDetails.map(move => extractMoveInformation(move))
+      console.log(extracted)
+    }
   }, [moveDetails])
 
-  if (!moveDetails) return
+  if (!moveInfo) return
 
-  const levelUpDiv = moveDetails?.level?.map(move => {
+  const levelUpDiv = moveInfo?.level?.map(move => {
     return <div> {move.name} </div>
   })
 
