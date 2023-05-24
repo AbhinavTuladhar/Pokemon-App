@@ -210,7 +210,7 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
       const moveClassImage = returnMoveImage(move.damageClass)
   
       return (
-        <div className={`${stringDecoration} flex flex-row items-center justify-evenly gap-x-4 h-12 border-t-[1px] border-slate-400 px-4`}>
+        <div className={`${stringDecoration} flex flex-row items-center justify-between gap-x-4 h-12 border-t-[1px] border-slate-400 px-4`}>
           {
             move.levelLearntAt &&
             <div className='w-1/12'> 
@@ -254,7 +254,7 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
 
   return (
     <div className='flex flex-row justify-between w-full flex-wrap'>
-      <div className='flex flex-col w-475/1000 md:w-475/1000 sm:w-full'>
+      <div className='flex flex-col lg:w-475/1000 smmd:w-475/1000 sm:w-full'>
         <SectionTitle text={'Moves learnt by level up'} />
         {
           finalMoveDetails?.level?.length > 1 
@@ -281,7 +281,7 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           `${pokemonName} does not learn any moves by breeding.`
         }
       </div>
-      <div className='flex flex-col w-475/1000 md:w-475/1000 sm:w-full'>
+      <div className='flex flex-col lg:w-475/1000 smmd:w-475/1000 sm:w-full'>
         <SectionTitle text={'Moves learnt by HM/TM'} />
         {
           finalMoveDetails?.machine?.length > 1 
