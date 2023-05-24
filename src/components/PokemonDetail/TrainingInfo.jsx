@@ -1,4 +1,5 @@
-import React from "react";
+import React from "react"
+import SectionTitle from "../SectionTitle"
 
 
 const TrainingInfo = ({ data }) => {
@@ -55,7 +56,7 @@ const TrainingInfo = ({ data }) => {
 
   return (
     <div className='border-b-[1px] w-full'>
-      <div className='font-bold text-3xl mb-10'> Training data </div>
+      <SectionTitle text={'Training Data'} />
         {tableDiv}
     </div>
   )

@@ -1,4 +1,5 @@
 import React from 'react'
+import SectionTitle from '../SectionTitle'
 
 // This is for grouping the name of the games if they have the same description for the Pokemon.
 const groupByDescription = data => {
@@ -57,7 +58,7 @@ const PokeDexEntry = ( { data }) => {
 
   return (
     <>
-      <div className='font-bold text-3xl mb-10'> Pokédex Entries </div>
+      <SectionTitle text={'Pokédex Entries'} />
       <div className='flex flex-col border-b-[1px] border-gray-200'>
         {entryRows}
       </div>

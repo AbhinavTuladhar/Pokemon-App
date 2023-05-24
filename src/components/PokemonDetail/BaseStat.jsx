@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useMemo } from 'react'
+import SectionTitle from '../SectionTitle'
 import statCalculator from '../../utils/StatCalculation'
 
 /*
@@ -129,9 +130,7 @@ const BaseStat = ({ data }) => {
 
   return (
     <>
-      <div className='text-3xl font-bold mb-4'>
-        Base Stats
-      </div>
+      <SectionTitle text={'Base Stats'} />
       <div className='border-gray-200 border-b-[1px]'>
         {rowValues}
       </div>

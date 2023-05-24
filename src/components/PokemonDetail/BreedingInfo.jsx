@@ -1,4 +1,5 @@
 import { React } from 'react'
+import SectionTitle from '../SectionTitle'
 import formatName from '../../utils/NameFormatting'
 
 const generateGenderInfo = genderRate => {
@@ -61,7 +62,7 @@ const BreedingInfo = ({ data }) => {
 
   return (
     <div className='border-b-[1px] w-full'>
-      <div className='font-bold text-3xl mb-10'> Breeding </div>
+      <SectionTitle text={'Breeding'} />
         {tableDiv}
     </div>
   )

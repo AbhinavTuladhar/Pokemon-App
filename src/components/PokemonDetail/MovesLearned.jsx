@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 import formatName from '../../utils/NameFormatting'
 import TypeCard from '../TypeCard'
+import SectionTitle from '../SectionTitle'
 import extractMoveInformation from '../../utils/extractMoveInfo'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
@@ -225,15 +226,15 @@ const MovesLearned = ({ data, id }) => {
   const machineTable = returnMoveTable(finalMoveDetails?.machine)
 
   return (
-    <div className='flex flex-row justify-between w-full'>
-      <div className='flex flex-col w-475/1000'>
-        <span className='text-3xl my-4 font-bold'> Moves learnt by level up </span>
-        <TableContainer child={levelUpTable} />
-        <span className='text-3xl my-4 font-bold'> Moves learnt by move tutor </span>
+    <div className='flex flex-row justify-between w-full flex-grow'>
+      <div className='flex flex-col w-475/1000 md:w-475/1000 sm:w-full'>
+        <SectionTitle text={'Moves learnt by level up'} />
+        <TableContainer child={levelUpTable}  />
+        <SectionTitle text={'Moves learnt by tutor'} />
         <TableContainer child={tutorTable} />
       </div>
-      <div className='flex flex-col w-475/1000'>
-        <span className='text-3xl my-4 font-bold'> Moves learnt by TM/HMs </span>
+      <div className='flex flex-col w-475/1000 md:w-475/1000 sm:w-full'>
+        <SectionTitle text={'Moves learnt by HM/TM'} />
         <TableContainer child={machineTable} />
       </div>
     </div>

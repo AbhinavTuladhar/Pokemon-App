@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react'
+import SectionTitle from '../SectionTitle'
 import useFetch from '../../utils/useFetch'
 
 function formatFields(data) {
@@ -129,9 +130,7 @@ const Locations = ({ id, name }) => {
       {
         finalTable.length > 0 &&
         <>
-          <div className='font-bold text-3xl mb-10'>
-            Where to find { name }
-          </div>
+          <SectionTitle text={`Where to find ${name}`} />
           <div className='border-gray-200 border-b-[1px]'>
             {finalTable}
           </div>

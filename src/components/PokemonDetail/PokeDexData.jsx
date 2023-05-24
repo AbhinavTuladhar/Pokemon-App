@@ -1,5 +1,6 @@
 import { React, useMemo, useEffect, useCallback, useState } from 'react'
 import TypeCard from '../TypeCard'
+import SectionTitle from '../SectionTitle'
 import axios from 'axios'
 
 const PokeDexData = ({ pokemonData }) => {
@@ -147,9 +148,7 @@ const PokeDexData = ({ pokemonData }) => {
 
   return (
     <>
-      <div className='font-bold text-3xl mb-10'>
-        Pokédex data
-      </div>
+      <SectionTitle text={'Pokédex data'} />
       <div className='flex flex-col border-b-[1px]'>
         {tableEntries}
       </div>
