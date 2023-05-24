@@ -9,7 +9,18 @@ import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
 import moveStatus from '../../images/move-status.png'
 
+// This is for the headers
 const firstRow = {
+  moveName: 'Name',
+  moveType: 'Type',
+  damageClass: 'Class',
+  power: "Power",
+  accuracy: "Acc.",
+}
+
+// This is for the level up header only.
+const firstRowLevelUp = {
+  levelLearntAt: 'Lv.',
   moveName: 'Name',
   moveType: 'Type',
   damageClass: 'Class',
@@ -63,8 +74,15 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
     tutor: [],
     egg: []
   })
+  // This state is for keeping track of the level learnt value.
+  const [levelLearntData, setLevelLearntData] = useState([])
   const [moveData, setMoveData] = useState([])
-  const [finalMoveDetails, setFinalMoveDetails] = useState([])
+  const [finalMoveDetails, setFinalMoveDetails] = useState({
+    level: [],
+    tutor: [],
+    egg: [],
+    machine: []
+  })
 
   useEffect(() => {
     // Consider that the latest gen is ORAS
@@ -105,26 +123,23 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
       else
         return (curr.name < next.name ? -1 : 1)
     })
+
+    // Extract the move name and the level learnt for the moves learn by level up.
+    setLevelLearntData(() => {
+      return levelUpMoves?.map(move => {
+        return {
+          name: move.name,
+          levelLearntAt: move.version_group_details[0].level_learned_at
+        }
+      })
+    })
     setMoveURLs({
       level: sortedLevelMoves?.map(move => move.moveURL),
       machine: machineMoves?.map(move => move.moveURL),
       egg: eggMoves?.map(move => move.moveURL),
       tutor: tutorMoves?.map(move => move.moveURL),
     })
-    // setMoveInfo({
-    //   level: sortedLevelMoves,
-    //   egg: eggMoves,
-    //   machine: machineMoves,
-    //   tutor: tutorMoves
-    // })
   }, [moveData])
-
-  useEffect(() => {
-    if (moveURLs) {
-      console.log('printing move urls')
-      console.log(moveURLs)
-    }
-  }, [moveURLs])
 
   // Now query the moveURLs to obtain their details
   const fetchData = async (urls) => {
@@ -170,24 +185,23 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
       machineExtracted = machineMoveDetails?.map(move => extractMoveInformation(move))
     if (eggMoveDetails?.length > 0)
       eggExtracted = eggMoveDetails?.map(move => extractMoveInformation(move))
+
     setFinalMoveDetails(() => {
+      const combinedLevelData = levelLearntData?.map(obj1 => {
+        const obj2 = levelExtracted?.find(obj => obj?.moveName === obj1?.name)
+        return {...obj1, ...obj2}
+      })
+
       return {
-        level: [firstRow, ...levelExtracted],
+        level: [firstRowLevelUp, ...combinedLevelData],
         tutor: [firstRow, ...tutorExtracted],
         machine: [firstRow, ...machineExtracted],
         egg: [firstRow, ...eggExtracted]
       }
     })
-  }, [levelMoveDetails, tutorMoveDetails, machineMoveDetails, eggMoveDetails])
-  
-  useEffect(() => {
-    if (finalMoveDetails) {
-      console.log('printing final move details')
-      console.log(finalMoveDetails)
-    }
-  }, [finalMoveDetails])
+  }, [levelMoveDetails, tutorMoveDetails, machineMoveDetails, eggMoveDetails, levelLearntData])
 
-  // if (finalMoveDetails?.length === 0) return
+  // if (finalMoveDetails?.level?.length === 1) return
 
   // Return a tabular form of the levelup, machine, egg and tutor moves data.
   const returnMoveTable = data => {
@@ -196,15 +210,21 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
       const moveClassImage = returnMoveImage(move.damageClass)
   
       return (
-        <div className={`${stringDecoration} flex flex-row gap-x-4 h-12 border-t-[1px] border-slate-400 items-center px-4`}>
+        <div className={`${stringDecoration} flex flex-row items-center justify-evenly gap-x-4 h-12 border-t-[1px] border-slate-400 px-4`}>
+          {
+            move.levelLearntAt &&
+            <div className='w-1/12'> 
+              {move.levelLearntAt} 
+            </div>
+          }
           <div className='w-3/12'> 
-            {formatName(move.moveName)} 
+            {formatName(move?.moveName)} 
           </div>
           <div className='w-2/12'>
             {
               index === 0 ? 
               'Type' :
-              <TypeCard typeName={move.moveType} />
+              <TypeCard typeName={move?.moveType} />
             }
           </div>
           <div className='w-1/12'> 
@@ -213,14 +233,14 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
               ?
               move.damageClass
               :
-              <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move.damageClass} />
+              <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move?.damageClass} />
             }
           </div>
           <div className='w-1/12 justify-end flex'> 
-            {move.power} 
+            {move?.power} 
           </div>
           <div className='w-1/12 justify-end flex'> 
-            {move.accuracy} 
+            {move?.accuracy} 
           </div>
         </div>
       )
