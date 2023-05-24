@@ -145,10 +145,10 @@ const PokemonDetail = () => {
         <PokeDexEntry data={dexEntry} />
       </div>
       <div>
-        <Locations id={idInfo.id} name={idInfo.name} />
+        <MovesLearned data={{ ...pokemon }} id={idInfo.id} name={idInfo.name} />
       </div>
       <div>
-        <MovesLearned data={{ ...pokemon }} id={idInfo.id} />
+        <Locations id={idInfo.id} name={idInfo.name} />
       </div>
     </motion.div>
   )

@@ -55,19 +55,15 @@ const TableContainer = ( { child }) => {
   )
 }
 
-const MovesLearned = ({ data, id }) => {
+const MovesLearned = ({ data, id, name: pokemonName }) => {
   const { moves } = data;
   const [moveURLs, setMoveURLs] = useState({
     level: [],
     machine: [],
-    tutor: []
+    tutor: [],
+    egg: []
   })
   const [moveData, setMoveData] = useState([])
-  const [moveInfo, setMoveInfo] = useState({
-    level: [],
-    machine: [],
-    tutor: []
-  })
   const [finalMoveDetails, setFinalMoveDetails] = useState([])
 
   useEffect(() => {
@@ -115,12 +111,12 @@ const MovesLearned = ({ data, id }) => {
       egg: eggMoves?.map(move => move.moveURL),
       tutor: tutorMoves?.map(move => move.moveURL),
     })
-    setMoveInfo({
-      level: sortedLevelMoves,
-      egg: eggMoves,
-      machine: machineMoves,
-      tutor: tutorMoves
-    })
+    // setMoveInfo({
+    //   level: sortedLevelMoves,
+    //   egg: eggMoves,
+    //   machine: machineMoves,
+    //   tutor: tutorMoves
+    // })
   }, [moveData])
 
   useEffect(() => {
@@ -154,25 +150,35 @@ const MovesLearned = ({ data, id }) => {
     { enabled: true }
   )
 
+  const { data: eggMoveDetails } = useQuery(
+    ['eggDetails', moveURLs.egg], 
+    () => fetchData(moveURLs.egg),
+    { enabled: true }
+  )
+
   // For extracting information from the move details
   useEffect(() => {
     let levelExtracted = []
     let tutorExtracted = []
     let machineExtracted = []
+    let eggExtracted = []
     if (levelMoveDetails?.length > 0)
       levelExtracted = levelMoveDetails?.map(move => extractMoveInformation(move))
     if (tutorMoveDetails?.length > 0)
       tutorExtracted = tutorMoveDetails?.map(move => extractMoveInformation(move))
     if (machineMoveDetails?.length > 0)
       machineExtracted = machineMoveDetails?.map(move => extractMoveInformation(move))
+    if (eggMoveDetails?.length > 0)
+      eggExtracted = eggMoveDetails?.map(move => extractMoveInformation(move))
     setFinalMoveDetails(() => {
       return {
         level: [firstRow, ...levelExtracted],
         tutor: [firstRow, ...tutorExtracted],
         machine: [firstRow, ...machineExtracted],
+        egg: [firstRow, ...eggExtracted]
       }
     })
-  }, [levelMoveDetails, tutorMoveDetails, machineMoveDetails])
+  }, [levelMoveDetails, tutorMoveDetails, machineMoveDetails, eggMoveDetails])
   
   useEffect(() => {
     if (finalMoveDetails) {
@@ -186,7 +192,7 @@ const MovesLearned = ({ data, id }) => {
   // Return a tabular form of the levelup, machine, egg and tutor moves data.
   const returnMoveTable = data => {
     return data?.map((move, index) => {
-      const stringDecoration = index === 0 ? 'font-bold bg-[#1a1a1a]' : ''
+      const stringDecoration = index === 0 ? 'font-bold bg-[#1a1a1a]' : 'hover:bg-gray-700'
       const moveClassImage = returnMoveImage(move.damageClass)
   
       return (
@@ -224,18 +230,46 @@ const MovesLearned = ({ data, id }) => {
   const levelUpTable = returnMoveTable(finalMoveDetails?.level)
   const tutorTable = returnMoveTable(finalMoveDetails?.tutor)
   const machineTable = returnMoveTable(finalMoveDetails?.machine)
+  const eggTable = returnMoveTable(finalMoveDetails?.egg)
 
   return (
-    <div className='flex flex-row justify-between w-full flex-grow'>
+    <div className='flex flex-row justify-between w-full flex-wrap'>
       <div className='flex flex-col w-475/1000 md:w-475/1000 sm:w-full'>
         <SectionTitle text={'Moves learnt by level up'} />
-        <TableContainer child={levelUpTable}  />
+        {
+          finalMoveDetails?.level?.length > 1 
+          ?
+          <TableContainer child={levelUpTable}  />
+          :
+          `${pokemonName} does not learn any moves by level up`
+        }
+
         <SectionTitle text={'Moves learnt by tutor'} />
-        <TableContainer child={tutorTable} />
+        {
+          finalMoveDetails?.tutor?.length > 1
+          ?
+          <TableContainer child={tutorTable} />
+          :
+          `${pokemonName} does not learn any move taught by a tutor.`
+        }
+        <SectionTitle text={'Moves learnt by Breeding'} />
+        {
+          finalMoveDetails?.egg?.length > 1
+          ?
+          <TableContainer child={eggTable} />
+          :
+          `${pokemonName} does not learn any moves by breeding.`
+        }
       </div>
       <div className='flex flex-col w-475/1000 md:w-475/1000 sm:w-full'>
         <SectionTitle text={'Moves learnt by HM/TM'} />
-        <TableContainer child={machineTable} />
+        {
+          finalMoveDetails?.machine?.length > 1 
+          ?
+          <TableContainer child={machineTable} />
+          :
+          `${pokemonName} does not learn any moves by TM or HM.`
+        }
       </div>
     </div>
   )
