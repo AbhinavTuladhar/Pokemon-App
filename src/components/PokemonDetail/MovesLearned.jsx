@@ -16,6 +16,7 @@ const firstRow = {
   accuracy: "Acc.",
 }
 
+// This is for filtering out the moves on depending on how it is learnt - only for ORAS.
 const separateMoves = ({ data, learnMethod }) => {
   const movesLearnt = data.map(move => {
     const { version_group_details } = move // this is an array
@@ -32,6 +33,7 @@ const separateMoves = ({ data, learnMethod }) => {
   return finalFilteredMoves
 }
 
+// This is for mapping the move damage class to its respective image.
 const returnMoveImage = damageClass => {
   if (damageClass === 'physical')
     return movePhysical
@@ -41,6 +43,15 @@ const returnMoveImage = damageClass => {
     return moveStatus
   else
     return ''
+}
+
+// This is just a simple component only to properly encapsulate tabular data.
+const TableContainer = ( { child }) => {
+  return (
+    <div className='border-b-[1px] border-slate-400'>
+        {child}
+    </div>
+  )
 }
 
 const MovesLearned = ({ data, id }) => {
@@ -209,16 +220,21 @@ const MovesLearned = ({ data, id }) => {
     })
   }
 
-  const levelUpRow = returnMoveTable(finalMoveDetails?.level)
-  const tutorRow = returnMoveTable(finalMoveDetails?.tutor)
+  const levelUpTable = returnMoveTable(finalMoveDetails?.level)
+  const tutorTable = returnMoveTable(finalMoveDetails?.tutor)
+  const machineTable = returnMoveTable(finalMoveDetails?.machine)
 
   return (
-    <div className='flex flex-row justify-between'>
-      <div className='border-b-[1px] border-slate-400 w-475/1000'>
-        {levelUpRow}
+    <div className='flex flex-row justify-between w-full'>
+      <div className='flex flex-col w-475/1000'>
+        <span className='text-3xl my-4 font-bold'> Moves learnt by level up </span>
+        <TableContainer child={levelUpTable} />
+        <span className='text-3xl my-4 font-bold'> Moves learnt by move tutor </span>
+        <TableContainer child={tutorTable} />
       </div>
-      <div className='border-b-[1px] border-slate-400 w-475/1000'>
-        {tutorRow}
+      <div className='flex flex-col w-475/1000'>
+        <span className='text-3xl my-4 font-bold'> Moves learnt by TM/HMs </span>
+        <TableContainer child={machineTable} />
       </div>
     </div>
   )
