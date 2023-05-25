@@ -123,13 +123,13 @@ const PokemonDetail = () => {
         {idInfo.name}
       </div>
       <div className='flex flex-row flex-wrap gap-x-10'>
-        <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
+        <div className='flex-grow w-full mdlg:w-1/4 sm:w-full py-4'>
           <ImageTile imageSources={imageSource} />
         </div>
-        <div className='flex-grow w-full md:w-1/4 sm:w-full py-4'>
+        <div className='flex-grow w-full mdlg:w-1/4 sm:w-full py-4'>
           <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
         </div>
-        <div className='flex flex-col flex-grow w-full md:w-1/4 sm:w-full py-4 gap-y-5'>
+        <div className='flex flex-col flex-grow w-full mdlg:w-1/4 sm:w-full py-4 gap-y-5'>
           <div className='flex w-full'>
             <TrainingInfo data={{...pokemon, ...speciesData}} />
           </div>
@@ -137,7 +137,7 @@ const PokemonDetail = () => {
             <BreedingInfo data={{...pokemon, ...speciesData}} />
           </div>
         </div>
-        <div className='w-full md:w-2/3 sm:w-full'>
+        <div className='w-full md:w-full sm:w-full'>
           <BaseStat data={{...pokemon, ...speciesData}} />
         </div>
       </div>

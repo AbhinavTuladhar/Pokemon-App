@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       screens: {
         'smmd': '1070px',
+        'mdlg': '1170px'
       },
       width: {
         '475/1000': '47.5%',
