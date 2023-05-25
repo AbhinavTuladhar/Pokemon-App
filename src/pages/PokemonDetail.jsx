@@ -144,7 +144,7 @@ const PokemonDetail = () => {
       <div>
         <PokeDexEntry data={dexEntry} />
       </div>
-      <div>
+      <div className='w-full sm:w-full py-4 gap-y-5'>
         <MovesLearned data={{ ...pokemon }} id={idInfo.id} name={idInfo.name} />
       </div>
       <div>
