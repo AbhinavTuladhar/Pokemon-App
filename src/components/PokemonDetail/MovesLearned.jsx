@@ -254,7 +254,7 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
 
   return (
     <div className='flex flex-row justify-between w-full flex-wrap'>
-      <div className='flex flex-col lg:w-475/1000 smmd:w-475/1000 sm:w-full'>
+      <div className='flex flex-col lg:w-475/1000 w-full'>
         <SectionTitle text={'Moves learnt by level up'} />
         {
           finalMoveDetails?.level?.length > 1 
@@ -281,7 +281,7 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           `${pokemonName} does not learn any moves by breeding.`
         }
       </div>
-      <div className='flex flex-col lg:w-475/1000 smmd:w-475/1000 sm:w-full'>
+      <div className='flex flex-col lg:w-475/1000 w-full'>
         <SectionTitle text={'Moves learnt by HM/TM'} />
         {
           finalMoveDetails?.machine?.length > 1 

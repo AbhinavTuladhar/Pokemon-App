@@ -75,6 +75,7 @@ module.exports = {
     'to-gray-500',
     'to-pink-300',
 
+    'to-gray-400',
     'to-yellow-600',
     'to-red-700',
     'to-blue-600',
