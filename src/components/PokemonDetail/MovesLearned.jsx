@@ -21,11 +21,7 @@ const firstRow = {
 // This is for the level up header only.
 const firstRowLevelUp = {
   levelLearntAt: 'Lv.',
-  moveName: 'Name',
-  moveType: 'Type',
-  damageClass: 'Class',
-  power: "Power",
-  accuracy: "Acc.",
+  ...firstRow
 }
 
 // This is for filtering out the moves on depending on how it is learnt - only for ORAS.
@@ -67,7 +63,7 @@ const returnMoveImage = damageClass => {
 // }
 const TableContainer = ( { child }) => {
   return (
-    <div className='border-b-[1px] border-slate-400 table'>
+    <div className='border-b-[1px] border-slate-400 table overflow-x-scroll table-fixed'>
       { child }
     </div>
   )
@@ -214,30 +210,32 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
   const returnMoveTable = data => {
     return data?.map((move, index) => {
       // Darken the first row, else create a hover effect
-      const stringDecoration = index === 0 ? 'font-bold bg-[#1a1a1a]' : 'hover:bg-gray-700'
+      const stringDecoration = index === 0 ? 'font-bold bg-[#1a1a1a]' : ''
       // For the damage class image
       const moveClassImage = returnMoveImage(move?.damageClass)
       // Check if it is the first column.
       const firstColStyle = move?.levelLearntAt ? '' : 'pl-2'
+      // For zebra pattern
+      const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
-        <div className={`${stringDecoration} table-row border-[1px] border-slate-400 mx-2`}>
+        <div className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400 mx-2`}>
           {
             move.levelLearntAt &&
-            <div className='pl-2 table-cell align-middle h-12 border-t-[1px] border-slate-400'>
+            <div className='pl-2 table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
               {move?.levelLearntAt}
             </div>
           }
-          <div className={`${firstColStyle} table-cell align-middle h-12 border-t-[1px] border-slate-400`}>
+          <div className={`${firstColStyle} table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2`}>
             {formatName(move?.moveName)}
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {
               index === 0 ? 
               'Type' :
               <TypeCard typeName={move?.moveType} />
             }
           </div>  
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'> 
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'> 
             {
               moveClassImage === '' 
               ?
@@ -245,11 +243,11 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
               :
               <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move?.damageClass} />
             }
-         </div>        
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
+          </div>       
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {move?.power}
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {move?.accuracy}
           </div>
         </div>
