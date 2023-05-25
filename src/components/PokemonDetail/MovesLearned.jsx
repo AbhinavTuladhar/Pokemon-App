@@ -53,17 +53,9 @@ const returnMoveImage = damageClass => {
     return ''
 }
 
-// This is just a simple component only to properly encapsulate tabular data.
-// const TableContainer = ( { child }) => {
-//   return (
-//     <div className='border-b-[1px] border-slate-400 flex flex-col flex-wrap flex-shrink flex-grow-0 overflow-x-auto' style={{maxWidth: "100%"}}>
-//       { child }
-//     </div>
-//   )
-// }
 const TableContainer = ( { child }) => {
   return (
-    <div className='border-b-[1px] border-slate-400 table overflow-x-scroll table-fixed'>
+    <div className='border-b-[1px] border-slate-400 table'>
       { child }
     </div>
   )
@@ -204,8 +196,6 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
     })
   }, [levelMoveDetails, tutorMoveDetails, machineMoveDetails, eggMoveDetails, levelLearntData])
 
-  // if (finalMoveDetails?.level?.length === 1) return
-
   // Return a tabular form of the levelup, machine, egg and tutor moves data.
   const returnMoveTable = data => {
     return data?.map((move, index) => {
@@ -214,28 +204,28 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
       // For the damage class image
       const moveClassImage = returnMoveImage(move?.damageClass)
       // Check if it is the first column.
-      const firstColStyle = move?.levelLearntAt ? '' : 'pl-2'
+      const firstColStyle = move?.levelLearntAt ? '' : 'pl-4'
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
         <div className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400 mx-2`}>
           {
             move.levelLearntAt &&
-            <div className='pl-2 table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+            <div className='pl-4 table-cell align-middle h-12 border-t-[1px] border-slate-400'>
               {move?.levelLearntAt}
             </div>
           }
-          <div className={`${firstColStyle} table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2`}>
+          <div className={`${firstColStyle} table-cell align-middle h-12 border-t-[1px] border-slate-400`}>
             {formatName(move?.moveName)}
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
             {
               index === 0 ? 
               'Type' :
               <TypeCard typeName={move?.moveType} />
             }
           </div>  
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'> 
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'> 
             {
               moveClassImage === '' 
               ?
@@ -244,10 +234,10 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
               <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move?.damageClass} />
             }
           </div>       
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
             {move?.power}
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
             {move?.accuracy}
           </div>
         </div>
