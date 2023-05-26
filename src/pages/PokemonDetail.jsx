@@ -113,7 +113,7 @@ const PokemonDetail = () => {
 
   return (
     <motion.div 
-      className='flex flex-col justify-center gap-y-5 mx-10'
+      className='gap-y-5 mx-10'
       initial={{ y: '100%', scale: 0.8, opacity: 0 }}
       animate={{ y: 0, scale: 1, opacity: 1, transitionDuration: '0.8s' }}
       exit={{ y: '100%', scale: 0.8, opacity: 0, transitionDuration: '0.75s' }}
@@ -144,7 +144,7 @@ const PokemonDetail = () => {
       <div>
         <PokeDexEntry data={dexEntry} />
       </div>
-      <div className='w-full sm:w-full py-4 gap-y-5'>
+      <div className='py-4 gap-y-5'>
         <MovesLearned data={{ ...pokemon }} id={idInfo.id} name={idInfo.name} />
       </div>
       <div>

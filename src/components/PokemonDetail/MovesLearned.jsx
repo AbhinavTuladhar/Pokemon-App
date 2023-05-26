@@ -14,6 +14,7 @@ const firstRow = {
   moveName: 'Name',
   moveType: 'Type',
   damageClass: 'Class',
+  PP: 'PP',
   power: "Power",
   accuracy: "Acc.",
 }
@@ -55,8 +56,10 @@ const returnMoveImage = damageClass => {
 
 const TableContainer = ( { child }) => {
   return (
-    <div className='border-b-[1px] border-slate-400 table'>
-      { child }
+    <div className='overflow-auto'>
+      <div className='border-b-[1px] border-slate-400 min-w-full table'>
+        { child }
+      </div>
     </div>
   )
 }
@@ -208,24 +211,24 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
-        <div className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400 mx-2`}>
+        <div className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400`}>
           {
             move.levelLearntAt &&
-            <div className='pl-4 table-cell align-middle h-12 border-t-[1px] border-slate-400'>
+            <div className='pl-4 table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
               {move?.levelLearntAt}
             </div>
           }
-          <div className={`${firstColStyle} table-cell align-middle h-12 border-t-[1px] border-slate-400`}>
+          <div className={`${firstColStyle} whitespace-nowrap table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2`}>
             {formatName(move?.moveName)}
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {
               index === 0 ? 
               'Type' :
               <TypeCard typeName={move?.moveType} />
             }
           </div>  
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'> 
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'> 
             {
               moveClassImage === '' 
               ?
@@ -233,11 +236,14 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
               :
               <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move?.damageClass} />
             }
-          </div>       
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
+          </div>    
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+            {move?.PP}
+          </div>   
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {move?.power}
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400'>
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {move?.accuracy}
           </div>
         </div>
@@ -249,6 +255,19 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
   const tutorTable = returnMoveTable(finalMoveDetails?.tutor)
   const machineTable = returnMoveTable(finalMoveDetails?.machine)
   const eggTable = returnMoveTable(finalMoveDetails?.egg)
+
+  // return (
+  //   <>
+  //     <SectionTitle text={'Moves learnt by level up'} />
+  //       {
+  //         finalMoveDetails?.level?.length > 1 
+  //         ?
+  //         <TableContainer child={levelUpTable}  />
+  //         :
+  //         `${pokemonName} does not learn any moves by level up`
+  //       }
+  //   </>
+  // )
 
   return (
     <div className='flex flex-row justify-between w-full flex-wrap'>

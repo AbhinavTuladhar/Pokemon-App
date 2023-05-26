@@ -24,7 +24,7 @@ const NavBar = () => {
   })
 
   return (
-    <nav className='bg-green-400 max-w-screen-2xl min-w-min'>
+    <nav className='bg-green-400'>
       <div className='bg-slate-900 text-yellow-400 py-2 text-center text-6xl font-extrabold tracking-widest'>
         <NavLink to='/'> 
           PokéDex
