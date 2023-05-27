@@ -1,6 +1,7 @@
 import { React, useMemo, useEffect, useCallback, useState } from 'react'
 import TypeCard from '../TypeCard'
 import SectionTitle from '../SectionTitle'
+import TableContainer from '../TableContainer'
 import axios from 'axios'
 
 const PokeDexData = ({ pokemonData }) => {
@@ -135,23 +136,36 @@ const PokeDexData = ({ pokemonData }) => {
   const tableEntries = tableData.map(row => {
     const spacing = row.label === 'Abilities' || row.label === 'Regional no.'? 'min-h-14' : 'h-12'
     return (
-      <div className={`flex flex-row border-t-[1px] border-gray-200 py-2 ${spacing}`}>
-        <div className='flex justify-end text-right items-center w-3/12'>
+      <div className={`table-row border-t-[1px] border-gray-200 py-2 ${spacing}`}>
+        <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 text-right w-3/12'>
           {row.label}
         </div>
-        <div className='flex justify-start pl-4 w-9/12 items-center'>
-          {row.value}
+        <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 pl-4 w-9/12'>
+          <div className="flex">
+            {row.value}
+          </div>
         </div>
       </div>
     )
   })
+  // const tableEntries = tableData.map(row => {
+  //   const spacing = row.label === 'Abilities' || row.label === 'Regional no.'? 'min-h-14' : 'h-12'
+  //   return (
+  //     <div className={`flex flex-row border-t-[1px] border-gray-200 py-2 ${spacing}`}>
+  //       <div className='flex justify-end text-right items-center w-3/12'>
+  //         {row.label}
+  //       </div>
+  //       <div className='flex justify-start pl-4 w-9/12 items-center'>
+  //         {row.value}
+  //       </div>
+  //     </div>
+  //   )
+  // })
 
   return (
     <>
       <SectionTitle text={'Pokédex data'} />
-      <div className='flex flex-col border-b-[1px]'>
-        {tableEntries}
-      </div>
+      <TableContainer child={tableEntries} />
     </>
   )
 }
