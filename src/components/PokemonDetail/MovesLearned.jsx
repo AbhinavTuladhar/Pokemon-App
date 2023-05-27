@@ -1,9 +1,10 @@
 import { React, useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import formatName from '../../utils/NameFormatting'
 import TypeCard from '../TypeCard'
 import SectionTitle from '../SectionTitle'
+import TableContainer from '../TableContainer'
+import formatName from '../../utils/NameFormatting'
 import extractMoveInformation from '../../utils/extractMoveInfo'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
@@ -52,16 +53,6 @@ const returnMoveImage = damageClass => {
     return moveStatus
   else
     return ''
-}
-
-const TableContainer = ( { child }) => {
-  return (
-    <div className='overflow-auto'>
-      <div className='border-b-[1px] border-slate-400 min-w-full table'>
-        { child }
-      </div>
-    </div>
-  )
 }
 
 const MovesLearned = ({ data, id, name: pokemonName }) => {
@@ -255,19 +246,6 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
   const tutorTable = returnMoveTable(finalMoveDetails?.tutor)
   const machineTable = returnMoveTable(finalMoveDetails?.machine)
   const eggTable = returnMoveTable(finalMoveDetails?.egg)
-
-  // return (
-  //   <>
-  //     <SectionTitle text={'Moves learnt by level up'} />
-  //       {
-  //         finalMoveDetails?.level?.length > 1 
-  //         ?
-  //         <TableContainer child={levelUpTable}  />
-  //         :
-  //         `${pokemonName} does not learn any moves by level up`
-  //       }
-  //   </>
-  // )
 
   return (
     <div className='flex flex-row justify-between w-full flex-wrap'>

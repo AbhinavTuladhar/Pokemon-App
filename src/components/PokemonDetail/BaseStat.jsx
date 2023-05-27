@@ -1,5 +1,6 @@
 import { React, useState, useEffect, useMemo } from 'react'
 import SectionTitle from '../SectionTitle'
+import TableContainer from '../TableContainer'
 import statCalculator from '../../utils/StatCalculation'
 
 /*
@@ -107,21 +108,21 @@ const BaseStat = ({ data }) => {
     const stringDecoration = index === statDetail.length - 1 ? 'font-bold' : ''
 
     return (
-      <div className='flex flex-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-2'> 
-        <div className='flex justify-end text-right items-center w-16 flex-shrink-0' >
+      <div className='table-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-0'> 
+        <div className='table-cell text-right border-gray-200 border-t align-middle pr-2'>
           {stat.name}
         </div>
-        <div className='flex justify-end pr-4 pl-2 w-14 items-center flex-shrink-0' >
-          <span className={stringDecoration}> {stat.value} </span>
+        <div className='table-cell px-1 border-gray-200 border-t text-right align-middle'>
+          <span className={`${stringDecoration} text-left`}> {stat.value} </span>
         </div>
-        <div className='w-full flex flex-row justify-start items-center'>
-          <div className='my-0 h-1/3 rounded-md ml-2' style={{width: stat.width, minWidth: '2%', backgroundColor: stat.colour}}>
+        <div className='w-full table-cell border-gray-200 border-t align-middle h-full mx-0 px-0'>
+          <div className='my-0 h-3 rounded ml-2' style={{width: stat.width, minWidth: '0.25em', maxWidth: '100%', backgroundColor: stat.colour}}> &nbsp;
           </div>
         </div>
-        <div className='flex justify-end pl-2 w-14 items-center flex-shrink-0'>
+        <div className='table-cell px-1 pl-3 border-gray-200 border-t align-middle text-right'>
           {stat.min}
         </div>
-        <div className='flex justify-end pl-2 w-14 items-center flex-shrink-0'>
+        <div className='table-cell px-1 border-gray-200 border-t align-middle text-right'>
           {stat.max}
         </div>
       </div>
@@ -131,9 +132,7 @@ const BaseStat = ({ data }) => {
   return (
     <>
       <SectionTitle text={'Base Stats'} />
-      <div className='border-gray-200 border-b-[1px]'>
-        {rowValues}
-      </div>
+      <TableContainer child={rowValues} />
       {/* This is just some informative text. */}
       <div className='mt-4 font-extralight'>
         The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a beneficial nature, 252 EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs, 0 IVs.

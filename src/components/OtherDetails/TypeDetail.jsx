@@ -86,7 +86,7 @@ const TypeDetail = ( ) => {
         doubleDamageToList?.length > 0 &&
         <>
           <div className='flex flex-row items-center gap-2 py-2 my-2'> 
-            <AiFillCheckCircle className='text-green-400' />  <span className='italic'> { formattedType } </span> moves are super-effective against 
+            <AiFillCheckCircle className='text-green-400' /> { formattedType } moves are super-effective against 
           </div>
           <div className='flex flex-row flex-wrap gap-2 ml-4'>
             { doubleDamageToList }
@@ -95,7 +95,7 @@ const TypeDetail = ( ) => {
       }
 
       <div className='flex flex-row items-center gap-2 py-2 my-2'> 
-          <AiFillCloseCircle className='text-red-400' />  <span className='italic'> {formattedType} </span> moves are not very effective against
+          <AiFillCloseCircle className='text-red-400' /> {formattedType} moves are not very effective against
       </div>
         <div className='flex flex-row flex-wrap gap-2 ml-4'>
           { halfDamageToList }
@@ -104,7 +104,7 @@ const TypeDetail = ( ) => {
       { noDamageToList?.length > 0 &&
         <>
           <div className='flex flex-row items-center gap-2 py-2 my-2'> 
-            <AiFillCloseCircle className='text-red-400' />  <span className='italic'> {formattedType} </span> moves have no effect on 
+            <AiFillCloseCircle className='text-red-400' /> {formattedType} moves have no effect on 
           </div>
           <div className='flex flex-row flex-wrap gap-2 ml-4'>
             { noDamageToList }
@@ -123,7 +123,7 @@ const TypeDetail = ( ) => {
         doubleDamageFromList?.length > 0 &&
         <>
           <div className='flex flex-row items-center gap-2 py-2 my-2'> 
-            <AiFillCheckCircle className='text-green-400' /> These types are super-effective against <span className='italic'> {formattedType} </span> Pokemon.
+            <AiFillCheckCircle className='text-green-400' /> These types are super-effective against {formattedType} Pokemon.
           </div>
           <div className='flex flex-row flex-wrap gap-2 ml-4'>
             { doubleDamageFromList }
@@ -135,7 +135,7 @@ const TypeDetail = ( ) => {
         halfDamageFromList?.length > 0 &&
         <>
           <div className='flex flex-row items-center gap-2 py-2 my-2'> 
-            <AiFillCloseCircle className='text-red-400' /> These types are not very effective against <span className='italic'> {formattedType} </span> Pokemon.
+            <AiFillCloseCircle className='text-red-400' /> These types are not very effective against {formattedType} Pokemon.
           </div>
           <div className='flex flex-row flex-wrap gap-2 ml-4'>
             { halfDamageFromList }
@@ -163,15 +163,9 @@ const TypeDetail = ( ) => {
   return (
     <motion.div 
       className='mx-2'
-      // initial={{ opacity: 0, scale: 0.95 }}
-      // animate={{ opacity: 1, scale: 1 }}
-      // exit={{ opacity: 0, scale: 0.95 }}
       initial={{ x: '-100%', opacity: 0 }}
       animate={{ x: 0, scale: 1, opacity: 1, transitionDuration: '0.25s' }}
       exit={{ x: '100%', opacity: 0, transitionDuration: '0.25s' }}
-      // initial={{ x: '-100%', opacity: 0 }}
-      // animate={{ x: 0, opacity: 1 }}
-      // exit={{ x: '100%', opacity: 0 }}
       transition={{ duration: 0.5, ease: 'easeIn' }}
     >
       { titleDiv }

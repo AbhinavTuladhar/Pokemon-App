@@ -1,5 +1,6 @@
 import { React } from 'react'
 import SectionTitle from '../SectionTitle'
+import TableContainer from '../TableContainer'
 import formatName from '../../utils/NameFormatting'
 
 const generateGenderInfo = genderRate => {
@@ -53,18 +54,18 @@ const BreedingInfo = ({ data }) => {
 
   const tableDiv = tableRows.map(row => {
     return (
-      <div className='flex flex-row border-t-[1px] border-gray-200 py-2 h-12'>
-        <div className='flex justify-end items-center w-4/12 text-right'> {row.label} </div>
-        <div className='flex justify-start pl-4 w-8/12 items-center'> {row.value} </div>
+      <div className='table-row py-2 h-12'>
+        <div className='table-cell border-t-[1px] border-gray-200 align-middle w-4/12 text-right'> {row.label} </div>
+        <div className='table-cell border-t-[1px] border-gray-200 align-middle pl-4 w-8/12 items-center'> {row.value} </div>
       </div>
     )
   })
 
   return (
-    <div className='border-b-[1px] w-full'>
+    <>
       <SectionTitle text={'Breeding'} />
-        {tableDiv}
-    </div>
+      <TableContainer child={tableDiv} />
+    </>
   )
 
 }
