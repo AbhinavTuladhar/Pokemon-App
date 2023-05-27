@@ -103,20 +103,32 @@ const PokeDexData = ({ pokemonData }) => {
   })
   
   // This is for rendering tha actual regional pokdex numbers.
+  // const regionNumberList = finalGameData?.map(number => {
+  //   return (
+  //     <div className='flex flex-row'>
+  //       <div className='flex flex-row justify-start w-2/12'>
+  //         { number.dexNumber }
+  //       </div>
+  //       <div className='flex flex-row justify-start w-10/12 brightness-90'>
+  //         { number.game }
+  //       </div>
+  //     </div>
+  //   )
+  // })
   const regionNumberList = finalGameData?.map(number => {
     return (
-      <div className='flex flex-row'>
-        <div className='flex flex-row justify-start w-2/12'>
+      <div className='table-row'>
+        <div className='table-cell px-1'>
           { number.dexNumber }
         </div>
-        <div className='flex flex-row justify-start w-10/12 brightness-90'>
+        <div className='table-cell px-1 brightness-90'>
           { number.game }
         </div>
       </div>
     )
   })
   const regionNumberListFinal = (
-    <div className='flex flex-col w-full'>
+    <div className='table'>
       {regionNumberList}
     </div>
   )
