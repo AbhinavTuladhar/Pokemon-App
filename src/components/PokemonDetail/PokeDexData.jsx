@@ -147,19 +147,6 @@ const PokeDexData = ({ pokemonData }) => {
       </div>
     )
   })
-  // const tableEntries = tableData.map(row => {
-  //   const spacing = row.label === 'Abilities' || row.label === 'Regional no.'? 'min-h-14' : 'h-12'
-  //   return (
-  //     <div className={`flex flex-row border-t-[1px] border-gray-200 py-2 ${spacing}`}>
-  //       <div className='flex justify-end text-right items-center w-3/12'>
-  //         {row.label}
-  //       </div>
-  //       <div className='flex justify-start pl-4 w-9/12 items-center'>
-  //         {row.value}
-  //       </div>
-  //     </div>
-  //   )
-  // })
 
   return (
     <>
