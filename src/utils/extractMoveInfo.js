@@ -5,6 +5,7 @@ const extractMoveInformation = move => {
     accuracy,
     damage_class: { name: damageClass},
     effect_chance,
+    effect_entries,
     flavor_text_entries,
     generation: { name: generationIntroduced },
     meta : { 
@@ -27,12 +28,19 @@ const extractMoveInformation = move => {
   const ORASDescription = flavor_text_entries.find(entry =>
     entry.language.name === 'en' && entry.version_group.name === 'omega-ruby-alpha-sapphire'
   )
+  // Find the English effect entry.
+  const englishEffect = effect_entries.find(entry => 
+    entry.language.name === 'en'
+  )
+  const longEntry = englishEffect.effect
+  const shortEntry = englishEffect.short_effect
   const realAccuracy = accuracy === null ? '-' : accuracy
   const realPower = power === null ? '-' : power
+  const realEffectChance = effect_chance === null ? '-' : effect_chance
   return {
     accuracy: realAccuracy,
     damageClass,
-    effect_chance,
+    effect_chance: realEffectChance,
     generationIntroduced,
     ailmentName,
     ailmentChance,
@@ -47,7 +55,9 @@ const extractMoveInformation = move => {
     targetType,
     moveType,
     moveCategory,
-    description: ORASDescription.flavor_text
+    description: ORASDescription.flavor_text,
+    longEntry,
+    shortEntry
   };
 }
 

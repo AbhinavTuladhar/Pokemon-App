@@ -3,6 +3,7 @@ import MainPage from '../pages/MainPage'
 import WelcomePage from '../pages/WelcomePage'
 import PokemonDetail from '../pages/PokemonDetail'
 import TypeDetail from './OtherDetails/TypeDetail'
+import MoveDetail from '../pages/MoveDetail'
 import TypeListing from '../pages/TypeListing'
 import MoveListing from '../pages/MoveListing'
 import { Routes, Route, useLocation } from 'react-router-dom'
@@ -30,11 +31,12 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode='wait'>
       <Routes location={location} key={location.pathname}>
         <Route path='' element={<WelcomePage />} />
-        <Route path='/pokemon/:id' element={<PokemonDetail />} />
-        <Route path='/types/:type' element={<TypeDetail />} />
         <Route path='/types' element={<TypeListing />} />
         <Route path='/moves' element={<MoveListing />} />
         {generationRoutes}
+        <Route path='/pokemon/:id' element={<PokemonDetail />} />
+        <Route path='/types/:type' element={<TypeDetail />} />
+        <Route path='/move/:id' element={<MoveDetail />} />
       </Routes>
     </AnimatePresence>
   )
