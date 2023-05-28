@@ -63,7 +63,7 @@ const PokeDexEntry = ( { data }) => {
   return (
     <>
       <SectionTitle text={'Pokédex Entries'} />
-      <div className='table border-b-[1px] border-gray-200'>
+      <div className='table border-b-[1px] border-gray-200 w-full'>
         {entryRows}
       </div>
     </>

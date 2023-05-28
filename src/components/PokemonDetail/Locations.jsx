@@ -114,7 +114,7 @@ const Locations = ({ id, name }) => {
   const finalTable = preFinalTable?.map(row => {
     return (
       <div className={`table-row py-2 border-gray-200 border-t-[1px] px-2 mx-2`}>
-        <div className='table-cell border-gray-200 border-t-[1px] py-2 mx-4 align-middle text-right'> {row.versionName} </div>
+        <div className='table-cell w-2/12 border-gray-200 border-t-[1px] py-2 mx-4 align-middle text-right'> {row.versionName} </div>
         <div className='table-cell border-gray-200 border-t-[1px] py-2 pl-4 align-middle first-line:mx-4'> {row.locationName} </div>
       </div>
     )
