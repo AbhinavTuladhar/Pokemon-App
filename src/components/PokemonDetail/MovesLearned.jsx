@@ -9,6 +9,7 @@ import extractMoveInformation from '../../utils/extractMoveInfo'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
 import moveStatus from '../../images/move-status.png'
+import { NavLink } from 'react-router-dom'
 
 // This is for the headers
 const firstRow = {
@@ -199,6 +200,8 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
       const moveClassImage = returnMoveImage(move?.damageClass)
       // Check if it is the first column.
       const firstColStyle = move?.levelLearntAt ? '' : 'pl-4'
+      // Different colour for the move name column
+      const moveNameStyle = index === 0 ? '' : 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300 hover:cursor-pointer'
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
@@ -209,8 +212,14 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
               {move?.levelLearntAt}
             </div>
           }
-          <div className={`${firstColStyle} whitespace-nowrap table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2`}>
-            {formatName(move?.moveName)}
+          <div className={`${firstColStyle} ${moveNameStyle} whitespace-nowrap table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2 `}>
+            {
+              index !== 0 
+              ?
+              <NavLink to={`/moves/${move?.id}`}> {formatName(move?.moveName)} </NavLink>
+              :
+              formatName(move?.moveName)
+            }
           </div>
           <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {

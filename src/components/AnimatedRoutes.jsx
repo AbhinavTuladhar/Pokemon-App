@@ -36,7 +36,7 @@ const AnimatedRoutes = () => {
         {generationRoutes}
         <Route path='/pokemon/:id' element={<PokemonDetail />} />
         <Route path='/types/:type' element={<TypeDetail />} />
-        <Route path='/move/:id' element={<MoveDetail />} />
+        <Route path='/moves/:id' element={<MoveDetail />} />
       </Routes>
     </AnimatePresence>
   )

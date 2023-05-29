@@ -17,6 +17,8 @@ const extractMoveInformation = move => {
       category: { name: moveCategory },
       stat_chance: statChance
     },
+    id,
+    machines,
     name: moveName,
     power,
     pp: PP,
@@ -57,7 +59,9 @@ const extractMoveInformation = move => {
     moveCategory,
     description: ORASDescription.flavor_text,
     longEntry,
-    shortEntry
+    shortEntry,
+    id,
+    machines
   };
 }
 
