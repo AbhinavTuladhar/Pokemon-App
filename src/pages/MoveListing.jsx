@@ -53,7 +53,7 @@ const MoveListing = () => {
   }
 
   // Perform a GET request on all the 'calculated' URLs.
-  const { data: moveData, isLoading } = useQuery(
+  const { data: moveData } = useQuery(
     ['moveData', urlList],
     () => Promise.all(urlList.map(fetchData)),
     { staleTime: Infinity, cacheTime: Infinity }
@@ -63,8 +63,6 @@ const MoveListing = () => {
     if (!moveData)
       return
     const extracted = moveData.map(move => extractMoveInformation(move))
-    console.log('printing raw move data')
-    console.log(extracted)
     setMoveList(() => {
       const extractedNew = extracted.map(move => {
         const { id, moveName, moveType, damageClass, power, accuracy, PP, shortEntry, effect_chance: effectChance, machines } = move
@@ -127,23 +125,11 @@ const MoveListing = () => {
     
     const joinedData = moveList?.map(obj1 => {
       const obj2 = TMData?.find(obj => obj1.moveName === obj.name) 
-      return { ...obj1, ... obj2 }
+      return { ...obj1, ...obj2 }
     })
 
     setMoveListReady(joinedData)
   }, [TMData, moveList])
-
-  useEffect(() => {
-    if (moveListReady.length > 0) {
-      console.log('Logging completely ready list', moveListReady)
-    }
-  }, [moveListReady])
-
-  if (!moveListReady) {
-    return (
-      <div className='flex text-center items-center justify-center text-3xl'> Loading. It'll take some time since there are 621 moves! </div>
-    )
-  }
 
   const headers = [{
     moveName: 'Name',
@@ -162,36 +148,58 @@ const MoveListing = () => {
     const link = `/moves/${id}`
     // Provide a border on all sides and bold the text for the header.
     const headerStyle = index === 0 ? 'font-bold' : ''
+    // An image for the move type.
     const moveClassImage = returnMoveImage(damageClass)
-    // Creating an object for the DRY principle.
+    // Creating an object for the table cells, abiding by the DRY principle.
     const tableCellData = [
       { 
         key: 'moveName', 
         value: (
           <NavLink to={link}> {formatName(moveName)} </NavLink> 
-        )
+        ),
+        style: index !== 0 ? 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300 whitespace-nowrap' : ''
       },
-      { key: 'moveType', value: index === 0 ? moveType : <TypeCard typeName={ moveType } /> },
-      { key: 'damageClass', value: index === 0 ? damageClass : <img src={moveClassImage} className='h-[20px] w-[30px]' alt={damageClass} /> },
-      { key: 'power', value: power },
-      { key: 'accuracy', value: accuracy },
-      { key: 'PP', value: PP },
-      { key: 'machine', value: machine },
-      { key: 'shortEntry', value: shortEntry?.replace('$effect_chance% ', '') },
-      { key: 'effectChance', value: effectChance },
+      { 
+        key: 'moveType', 
+        value: index === 0 ? moveType : <TypeCard typeName={ moveType } /> 
+      },
+      { 
+        key: 'damageClass', 
+        value: index === 0 ? damageClass : <img src={moveClassImage} className='h-[20px] w-[30px]' alt={damageClass} /> 
+      },
+      { 
+        key: 'power', 
+        value: power 
+      },
+      { 
+        key: 'accuracy', 
+        value: accuracy 
+      },
+      { 
+        key: 'PP', 
+        value: PP 
+      },
+      { 
+        key: 'machine', 
+        value: machine 
+      },
+      { 
+        key: 'shortEntry', 
+        value: (<div className='w-[36rem]'> { shortEntry?.replace('$effect_chance% ', '') } </div>),
+        style: 'pr-8 w-[48rem]'
+      },
+      { 
+        key: 'effectChance', 
+        value: effectChance ,
+        style: 'whitespace-nowrap'
+      },
     ];
     const tableCells = tableCellData.map(cell => {
-      const extraStyling = cell.key === 'shortEntry' ? 'pr-8 w-[48rem]' : 'pl-4'
-      // Make a style for the navlink
-      const navLinkStyle = cell.key === 'moveName' && index !== 0 ? 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300' : ''
-      // Make a special div for the entry
-      const entryDiv = cell.key === 'shortEntry' ? (<div className='w-[36rem]'> { cell.value } </div>) : cell.value
-
       return (
         <div 
-          className={`${headerStyle} ${extraStyling} ${navLinkStyle} border-t-[1px] border-gray-500 table-cell h-12 align-middle pl-2 py-2`}
+          className={`${cell.style} ${headerStyle} border-gray-500 border-t-[1px] table-cell h-12 align-middle p-2`}
         > 
-          { entryDiv }
+          { cell.value }
         </div>
       )
     })
@@ -201,6 +209,12 @@ const MoveListing = () => {
       </div>
     )
   }) 
+
+  if (moveTableRows?.length < 2 && TMData.length === 0) {
+    return (
+      <div className='flex text-center items-center justify-center text-3xl'> Loading. It'll take some time since there are 621 moves! </div>
+    )
+  }
 
   return (
     <motion.div 
