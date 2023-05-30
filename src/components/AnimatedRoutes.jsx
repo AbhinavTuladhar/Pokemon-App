@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import MainPage from '../pages/MainPage'
-import WelcomePage from '../pages/WelcomePage'
-import PokemonDetail from '../pages/PokemonDetail'
-import TypeDetail from './OtherDetails/TypeDetail'
-import MoveDetail from '../pages/MoveDetail'
-import TypeListing from '../pages/TypeListing'
-import MoveListing from '../pages/MoveListing'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
+// Lazy loaded components
+const WelcomePage = lazy(() => import('../pages/WelcomePage'))
+const PokemonDetail = lazy(() => import('../pages/PokemonDetail'))
+const TypeDetail = lazy(() => import('./OtherDetails/TypeDetail'))
+const MoveDetail = lazy(() => import('../pages/MoveDetail'))
+const TypeListing = lazy(() => import('../pages/TypeListing'))
+const MoveListing = lazy(() => import('../pages/MoveListing'))
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -29,15 +30,17 @@ const AnimatedRoutes = () => {
 
   return (
     <AnimatePresence mode='wait'>
-      <Routes location={location} key={location.pathname}>
-        <Route path='' element={<WelcomePage />} />
-        <Route path='/types' element={<TypeListing />} />
-        <Route path='/moves' element={<MoveListing />} />
-        {generationRoutes}
-        <Route path='/pokemon/:id' element={<PokemonDetail />} />
-        <Route path='/types/:type' element={<TypeDetail />} />
-        <Route path='/moves/:id' element={<MoveDetail />} />
-      </Routes>
+      <Suspense>
+        <Routes location={location} key={location.pathname}>
+          <Route path='' element={<WelcomePage />} />
+          <Route path='/types' element={<TypeListing />} />
+          <Route path='/moves' element={<MoveListing />} />
+          {generationRoutes}
+          <Route path='/pokemon/:id' element={<PokemonDetail />} />
+          <Route path='/types/:type' element={<TypeDetail />} />
+          <Route path='/moves/:id' element={<MoveDetail />} />
+        </Routes>
+      </Suspense>
     </AnimatePresence>
   )
 }
