@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import MoveData from '../components/MoveDetail/MoveData'
 import MachineRecord from '../components/MoveDetail/MachineRecord'
 import MoveEffect from '../components/MoveDetail/MoveEffect'
+import GameDescription from '../components/MoveDetail/GameDescription'
 import useFetch from '../utils/useFetch'
 import extractMoveInformation from '../utils/extractMoveInfo'
 import formatName from '../utils/NameFormatting'
@@ -36,13 +37,10 @@ const MoveDetail = () => {
       exit={{ y: '100%', opacity: 0, transitionDuration: '0.75s' }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
-      <div className='flex justify-center text-4xl font-bold'>
-        { formatName(moveInfo.moveName) }&nbsp;
-        <span className='brightness-90'>
-          (move)
-        </span>
+      <div className='flex justify-center text-center text-4xl font-bold'>
+        { formatName(moveInfo.moveName) } (move)
       </div>
-      <div className='flex flex-row flex-wrap gap-x-24'>
+      <div className='flex flex-row flex-wrap gap-x-24 mt-4'>
         <div className='flex flex-col lg:w-1/4 w-full'>
           <MoveData moveInfo={ moveInfo } />
           {
@@ -50,8 +48,9 @@ const MoveDetail = () => {
             <MachineRecord machineList={ moveInfo.machines} />
           }
         </div>
-        <div className='lg:w-2/3 w-full'>
+        <div className='flex flex-col lg:w-2/3 w-full'>
           <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
+          <GameDescription descriptions={moveInfo.descriptions} />
         </div>
       </div>
     </motion.div>

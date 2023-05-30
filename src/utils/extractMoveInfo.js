@@ -1,3 +1,5 @@
+import generationMapping from "./generationMapping"
+
 // This is for extracting the information of the moves
 const extractMoveInformation = move => {
   if (!move) return
@@ -32,7 +34,8 @@ const extractMoveInformation = move => {
     .filter(entry => entry.language.name === 'en')
     .map(version => ({
       description: version.flavor_text,
-      version: version.version_group.name
+      version: version.version_group.name,
+      generation: generationMapping[version.version_group.name]
     }))
 
   // Find the English effect entry.
