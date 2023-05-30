@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import MoveData from '../components/MoveDetail/MoveData'
+import MachineRecord from '../components/MoveDetail/MachineRecord'
+import MoveEffect from '../components/MoveDetail/MoveEffect'
 import useFetch from '../utils/useFetch'
 import extractMoveInformation from '../utils/extractMoveInfo'
 import formatName from '../utils/NameFormatting'
@@ -22,9 +24,13 @@ const MoveDetail = () => {
     setMoveInfo(extractedInformation)
   }, [moveData])
 
+  useEffect(() => {
+    if (moveInfo) console.log('Logging extracted information from move detail', moveInfo)
+  }, [moveInfo])
+
   return (
     <motion.div
-      className='mx-4'
+      className='mx-10'
       initial={{ y: '100%', opacity: 0 }}
       animate={{ y: 0, opacity: 1, transitionDuration: '0.8s' }}
       exit={{ y: '100%', opacity: 0, transitionDuration: '0.75s' }}
@@ -36,7 +42,18 @@ const MoveDetail = () => {
           (move)
         </span>
       </div>
-      <MoveData moveInfo={ moveInfo } />
+      <div className='flex flex-row flex-wrap gap-x-24'>
+        <div className='flex flex-col lg:w-1/4 w-full'>
+          <MoveData moveInfo={ moveInfo } />
+          {
+            moveInfo?.machines?.length > 0 &&
+            <MachineRecord machineList={ moveInfo.machines} />
+          }
+        </div>
+        <div className='lg:w-2/3 w-full'>
+          <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
+        </div>
+      </div>
     </motion.div>
   )
 }

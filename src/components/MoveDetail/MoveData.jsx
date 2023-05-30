@@ -5,8 +5,6 @@ import SectionTitle from '../SectionTitle'
 import formatName from '../../utils/NameFormatting'
 
 const MoveData = ({ moveInfo }) => {
-  console.log('in move data', moveInfo)
-
   const {
     moveType, 
     damageClass,
@@ -28,10 +26,10 @@ const MoveData = ({ moveInfo }) => {
   const tableRows = rowData.map(row => {
     return (
       <div className='table-row h-12'>
-        <div className="table-cell align-middle text-right border-t-[1px] py-2 pr-8 border-slate-200"> 
+        <div key={ row.header } className="table-cell align-middle text-right border-t-[1px] py-2 pr-8 border-slate-200"> 
           { row.header }
         </div>
-        <div className="table-cell align-middle border-t-[1px] py-2 border-slate-200"> 
+        <div key={ row.value} className="table-cell align-middle border-t-[1px] py-2 border-slate-200"> 
           { row.value }
         </div>
       </div>
@@ -41,7 +39,7 @@ const MoveData = ({ moveInfo }) => {
   return (
     <>
       <SectionTitle text={'Move data'} />
-      <div className='lg:w-1/4 w-full'>
+      <div className='w-full'>
         <TableContainer child={tableRows} />
       </div>
     </>
