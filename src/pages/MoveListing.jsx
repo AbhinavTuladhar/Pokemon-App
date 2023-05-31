@@ -210,19 +210,27 @@ const MoveListing = () => {
     )
   }) 
 
-  if (moveTableRows?.length < 2 && TMData.length === 0) {
-    return (
-      <div className='flex text-center items-center justify-center text-3xl'> Loading. It'll take some time since there are 621 moves! </div>
-    )
-  }
+  const loadingDiv =  (
+    <div className='flex text-center items-center justify-center text-3xl'> 
+      Loading. It'll take some time since there are 621 moves! 
+    </div>
+  )
 
   return (
     <motion.div 
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className='mx-4'>
-      <TableContainer child={moveTableRows} />
+      animate={{ opacity: 1, transitionDuration: '0.8s' }}
+      exit={{ opacity: 0, transitionDuration: '0.75s' }}
+      className='mx-4'
+    >
+      { 
+        // Checking if data is present
+        (moveTableRows?.length < 2 && TMData.length === 0) 
+        ?
+        loadingDiv
+        :
+        <TableContainer child={moveTableRows} />
+      }
     </motion.div>
   )
 }
