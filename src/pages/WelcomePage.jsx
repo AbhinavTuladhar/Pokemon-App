@@ -12,7 +12,8 @@ const WelcomePage = () => {
     <motion.div
       initial={{opacity: 0}}
       animate={{opacity: 1}}
-      exit={{opacity: 0}}
+      exit={{ y: '100%', opacity: 0, transitionDuration: '0.5s' }}
+      transition={{ ease: 'easeIn'}}
       className='mx-2 pt-10 flex flex-col justify-center items-center gap-y-4'
     >
       <div className="flex text-5xl justify-center font-bold mx-auto">

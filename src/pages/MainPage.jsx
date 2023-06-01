@@ -40,8 +40,8 @@ const MainPage = ({ idRange }) => {
 
   // Text to display when the data is not available.
   const loadingText = (
-    <div className='justify-center items-center text-5xl'> 
-      Please wait, data is loading... 
+    <div className='flex text-center justify-center items-center text-5xl'> 
+      Loading...
     </div>)
 
   return (
