@@ -1,17 +1,19 @@
 import { React, useMemo, useEffect } from 'react'
-import axios from 'axios'
 import { useQuery } from 'react-query'
 import { useLocation } from 'react-router-dom'
-import PokeCard from '../components/PokeCard'
 import { motion } from 'framer-motion'
+import axios from 'axios'
+import PokeCard from '../components/PokeCard'
 
 const MainPage = ({ idRange }) => {
   // This is for setting the title of the page.
   const currentLocation = useLocation()
-  const generationNumber = currentLocation.pathname.slice(-1)
+  const generationNumberRaw = currentLocation.pathname.slice(-1)
+  // Check for the 'other forms' page.
+  const generationNumber = isNaN(generationNumberRaw) ? '' : generationNumberRaw
 
   useEffect(() => {
-    document.title = `Gen ${generationNumber}`
+    document.title = generationNumber !== '' ? `Gen ${generationNumber}` : 'Pokemon forms'
   }, [generationNumber])
 
   const fetchPokemonData = async (url) => {
@@ -46,13 +48,31 @@ const MainPage = ({ idRange }) => {
 
   return (
     <motion.div 
-      className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'
       initial={{ x: '-100%', opacity: 0 }}
       animate={{ x: 0, opacity: 1, transitionDuration: '0.3s' }}
       exit={{ x: '100%', opacity: 0, transitionDuration: '0.5s' }}
       transition={{ ease: 'easeIn'}}
     >
-      {isLoading ? loadingText : pokemonBoxes}
+      {
+        isLoading 
+        ? 
+        loadingText 
+        : 
+        <>
+          <div className='flex text-5xl font-bold justify-center'>
+            {
+              generationNumber !== '' 
+              ? 
+              `Generation ${generationNumber} Pokemon` 
+              : 
+              'Pokemon forms'
+            }
+          </div>
+          <div className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'>
+            { pokemonBoxes }
+          </div>
+        </>
+      }
     </motion.div>
   )
 }

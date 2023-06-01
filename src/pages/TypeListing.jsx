@@ -17,12 +17,15 @@ const TypeListing = () => {
 
   return (
     <motion.div 
-      className='w-7/12 mx-auto p-4'
+      className='md:w-3/4 w-full mx-auto p-4'
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      animate={{ opacity: 1, transitionDuration: '0.5s' }}
+      exit={{ opacity: 0, transitionDuration: '0.5s' }}
+      transition={{ ease: 'easeIn'}}
     >
-      <h1 className='text-4xl mb-4 font-bold'> These are all the types: </h1>
+      <h1 className='flex text-center justify-center text-4xl mb-10 font-bold'> 
+        Type List
+      </h1>
       <div className='flex flex-row flex-wrap gap-4 justify-center'>
         { typeCardList }
       </div>
