@@ -148,6 +148,15 @@ const MoveListing = () => {
     const link = `/moves/${id}`
     // Provide a border on all sides and bold the text for the header.
     const headerStyle = index === 0 ? 'font-bold' : ''
+    // Separate background colours for the header and odd-even rows.
+    let bgColour
+    if (index !== 0 && index % 2 === 0) {
+      bgColour = 'bg-gray-900'
+    } else if (index === 0) {
+      bgColour = 'bg-[#1a1a1a]'
+    } else {
+      bgColour = ''
+    }
     // An image for the move type.
     const moveClassImage = returnMoveImage(damageClass)
     // Creating an object for the table cells, abiding by the DRY principle.
@@ -197,14 +206,14 @@ const MoveListing = () => {
     const tableCells = tableCellData.map(cell => {
       return (
         <div 
-          className={`${cell.style} ${headerStyle} border-gray-500 border-t-[1px] table-cell h-12 align-middle p-2`}
+          className={`${cell.style} ${headerStyle} ${bgColour} border-gray-500 border-t-[1px] table-cell h-12 align-middle p-2`}
         > 
           { cell.value }
         </div>
       )
     })
     return (
-      <div className='table-row'>
+      <div className='table-row hover:brightness-110'>
         { tableCells }
       </div>
     )
@@ -212,7 +221,7 @@ const MoveListing = () => {
 
   const loadingDiv =  (
     <div className='flex text-center items-center justify-center text-3xl'> 
-      Loading. It'll take some time since there are 621 moves! 
+      Loading. It might take some time since there are 621 moves! 
     </div>
   )
 
