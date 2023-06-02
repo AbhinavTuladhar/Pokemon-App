@@ -3,7 +3,10 @@ import { useQuery } from 'react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import axios from 'axios'
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'
 import PokeCard from '../components/PokeCard'
+import PokeCardSkeleton from '../components/PokeCardSkeleton'
 
 const MainPage = ({ idRange }) => {
   // This is for setting the title of the page.
@@ -11,6 +14,9 @@ const MainPage = ({ idRange }) => {
   const generationNumberRaw = currentLocation.pathname.slice(-1)
   // Check for the 'other forms' page.
   const generationNumber = isNaN(generationNumberRaw) ? '' : generationNumberRaw
+
+  // Find the number of Pokemon in the page for skeleton.
+  const pokemonCount = idRange[1] - idRange[0]
 
   useEffect(() => {
     document.title = generationNumber !== '' ? `Gen ${generationNumber}` : 'Pokemon forms'
@@ -56,10 +62,12 @@ const MainPage = ({ idRange }) => {
       {
         isLoading 
         ? 
-        loadingText 
+        <div className='gap-x-2 px-0 py-4 flex flex-wrap justify-center items-center'>
+          <PokeCardSkeleton cardCount={20} />
+        </div>
         : 
         <>
-          <div className='flex text-5xl font-bold justify-center'>
+          {/* <div className='flex text-5xl font-bold justify-center'>
             {
               generationNumber !== '' 
               ? 
@@ -67,7 +75,7 @@ const MainPage = ({ idRange }) => {
               : 
               'Pokemon forms'
             }
-          </div>
+          </div> */}
           <div className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'>
             { pokemonBoxes }
           </div>
