@@ -8,6 +8,7 @@ import TableContainer from '../components/TableContainer'
 import extractMoveInformation from '../utils/extractMoveInfo'
 import formatName from '../utils/NameFormatting'
 import TypeCard from '../components/TypeCard'
+import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import movePhysical from '../images/move-physical.png'
 import moveSpecial from '../images/move-special.png'
 import moveStatus from '../images/move-status.png'
@@ -236,7 +237,7 @@ const MoveListing = () => {
         // Checking if data is present
         (moveTableRows?.length < 2 && TMData.length === 0) 
         ?
-        loadingDiv
+        <MoveListingSkeleton rowCount={20} />
         :
         <TableContainer child={moveTableRows} />
       }
