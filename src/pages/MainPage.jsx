@@ -62,20 +62,11 @@ const MainPage = ({ idRange }) => {
       {
         isLoading 
         ? 
-        <div className='gap-x-2 px-0 py-4 flex flex-wrap justify-center items-center'>
+        <div className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'>
           <PokeCardSkeleton cardCount={20} />
         </div>
         : 
         <>
-          {/* <div className='flex text-5xl font-bold justify-center'>
-            {
-              generationNumber !== '' 
-              ? 
-              `Generation ${generationNumber} Pokemon` 
-              : 
-              'Pokemon forms'
-            }
-          </div> */}
           <div className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'>
             { pokemonBoxes }
           </div>
