@@ -4,6 +4,7 @@ import { AiFillCheckCircle, AiFillCloseCircle }  from 'react-icons/ai'
 import { motion } from 'framer-motion'
 import TypeCard from '../TypeCard'
 import useFetch from '../../utils/useFetch'
+import { extractTypeInformation } from '../../utils/extractInfo'
 
 const TypeDetail = ( ) => {
   const { type } = useParams()
@@ -27,36 +28,8 @@ const TypeDetail = ( ) => {
   }, [fetchedData])
 
   useEffect(() => {
-    const extractInformation = data => {
-      const {
-        damage_relations: damageRelations,
-        moves: moveList,
-        pokemon: pokemonList,
-      } = data
-      const {
-        double_damage_from: doubleDamageFrom,
-        double_damage_to: doubleDamageTo,
-        half_damage_from: halfDamageFrom,
-        half_damage_to: halfDamageTo,
-        no_damage_from: noDamageFrom,
-        no_damage_to: noDamageTo
-      } = damageRelations
-
-      const extractName = arr => arr.map(type => type.name)
-
-      return {
-        doubleDamageFrom: extractName(doubleDamageFrom),
-        doubleDamageTo: extractName(doubleDamageTo),
-        halfDamageFrom: extractName(halfDamageFrom),
-        halfDamageTo: extractName(halfDamageTo),
-        noDamageFrom: extractName(noDamageFrom),
-        noDamageTo: extractName(noDamageTo),
-        moveList: moveList,
-        pokemonList: pokemonList,
-      }
-    }
     if (Object.keys(typeData).length !== 0) {
-      const managedInformation = extractInformation(typeData)
+      const managedInformation = extractTypeInformation(typeData)
       setExtractedInformation(managedInformation)
     }
   }, [typeData])
