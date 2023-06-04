@@ -11,7 +11,8 @@ const NavBar = () => {
     { path: '/pokemon/generation-6', name: 'Generation 6'},
     { path: '/pokemon/forms', name: 'Other forms'},
     { path: '/types', name: 'Pokemon Types'},
-    { path: '/moves', name: 'Moves'}
+    { path: '/moves', name: 'Moves'},
+    { path: '/ability', name: 'Abilities'}
   ]
 
   // For making the navigation bar.
