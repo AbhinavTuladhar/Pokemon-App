@@ -3,7 +3,6 @@ import { useQuery } from 'react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import axios from 'axios'
-import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css'
 import PokeCard from '../components/PokeCard'
 import PokeCardSkeleton from '../components/PokeCardSkeleton'

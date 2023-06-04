@@ -6,7 +6,7 @@ import MachineRecord from '../components/MoveDetail/MachineRecord'
 import MoveEffect from '../components/MoveDetail/MoveEffect'
 import GameDescription from '../components/MoveDetail/GameDescription'
 import useFetch from '../utils/useFetch'
-import extractMoveInformation from '../utils/extractMoveInfo'
+import { extractMoveInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
 
 const MoveDetail = () => {

@@ -10,7 +10,7 @@ import BaseStat from '../components/PokemonDetail/BaseStat'
 import Locations from '../components/PokemonDetail/Locations'
 import BreedingInfo from '../components/PokemonDetail/BreedingInfo'
 import MovesLearned from '../components/PokemonDetail/MovesLearned'
-import formatName from '../utils/NameFormatting';
+import { extractPokemonInformation, extractSpeciesInformation } from '../utils/extractInfo'
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -34,54 +34,28 @@ const PokemonDetail = () => {
   }, [speciesURL])
 
   // For extracting information from the 'pokemon' object.
-  const extractGeneralInformation = (data) => {
+  const setGeneralInformation = (data) => {
+    const extractedInfo = extractPokemonInformation(data)
     const { 
       id,
       name,
-      sprites: { other : { 'official-artwork' : { front_default, front_shiny }}} ,
-      species: { url: speciesLink}
-    } = data;
-    setImageSource({defaultSprite: front_default, shinySprite: front_shiny})
-    setSpeciesURL(speciesLink)
-    setIdInfo(() => {
-      const properName = formatName(name)
-      return {
-        id: id,
-        name: properName
-      }
-    })
+      defaultSprite,
+      shinySprite,
+      speciesUrl
+    } = extractedInfo;
+    setImageSource({defaultSprite, shinySprite})
+    setSpeciesURL(speciesUrl)
+    setIdInfo(() => ({ id, name }))
   };
 
   // same as above, but for speciesData.
-  const extractSpeciesInformation = ( data ) => {
+  const setSpeciesInformation = ( data ) => {
     if (!data || !data.genera)
       return
-    const  { 
-      genera, 
-      flavor_text_entries, 
-      base_happiness, 
-      capture_rate, 
-      growth_rate : {name: growthRateType},
-      pokedex_numbers,
-      gender_rate,
-      egg_groups,
-      hatch_counter
-    } = data
-    // Find only the English genus name of the 'mon.
-    const englishGenus = genera.find(entry => entry.language.name === 'en')
+    const extractedInfo = extractSpeciesInformation(data)
+    const { flavor_text_entries } = extractedInfo
     setDexEntry(flavor_text_entries)
-    setSpeciesData(() => {
-      return {
-        genus: englishGenus.genus,
-        base_happiness: base_happiness,
-        capture_rate: capture_rate,
-        growth_rate: growthRateType,
-        pokedex_numbers: pokedex_numbers,
-        gender_rate: gender_rate,
-        egg_groups: egg_groups,
-        hatch_counter: hatch_counter
-      }
-    })
+    setSpeciesData(extractedInfo)
   }
 
   // Fpr a dynamic title.
@@ -99,10 +73,10 @@ const PokemonDetail = () => {
   // For extracting the information from the fetched 
   useEffect(() => {
     if (pokemon) {
-      extractGeneralInformation(pokemon);
+      setGeneralInformation(pokemon);
     }
     if (speciesData) {
-      extractSpeciesInformation(speciesData)
+      setSpeciesInformation(speciesData)
     }
   }, [pokemon, speciesData]);
 

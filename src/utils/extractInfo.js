@@ -1,7 +1,8 @@
 import generationMapping from "./generationMapping"
+import formatName from "./NameFormatting";
 
 // This is for extracting the information of the moves
-const extractMoveInformation = move => {
+export const extractMoveInformation = move => {
   if (!move) return
   const { 
     accuracy,
@@ -91,4 +92,47 @@ const extractMoveInformation = move => {
   };
 }
 
-export default extractMoveInformation
+export const extractPokemonInformation = (data) => {
+  const { 
+    id,
+    name,
+    sprites: { other: { 'official-artwork': { front_default, front_shiny }}},
+    species: { url: speciesLink }
+  } = data;
+  return {
+    id,
+    name: formatName(name),
+    defaultSprite: front_default, 
+    shinySprite: front_shiny,
+    speciesUrl: speciesLink
+  }
+};
+
+export const extractSpeciesInformation = data => {
+  const  { 
+    genera, 
+    flavor_text_entries, 
+    base_happiness, 
+    capture_rate, 
+    growth_rate : {name: growthRateType},
+    pokedex_numbers,
+    gender_rate,
+    egg_groups,
+    hatch_counter
+  } = data
+  // Find only the English genus name of the 'mon.
+  const englishGenus = genera.find(entry => entry.language.name === 'en')
+  return {
+    genus: englishGenus.genus,
+    growth_rate: growthRateType,
+    base_happiness,
+    capture_rate,
+    pokedex_numbers,
+    gender_rate,
+    egg_groups,
+    hatch_counter,
+    flavor_text_entries
+  }
+}
+
+export default extractSpeciesInformation
