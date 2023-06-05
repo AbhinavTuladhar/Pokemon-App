@@ -10,6 +10,7 @@ import MoveDetail from '../pages/MoveDetail'
 import TypeListing from '../pages/TypeListing'
 import MoveListing from '../pages/MoveListing'
 import AbilityListing from '../pages/AbilityListing'
+import AbilityDetail from '../pages/AbilityDetail'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -40,6 +41,7 @@ const AnimatedRoutes = () => {
         <Route path='/pokemon/:id' element={<PokemonDetail />} />
         <Route path='/types/:type' element={<TypeDetail />} />
         <Route path='/moves/:id' element={<MoveDetail />} />
+        <Route path='/ability/:id' element={<AbilityDetail />} />
       </Routes>
     </AnimatePresence>
   )

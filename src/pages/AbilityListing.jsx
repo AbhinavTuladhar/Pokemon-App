@@ -2,9 +2,11 @@ import React, { useState, useEffect, useMemo } from 'react'
 import axios from 'axios'
 import { useQuery } from 'react-query'
 import { motion } from 'framer-motion'
+import { NavLink } from 'react-router-dom'
 import { extrctAbilityInformation } from '../utils/extractInfo'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import TableContainer from '../components/TableContainer'
+import formatName from '../utils/NameFormatting'
 
 const AbilityListing = () => {
   const [abilityInfo, setAbilityInfo] = useState([])
@@ -49,8 +51,10 @@ const AbilityListing = () => {
   }]
 
   const tableRows = [...headers, ...abilityInfo].map((row, index) => {
-    const { name, pokemonCount, shortEntry, generationIntroduced } = row
+    const { id, name, pokemonCount, shortEntry, generationIntroduced } = row
     const headerStyle = index === 0 ? 'font-bold sticky top-0' : ''
+    const abilityLink = `/ability/${id}`
+
     // Separate background colours for the header and odd-even rows.
     let bgColour
     if (index !== 0 && index % 2 === 0) {
@@ -60,8 +64,13 @@ const AbilityListing = () => {
     } else {
       bgColour = ''
     }
+    
     const cellData = [
-      { key: 'Name', value: name, style: index !== 0 ? 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300 whitespace-nowrap' : '' },
+      { 
+        key: 'Name', 
+        value: (<NavLink to={abilityLink}> {formatName(name)} </NavLink>), 
+        style: index !== 0 ? 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300 whitespace-nowrap' : '' 
+      },
       { key: 'Pokemon', value: pokemonCount, style: index !== 0 ? 'text-right' : '' },
       { key: 'Description', value: shortEntry },
       { 
