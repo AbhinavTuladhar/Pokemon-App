@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { motion } from 'framer-motion'
 import { extrctAbilityInformation } from '../utils/extractInfo'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
+import TableContainer from '../components/TableContainer'
 
 const AbilityListing = () => {
   const [abilityInfo, setAbilityInfo] = useState([])
@@ -94,9 +95,7 @@ const AbilityListing = () => {
         ?
         <MoveListingSkeleton rowCount={20} />
         :
-        <div className='border-b-[1px] border-slate-400 min-w-full table'>
-          { tableRows }
-        </div>
+        <TableContainer child={tableRows} />
       }
     </motion.div>
   )
