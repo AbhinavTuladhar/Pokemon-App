@@ -5,6 +5,7 @@ import { extrctAbilityInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
 import { motion } from 'framer-motion'
 import AbilityEffect from '../components/AbilityDetail/AbilityEffect'
+import AbilityDescription from '../components/AbilityDetail/AbilityDescription'
 
 const AbilityDetail = () => {
   const { id } = useParams()
@@ -16,7 +17,7 @@ const AbilityDetail = () => {
     if (abilityData.length === 0)
       return
     const extracted = extrctAbilityInformation(abilityData)
-    console.log(extracted.longEntry)  
+    console.log('The extracted information in ability is', extracted)  
     setAbilityInfo(extracted)
   }, [abilityData])
 
@@ -34,6 +35,7 @@ const AbilityDetail = () => {
       <div className='flex flex-row flex-wrap gap-x-10 mt-4'>
         <div className='flex flex-col lg:w-475/1000 w-full'> 
           <AbilityEffect entry={abilityInfo.longEntry} />
+          <AbilityDescription descriptions={abilityInfo.descriptions} />
         </div>
         <div className='flex flex-col lg:w-475/1000 w-full'> 
           Test2

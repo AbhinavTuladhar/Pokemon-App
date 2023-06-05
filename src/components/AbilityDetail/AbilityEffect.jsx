@@ -8,7 +8,7 @@ const AbilityEffect = ({ entry }) => {
       <SectionTitle text={'Effect'} />
       { paragraphs?.map((paragraph, index) => (
         <> 
-          { paragraph }
+          { paragraph.charAt(0).toUpperCase() + paragraph.slice(1) }
           { index !== paragraphs?.length - 1 && <br /> }
         </>
       ))}

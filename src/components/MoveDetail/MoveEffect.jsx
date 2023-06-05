@@ -9,7 +9,8 @@ const MoveEffect = ({ entry, chance }) => {
       <SectionTitle text={'Effect'} />
       { paragraphs?.map((paragraph, index) => (
         <> 
-          { paragraph }
+          {/* Capitalse the first letter of each paragraph. */}
+          { paragraph.charAt(0).toUpperCase() + paragraph.slice(1) }
           { index !== paragraphs?.length - 1 && <br /> }
         </>
       ))}

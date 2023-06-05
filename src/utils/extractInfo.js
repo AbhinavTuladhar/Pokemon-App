@@ -185,7 +185,8 @@ export const extrctAbilityInformation = data => {
   const descriptions = flavor_text_entries.filter(entry => entry.language.name === 'en')
     .map(entry => ({
       description: entry.flavor_text,
-      versionName: entry.version_group.name
+      versionName: entry.version_group.name,
+      generation: generationMapping[entry.version_group.name]
     }))
   
   // The number of Pokemon that have the ability.
@@ -203,6 +204,7 @@ export const extrctAbilityInformation = data => {
     generationIntroduced: generationIntroduced,
     id,
     name: formatName(name),
-    pokemonCount
+    pokemonCount,
+    pokemon
   }
 }
