@@ -56,7 +56,7 @@ const MainPage = ({ idRange }) => {
   // For handling the search bar.
   const handleChange = event => {
     const searchString = event.target.value
-    const filteredData = pokemonInfo?.filter(pokemon => pokemon.name.includes(searchString))
+    const filteredData = pokemonInfo?.filter(pokemon => pokemon.name.includes(searchString.toLowerCase()))
     setFilteredPokemonInfo(filteredData);
   }
 
