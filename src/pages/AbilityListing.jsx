@@ -10,6 +10,7 @@ import formatName from '../utils/NameFormatting'
 
 const AbilityListing = () => {
   const [abilityInfo, setAbilityInfo] = useState([])
+  const [filteredAbilityInfo, setFilteredAbilityInfo] = useState([])
 
   const urlList = useMemo(() => {
     let urls = []
@@ -34,13 +35,24 @@ const AbilityListing = () => {
 
   // Extract the information and sort in alphabetical order.
   useEffect(() => {
-    if (abilityData) {
-      const extracted = abilityData
-        ?.map(ability => extrctAbilityInformation(ability))
-        ?.sort((a, b) => a?.name > b?.name ? 1 : -1)
-      setAbilityInfo(extracted)
+    if (!abilityData) {
+      return
     }
+    const extracted = abilityData
+      ?.map(ability => extrctAbilityInformation(ability))
+      ?.sort((a, b) => a?.name > b?.name ? 1 : -1)
+    setAbilityInfo(extracted)
+    setFilteredAbilityInfo(extracted)
   }, [abilityData])
+
+  const handleChange = event => {
+    // There are dashes in the JSON data.
+    // Replace any spaces in the query with a dash.
+    const searchQuery = event.target.value.toLowerCase().replace(' ', '-')
+    console.log('The search query is', searchQuery)
+    const filteredData = abilityInfo?.filter(ability => ability.name.includes(searchQuery))
+    setFilteredAbilityInfo(filteredData)
+  }
 
   // Headers that are used in the table.
   const headers = [{
@@ -50,7 +62,7 @@ const AbilityListing = () => {
      generationIntroduced: 'Gen.' ,
   }]
 
-  const tableRows = [...headers, ...abilityInfo].map((row, index) => {
+  const tableRows = [...headers, ...filteredAbilityInfo].map((row, index) => {
     const { id, name, pokemonCount, shortEntry, generationIntroduced } = row
     const headerStyle = index === 0 ? 'font-bold sticky top-0' : ''
     const abilityLink = `/ability/${id}`
@@ -91,6 +103,12 @@ const AbilityListing = () => {
     )
   })
 
+  useEffect(() => {
+    if (filteredAbilityInfo) {
+      console.log('The filtered data is', filteredAbilityInfo)
+    }
+  }, [filteredAbilityInfo])
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -98,9 +116,17 @@ const AbilityListing = () => {
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
       className='mx-4'
     >
+      <div className='flex justify-center items-center'>
+        <input 
+          className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search' 
+          placeholder='Search for an ability...' 
+          disabled={tableRows?.length < 2 && abilityInfo?.length === 0 ? true : false}
+          onChange={handleChange}
+        />
+      </div>
       { 
         // Checking if data is present
-        (tableRows?.length < 2) 
+        (tableRows?.length < 2 && abilityInfo?.length === 0) 
         ?
         <MoveListingSkeleton rowCount={20} />
         :

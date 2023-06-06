@@ -28,6 +28,7 @@ const returnMoveImage = damageClass => {
 const MoveListing = () => {
   const [ moveList, setMoveList ] = useState([])
   const [ moveListReady, setMoveListReady ] = useState([])
+  const [ filteredMoves, setFilteredMoves ] = useState([])
   const [ TMURLs, setTMURLs ] = useState([])
   const [ TMData, setTMData ] = useState([])
 
@@ -130,6 +131,7 @@ const MoveListing = () => {
     })
 
     setMoveListReady(joinedData)
+    setFilteredMoves(joinedData)
   }, [TMData, moveList])
 
   const headers = [{
@@ -144,7 +146,15 @@ const MoveListing = () => {
     effectChance: 'Prob. (%)'
   }]
 
-  const moveTableRows = [...headers, ...moveListReady].map((move, index) => {
+  const handleChange = event => {
+    // There are dashes in the JSON data.
+    // Replace any spaces in the query with a dash.
+    const searchQuery = event.target.value.toLowerCase().replace(' ', '-')
+    const filteredData = moveListReady?.filter(move => move.moveName.includes(searchQuery))
+    setFilteredMoves(filteredData)
+  }
+
+  const moveTableRows = [...headers, ...filteredMoves].map((move, index) => {
     const { id, moveName, moveType, damageClass, power, accuracy, machine, PP, shortEntry, effectChance } = move
     const link = `/moves/${id}`
     // Provide a border on all sides and bold the text for the header.
@@ -220,12 +230,6 @@ const MoveListing = () => {
     )
   }) 
 
-  const loadingDiv =  (
-    <div className='flex text-center items-center justify-center text-3xl'> 
-      Loading. It might take some time since there are 621 moves! 
-    </div>
-  )
-
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -233,6 +237,14 @@ const MoveListing = () => {
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
       className='mx-4'
     >
+      <div className='flex justify-center items-center'>
+        <input 
+          className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search' 
+          placeholder='Search for a move' 
+          disabled={moveTableRows?.length < 2 && TMData.length === 0 ? true : false}
+          onChange={handleChange}
+        />
+      </div>
       { 
         // Checking if data is present
         (moveTableRows?.length < 2 && TMData.length === 0) 

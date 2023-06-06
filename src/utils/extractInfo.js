@@ -203,7 +203,7 @@ export const extrctAbilityInformation = data => {
     descriptions,
     generationIntroduced: generationIntroduced,
     id,
-    name: formatName(name),
+    name,
     pokemonCount,
     pokemon
   }
