@@ -1,4 +1,4 @@
-import { React, useMemo, useEffect } from 'react'
+import { React, useMemo, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -8,14 +8,15 @@ import PokeCard from '../components/PokeCard'
 import PokeCardSkeleton from '../components/PokeCardSkeleton'
 
 const MainPage = ({ idRange }) => {
+  const [pokemonInfo, setPokemonInfo] = useState([])
+  const [filteredPokemonInfo, setFilteredPokemonInfo] = useState([]);
+
+
   // This is for setting the title of the page.
   const currentLocation = useLocation()
   const generationNumberRaw = currentLocation.pathname.slice(-1)
   // Check for the 'other forms' page.
   const generationNumber = isNaN(generationNumberRaw) ? '' : generationNumberRaw
-
-  // Find the number of Pokemon in the page for skeleton.
-  const pokemonCount = idRange[1] - idRange[0]
 
   useEffect(() => {
     document.title = generationNumber !== '' ? `Gen ${generationNumber}` : 'Pokemon forms'
@@ -42,14 +43,22 @@ const MainPage = ({ idRange }) => {
     { staleTime: Infinity, cacheTime: Infinity }
   )
 
-  // Map each Pokemon to its respective card.
-  const pokemonBoxes = pokemonData?.map(pokemon => <PokeCard key={pokemon.id} data={pokemon} />)
+  useEffect(() => {
+    if (pokemonData?.length > 0) {
+      setPokemonInfo(pokemonData)
+      setFilteredPokemonInfo(pokemonData);
+    }
+  }, [pokemonData])
 
-  // Text to display when the data is not available.
-  const loadingText = (
-    <div className='flex text-center justify-center items-center text-5xl'> 
-      Loading...
-    </div>)
+  // Map each Pokemon to its respective card.
+  const pokemonBoxes = filteredPokemonInfo?.map(pokemon => <PokeCard key={pokemon.id} data={pokemon} />)
+
+  // For handling the search bar.
+  const handleChange = event => {
+    const searchString = event.target.value
+    const filteredData = pokemonInfo?.filter(pokemon => pokemon.name.includes(searchString))
+    setFilteredPokemonInfo(filteredData);
+  }
 
   return (
     <motion.div 
@@ -58,6 +67,14 @@ const MainPage = ({ idRange }) => {
       exit={{ x: '100%', opacity: 0, transitionDuration: '0.5s' }}
       transition={{ ease: 'easeIn'}}
     >
+      <div className='flex justify-center items-center'>
+        <input 
+          className='text-black rounded-xl mx-4 py-2 px-4 w-full lg:w-[20rem]' type='search' 
+          placeholder='Search for a Pokemon' 
+          disabled={Boolean(isLoading)}
+          onChange={handleChange}
+        />
+      </div>
       {
         isLoading 
         ? 
