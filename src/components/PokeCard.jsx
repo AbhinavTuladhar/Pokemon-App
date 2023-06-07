@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import TypeCard from './TypeCard';
 import formatName from '../utils/NameFormatting';
 import typeMapping from '../utils/typeMapping';
+import { extractPokemonInformation } from '../utils/extractInfo';
 
 const darkenColour = colour => {
   // First check if the colour is the custom colour, ie grey-Yellow.
@@ -19,8 +20,8 @@ const PokeCard = ({ data }) => {
     id,
     name,
     types,
-    sprites: { other : { 'official-artwork' : { front_default }}}
-  } = data
+    defaultSprite
+  } = extractPokemonInformation(data)
 
   // For capitalising the first letter.
   const properName = formatName(name)
@@ -56,7 +57,7 @@ const PokeCard = ({ data }) => {
         {properName}
       </NavLink>
       <div>
-        <img src={front_default} className='h-[100px]' alt={name} />
+        <img src={defaultSprite} className='h-[100px]' alt={name} />
       </div>
       <div className='flex flex-row mt-4 mb-2'>
         {typeDivs}

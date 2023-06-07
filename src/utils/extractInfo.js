@@ -98,14 +98,16 @@ export const extractPokemonInformation = (data) => {
     id,
     name,
     sprites: { other: { 'official-artwork': { front_default, front_shiny }}},
-    species: { url: speciesLink }
+    species: { url: speciesLink },
+    types
   } = data;
   return {
     id,
     name: formatName(name),
     defaultSprite: front_default, 
     shinySprite: front_shiny,
-    speciesUrl: speciesLink
+    speciesUrl: speciesLink,
+    types
   }
 };
 
