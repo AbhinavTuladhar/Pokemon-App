@@ -41,9 +41,10 @@ const PokemonDetail = () => {
       name,
       defaultSprite,
       shinySprite,
-      speciesUrl
+      speciesUrl,
+      icon
     } = extractedInfo;
-    setImageSource({defaultSprite, shinySprite})
+    setImageSource({defaultSprite, shinySprite, icon})
     setSpeciesURL(speciesUrl)
     setIdInfo(() => ({ id, name }))
   };

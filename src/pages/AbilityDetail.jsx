@@ -6,6 +6,7 @@ import formatName from '../utils/NameFormatting'
 import { motion } from 'framer-motion'
 import AbilityEffect from '../components/AbilityDetail/AbilityEffect'
 import AbilityDescription from '../components/AbilityDetail/AbilityDescription'
+import PokemonList from '../components/AbilityDetail/PokemonList'
 
 const AbilityDetail = () => {
   const { id } = useParams()
@@ -20,6 +21,9 @@ const AbilityDetail = () => {
     console.log('The extracted information in ability is', extracted)  
     setAbilityInfo(extracted)
   }, [abilityData])
+
+  // Data to be sent to pokemon listing
+  const { pokemon: pokemonList, name } = abilityInfo
 
   return (
     <motion.div
@@ -38,7 +42,7 @@ const AbilityDetail = () => {
           <AbilityDescription descriptions={abilityInfo.descriptions} />
         </div>
         <div className='flex flex-col lg:w-475/1000 w-full'> 
-          Test2
+          <PokemonList data={{pokemonList, name}}/>
         </div>
       </div>
     </motion.div>

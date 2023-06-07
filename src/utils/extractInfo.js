@@ -95,17 +95,23 @@ export const extractMoveInformation = move => {
 
 export const extractPokemonInformation = (data) => {
   const { 
+    abilities,
     id,
     name,
-    sprites: { other: { 'official-artwork': { front_default, front_shiny }}},
+    sprites: { 
+      other: { 'official-artwork': { front_default, front_shiny }},
+      versions: { 'generation-viii': { icons: { front_default: icon }}}
+    },
     species: { url: speciesLink },
     types
-  } = data;
+  } = data
   return {
+    abilities,
     id,
     name: formatName(name),
     defaultSprite: front_default, 
     shinySprite: front_shiny,
+    icon,
     speciesUrl: speciesLink,
     types
   }
