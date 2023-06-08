@@ -1,34 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useQuery } from 'react-query'
-import axios from 'axios'
 import TableContainer from '../TableContainer'
 import SectionTitle from '../SectionTitle'
+import fetchData from '../../utils/fetchData'
 import generationMapping from '../../utils/generationMapping'
 import formatName from '../../utils/NameFormatting'
-import { transform } from 'framer-motion'
 
 const MachineRecord = ({ machineList }) => {
   console.log('In machine records', machineList)
   const urlList = machineList?.map(machine => machine.machine.url)
-  const [ machineInfo, setMachineInfo ] = useState([])
 
-  const fetchData = async (url) => {
-    const response = await axios.get(url)
-    return response.data
-  }
-
-  // This is for querying the list of urls.
-  const { data: machineData } = useQuery(
-    ['moveData', machineList],
-    () => Promise.all(urlList?.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
-
-  useEffect(() => {
-    if (machineData?.length === 0)
-      return
-    console.log('Logging machine response from machine record', machineData)
-    // Now re-structure the objects in the array
+  // Transforming the data of the API response.
+  const transformData = machineData => {
     const formattedData = machineData
       ?.map(machine => {
         const versionName = machine.version_group.name
@@ -59,17 +42,15 @@ const MachineRecord = ({ machineList }) => {
       return accumulator;
     }, {});
     const finalFormattedData = transformedData ? Object.values(transformedData) : []
-    setMachineInfo(finalFormattedData)
-    console.log('Logging transformed data', finalFormattedData)
-  }, [machineData])
-  
-  useEffect(() => {
-    if (machineInfo) console.log('Logging the machine info', machineInfo)
-  }, [machineInfo])
+    return finalFormattedData
+  }
 
-  useEffect(() => {
-    if (machineData) console.log('Logging the machine data', machineData)
-  }, [machineData])
+  // This is for querying the list of urls.
+  const { data: machineInfo } = useQuery(
+    ['moveData', machineList],
+    () => Promise.all(urlList?.map(fetchData)),
+    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
+  )
 
   // Now for the table rows.
   const tableRows = machineInfo?.map(machine => {
