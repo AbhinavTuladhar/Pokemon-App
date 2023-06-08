@@ -1,38 +1,32 @@
-import { React, useState, useEffect } from 'react'
+import { React, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { useQuery } from 'react-query'
 import { AiFillCheckCircle, AiFillCloseCircle }  from 'react-icons/ai'
 import { motion } from 'framer-motion'
 import TypeCard from '../TypeCard'
-import useFetch from '../../utils/useFetch'
+import fetchData from '../../utils/fetchData'
 import { extractTypeInformation } from '../../utils/extractInfo'
 
 const TypeDetail = ( ) => {
   const { type } = useParams()
   const typeURL = `https://pokeapi.co/api/v2/type/${type}`
-  const [typeData, setTypeData] = useState({})
-  const [extractedInformation, setExtractedInformation] = useState({})
 
-  const { data: fetchedData, loading: dataLoading } = useFetch(typeURL)
+  const transformData = data => {
+    const managedInformation = extractTypeInformation(data)
+    return (managedInformation)
+  }
+  const { data: extractedInformation = []} = useQuery(
+    ['typeDetail', 'type'],
+    () => fetchData(typeURL),
+    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
+  )
 
-  // Capitalise the first name
+  // Capitalise the first name for setting the document title.
   const formattedType = type.charAt(0).toUpperCase() + type.slice(1)
 
   useEffect(() => {
     document.title = `${formattedType} type Pokemon`
   }, [formattedType])
-  
-  useEffect(() => {
-    if (fetchedData) {
-      setTypeData(fetchedData);
-    }
-  }, [fetchedData])
-
-  useEffect(() => {
-    if (Object.keys(typeData).length !== 0) {
-      const managedInformation = extractTypeInformation(typeData)
-      setExtractedInformation(managedInformation)
-    }
-  }, [typeData])
 
   // Now format the data for rendering purposes.
   // Prepare the type effectiveness list
@@ -128,10 +122,6 @@ const TypeDetail = ( ) => {
       }
     </div>
   )
-
-  if (dataLoading || Object.keys(typeData).length === 0) {
-    return <div className='flex justify-center items-center text-4xl h-screen'>  </div>
-  }
 
   return (
     <motion.div 
