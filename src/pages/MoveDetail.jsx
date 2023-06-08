@@ -1,33 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
+import { useQuery } from 'react-query'
 import { motion } from 'framer-motion'
+import fetchData from '../utils/fetchData'
 import MoveData from '../components/MoveDetail/MoveData'
 import MachineRecord from '../components/MoveDetail/MachineRecord'
 import MoveEffect from '../components/MoveDetail/MoveEffect'
 import GameDescription from '../components/MoveDetail/GameDescription'
-import useFetch from '../utils/useFetch'
 import { extractMoveInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
 
+
 const MoveDetail = () => {
   const { id } = useParams()
-  const [ moveInfo, setMoveInfo ] = useState([])
-
   const url = `https://pokeapi.co/api/v2/move/${id}/`
 
-  const { data: moveData } = useFetch(url)
+  const transformData = data => {
+    const extractedInformation = extractMoveInformation(data)
+    return extractedInformation
+  }
 
-  useEffect(() => {
-    if (moveData.length === 0) 
-      return
-    const extractedInformation = extractMoveInformation(moveData)
-    console.log('Logging moveData', moveData)
-    setMoveInfo(extractedInformation)
-  }, [moveData])
-
-  useEffect(() => {
-    if (moveInfo) console.log('Logging extracted information from move detail', moveInfo)
-  }, [moveInfo])
+  const { data: moveInfo = []} = useQuery(
+    ['moveData', id],
+    () => fetchData(url),
+    { select: transformData, staleTime: Infinity, cacheTime: Infinity }
+  )
 
   return (
     <motion.div

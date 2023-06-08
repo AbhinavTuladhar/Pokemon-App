@@ -21,6 +21,7 @@ export const extractMoveInformation = move => {
     effect_entries,
     flavor_text_entries,
     generation: { name: generation },
+    learned_by_pokemon,
     meta : { 
       ailment : { name: ailmentName },
       ailment_chance: ailmentChance,
@@ -58,6 +59,9 @@ export const extractMoveInformation = move => {
   const longEntry = englishEffect.effect
   const shortEntry = englishEffect.short_effect
 
+  // Find the URLs of all the Pokemon that can learn the move.
+  const pokemonUrls = learned_by_pokemon?.map(pokemon => pokemon.url)
+
   // Dealing with keys which might have null values.
   const realAccuracy = accuracy === null ? '-' : accuracy
   const realPower = power === null ? '-' : power
@@ -89,7 +93,8 @@ export const extractMoveInformation = move => {
     longEntry,
     shortEntry,
     id,
-    machines
+    machines,
+    pokemonUrls
   };
 }
 
