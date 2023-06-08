@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from 'react'
 import SectionTitle from '../SectionTitle'
 import useFetch from '../../utils/useFetch'
+import { useQuery } from 'react-query'
+import fetchData from '../../utils/fetchData'
 
 function formatFields(data) {
   const newData = data.endsWith('area') ? data.replace('area', '') : data
@@ -77,30 +79,19 @@ const groupByLocation = data => {
 }
 
 const Locations = ({ id, name }) => {
-  const [locationData, setLocationData] = useState([]);
-  const [finalData, setFinalData] = useState([])
+  const transformData = locationData => {
+    const information = extractInformation(locationData)
+    const groupedByGame = groupByGame(information)
+    const groupedByLocation = groupByLocation(groupedByGame)
+    return groupedByLocation
+  }
 
-  // fetch the data using custom hook
-  const { data: fetchedData } = useFetch(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`)
-
-  useEffect(() => {
-    if (fetchedData) {
-      setLocationData(fetchedData)
-    }
-  }, [fetchedData]);
-
-  useEffect(() => {
-    if (locationData) {
-      const information = extractInformation(locationData)
-      setFinalData(() => [...information])
-      setFinalData(prevState => {
-        const groupedByGame = groupByGame(prevState)
-        const groupedByLocation = groupByLocation(groupedByGame)
-        return [...groupedByLocation]
-      })
-    }
-  }, [locationData])
-
+  const { data: finalData = []} = useQuery(
+    ['locations', id, name],
+    () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`),
+    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
+  )
+    
   // some formatting of the data
   const preFinalTable = finalData?.map(entry => {
     const listItems = entry.versionName.map((version, index) => {

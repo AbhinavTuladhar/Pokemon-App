@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import SectionTitle from '../SectionTitle'
 import TableContainer from '../TableContainer'
 import formatName from '../../utils/NameFormatting'
 import { extractPokemonInformation } from '../../utils/extractInfo'
+import fetchData from '../../utils/fetchData'
 
 const PokemonList = ({ data }) => {
   const { pokemonList, name: abilityName } = data
-  const [readyInformation, setReadyInformation] = useState([])
-
   const urlList = pokemonList?.map(pokemon => pokemon.pokemon.url)
 
-  // We now need to query the Pokemon URLs in order to find their icons, and other abilities
-  const fetchPokemonData = async (url) => {
-    const response = await axios.get(url)
-    return response.data
-  }
-
-  const { data: pokemonData } = useQuery(
-    ['abilityData', pokemonList],
-    () => Promise.all(urlList?.map(fetchPokemonData)),
-    { staleTime: Infinity, cacheTime: Infinity, retry: 3 },
-  )
-
-  useEffect(() => {
-    if (!pokemonData)
-      return
+  // Extracting information from the API response.
+  const transformData = pokemonData => {
     // We now need to find the pokemon name, the icons, and the other abilities of the pokemon.
     const rawInformation = pokemonData?.map(pokemon => {
       const { abilities, name, icon, id } = extractPokemonInformation(pokemon)
@@ -41,8 +26,15 @@ const PokemonList = ({ data }) => {
         icon
       }
     })
-    setReadyInformation(rawInformation?.filter(entry => entry.icon !== null))
-  }, [pokemonData, abilityName])
+    return (rawInformation?.filter(entry => entry.icon !== null))
+  }
+
+  // We now need to query the Pokemon URLs in order to find their icons, and other abilities
+  const { data: readyInformation = []} = useQuery(
+    ['abilityData', pokemonList],
+    () => Promise.all(urlList?.map(fetchData)),
+    { staleTime: Infinity, cacheTime: Infinity, retry: 3, select: transformData },
+  )
 
   const headers = [{
     id: '#',
@@ -104,9 +96,6 @@ const PokemonList = ({ data }) => {
     <>
       <SectionTitle text={`Pokemon with ${formatName(abilityName)}`} />
       <TableContainer child={rowData} />
-      {/* <>
-        {pokemonList?.map(pokemon => (<> {pokemon.pokemon.name} <br/> </>))}
-      </> */}
     </>
   )
 }

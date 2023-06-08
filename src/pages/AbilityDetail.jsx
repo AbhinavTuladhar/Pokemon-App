@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
-import useFetch from '../utils/useFetch'
 import { extrctAbilityInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
 import { motion } from 'framer-motion'
 import AbilityEffect from '../components/AbilityDetail/AbilityEffect'
 import AbilityDescription from '../components/AbilityDetail/AbilityDescription'
 import PokemonList from '../components/AbilityDetail/PokemonList'
+import fetchData from '../utils/fetchData'
+import { useQuery } from 'react-query'
 
 const AbilityDetail = () => {
   const { id } = useParams()
-  const [abilityInfo, setAbilityInfo] = useState({})
 
-  const { data: abilityData } = useFetch(`https://pokeapi.co/api/v2/ability/${id}/`)
+  // This is for manipulating the api response.
+  const transformData = data => {
+    return extrctAbilityInformation(data)
+  }
 
-  useEffect(() => {
-    if (abilityData.length === 0)
-      return
-    const extracted = extrctAbilityInformation(abilityData)
-    console.log('The extracted information in ability is', extracted)  
-    setAbilityInfo(extracted)
-  }, [abilityData])
+  const { data: abilityInfo = []} = useQuery(
+    ['abilityDetail', id],
+    () => fetchData(`https://pokeapi.co/api/v2/ability/${id}/`),
+    { select: transformData, staleTime: Infinity, cacheTime: Infinity }
+  )
 
   // Data to be sent to pokemon listing
   const { pokemon: pokemonList, name } = abilityInfo
