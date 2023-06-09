@@ -235,7 +235,7 @@ const MoveListing = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='mx-4'
+      className='md:mx-10 mx-4'
     >
       <div className='flex justify-center items-center'>
         <input 

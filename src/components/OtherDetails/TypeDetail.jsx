@@ -125,7 +125,7 @@ const TypeDetail = ( ) => {
 
   return (
     <motion.div 
-      className='mx-2'
+      className='md:mx-10 mx-4'
       initial={{ x: '-100%', opacity: 0 }}
       animate={{ x: 0, scale: 1, opacity: 1, transitionDuration: '0.25s' }}
       exit={{ x: '100%', opacity: 0, transitionDuration: '0.25s' }}
