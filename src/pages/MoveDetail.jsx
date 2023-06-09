@@ -9,7 +9,7 @@ import MoveEffect from '../components/MoveDetail/MoveEffect'
 import GameDescription from '../components/MoveDetail/GameDescription'
 import { extractMoveInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
-import PokemonCardList from '../components/MoveDetail/PokemonCardList'
+import PokemonCardList from '../components/PokemonCardList'
 
 
 const MoveDetail = () => {

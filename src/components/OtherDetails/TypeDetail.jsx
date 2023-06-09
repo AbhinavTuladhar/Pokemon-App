@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import TypeCard from '../TypeCard'
 import fetchData from '../../utils/fetchData'
 import { extractTypeInformation } from '../../utils/extractInfo'
-import PokemonCardList from '../MoveDetail/PokemonCardList'
+import PokemonCardList from '../PokemonCardList'
 import formatName from '../../utils/NameFormatting'
 
 const TypeDetail = ( ) => {

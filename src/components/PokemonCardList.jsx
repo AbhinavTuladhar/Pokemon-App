@@ -1,10 +1,10 @@
 import React from 'react'
-import PokeCardV2 from '../PokeCardV2'
-import SectionTitle from '../SectionTitle'
+import PokeCardV2 from './PokeCardV2'
+import SectionTitle from './SectionTitle'
 import { useQuery } from 'react-query'
-import fetchData from '../../utils/fetchData'
-import { extractPokemonInformation } from '../../utils/extractInfo'
-import MoveListingSkeleton from '../MoveListingSkeleton'
+import fetchData from '../utils/fetchData'
+import { extractPokemonInformation } from '../utils/extractInfo'
+import MoveListingSkeleton from './MoveListingSkeleton'
 
 const PokemonCardList = ({ title, pokemonUrls }) => {
   const transformData = data => {
