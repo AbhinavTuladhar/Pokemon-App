@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { motion } from 'framer-motion'
@@ -9,6 +9,7 @@ import MoveEffect from '../components/MoveDetail/MoveEffect'
 import GameDescription from '../components/MoveDetail/GameDescription'
 import { extractMoveInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
+import PokemonCardList from '../components/MoveDetail/PokemonCardList'
 
 
 const MoveDetail = () => {
@@ -26,9 +27,13 @@ const MoveDetail = () => {
     { select: transformData, staleTime: Infinity, cacheTime: Infinity }
   )
 
+  useEffect(() => {
+    console.log('Logging the move details', moveInfo)
+  }, [moveInfo])
+
   return (
     <motion.div
-      className='mx-10'
+      className='mx-4'
       initial={{ y: '100%', opacity: 0 }}
       animate={{ y: 0, opacity: 1, transitionDuration: '0.8s' }}
       exit={{ y: '100%', opacity: 0, transitionDuration: '0.75s' }}
@@ -49,6 +54,9 @@ const MoveDetail = () => {
           <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
           <GameDescription descriptions={moveInfo.descriptions} />
         </div>
+      </div>
+      <div>
+        <PokemonCardList moveName={moveInfo.moveName} pokemonUrls={moveInfo.pokemonUrls} />
       </div>
     </motion.div>
   )
