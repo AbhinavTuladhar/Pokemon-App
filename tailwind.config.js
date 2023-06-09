@@ -95,6 +95,27 @@ module.exports = {
     'to-gray-900',
     'to-gray-700',
     'to-pink-500',
+
+    // For the coloured text
+    'text-greyYellow',
+    'text-gray-400',
+    'text-red-500',
+    'text-blue-400',
+    'text-amber-400',
+    'text-green-500',
+    'text-blue-300',
+    'text-red-600',
+    'text-purple-400',
+    'text-yellow-600',
+    'text-indigo-400',
+    'text-pink-400',
+    'text-green-600',
+    'text-yellow-800',
+    'text-purple-600',
+    'text-indigo-600',
+    'text-gray-700',
+    'text-gray-500',
+    'text-pink-300',
   ]
 }
 

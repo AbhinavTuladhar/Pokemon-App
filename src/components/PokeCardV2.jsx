@@ -9,6 +9,16 @@ const PokeCardV2 = ({ pokemonData }) => {
   if (gameSprite === null || id >= 10000)
     return
 
+  const typeDiv = types.map((type, index) => {
+    const typeName = type.type.name
+    return (
+      <>
+        <TypeCard typeName={typeName} useTextOnly={true} />
+        {index !== types.length - 1 && <span> &nbsp; · &nbsp; </span>}
+      </>
+    )
+  })
+
   return (
     <div className='flex w-1/2 md:w-1/3 mdlg:w-1/5 lg:w-1/4 py-4'>
       <img src={gameSprite} className='w=[70px] h-[45px]' />
@@ -18,7 +28,7 @@ const PokeCardV2 = ({ pokemonData }) => {
             { name } 
           </NavLink> 
         </div>
-        <div> {`#${id}`} / {types.map(type => type.type.name)} </div>
+        <div className='flex'> {`#${id}`} / &nbsp;{ typeDiv } </div>
       </div>
     </div>
   )
