@@ -178,7 +178,7 @@ export const extractTypeInformation = data => {
     noDamageFrom: extractName(noDamageFrom),
     noDamageTo: extractName(noDamageTo),
     moveList: moveList,
-    pokemonList: pokemonList,
+    pokemonList: pokemonList.map(pokemon => pokemon.pokemon.url),
   }
 }
 

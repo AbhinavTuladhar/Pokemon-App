@@ -27,10 +27,6 @@ const MoveDetail = () => {
     { select: transformData, staleTime: Infinity, cacheTime: Infinity }
   )
 
-  useEffect(() => {
-    console.log('Logging the move details', moveInfo)
-  }, [moveInfo])
-
   return (
     <motion.div
       className='md:mx-10 mx-4'
@@ -56,7 +52,7 @@ const MoveDetail = () => {
         </div>
       </div>
       <div className='flex flex-col justify-between'>
-        <PokemonCardList moveName={moveInfo.moveName} pokemonUrls={moveInfo.pokemonUrls} />
+        <PokemonCardList title={`Pokemon that can learn ${formatName(moveInfo.moveName)}`} pokemonUrls={moveInfo.pokemonUrls} />
       </div>
     </motion.div>
   )

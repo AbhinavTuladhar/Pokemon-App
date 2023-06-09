@@ -6,6 +6,8 @@ import { motion } from 'framer-motion'
 import TypeCard from '../TypeCard'
 import fetchData from '../../utils/fetchData'
 import { extractTypeInformation } from '../../utils/extractInfo'
+import PokemonCardList from '../MoveDetail/PokemonCardList'
+import formatName from '../../utils/NameFormatting'
 
 const TypeDetail = ( ) => {
   const { type } = useParams()
@@ -16,7 +18,7 @@ const TypeDetail = ( ) => {
     return (managedInformation)
   }
   const { data: extractedInformation = []} = useQuery(
-    ['typeDetail', 'type'],
+    ['typeDetail', type],
     () => fetchData(typeURL),
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
   )
@@ -137,6 +139,9 @@ const TypeDetail = ( ) => {
       </div>
       <div className='gap-y-4 my-4'>
         {defensiveDiv}
+      </div>
+      <div>
+        { <PokemonCardList title={`${formatName(type)} Pokemon`} pokemonUrls={extractedInformation.pokemonList} />}
       </div>
     </motion.div>
   )
