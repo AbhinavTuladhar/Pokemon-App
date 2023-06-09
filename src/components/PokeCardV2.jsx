@@ -20,7 +20,7 @@ const PokeCardV2 = ({ pokemonData }) => {
   })
 
   return (
-    <div className='flex w-1/2 md:w-1/3 mdlg:w-1/5 lg:w-1/4 py-4'>
+    <div className='flex w-full sm:w-1/2 md:w-1/3 mdlg:w-1/5 lg:w-1/4 py-4'>
       <img src={gameSprite} className='w=[70px] h-[45px]' />
       <div className='flex flex-col'>
         <div> 

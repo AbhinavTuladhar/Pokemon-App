@@ -42,15 +42,15 @@ const MoveDetail = () => {
       <div className='flex justify-center text-center text-4xl font-bold'>
         { formatName(moveInfo.moveName) } (move)
       </div>
-      <div className='flex flex-row flex-wrap gap-x-24 mt-4'>
-        <div className='flex flex-col lg:w-1/4 w-full'>
+      <div className='flex flex-row flex-wrap justify-around mt-4'>
+        <div className='flex flex-col lg:w-1/4 sm:w-4/12 w-full'>
           <MoveData moveInfo={ moveInfo } />
           {
             moveInfo?.machines?.length > 0 &&
             <MachineRecord machineList={ moveInfo.machines} />
           }
         </div>
-        <div className='flex flex-col lg:w-2/3 w-full'>
+        <div className='flex flex-col lg:w-2/3 sm:w-6/12 w-full'>
           <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
           <GameDescription descriptions={moveInfo.descriptions} />
         </div>
