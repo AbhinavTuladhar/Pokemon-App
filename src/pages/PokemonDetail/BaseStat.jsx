@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useMemo } from 'react'
-import SectionTitle from '../SectionTitle'
-import TableContainer from '../TableContainer'
+import SectionTitle from '../../components/SectionTitle'
+import TableContainer from '../../components/TableContainer'
 import statCalculator from '../../utils/StatCalculation'
 
 /*
