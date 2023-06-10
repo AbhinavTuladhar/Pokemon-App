@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { AiFillCheckCircle, AiFillCloseCircle }  from 'react-icons/ai'
 import { motion } from 'framer-motion'
-import TypeCard from '../TypeCard'
+import TypeCard from '../../components/TypeCard'
+import PokemonCardList from '../../components/PokemonCardList'
 import fetchData from '../../utils/fetchData'
 import { extractTypeInformation } from '../../utils/extractInfo'
-import PokemonCardList from '../PokemonCardList'
 import formatName from '../../utils/NameFormatting'
 
 const TypeDetail = ( ) => {
