@@ -1,7 +1,6 @@
 import React from "react"
-import SectionTitle from "../SectionTitle"
-import TableContainer from "../TableContainer"
-
+import SectionTitle from "../../components/SectionTitle"
+import TableContainer from "../../components/TableContainer"
 
 const TrainingInfo = ({ data }) => {
   const {

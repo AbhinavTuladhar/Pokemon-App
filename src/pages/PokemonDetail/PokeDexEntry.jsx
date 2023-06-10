@@ -1,5 +1,5 @@
 import React from 'react'
-import SectionTitle from '../SectionTitle'
+import SectionTitle from '../../components/SectionTitle'
 
 // This is for grouping the name of the games if they have the same description for the Pokemon.
 const groupByDescription = data => {

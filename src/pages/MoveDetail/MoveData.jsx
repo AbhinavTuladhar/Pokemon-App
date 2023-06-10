@@ -1,7 +1,7 @@
 import React from 'react'
-import TypeCard from '../TypeCard'
-import TableContainer from '../TableContainer'
-import SectionTitle from '../SectionTitle'
+import TypeCard from '../../components/TypeCard'
+import TableContainer from '../../components/TableContainer'
+import SectionTitle from '../../components/SectionTitle'
 import formatName from '../../utils/NameFormatting'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
@@ -35,7 +35,7 @@ const MoveData = ({ moveInfo }) => {
       header: 'Category', 
       value: 
         (<div className='flex flex-row gap-x-4 items-center'>
-          <img src={returnMoveImage(damageClass)} className='h-[20px] w-[30px]' />
+          <img src={returnMoveImage(damageClass)} className='h-[20px] w-[30px]' alt={damageClass} />
           <> {formatName(damageClass)} </>
         </div>)
     },

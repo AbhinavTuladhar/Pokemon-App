@@ -1,15 +1,15 @@
 import { React, useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import TypeCard from '../TypeCard'
-import SectionTitle from '../SectionTitle'
-import TableContainer from '../TableContainer'
+import { NavLink } from 'react-router-dom'
+import TypeCard from '../../components/TypeCard'
+import SectionTitle from '../../components/SectionTitle'
+import TableContainer from '../../components/TableContainer'
 import formatName from '../../utils/NameFormatting'
-import { extractMoveInformation } from '../../utils/extractInfo' 
+import { extractMoveInformation } from '../../utils/extractInfo'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
 import moveStatus from '../../images/move-status.png'
-import { NavLink } from 'react-router-dom'
 
 // This is for the headers
 const firstRow = {

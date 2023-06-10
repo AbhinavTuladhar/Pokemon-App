@@ -1,7 +1,6 @@
-import { React, useState, useEffect } from 'react'
-import SectionTitle from '../SectionTitle'
-import useFetch from '../../utils/useFetch'
+import React from 'react'
 import { useQuery } from 'react-query'
+import SectionTitle from '../../components/SectionTitle'
 import fetchData from '../../utils/fetchData'
 
 function formatFields(data) {

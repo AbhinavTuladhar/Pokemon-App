@@ -1,13 +1,15 @@
 import React from 'react'
-import SectionTitle from '../SectionTitle'
+import SectionTitle from '../../components/SectionTitle';
 
-const AbilityEffect = ({ entry }) => {
-  const paragraphs = entry?.split('\n')
+const MoveEffect = ({ entry, chance }) => {
+  const updatedEntry = entry?.replace('$effect_chance', chance);
+  const paragraphs = updatedEntry?.split('\n')
   return (
     <>
       <SectionTitle text={'Effect'} />
       { paragraphs?.map((paragraph, index) => (
         <> 
+          {/* Capitalse the first letter of each paragraph. */}
           { paragraph.charAt(0).toUpperCase() + paragraph.slice(1) }
           { index !== paragraphs?.length - 1 && <br /> }
         </>
@@ -15,5 +17,4 @@ const AbilityEffect = ({ entry }) => {
     </>
   )
 }
-
-export default AbilityEffect
+export default MoveEffect

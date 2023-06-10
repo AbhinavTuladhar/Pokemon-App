@@ -1,8 +1,8 @@
 import { React, useMemo, useEffect, useCallback, useState } from 'react'
-import TypeCard from '../TypeCard'
-import SectionTitle from '../SectionTitle'
-import TableContainer from '../TableContainer'
 import axios from 'axios'
+import TypeCard from '../../components/TypeCard'
+import SectionTitle from '../../components/SectionTitle'
+import TableContainer from '../../components/TableContainer'
 
 const PokeDexData = ({ pokemonData }) => {
   const { id, types, genus, height, weight, abilities, pokedex_numbers } = pokemonData

@@ -4,13 +4,13 @@ import { AnimatePresence } from 'framer-motion'
 
 import MainPage from '../pages/MainPage'
 import WelcomePage from '../pages/WelcomePage'
-import PokemonDetail from '../pages/PokemonDetail'
-import TypeDetail from './OtherDetails/TypeDetail'
-import MoveDetail from '../pages/MoveDetail'
+import PokemonDetail from '../pages/PokemonDetail/PokemonDetail'
+import TypeDetail from '../pages/TypeDetail/TypeDetail'
+import MoveDetail from '../pages/MoveDetail/MoveDetail'
 import TypeListing from '../pages/TypeListing'
 import MoveListing from '../pages/MoveListing'
 import AbilityListing from '../pages/AbilityListing'
-import AbilityDetail from '../pages/AbilityDetail'
+import AbilityDetail from '../pages/AbilityDetail/AbilityDetail'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
