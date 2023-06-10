@@ -1,6 +1,6 @@
 import { React, useMemo, useEffect } from 'react'
-import TypeCard from '../components/TypeCard'
 import { motion } from 'framer-motion'
+import TypeCard from '../components/TypeCard'
 
 const TypeListing = () => {
   const typeList = useMemo(() => {

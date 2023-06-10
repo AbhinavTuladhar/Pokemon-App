@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import axios from 'axios'
 import { useQuery } from 'react-query'
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
-import { extrctAbilityInformation } from '../utils/extractInfo'
+import axios from 'axios'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import TableContainer from '../components/TableContainer'
 import formatName from '../utils/NameFormatting'
+import { extrctAbilityInformation } from '../utils/extractInfo'
 
 const AbilityListing = () => {
   const [abilityInfo, setAbilityInfo] = useState([])

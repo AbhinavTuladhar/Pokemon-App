@@ -2,14 +2,14 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { motion } from 'framer-motion'
-import fetchData from '../../utils/fetchData'
+import PokemonCardList from '../../components/PokemonCardList'
 import MoveData from './MoveData'
 import MachineRecord from './MachineRecord'
 import MoveEffect from './MoveEffect'
 import GameDescription from './GameDescription'
-import PokemonCardList from '../../components/PokemonCardList'
 import { extractMoveInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
+import fetchData from '../../utils/fetchData'
 
 
 const MoveDetail = () => {

@@ -1,5 +1,4 @@
 import React from 'react'
-import TableContainer from './TableContainer'
 import Skeleton from 'react-loading-skeleton'
 
 const MoveListingSkeleton = ({ rowCount }) => {
