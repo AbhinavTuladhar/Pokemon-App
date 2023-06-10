@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 
-import MainPage from '../pages/MainPage'
+import PokemonListing from '../pages/PokemonListing'
 import WelcomePage from '../pages/WelcomePage'
 import PokemonDetail from '../pages/PokemonDetail/PokemonDetail'
 import TypeDetail from '../pages/TypeDetail/TypeDetail'
@@ -26,7 +26,7 @@ const AnimatedRoutes = () => {
 
   const generationRoutes = generationRouteData.map(gen => {
     return (
-      <Route path={gen.path} element={<MainPage idRange={gen.idRange} />} />
+      <Route path={gen.path} element={<PokemonListing idRange={gen.idRange} />} />
     )
   })
 
