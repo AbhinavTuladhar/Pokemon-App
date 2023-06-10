@@ -1,7 +1,7 @@
 import React from "react";
-import TableContainer from "../TableContainer";
+import TableContainer from "../../components/TableContainer";
+import SectionTitle from "../../components/SectionTitle";
 import formatName from "../../utils/NameFormatting";
-import SectionTitle from "../SectionTitle";
 
 const GameDescription = ({ descriptions }) => {
   // The objective is to group by generation, but display the game names.
