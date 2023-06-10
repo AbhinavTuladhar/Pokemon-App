@@ -1,5 +1,5 @@
 import React from 'react'
-import SectionTitle from '../SectionTitle'
+import SectionTitle from '../../components/SectionTitle'
 
 const AbilityEffect = ({ entry }) => {
   const paragraphs = entry?.split('\n')

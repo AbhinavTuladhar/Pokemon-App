@@ -1,13 +1,13 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { extrctAbilityInformation } from '../utils/extractInfo'
-import formatName from '../utils/NameFormatting'
-import { motion } from 'framer-motion'
-import AbilityEffect from '../components/AbilityDetail/AbilityEffect'
-import AbilityDescription from '../components/AbilityDetail/AbilityDescription'
-import PokemonList from '../components/AbilityDetail/PokemonList'
-import fetchData from '../utils/fetchData'
 import { useQuery } from 'react-query'
+import { motion } from 'framer-motion'
+import { extrctAbilityInformation } from '../../utils/extractInfo'
+import fetchData from '../../utils/fetchData'
+import formatName from '../../utils/NameFormatting'
+import AbilityEffect from './AbilityEffect'
+import AbilityDescription from './AbilityDescription'
+import PokemonList from './PokemonList'
 
 const AbilityDetail = () => {
   const { id } = useParams()
