@@ -11,11 +11,11 @@ const TypeCard = ( { typeName, useTextOnly }) => {
     const fontColour = 'text-' + typeMapping[typeKey]
     const properName = typeName.charAt(0).toUpperCase() + typeName.slice(1)
     return (
-      <div className={`${fontColour} flex hover:underline`}>
+      <span className={`${fontColour} hover:underline w-min`}>
         <NavLink to={targetLink}>
           {properName}
         </NavLink>
-      </div>
+      </span>
     )
   } else {
     return(
