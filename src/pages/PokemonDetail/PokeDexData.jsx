@@ -1,8 +1,10 @@
 import { React, useMemo, useEffect, useCallback, useState } from 'react'
 import axios from 'axios'
+import { NavLink } from 'react-router-dom'
 import TypeCard from '../../components/TypeCard'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
+import formatName from '../../utils/NameFormatting'
 
 const PokeDexData = ({ pokemonData }) => {
   const { id, types, genus, height, weight, abilities, pokedex_numbers } = pokemonData
@@ -23,13 +25,6 @@ const PokeDexData = ({ pokemonData }) => {
 
   // Change the types into visual form.
   const typeNames = types.map(type => type.type.name)
-
-  // Making a list of all the abilities.
-  const abilityNames = abilities.map(ability => {
-    const name = ability.ability.name
-    const hiddenExtraText = ability.is_hidden === true ? ' (hidden)' : ''
-    return name.charAt(0).toUpperCase() + name.slice(1) + hiddenExtraText
-  })
 
   // Now we find the corresponding URLs of the regions.
   // This is for extracting the names of the corresponding games.
@@ -60,9 +55,22 @@ const PokeDexData = ({ pokemonData }) => {
   const typeDiv = typeNames.map(typeName => <TypeCard typeName={typeName} />)
 
   // Making an actual list of all the abilities.
-  const abilityList = abilityNames.map((ability, index) => <li key={index}> {ability} </li>)
+  const abilityList = abilities.map((ability, index) => {
+    const name = ability.ability.name
+    const prefix = ability.is_hidden === true ? '' : `${index+1}. ` 
+    const hiddenExtraText = ability.is_hidden === true ? ' (hidden ability)' : ''
+    return (
+      <li key={index}> 
+        <> {prefix} </>
+        <NavLink to={`/ability/${name}`} className='text-blue-400 hover:text-red-400 hover:underline duration-300'>
+          { formatName(name) }
+        </NavLink>
+        <> { hiddenExtraText } </>
+      </li>
+    )
+  })
   const abilityListFinal = (
-    <ol className='list-inside list-decimal'>
+    <ol className='list-inside list-none'>
       {abilityList}
     </ol>
   )
