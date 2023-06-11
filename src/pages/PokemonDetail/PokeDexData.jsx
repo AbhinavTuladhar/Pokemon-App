@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import TypeCard from '../../components/TypeCard'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
+import OneLineSkeleton from '../../components/OneLineSkeleton'
 import formatName from '../../utils/NameFormatting'
 
 const PokeDexData = ({ pokemonData }) => {
@@ -149,7 +150,7 @@ const PokeDexData = ({ pokemonData }) => {
         </div>
         <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 pl-4 w-9/12'>
           <div className="flex">
-            {row.value}
+            { row.value ? row.value : <OneLineSkeleton /> }
           </div>
         </div>
       </div>

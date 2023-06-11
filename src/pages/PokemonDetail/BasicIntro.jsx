@@ -2,6 +2,7 @@ import React from 'react'
 import TypeCard from '../../components/TypeCard'
 import formatName from '../../utils/NameFormatting'
 import generationMappingV2 from '../../utils/generationMappingV2'
+import OneLineSkeleton from '../../components/OneLineSkeleton'
 
 const BasicIntro = ({ pokemonData }) => {
   const { id, pokedex_numbers, name, types, genus } = pokemonData
@@ -25,13 +26,20 @@ const BasicIntro = ({ pokemonData }) => {
     )
   })
 
+
   return (
     <div className='mt-8 mb-2 flex flex-row flex-wrap'>
-      <span>
-        {`${properName} is a`} &nbsp;
-        {typeDiv} &nbsp;
-        {`type Pokemon introduced in Generation ${generationIntroduced}. It is also known as the '${genus}'.`}
-      </span>
+      {
+        genus
+        ?
+        <span>
+          {`${properName} is a`} &nbsp;
+          {typeDiv} &nbsp;
+          {`type Pokemon introduced in Generation ${generationIntroduced}. It is also known as the '${genus}'.`}
+        </span>
+        :
+        <OneLineSkeleton />
+      }
     </div>
   )
 }
