@@ -98,7 +98,9 @@ const PokemonDetail = () => {
       <div className="text-4xl font-bold flex justify-center">
         {idInfo.name}
       </div>
+
       <BasicIntro pokemonData={{...pokemon, ...speciesData}} />
+
       <div className='flex flex-row flex-wrap gap-x-10'>
         <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 sm:w-full py-4'>
           <ImageTile imageSources={imageSource} />
@@ -118,12 +120,15 @@ const PokemonDetail = () => {
           <BaseStat data={{...pokemon, ...speciesData}} />
         </div>
       </div>
+
       <div>
         <PokeDexEntry data={dexEntry} />
       </div>
+
       <div className='py-4 gap-y-5'>
         <MovesLearned data={{ ...pokemon }} id={idInfo.id} name={idInfo.name} />
       </div>
+      
       <div>
         <Locations id={idInfo.id} name={idInfo.name} />
       </div>
