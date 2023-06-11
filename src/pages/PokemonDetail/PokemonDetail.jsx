@@ -98,9 +98,7 @@ const PokemonDetail = () => {
       <div className="text-4xl font-bold flex justify-center">
         {idInfo.name}
       </div>
-      <div>
-        <BasicIntro pokemonData={{...pokemon, ...speciesData}} />
-      </div>
+      <BasicIntro pokemonData={{...pokemon, ...speciesData}} />
       <div className='flex flex-row flex-wrap gap-x-10'>
         <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 sm:w-full py-4'>
           <ImageTile imageSources={imageSource} />

@@ -14,7 +14,7 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ## Features:
 
-### 1. List of Pokemon by Generation (up to generation 6 for now) and different forms
+### 1. List of Pokemon by Generation (up to generation 7) and different forms
 
 ![PokemonList](./Screenshots/PokemonList.jpg)
 
@@ -26,7 +26,7 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ![Detail_3](./Screenshots/PokemonDetail_3.jpg)
 
-### 3. List of all moves (up to generation 6 for now, again)
+### 3. List of all moves (up to generation 7)
 
 ### 4. Detail of individual moves
 

@@ -9,6 +9,7 @@ const numberMapper = {
   'iv': '4',
   'v': '5',
   'vi': '6',
+  'vii': '7'
 }
 
 // This is for extracting the information of the moves

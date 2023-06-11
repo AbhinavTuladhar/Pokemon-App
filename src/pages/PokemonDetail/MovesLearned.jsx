@@ -27,7 +27,7 @@ const firstRowLevelUp = {
   ...firstRow
 }
 
-// This is for filtering out the moves on depending on how it is learnt - only for ORAS.
+// This is for filtering out the moves on depending on how it is learnt - only for SM.
 const separateMoves = ({ data, learnMethod }) => {
   const movesLearnt = data.map(move => {
     const { version_group_details } = move // this is an array
@@ -75,21 +75,21 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
   })
 
   useEffect(() => {
-    // Consider that the latest gen is ORAS
-    const ORASData = moves?.flatMap(move => {
+    // Consider that the latest gen is 7.
+    const SMData = moves?.flatMap(move => {
       const { version_group_details } = move
-      const ORASInfo = version_group_details.filter(version => 
-        version.version_group.name === 'omega-ruby-alpha-sapphire'
+      const SMInfo = version_group_details.filter(version => 
+        version.version_group.name === 'ultra-sun-ultra-moon'
       )
       return {
         ...move, 
-        version_group_details: ORASInfo
+        version_group_details: SMInfo
       }
     })
 
     // Filter out the details in the version group details array is empty
-    const finalORASData = ORASData.filter(move => move.version_group_details.length > 0)
-    setMoveData(finalORASData)
+    const finalSMData = SMData.filter(move => move.version_group_details.length > 0)
+    setMoveData(finalSMData)
   }, [moves])
 
   // This is for separating out the moves learnt by level up, TM/HM and by breeding.
@@ -263,7 +263,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
         {
           finalMoveDetails?.level?.length > 1 
           ?
-          <TableContainer child={levelUpTable}  />
+          <>
+            <span className='mb-4'>
+              {`${pokemonName} learns the following moves in generation 7 at the levels specified.`}
+            </span>
+            <TableContainer child={levelUpTable}  />
+          </>
           :
           `${pokemonName} does not learn any moves by level up`
         }
@@ -272,7 +277,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
         {
           finalMoveDetails?.tutor?.length > 1
           ?
-          <TableContainer child={tutorTable} />
+          <>
+            <span className='mb-4'>
+              {`${pokemonName} can be taught the following moves in generation 7 by move tutors.`}
+            </span>
+            <TableContainer child={tutorTable} />
+          </>
           :
           `${pokemonName} does not learn any move taught by a tutor.`
         }
@@ -280,7 +290,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
         {
           finalMoveDetails?.egg?.length > 1
           ?
-          <TableContainer child={eggTable} />
+          <>
+            <span className='mb-4'>
+              {`${pokemonName} learns the following moves in generation 7 by breeding.`}
+            </span>
+            <TableContainer child={eggTable} />
+          </>
           :
           `${pokemonName} does not learn any moves by breeding.`
         }
@@ -290,7 +305,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
         {
           finalMoveDetails?.machine?.length > 1 
           ?
-          <TableContainer child={machineTable} />
+          <>
+            <span className='mb-4'>
+              {`${pokemonName} is compatible with these Technical Machines in Generation 7:`}
+            </span>
+            <TableContainer child={machineTable} />
+          </>
           :
           `${pokemonName} does not learn any moves by TM or HM.`
         }

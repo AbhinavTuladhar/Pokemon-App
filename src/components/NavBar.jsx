@@ -24,6 +24,7 @@ const NavBar = () => {
     { path: '/pokemon/generation-4', name: 'Generation 4' },
     { path: '/pokemon/generation-5', name: 'Generation 5' },
     { path: '/pokemon/generation-6', name: 'Generation 6' },
+    { path: '/pokemon/generation-7', name: 'Generation 7' },
     { path: '/pokemon/forms', name: 'Other forms'},
     { path: '/types', name: 'Types'},
     { path: '/moves', name: 'Moves'},
@@ -44,8 +45,8 @@ const NavBar = () => {
     setIsMenuOpen(true);
   };
 
-  const pokemonNavElements = <ListItem items={linkData.slice(0, 7)} closeMenu={closeMenu} subMenuFlag={true} />
-  const otherNavElements = <ListItem items={linkData.slice(7)} closeMenu={closeMenu} subMenuFlag={false} />
+  const pokemonNavElements = <ListItem items={linkData.slice(0, 8)} closeMenu={closeMenu} subMenuFlag={true} />
+  const otherNavElements = <ListItem items={linkData.slice(8)} closeMenu={closeMenu} subMenuFlag={false} />
 
   return (
     <>
