@@ -26,7 +26,8 @@ const MoveData = ({ moveInfo }) => {
     power,
     accuracy,
     PP,
-    generationIntroduced
+    generationIntroduced,
+    priority
   } = moveInfo
   
   const rowData = [
@@ -41,18 +42,25 @@ const MoveData = ({ moveInfo }) => {
     },
     { header: 'Power', value: power, },
     { header: 'Accuracy', value: accuracy, },
+    { header: 'Priority', value: priority },
     { header: 'PP', value: <> { `${PP} (max. ${PP*1.6})` } </>, },
     { header: 'Introduced', value: generationIntroduced }
   ]
 
   const tableRows = rowData.map(row => {
+    // Skip the priority row if the priority is zero.
+    if (row.header === 'Priority' && row.value === 0) {
+      return
+    }
+    // Add a positive sign to priority if positive.
+    const rowValue = row.header === 'Priority' && parseInt(row.value) > 0 ? `+${row.value}` : row.value
     return (
       <div className='table-row h-12'>
         <div key={ row.header } className="table-cell align-middle text-right border-t-[1px] py-2 pr-8 border-slate-200"> 
           { row.header }
         </div>
-        <div key={ row.value} className="table-cell align-middle border-t-[1px] py-2 border-slate-200"> 
-          { row.value }
+        <div key={ row.value } className="table-cell align-middle border-t-[1px] py-2 border-slate-200"> 
+          { rowValue }
         </div>
       </div>
     )
