@@ -32,17 +32,11 @@ const TypeChart = ({ data }) => {
   const typeDefenseInfo = Object.entries(obj).map(([type, multiplier]) => {
     return { type, multiplier }
   })
-  console.log(typeDefenseInfo)
-
-  const testData = [
-    { type: 'fairy', multiplier: 2},
-    { type: 'dragon', multiplier: 1}
-  ]
 
   return (
-    <div>
+    <section>
       <SectionTitle text='Type Defenses' />
-      <span> {`The effectiveness of each type on ${formatName(name)}`} </span>
+      <span> {`The effectiveness of each type on ${formatName(name)}: `} </span>
       <div className='flex flex-col md:flex-row mdlg:flex-col sm:flex-row justify-center'>
         <div className='flex flex-row flex-wrap mt-6 gap-x-[1px] justify-center'>
           {typeDefenseInfo.slice(0, 9).map(row => <MiniTypeCard defenceData={row} />)}
@@ -51,7 +45,7 @@ const TypeChart = ({ data }) => {
           {typeDefenseInfo.slice(9).map(row => <MiniTypeCard defenceData={row} />)}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

@@ -116,6 +116,12 @@ module.exports = {
     'text-gray-700',
     'text-gray-500',
     'text-pink-300',
+
+    // For the type chart
+    'bg-lime-600',
+    'bg-lime-500',
+    'bg-red-800',
+    'bg-red-900',
   ]
 }
 
