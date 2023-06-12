@@ -11,6 +11,7 @@ import BaseStat from './BaseStat'
 import Locations from './Locations'
 import BreedingInfo from './BreedingInfo'
 import MovesLearned from './MovesLearned'
+import TypeChart from './TypeChart';
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 
 const PokemonDetail = () => {
@@ -101,14 +102,17 @@ const PokemonDetail = () => {
 
       <BasicIntro pokemonData={{...pokemon, ...speciesData}} />
 
-      <div className='flex flex-row flex-wrap gap-x-10'>
-        <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 sm:w-full py-4'>
+      <div className='flex flex-row flex-wrap gap-x-5'>
+
+        <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
           <ImageTile imageSources={imageSource} />
         </div>
-        <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 sm:w-full py-4'>
+
+        <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
           <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
         </div>
-        <div className='flex flex-col flex-grow w-full mdlg:w-1/4 md:w-1/3 sm:w-full py-4 gap-y-5'>
+
+        <div className='flex flex-col flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4 gap-y-5'>
           <div className='flex flex-col w-full'>
             <TrainingInfo data={{...pokemon, ...speciesData}} />
           </div>
@@ -116,22 +120,28 @@ const PokemonDetail = () => {
             <BreedingInfo data={{...pokemon, ...speciesData}} />
           </div>
         </div>
-        <div className='w-full md:w-full sm:w-full'>
-          <BaseStat data={{...pokemon, ...speciesData}} />
-        </div>
+        
+        <section className='flex flex-row flex-grow flex-wrap gap-x-5'>
+          <div className='flex flex-col flex-grow w-full mdlg:w-[44%] sm:w-full'>
+            <BaseStat data={{...pokemon, ...speciesData}} />
+          </div>
+          <div className='flex flex-col flex-grow w-full mdlg:w-[10%] sm:w-full'>
+            <TypeChart data={{...pokemon}} />
+          </div> 
+        </section>
       </div>
 
-      <div>
+      <section>
         <PokeDexEntry data={dexEntry} />
-      </div>
+      </section>
 
-      <div className='py-4 gap-y-5'>
+      <section className='py-4 gap-y-5'>
         <MovesLearned data={{ ...pokemon }} id={idInfo.id} name={idInfo.name} />
-      </div>
+      </section>
       
-      <div>
+      <section>
         <Locations id={idInfo.id} name={idInfo.name} />
-      </div>
+      </section>
     </motion.div>
   )
 };

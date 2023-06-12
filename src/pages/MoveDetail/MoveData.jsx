@@ -50,7 +50,7 @@ const MoveData = ({ moveInfo }) => {
   const tableRows = rowData.map(row => {
     // Skip the priority row if the priority is zero.
     if (row.header === 'Priority' && row.value === 0) {
-      return
+      return null
     }
     // Add a positive sign to priority if positive.
     const rowValue = row.header === 'Priority' && parseInt(row.value) > 0 ? `+${row.value}` : row.value
