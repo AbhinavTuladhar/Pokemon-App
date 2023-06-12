@@ -22,7 +22,7 @@ const AnimatedRoutes = () => {
     { path: '/pokemon/generation-5', idRange: [494, 649]},
     { path: '/pokemon/generation-6', idRange: [650, 721]},
     { path: '/pokemon/generation-7', idRange: [722, 809]},
-    { path: '/pokemon/forms', idRange: [10001, 10271]},
+    { path: '/pokemon/forms', idRange: [10001, 10157]},
   ]
 
   const generationRoutes = generationRouteData.map(gen => {
