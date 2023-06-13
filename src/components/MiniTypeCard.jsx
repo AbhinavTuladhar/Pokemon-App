@@ -25,7 +25,7 @@ const MiniTypeCard = ({ defenceData }) => {
   return (
     <div className={`flex flex-col w-9 text-center`}>
       <div className={`${backgroundColourType} h-9 flex items-center justify-center text-xs px-1 rounded tracking-tight hover:brightness-125 duration-300`}>
-        <NavLink to={`/type/${type}`}>
+        <NavLink to={`/types/${type}`}>
           { type.slice(0, 3).toUpperCase() }
         </NavLink>
       </div>
