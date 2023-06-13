@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import React from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
@@ -56,80 +56,59 @@ const returnMoveImage = damageClass => {
     return ''
 }
 
-const MovesLearned = ({ data, id, name: pokemonName }) => {
-  const { moves } = data;
-  const [moveURLs, setMoveURLs] = useState({
-    level: [],
-    machine: [],
-    tutor: [],
-    egg: []
-  })
-  // This state is for keeping track of the level learnt value.
-  const [levelLearntData, setLevelLearntData] = useState([])
-  const [moveData, setMoveData] = useState([])
-  const [finalMoveDetails, setFinalMoveDetails] = useState({
-    level: [],
-    tutor: [],
-    egg: [],
-    machine: []
+const MovesLearned = ({ data }) => {
+  const { moves, name: pokemonName } = data;
+  const properPokemonName = formatName(pokemonName)
+
+  // Consider that the latest gen is 7.
+  const SMData = moves?.flatMap(move => {
+    const { version_group_details } = move
+    const SMInfo = version_group_details.filter(version => 
+      version.version_group.name === 'ultra-sun-ultra-moon'
+    )
+    return {
+      ...move, 
+      version_group_details: SMInfo
+    }
   })
 
-  useEffect(() => {
-    // Consider that the latest gen is 7.
-    const SMData = moves?.flatMap(move => {
-      const { version_group_details } = move
-      const SMInfo = version_group_details.filter(version => 
-        version.version_group.name === 'ultra-sun-ultra-moon'
-      )
-      return {
-        ...move, 
-        version_group_details: SMInfo
-      }
-    })
-
-    // Filter out the details in the version group details array is empty
-    const finalSMData = SMData.filter(move => move.version_group_details.length > 0)
-    setMoveData(finalSMData)
-  }, [moves])
-
+  // Filter out the details in the version group details array is empty
+  const finalSMData = SMData.filter(move => move.version_group_details.length > 0)
+  const moveData = finalSMData
+  
   // This is for separating out the moves learnt by level up, TM/HM and by breeding.
-  useEffect(() => {
-    if (!moveData)
-      return
-    const levelUpMoves = separateMoves({data: moveData, learnMethod: 'level-up'})
-    const machineMoves = separateMoves({data: moveData, learnMethod: 'machine'})
-    const eggMoves = separateMoves({data: moveData, learnMethod: 'egg'})
-    const tutorMoves = separateMoves({data: moveData, learnMethod: 'tutor'})
+  const levelUpMoves = separateMoves({data: moveData, learnMethod: 'level-up'})
+  const machineMoves = separateMoves({data: moveData, learnMethod: 'machine'})
+  const eggMoves = separateMoves({data: moveData, learnMethod: 'egg'})
+  const tutorMoves = separateMoves({data: moveData, learnMethod: 'tutor'})
 
-    // Now sort the moves by some conditions.
-    // sort level up moves by the level learnt.
-    const sortedLevelMoves = levelUpMoves.sort((curr, next) => {
-      const levelLearntCurrent = curr.version_group_details[0].level_learned_at
-      const levelLearntNext = next.version_group_details[0].level_learned_at
-      if (levelLearntCurrent < levelLearntNext) 
-        return -1
-      else if (levelLearntCurrent > levelLearntNext)
-        return 1
-      else
-        return (curr.name < next.name ? -1 : 1)
-    })
+  // Now sort the moves by some conditions.
+  // sort level up moves by the level learnt.
+  const sortedLevelMoves = levelUpMoves.sort((curr, next) => {
+    const levelLearntCurrent = curr.version_group_details[0].level_learned_at
+    const levelLearntNext = next.version_group_details[0].level_learned_at
+    if (levelLearntCurrent < levelLearntNext) 
+      return -1
+    else if (levelLearntCurrent > levelLearntNext)
+      return 1
+    else
+      return (curr.name < next.name ? -1 : 1)
+  })
 
-    // Extract the move name and the level learnt for the moves learn by level up.
-    setLevelLearntData(() => {
-      return levelUpMoves?.map(move => {
-        return {
-          name: move.name,
-          levelLearntAt: move.version_group_details[0].level_learned_at
-        }
-      })
-    })
-    setMoveURLs({
-      level: sortedLevelMoves?.map(move => move.moveURL),
-      machine: machineMoves?.map(move => move.moveURL),
-      egg: eggMoves?.map(move => move.moveURL),
-      tutor: tutorMoves?.map(move => move.moveURL),
-    })
-  }, [moveData])
+  // Extract the move name and the level learnt for the moves learn by level up.
+  const levelLearntData = levelUpMoves?.map(move => {
+    return {
+      name: move.name,
+      levelLearntAt: move.version_group_details[0].level_learned_at
+    }
+  })
+
+  const moveUrls = {
+    level: sortedLevelMoves?.map(move => move.moveURL),
+    machine: machineMoves?.map(move => move.moveURL),
+    egg: eggMoves?.map(move => move.moveURL),
+    tutor: tutorMoves?.map(move => move.moveURL),
+  }
 
   // Now query the moveURLs to obtain their details
   const fetchData = async (urls) => {
@@ -137,59 +116,49 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
     return responses.map(response => response.data);
   }
 
-  const { data: levelMoveDetails } = useQuery(
-    ['levelDetails', moveURLs.level], 
-    () => fetchData(moveURLs.level),
-    { enabled: true }
+  const transformMoveData = data => {
+    return data.map(move => extractMoveInformation(move))
+  }
+
+  const { data: levelMoveDetails, isLoading: isLoadingLevel } = useQuery(
+    ['levelDetails', moveUrls.level], 
+    () => fetchData(moveUrls.level),
+    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
   )
 
-  const { data: tutorMoveDetails } = useQuery(
-    ['tutorDetails', moveURLs.tutor], 
-    () => fetchData(moveURLs.tutor),
-    { enabled: true }
+  const { data: tutorMoveDetails, isLoading: isLoadingTutor } = useQuery(
+    ['tutorDetails', moveUrls.tutor], 
+    () => fetchData(moveUrls.tutor),
+    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
   )
 
-  const { data: machineMoveDetails } = useQuery(
-    ['machineDetails', moveURLs.machine], 
-    () => fetchData(moveURLs.machine),
-    { enabled: true }
+  const { data: machineMoveDetails, isLoading: isLoadingMachine } = useQuery(
+    ['machineDetails', moveUrls.machine], 
+    () => fetchData(moveUrls.machine),
+    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
   )
 
-  const { data: eggMoveDetails } = useQuery(
-    ['eggDetails', moveURLs.egg], 
-    () => fetchData(moveURLs.egg),
-    { enabled: true }
+  const { data: eggMoveDetails, isLoading: isLoadingEgg } = useQuery(
+    ['eggDetails', moveUrls.egg], 
+    () => fetchData(moveUrls.egg),
+    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
   )
 
-  // For extracting information from the move details
-  useEffect(() => {
-    let levelExtracted = []
-    let tutorExtracted = []
-    let machineExtracted = []
-    let eggExtracted = []
-    if (levelMoveDetails?.length > 0)
-      levelExtracted = levelMoveDetails?.map(move => extractMoveInformation(move))
-    if (tutorMoveDetails?.length > 0)
-      tutorExtracted = tutorMoveDetails?.map(move => extractMoveInformation(move))
-    if (machineMoveDetails?.length > 0)
-      machineExtracted = machineMoveDetails?.map(move => extractMoveInformation(move))
-    if (eggMoveDetails?.length > 0)
-      eggExtracted = eggMoveDetails?.map(move => extractMoveInformation(move))
+  if (isLoadingLevel || isLoadingTutor || isLoadingMachine || isLoadingEgg) {
+    return
+  }
 
-    setFinalMoveDetails(() => {
-      const combinedLevelData = levelLearntData?.map(obj1 => {
-        const obj2 = levelExtracted?.find(obj => obj?.moveName === obj1?.name)
-        return {...obj1, ...obj2}
-      })
+  const combinedLevelDetails = levelLearntData?.map(obj1 => {
+    const obj2 = levelMoveDetails?.find(obj => obj?.moveName === obj1?.name)
+    return {...obj1, ...obj2}
+  })
 
-      return {
-        level: [firstRowLevelUp, ...combinedLevelData],
-        tutor: [firstRow, ...tutorExtracted],
-        machine: [firstRow, ...machineExtracted],
-        egg: [firstRow, ...eggExtracted]
-      }
-    })
-  }, [levelMoveDetails, tutorMoveDetails, machineMoveDetails, eggMoveDetails, levelLearntData])
+  const finalMoveDetails = {
+    level: [firstRowLevelUp, ...combinedLevelDetails],
+    tutor: [firstRow, ...tutorMoveDetails],
+    machine: [firstRow, ...machineMoveDetails],
+    egg: [firstRow, ...eggMoveDetails]
+  }
 
   // Return a tabular form of the levelup, machine, egg and tutor moves data.
   const returnMoveTable = data => {
@@ -265,12 +234,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           ?
           <>
             <span className='mb-4'>
-              {`${pokemonName} learns the following moves in generation 7 at the levels specified.`}
+              {`${properPokemonName} learns the following moves in generation 7 at the levels specified.`}
             </span>
             <TableContainer child={levelUpTable}  />
           </>
           :
-          `${pokemonName} does not learn any moves by level up`
+          `${properPokemonName} does not learn any moves by level up`
         }
 
         <SectionTitle text={'Moves learnt by tutor'} />
@@ -279,12 +248,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           ?
           <>
             <span className='mb-4'>
-              {`${pokemonName} can be taught the following moves in generation 7 by move tutors.`}
+              {`${properPokemonName} can be taught the following moves in generation 7 by move tutors.`}
             </span>
             <TableContainer child={tutorTable} />
           </>
           :
-          `${pokemonName} does not learn any move taught by a tutor.`
+          `${properPokemonName} does not learn any move taught by a tutor.`
         }
         <SectionTitle text={'Moves learnt by Breeding'} />
         {
@@ -292,12 +261,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           ?
           <>
             <span className='mb-4'>
-              {`${pokemonName} learns the following moves in generation 7 by breeding.`}
+              {`${properPokemonName} learns the following moves in generation 7 by breeding.`}
             </span>
             <TableContainer child={eggTable} />
           </>
           :
-          `${pokemonName} does not learn any moves by breeding.`
+          `${properPokemonName} does not learn any moves by breeding.`
         }
       </div>
       <div className='flex flex-col lg:w-475/1000 w-full'>
@@ -307,12 +276,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           ?
           <>
             <span className='mb-4'>
-              {`${pokemonName} is compatible with these Technical Machines in Generation 7:`}
+              {`${properPokemonName} is compatible with these Technical Machines in Generation 7:`}
             </span>
             <TableContainer child={machineTable} />
           </>
           :
-          `${pokemonName} does not learn any moves by TM or HM.`
+          `${properPokemonName} does not learn any moves by TM or HM.`
         }
       </div>
     </div>

@@ -99,11 +99,17 @@ export const extractMoveInformation = move => {
   };
 }
 
-export const extractPokemonInformation = (data) => {
-  const { 
+export const extractPokemonInformation = data => {
+  const {
     abilities,
+    base_experience,
+    forms,
+    game_indices,
+    height,
     id,
+    moves,
     name,
+    species: { url: speciesLink },
     sprites: { 
       other: { 'official-artwork': { front_default, front_shiny }},
       versions: { 
@@ -111,46 +117,58 @@ export const extractPokemonInformation = (data) => {
         'generation-viii': { icons: { front_default: icon }}
       }
     },
-    species: { url: speciesLink },
-    types
+    stats,
+    types,
+    weight
   } = data
   return {
     abilities,
+    base_experience,
+    forms,
+    game_indices,
+    height,
     id,
+    moves,
     name: formatName(name),
-    defaultSprite: front_default, 
-    shinySprite: front_shiny,
+    speciesLink,
+    front_default,
+    front_shiny,
+    gameSprite,
     icon,
-    speciesUrl: speciesLink,
+    stats,
     types,
-    gameSprite
+    weight
   }
-};
+}
 
 export const extractSpeciesInformation = data => {
   const  { 
-    genera, 
-    flavor_text_entries, 
     base_happiness, 
     capture_rate, 
-    growth_rate : {name: growthRateType},
-    pokedex_numbers,
-    gender_rate,
     egg_groups,
-    hatch_counter
+    evolution_chain: { url: evolutionChainUrl },
+    flavor_text_entries, 
+    gender_rate,
+    genera, 
+    generation: { name: generationIntroduced },
+    growth_rate : {name: growthRateType},
+    hatch_counter,
+    pokedex_numbers
   } = data
   // Find only the English genus name of the 'mon.
   const englishGenus = genera.find(entry => entry.language.name === 'en')
   return {
-    genus: englishGenus.genus,
-    growth_rate: growthRateType,
     base_happiness,
     capture_rate,
-    pokedex_numbers,
-    gender_rate,
     egg_groups,
+    evolutionChainUrl,
+    flavor_text_entries,
+    gender_rate,
+    generationIntroduced,
+    genus: englishGenus.genus,
+    growth_rate: growthRateType,
     hatch_counter,
-    flavor_text_entries
+    pokedex_numbers,
   }
 }
 
