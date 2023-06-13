@@ -1,6 +1,5 @@
-import { React, useEffect, useState, useCallback } from 'react';
+import { React, useEffect  } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useQuery } from 'react-query';
 import { motion } from 'framer-motion'
 import BasicIntro from './BasicIntro';
@@ -13,32 +12,15 @@ import Locations from './Locations'
 import BreedingInfo from './BreedingInfo'
 import MovesLearned from './MovesLearned'
 import TypeChart from './TypeChart';
-import { extractPokemonInformation, extractSpeciesInformation, extractPokemonInformationNew } from '../../utils/extractInfo'
+import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData';
+import formatName from '../../utils/NameFormatting';
 
 const PokemonDetail = () => {
   const { id } = useParams();
-  const [idInfo, setIdInfo] = useState({})            // defines the ID number and name of the pokemon
-  const [pokemon, setPokemon] = useState(null);       // the data that is obtained from the entry of the 'mon.
-  const [imageSource, setImageSource] = useState('')  // for storing the normal and shiny sprites.
-  const [speciesData, setSpeciesData] = useState({})  // defines the species information of the 'mon.
-  const [speciesURL, setSpeciesURL] = useState('')
-  const [dexEntry, setDexEntry] = useState({})
-
-  const fetchDataOld = useCallback(async () => {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`);
-    const responseData = await response.data;
-    setPokemon(responseData);
-  }, [id])
-
-  const fetchSpeciesData = useCallback(async () => {
-    const response = await axios.get(speciesURL)
-    const responseData = await response.data
-    setSpeciesData(responseData)
-  }, [speciesURL])
 
   const transformPokemonData = data => {
-    return extractPokemonInformationNew(data)
+    return extractPokemonInformation(data)
   }
 
   const { data: pokemonData, isLoading: isLoadingPokemonData } = useQuery(
@@ -69,14 +51,14 @@ const PokemonDetail = () => {
 
   // Setting the image source.
   const imageSourceNew = { defaultSprite, shinySprite, icon }
-  const idInfoNew = { pokemonId, pokemonName }
+  const idInfo = { id: pokemonId, name: pokemonName }
 
   // Get the species data
   const transformSpeciesData = data => {
     return extractSpeciesInformation(data)
   }
 
-  const { data: speciesDataNew } = useQuery(
+  const { data: speciesDataNew, isLoading: isLoadingSpeciesData } = useQuery(
     ['speciesData', speciesLink],
     () => fetchData(speciesLink),
     { staleTime: Infinity, cacheTime: Infinity, select: transformSpeciesData }
@@ -96,58 +78,11 @@ const PokemonDetail = () => {
     pokedex_numbers,
   } = speciesDataNew || {}
 
-  // For extracting information from the 'pokemon' object.
-  const setGeneralInformation = (data) => {
-    const extractedInfo = extractPokemonInformation(data)
-    const { 
-      id,
-      name,
-      defaultSprite,
-      shinySprite,
-      speciesUrl,
-      icon
-    } = extractedInfo;
-    setImageSource({defaultSprite, shinySprite, icon})
-    setSpeciesURL(speciesUrl)
-    setIdInfo(() => ({ id, name }))
-  };
-
-  // same as above, but for speciesData.
-  const setSpeciesInformation = ( data ) => {
-    if (!data || !data.genera)
-      return
-    const extractedInfo = extractSpeciesInformation(data)
-    const { flavor_text_entries } = extractedInfo
-    setDexEntry(flavor_text_entries)
-    setSpeciesData(extractedInfo)
-  }
-
-  // Fpr a dynamic title.
+  // For a dynamic title.
   useEffect(() => {
-    const correctTitle = idInfo.name ? `${idInfo.name} Pokedex` : '...'
-    document.title = correctTitle
+    const correctTitle = idInfo.name ? `${idInfo.name} Pokedex | Pokemon Database` : '...'
+    document.title = formatName(correctTitle)
   }, [idInfo])
-
-  // Fetch the individual Pokemon and then the species data.
-  useEffect(() => {
-    fetchDataOld();
-    fetchSpeciesData();
-  }, [fetchDataOld, fetchSpeciesData]);
-
-  // For extracting the information from the fetched 
-  useEffect(() => {
-    if (pokemon) {
-      setGeneralInformation(pokemon);
-    }
-    if (speciesData) {
-      setSpeciesInformation(speciesData)
-    }
-  }, [pokemon, speciesData]);
-
-  // Render a simple loading page if both the dat hasn't been fetched.
-  if (!pokemon || !speciesData) {
-    return
-  }
 
   // Define the props to all the child components.
   const BasicInfoProps = {
@@ -198,6 +133,10 @@ const PokemonDetail = () => {
   const LocationsProps = {
     id: pokemonId,
     name: pokemonName
+  }
+
+  if (isLoadingPokemonData || isLoadingSpeciesData) {
+    return
   }
 
   return (

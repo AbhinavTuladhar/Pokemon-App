@@ -20,7 +20,7 @@ const PokeCard = ({ data }) => {
     id,
     name,
     types,
-    defaultSprite
+    front_default: defaultSprite
   } = extractPokemonInformation(data)
 
   // For capitalising the first letter.

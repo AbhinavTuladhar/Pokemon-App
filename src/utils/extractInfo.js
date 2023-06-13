@@ -99,7 +99,7 @@ export const extractMoveInformation = move => {
   };
 }
 
-export const extractPokemonInformationNew = data => {
+export const extractPokemonInformation = data => {
   const {
     abilities,
     base_experience,
@@ -129,7 +129,7 @@ export const extractPokemonInformationNew = data => {
     height,
     id,
     moves,
-    name,
+    name: formatName(name),
     speciesLink,
     front_default,
     front_shiny,
@@ -140,34 +140,6 @@ export const extractPokemonInformationNew = data => {
     weight
   }
 }
-
-export const extractPokemonInformation = (data) => {
-  const { 
-    abilities,
-    id,
-    name,
-    sprites: { 
-      other: { 'official-artwork': { front_default, front_shiny }},
-      versions: { 
-        'generation-vii': { 'ultra-sun-ultra-moon': { front_default: gameSprite } },
-        'generation-viii': { icons: { front_default: icon }}
-      }
-    },
-    species: { url: speciesLink },
-    types
-  } = data
-  return {
-    abilities,
-    id,
-    name: formatName(name),
-    defaultSprite: front_default, 
-    shinySprite: front_shiny,
-    icon,
-    speciesUrl: speciesLink,
-    types,
-    gameSprite
-  }
-};
 
 export const extractSpeciesInformation = data => {
   const  { 
