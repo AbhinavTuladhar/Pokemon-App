@@ -77,7 +77,9 @@ const groupByLocation = data => {
   return info
 }
 
-const Locations = ({ id, name }) => {
+const Locations = ({ props }) => {
+  const { id, name } = props
+
   const transformData = locationData => {
     const information = extractInformation(locationData)
     const groupedByGame = groupByGame(information)

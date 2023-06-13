@@ -1,6 +1,7 @@
 import { React, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useQuery } from 'react-query';
 import { motion } from 'framer-motion'
 import BasicIntro from './BasicIntro';
 import PokeDexEntry from './PokeDexEntry';
@@ -12,7 +13,8 @@ import Locations from './Locations'
 import BreedingInfo from './BreedingInfo'
 import MovesLearned from './MovesLearned'
 import TypeChart from './TypeChart';
-import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
+import { extractPokemonInformation, extractSpeciesInformation, extractPokemonInformationNew } from '../../utils/extractInfo'
+import fetchData from '../../utils/fetchData';
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -23,7 +25,7 @@ const PokemonDetail = () => {
   const [speciesURL, setSpeciesURL] = useState('')
   const [dexEntry, setDexEntry] = useState({})
 
-  const fetchData = useCallback(async () => {
+  const fetchDataOld = useCallback(async () => {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`);
     const responseData = await response.data;
     setPokemon(responseData);
@@ -34,6 +36,65 @@ const PokemonDetail = () => {
     const responseData = await response.data
     setSpeciesData(responseData)
   }, [speciesURL])
+
+  const transformPokemonData = data => {
+    return extractPokemonInformationNew(data)
+  }
+
+  const { data: pokemonData, isLoading: isLoadingPokemonData } = useQuery(
+    ['pokemonData', id],
+    () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/`),
+    { staleTime: Infinity, cacheTime: Infinity, select: transformPokemonData }
+  ) 
+
+  // Destructure the pokemoNData object and assign them to several variables.
+  const {
+    abilities,
+    base_experience,
+    forms,
+    game_indices,
+    height,
+    id: pokemonId,
+    moves,
+    name: pokemonName,
+    speciesLink,
+    front_default: defaultSprite,
+    front_shiny: shinySprite,
+    gameSprite,
+    icon,
+    stats,
+    types,
+    weight
+  } = pokemonData || {}
+
+  // Setting the image source.
+  const imageSourceNew = { defaultSprite, shinySprite, icon }
+  const idInfoNew = { pokemonId, pokemonName }
+
+  // Get the species data
+  const transformSpeciesData = data => {
+    return extractSpeciesInformation(data)
+  }
+
+  const { data: speciesDataNew } = useQuery(
+    ['speciesData', speciesLink],
+    () => fetchData(speciesLink),
+    { staleTime: Infinity, cacheTime: Infinity, select: transformSpeciesData }
+  )
+
+  const { 
+    base_happiness,
+    capture_rate,
+    egg_groups,
+    evolutionChainUrl,
+    flavor_text_entries,
+    gender_rate,
+    generationIntroduced,
+    genus,
+    growth_rate,
+    hatch_counter,
+    pokedex_numbers,
+  } = speciesDataNew || {}
 
   // For extracting information from the 'pokemon' object.
   const setGeneralInformation = (data) => {
@@ -69,9 +130,9 @@ const PokemonDetail = () => {
 
   // Fetch the individual Pokemon and then the species data.
   useEffect(() => {
-    fetchData();
+    fetchDataOld();
     fetchSpeciesData();
-  }, [fetchData, fetchSpeciesData]);
+  }, [fetchDataOld, fetchSpeciesData]);
 
   // For extracting the information from the fetched 
   useEffect(() => {
@@ -88,6 +149,57 @@ const PokemonDetail = () => {
     return
   }
 
+  // Define the props to all the child components.
+  const BasicInfoProps = {
+    id: pokemonId,
+    name: pokemonName,
+    types,
+    genus,
+    pokedex_numbers
+  }
+
+  const PokeDexDataProps = {
+    ...BasicInfoProps,
+    abilities,
+    height,
+    weight
+  }
+
+  const TrainingInfoProps = {
+    capture_rate,
+    base_happiness,
+    base_experience,
+    growth_rate,
+    stats
+  }
+
+  const BreedingInfoProps = {
+    egg_groups,
+    gender_rate,
+    hatch_counter
+  }
+
+  const BaseStatProps = {
+    stats
+  }
+
+  const TypeChartProps = {
+    types,
+    name: pokemonName
+  }
+
+  const PokeDexEntryProps = flavor_text_entries
+
+  const MovesLearnedProps = {
+    moves,
+    name: pokemonName,
+  }
+
+  const LocationsProps = {
+    id: pokemonId,
+    name: pokemonName
+  }
+
   return (
     <motion.div 
       className='gap-y-5 md:mx-10 mx-4'
@@ -100,47 +212,47 @@ const PokemonDetail = () => {
         {idInfo.name}
       </div>
 
-      <BasicIntro pokemonData={{...pokemon, ...speciesData}} />
+      <BasicIntro pokemonData={ BasicInfoProps } />
 
       <div className='flex flex-row flex-wrap gap-x-5'>
 
         <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
-          <ImageTile imageSources={imageSource} />
+          <ImageTile imageSources={ imageSourceNew } />
         </div>
 
         <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
-          <PokeDexData pokemonData={{...pokemon, ...speciesData}} />
+          <PokeDexData pokemonData={ PokeDexDataProps } />
         </div>
 
         <div className='flex flex-col flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4 gap-y-5'>
           <div className='flex flex-col w-full'>
-            <TrainingInfo data={{...pokemon, ...speciesData}} />
+            <TrainingInfo data={ TrainingInfoProps } />
           </div>
           <div className='flex flex-col w-full'>
-            <BreedingInfo data={{...pokemon, ...speciesData}} />
+            <BreedingInfo data={ BreedingInfoProps } />
           </div>
         </div>
         
         <section className='flex flex-row flex-grow flex-wrap gap-x-5'>
           <div className='flex flex-col flex-grow w-full mdlg:w-[44%] sm:w-full'>
-            <BaseStat data={{...pokemon, ...speciesData}} />
+            <BaseStat data={ BaseStatProps } />
           </div>
           <div className='flex flex-col flex-grow w-full mdlg:w-[10%] sm:w-full'>
-            <TypeChart data={{...pokemon}} />
+            <TypeChart data={ TypeChartProps } />
           </div> 
         </section>
       </div>
 
       <section>
-        <PokeDexEntry data={dexEntry} />
+        <PokeDexEntry data={ PokeDexEntryProps } />
       </section>
 
       <section className='py-4 gap-y-5'>
-        <MovesLearned data={{ ...pokemon }} id={idInfo.id} name={idInfo.name} />
+        <MovesLearned data={ MovesLearnedProps } />
       </section>
       
       <section>
-        <Locations id={idInfo.id} name={idInfo.name} />
+        <Locations props={ LocationsProps } />
       </section>
     </motion.div>
   )

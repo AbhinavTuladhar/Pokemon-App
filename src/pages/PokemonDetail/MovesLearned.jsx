@@ -56,8 +56,10 @@ const returnMoveImage = damageClass => {
     return ''
 }
 
-const MovesLearned = ({ data, id, name: pokemonName }) => {
-  const { moves } = data;
+const MovesLearned = ({ data }) => {
+  const { moves, name: pokemonName } = data;
+  const properPokemonName = formatName(pokemonName)
+
   const [moveURLs, setMoveURLs] = useState({
     level: [],
     machine: [],
@@ -265,12 +267,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           ?
           <>
             <span className='mb-4'>
-              {`${pokemonName} learns the following moves in generation 7 at the levels specified.`}
+              {`${properPokemonName} learns the following moves in generation 7 at the levels specified.`}
             </span>
             <TableContainer child={levelUpTable}  />
           </>
           :
-          `${pokemonName} does not learn any moves by level up`
+          `${properPokemonName} does not learn any moves by level up`
         }
 
         <SectionTitle text={'Moves learnt by tutor'} />
@@ -279,12 +281,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           ?
           <>
             <span className='mb-4'>
-              {`${pokemonName} can be taught the following moves in generation 7 by move tutors.`}
+              {`${properPokemonName} can be taught the following moves in generation 7 by move tutors.`}
             </span>
             <TableContainer child={tutorTable} />
           </>
           :
-          `${pokemonName} does not learn any move taught by a tutor.`
+          `${properPokemonName} does not learn any move taught by a tutor.`
         }
         <SectionTitle text={'Moves learnt by Breeding'} />
         {
@@ -292,12 +294,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           ?
           <>
             <span className='mb-4'>
-              {`${pokemonName} learns the following moves in generation 7 by breeding.`}
+              {`${properPokemonName} learns the following moves in generation 7 by breeding.`}
             </span>
             <TableContainer child={eggTable} />
           </>
           :
-          `${pokemonName} does not learn any moves by breeding.`
+          `${properPokemonName} does not learn any moves by breeding.`
         }
       </div>
       <div className='flex flex-col lg:w-475/1000 w-full'>
@@ -307,12 +309,12 @@ const MovesLearned = ({ data, id, name: pokemonName }) => {
           ?
           <>
             <span className='mb-4'>
-              {`${pokemonName} is compatible with these Technical Machines in Generation 7:`}
+              {`${properPokemonName} is compatible with these Technical Machines in Generation 7:`}
             </span>
             <TableContainer child={machineTable} />
           </>
           :
-          `${pokemonName} does not learn any moves by TM or HM.`
+          `${properPokemonName} does not learn any moves by TM or HM.`
         }
       </div>
     </div>

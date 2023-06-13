@@ -99,6 +99,48 @@ export const extractMoveInformation = move => {
   };
 }
 
+export const extractPokemonInformationNew = data => {
+  const {
+    abilities,
+    base_experience,
+    forms,
+    game_indices,
+    height,
+    id,
+    moves,
+    name,
+    species: { url: speciesLink },
+    sprites: { 
+      other: { 'official-artwork': { front_default, front_shiny }},
+      versions: { 
+        'generation-vii': { 'ultra-sun-ultra-moon': { front_default: gameSprite } },
+        'generation-viii': { icons: { front_default: icon }}
+      }
+    },
+    stats,
+    types,
+    weight
+  } = data
+  return {
+    abilities,
+    base_experience,
+    forms,
+    game_indices,
+    height,
+    id,
+    moves,
+    name,
+    speciesLink,
+    front_default,
+    front_shiny,
+    gameSprite,
+    icon,
+    stats,
+    types,
+    weight
+  }
+}
+
 export const extractPokemonInformation = (data) => {
   const { 
     abilities,
@@ -129,28 +171,32 @@ export const extractPokemonInformation = (data) => {
 
 export const extractSpeciesInformation = data => {
   const  { 
-    genera, 
-    flavor_text_entries, 
     base_happiness, 
     capture_rate, 
-    growth_rate : {name: growthRateType},
-    pokedex_numbers,
-    gender_rate,
     egg_groups,
-    hatch_counter
+    evolution_chain: { url: evolutionChainUrl },
+    flavor_text_entries, 
+    gender_rate,
+    genera, 
+    generation: { name: generationIntroduced },
+    growth_rate : {name: growthRateType},
+    hatch_counter,
+    pokedex_numbers
   } = data
   // Find only the English genus name of the 'mon.
   const englishGenus = genera.find(entry => entry.language.name === 'en')
   return {
-    genus: englishGenus.genus,
-    growth_rate: growthRateType,
     base_happiness,
     capture_rate,
-    pokedex_numbers,
-    gender_rate,
     egg_groups,
+    evolutionChainUrl,
+    flavor_text_entries,
+    gender_rate,
+    generationIntroduced,
+    genus: englishGenus.genus,
+    growth_rate: growthRateType,
     hatch_counter,
-    flavor_text_entries
+    pokedex_numbers,
   }
 }
 
