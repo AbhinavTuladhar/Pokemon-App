@@ -72,6 +72,9 @@ const MovesLearned = ({ data }) => {
     }
   })
 
+  console.log('Logging move information')
+  console.log(SMData)
+
   // Filter out the details in the version group details array is empty
   const finalSMData = SMData.filter(move => move.version_group_details.length > 0)
   const moveData = finalSMData
@@ -85,8 +88,8 @@ const MovesLearned = ({ data }) => {
   // Now sort the moves by some conditions.
   // sort level up moves by the level learnt.
   const sortedLevelMoves = levelUpMoves.sort((curr, next) => {
-    const levelLearntCurrent = curr.version_group_details[0].level_learned_at
-    const levelLearntNext = next.version_group_details[0].level_learned_at
+    const levelLearntCurrent = curr.version_group_details[curr.version_group_details.length - 1].level_learned_at
+    const levelLearntNext = next.version_group_details[next.version_group_details.length - 1].level_learned_at
     if (levelLearntCurrent < levelLearntNext) 
       return -1
     else if (levelLearntCurrent > levelLearntNext)
@@ -99,7 +102,7 @@ const MovesLearned = ({ data }) => {
   const levelLearntData = levelUpMoves?.map(move => {
     return {
       name: move.name,
-      levelLearntAt: move.version_group_details[0].level_learned_at
+      levelLearntAt: move.version_group_details[move.version_group_details.length - 1].level_learned_at
     }
   })
 
