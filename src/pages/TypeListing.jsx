@@ -1,4 +1,4 @@
-import { React, useMemo, useEffect } from 'react'
+import { React, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import TypeCard from '../components/TypeCard'
 
@@ -11,9 +11,7 @@ const TypeListing = () => {
 
   const typeCardList = typeList.map(type => <TypeCard typeName={type } />)
 
-  useEffect(() => {
-    document.title = 'Pokemon Types'
-  }, [])
+  document.title = 'Pokémon types | Pokémon database'
 
   return (
     <motion.div 

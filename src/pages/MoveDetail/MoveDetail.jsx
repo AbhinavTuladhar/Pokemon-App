@@ -27,6 +27,10 @@ const MoveDetail = () => {
     { select: transformData, staleTime: Infinity, cacheTime: Infinity }
   )
 
+  // Set the document title
+  const { moveName } = moveInfo
+  document.title = `${formatName(moveName)} | Pokémon Moves | Pokémon Database`
+
   return (
     <motion.div
       className='md:mx-10 mx-4'

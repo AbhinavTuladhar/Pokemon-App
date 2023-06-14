@@ -26,6 +26,8 @@ const AbilityDetail = () => {
   // Data to be sent to pokemon listing
   const { pokemon: pokemonList, name } = abilityInfo
 
+  document.title = `${formatName(name)} | Pokémon abilities | Pokémon database`
+
   return (
     <motion.div
       className='md:mx-10 mx-4'

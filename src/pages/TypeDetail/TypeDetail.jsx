@@ -23,12 +23,7 @@ const TypeDetail = ( ) => {
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
   )
 
-  // Capitalise the first name for setting the document title.
   const formattedType = type.charAt(0).toUpperCase() + type.slice(1)
-
-  useEffect(() => {
-    document.title = `${formattedType} type Pokemon`
-  }, [formattedType])
 
   // Now format the data for rendering purposes.
   // Prepare the type effectiveness list
@@ -124,6 +119,8 @@ const TypeDetail = ( ) => {
       }
     </div>
   )
+
+  document.title = `${formattedType} type Pokémon | Pokémon database`
 
   return (
     <motion.div 

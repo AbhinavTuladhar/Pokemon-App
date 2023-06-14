@@ -72,9 +72,6 @@ const MovesLearned = ({ data }) => {
     }
   })
 
-  console.log('Logging move information')
-  console.log(SMData)
-
   // Filter out the details in the version group details array is empty
   const finalSMData = SMData.filter(move => move.version_group_details.length > 0)
   const moveData = finalSMData

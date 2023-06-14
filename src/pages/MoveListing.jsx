@@ -41,8 +41,8 @@ const MoveListing = () => {
   // This fetches the URLs of all the moves
   const urlList = useMemo(() => {
     let urls = []
-    // default is 621
-    for (let i = 1; i <= 621; i++) {
+    // default is 621 up to gen 6, 728 for gen 7.
+    for (let i = 1; i <= 728; i++) {
       urls.push(`https://pokeapi.co/api/v2/move/${i}/`)
     }
     return urls
@@ -229,6 +229,8 @@ const MoveListing = () => {
       </div>
     )
   }) 
+
+  document.title = 'Pokémon moves list | Pokémon database'
 
   return (
     <motion.div 

@@ -49,7 +49,6 @@ const AbilityListing = () => {
     // There are dashes in the JSON data.
     // Replace any spaces in the query with a dash.
     const searchQuery = event.target.value.toLowerCase().replace(' ', '-')
-    console.log('The search query is', searchQuery)
     const filteredData = abilityInfo?.filter(ability => ability.name.includes(searchQuery))
     setFilteredAbilityInfo(filteredData)
   }
@@ -103,11 +102,8 @@ const AbilityListing = () => {
     )
   })
 
-  useEffect(() => {
-    if (filteredAbilityInfo) {
-      console.log('The filtered data is', filteredAbilityInfo)
-    }
-  }, [filteredAbilityInfo])
+  // Set the document title
+  document.title = 'Pokémon abilities list | Pokémon database'
 
   return (
     <motion.div

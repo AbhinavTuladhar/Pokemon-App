@@ -18,10 +18,6 @@ const MainPage = ({ idRange }) => {
   // Check for the 'other forms' page.
   const generationNumber = isNaN(generationNumberRaw) ? '' : generationNumberRaw
 
-  useEffect(() => {
-    document.title = generationNumber !== '' ? `Gen ${generationNumber}` : 'Pokemon forms'
-  }, [generationNumber])
-
   const fetchPokemonData = async (url) => {
     const response = await axios.get(url)
     return response.data
@@ -59,6 +55,10 @@ const MainPage = ({ idRange }) => {
     const filteredData = pokemonInfo?.filter(pokemon => pokemon.name.includes(searchString.toLowerCase()))
     setFilteredPokemonInfo(filteredData);
   }
+
+  const titleSuffix = 'List | Pokémon database'
+  const titlePrefix = generationNumber !== '' ? `Generation ${generationNumber} Pokémon` : 'Pokémon forms'
+  document.title = `${titlePrefix} ${titleSuffix}`
 
   return (
     <motion.div 

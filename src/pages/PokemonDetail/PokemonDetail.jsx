@@ -1,4 +1,4 @@
-import { React, useEffect  } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { motion } from 'framer-motion'
@@ -78,11 +78,8 @@ const PokemonDetail = () => {
     pokedex_numbers,
   } = speciesDataNew || {}
 
-  // For a dynamic title.
-  useEffect(() => {
-    const correctTitle = idInfo.name ? `${idInfo.name} Pokedex | Pokemon Database` : '...'
-    document.title = formatName(correctTitle)
-  }, [idInfo])
+  // Setting the title
+  document.title = `${formatName(pokemonName)}: stats, moves, evolution and locations | Pokémon Database`
 
   // Define the props to all the child components.
   const BasicInfoProps = {

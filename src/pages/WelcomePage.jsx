@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import React from 'react'
 import { motion } from 'framer-motion'
 
 const WelcomePage = () => {
-  const location = useLocation()
-  useEffect(() => {
-    document.title = 'Pokedex'
-  }, [location])
-  
+  document.title = 'Pokémon Database clone'
+
   return(
     <motion.div
       initial={{opacity: 0}}
