@@ -51,7 +51,7 @@ const TypeDetail = ( ) => {
   )
 
   const offensiveDiv = (
-    <div className='gap-4'> 
+    <div className='flex flex-wrap flex-col w-full lg:w-475/1000 gap-4'> 
       <div className='text-3xl font-bold'>
         Attack <span className='text-gray-300 italic'> pros & cons </span>
       </div>
@@ -88,7 +88,7 @@ const TypeDetail = ( ) => {
   )
 
   const defensiveDiv = (
-    <div className='gap-4'> 
+    <div className='flex flex-wrap flex-col w-full lg:w-475/1000 gap-4'> 
       <div className='text-3xl font-bold'>
         Defence <span className='text-gray-300 italic'> pros & cons </span>
       </div>
@@ -142,18 +142,15 @@ const TypeDetail = ( ) => {
       { titleDiv }
       <TypeDetailCard moveList={moveList} pokemonList={pokemonList} typeName={type} />
 
-      <div className='gap-y-4'>
-        {offensiveDiv}
-      </div>
-
-      <div className='gap-y-4 my-4'>
-        {defensiveDiv}
+      <div className='flex flex-row flex-wrap justify-between gap-y-10'>
+        { offensiveDiv }
+        { defensiveDiv }
       </div>
 
       <div>
         { <PokemonCardList title={`${formatName(type)} Pokemon`} pokemonUrls={extractedInformation.pokemonList} />}
       </div>
-      
+
     </motion.div>
   )
 }
