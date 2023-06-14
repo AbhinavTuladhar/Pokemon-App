@@ -43,7 +43,7 @@ const MoveData = ({ moveInfo }) => {
     { header: 'Power', value: power, },
     { header: 'Accuracy', value: accuracy, },
     { header: 'Priority', value: priority },
-    { header: 'PP', value: <> { `${PP} (max. ${PP*1.6})` } </>, },
+    { header: 'PP', value: <> { `${PP} (max. ${Math.floor(PP*1.6)})` } </>, },
     { header: 'Introduced', value: generationIntroduced }
   ]
 

@@ -56,7 +56,10 @@ const MoveDetail = () => {
         </div>
       </div>
       <div className='flex flex-col justify-between'>
-        <PokemonCardList title={`Pokemon that can learn ${formatName(moveInfo.moveName)}`} pokemonUrls={moveInfo.pokemonUrls} />
+        {
+          moveInfo.pokemonUrls > 0 &&
+          <PokemonCardList title={`Pokemon that can learn ${formatName(moveInfo.moveName)}`} pokemonUrls={moveInfo.pokemonUrls} />
+        }
       </div>
     </motion.div>
   )

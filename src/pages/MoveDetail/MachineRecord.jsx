@@ -7,7 +7,6 @@ import generationMapping from '../../utils/generationMapping'
 import formatName from '../../utils/NameFormatting'
 
 const MachineRecord = ({ machineList }) => {
-  console.log('In machine records', machineList)
   const urlList = machineList?.map(machine => machine.machine.url)
 
   // Transforming the data of the API response.
