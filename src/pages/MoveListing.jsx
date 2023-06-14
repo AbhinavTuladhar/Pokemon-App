@@ -177,7 +177,7 @@ const MoveListing = () => {
         value: (
           <NavLink to={link}> {formatName(moveName)} </NavLink> 
         ),
-        style: index !== 0 ? 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300 whitespace-nowrap' : ''
+        style: index !== 0 ? 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300' : ''
       },
       { 
         key: 'moveType', 
@@ -206,7 +206,7 @@ const MoveListing = () => {
       { 
         key: 'shortEntry', 
         value: (<div className='w-[36rem]'> { shortEntry?.replace('$effect_chance% ', '') } </div>),
-        style: 'pr-8 w-[48rem]'
+        style: 'pr-8 w-[36rem]'
       },
       { 
         key: 'effectChance', 
