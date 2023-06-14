@@ -15,7 +15,7 @@ const TypeDetailCard = ({ moveList, pokemonList, typeName}) => {
     ?.length
 
   return (
-    <section className='flex flex-row flex-wrap justify-center my-8 gap-x-20'>
+    <section className='flex flex-row flex-wrap justify-center mt-6 mb-3 gap-x-20'>
 
       <div className='flex flex-col items-center justify-center border rounded-lg border-slate-500 p-2' >
         <span className='text-2xl font-bold'>

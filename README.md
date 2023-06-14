@@ -28,11 +28,15 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ### 3. List of all moves (up to generation 7)
 
+![Detail_3](./Screenshots/MoveList.jpg)
+
 ### 4. Detail of individual moves
 
 ![MoveDetail](./Screenshots/MoveDetail.jpg)
 
 ### 5. List of all types
+
+![MoveDetail](./Screenshots/TypeList.jpg)
 
 ### 6. Detail of the types
 
