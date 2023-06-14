@@ -5,6 +5,7 @@ import { AiFillCheckCircle, AiFillCloseCircle }  from 'react-icons/ai'
 import { motion } from 'framer-motion'
 import TypeCard from '../../components/TypeCard'
 import PokemonCardList from '../../components/PokemonCardList'
+import TypeDetailCard from './TypeDetailCard'
 import fetchData from '../../utils/fetchData'
 import { extractTypeInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
@@ -22,6 +23,14 @@ const TypeDetail = ( ) => {
     () => fetchData(typeURL),
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
   )
+
+  // Find the number of Pokemon and moves related to the type.
+  // const { 
+  //   pokemonList: { length: pokemonCount } = { length: 0 },
+  //   moveList: { length: moveCount } = { length: 0 }
+  // } = extractedInformation ?? {}
+
+  const { pokemonList, moveList } = extractedInformation ?? {}
 
   const formattedType = type.charAt(0).toUpperCase() + type.slice(1)
 
@@ -131,15 +140,20 @@ const TypeDetail = ( ) => {
       transition={{ duration: 0.5, ease: 'easeIn' }}
     >
       { titleDiv }
+      <TypeDetailCard moveList={moveList} pokemonList={pokemonList} typeName={type} />
+
       <div className='gap-y-4'>
         {offensiveDiv}
       </div>
+
       <div className='gap-y-4 my-4'>
         {defensiveDiv}
       </div>
+
       <div>
         { <PokemonCardList title={`${formatName(type)} Pokemon`} pokemonUrls={extractedInformation.pokemonList} />}
       </div>
+      
     </motion.div>
   )
 }
