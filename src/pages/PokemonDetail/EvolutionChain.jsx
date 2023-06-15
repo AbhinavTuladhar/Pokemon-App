@@ -1,7 +1,9 @@
 import React from 'react'
 import { useQuery } from 'react-query'
-import { BsArrowRight } from 'react-icons/bs'
+import { NavLink } from 'react-router-dom'
+import { BsArrowRight, BsArrowDown } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
+import TypeCard from '../../components/TypeCard'
 import fetchData from '../../utils/fetchData'
 import { extractPokemonInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
@@ -74,8 +76,8 @@ const EvolutionChain = ({ url }) => {
       select: pokemonDataList => {
         return pokemonDataList.map(pokemon => {
           const extractedInformation = extractPokemonInformation(pokemon)
-          const { name, homeSprite } = extractedInformation
-          return { name, homeSprite }
+          const { name, homeSprite, id, types } = extractedInformation
+          return { name, homeSprite, id, types }
         })
       }
     }
@@ -89,19 +91,53 @@ const EvolutionChain = ({ url }) => {
 
   // Define divs for each pokemon in the evolution chain.
   const individualPokemon = finalPokemonData?.map((pokemon) => {
+    const { homeSprite, name, id, types } = pokemon
+    const typeDiv = types.map((type, index) => {
+      const typeName = type.type.name
+      return (
+        <>
+          <TypeCard typeName={typeName} useTextOnly={true} />
+          {index !== types.length - 1 && <span> · </span>}
+        </>
+      )
+    })
+
+    // For the identifying number
+    const formattedId = `#${('00' + id).slice(-3)}`
+
     return (
-      <div className='flex flex-col items-center'>
-        <img src={pokemon.homeSprite} alt={pokemon} className='h-[160px]' />
-        { formatName(pokemon.name) }
+      <div className='flex flex-row sm:flex-row md:flex-col justify-center items-center gap-y-2'>
+        <img src={homeSprite} alt={name} className='h-40 aspect-square' />
+        <div className='flex flex-col items-center justify-center'>
+          { formattedId }
+          <NavLink 
+            to={`/pokemon/${id}`} 
+            className='text-blue-500 font-bold text-md hover:text-red-500 hover:underline duration-500'
+          > 
+            { formatName(name) }
+          </NavLink>
+          <span className='text-center'>
+            { typeDiv }
+          </span>
+        </div>
       </div>
     )
   })
 
   const finalEvolutionDiv = individualPokemon?.map((pokemon, index) => {
+    const pokemonData = individualPokemon[index]
     return (
-      <div className='flex justify-center items-center gap-x-10'>
+      <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center gap-x-5'>
         { pokemon }
-        { index !== individualPokemon.length - 1 && <BsArrowRight size={60} /> }
+        { 
+          index !== individualPokemon.length - 1 && 
+          (
+            <>
+              <BsArrowRight size={60} className='md:block sm:hidden hidden' />
+              <BsArrowDown size={60} className='md:hidden sm:block block' />
+            </>
+          )
+        }
       </div>
     )
   })
@@ -109,7 +145,7 @@ const EvolutionChain = ({ url }) => {
   return (
     <>
       <SectionTitle text='Evolution Chart' />
-      <div className='flex flex-row justify-center gap-x-10'>
+      <div className='flex flex-col md:flex-row sm:flex-col justify-center gap-x-5'>
         {
           isLoading || isLoadingPokemonData
           ?
