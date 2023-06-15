@@ -127,14 +127,14 @@ const EvolutionChain = ({ url }) => {
   const finalEvolutionDiv = individualPokemon?.map((pokemon, index) => {
     const pokemonData = individualPokemon[index]
     return (
-      <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center gap-x-5'>
+      <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center'>
         { pokemon }
         { 
           index !== individualPokemon.length - 1 && 
           (
             <>
-              <BsArrowRight size={60} className='md:block sm:hidden hidden' />
-              <BsArrowDown size={60} className='md:hidden sm:block block' />
+              <BsArrowRight size={60} className='md:block sm:hidden hidden mx-4' />
+              <BsArrowDown size={60} className='md:hidden sm:block block my-2' />
             </>
           )
         }

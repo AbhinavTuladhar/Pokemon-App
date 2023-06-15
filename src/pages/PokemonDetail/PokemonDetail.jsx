@@ -151,7 +151,7 @@ const PokemonDetail = () => {
 
       <BasicIntro pokemonData={ BasicInfoProps } />
 
-      <div className='flex flex-row flex-wrap gap-x-5'>
+      <div className='flex flex-row flex-wrap gap-x-10'>
 
         <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
           <ImageTile imageSources={ imageSourceNew } />
@@ -170,11 +170,11 @@ const PokemonDetail = () => {
           </div>
         </div>
         
-        <section className='flex flex-row flex-grow flex-wrap gap-x-5'>
-          <div className='flex flex-col flex-grow w-full mdlg:w-[44%] sm:w-full'>
+        <section className='flex flex-row flex-grow flex-wrap justify-between gap-x-9'>
+          <div className='flex flex-col flex-grow w-full mdlg:w-[51%] sm:w-full'>
             <BaseStat data={ BaseStatProps } />
           </div>
-          <div className='flex flex-col flex-grow w-full mdlg:w-[10%] sm:w-full'>
+          <div className='flex flex-col flex-grow w-full mdlg:w-[16.5%] sm:w-full'>
             <TypeChart data={ TypeChartProps } />
           </div> 
         </section>
