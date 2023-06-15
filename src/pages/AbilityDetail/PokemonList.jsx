@@ -57,7 +57,7 @@ const PokemonList = ({ data }) => {
         key: 'pokemonName',
         value: (
           <NavLink to={`/pokemon/${id}`} className={index > 0 && 'text-blue-500 font-bold hover:text-red-500 hover:underline duration-300'}> 
-            { name } 
+            { formatName(name) } 
           </NavLink>
         )
       },

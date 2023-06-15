@@ -111,7 +111,10 @@ export const extractPokemonInformation = data => {
     name,
     species: { url: speciesLink },
     sprites: { 
-      other: { 'official-artwork': { front_default, front_shiny }},
+      other: { 
+        'official-artwork': { front_default, front_shiny },
+        'home': { front_default: homeSprite }
+      },
       versions: { 
         'generation-vii': { 'ultra-sun-ultra-moon': { front_default: gameSprite } },
         'generation-viii': { icons: { front_default: icon }}
@@ -127,9 +130,10 @@ export const extractPokemonInformation = data => {
     forms,
     game_indices,
     height,
+    homeSprite,
     id,
     moves,
-    name: formatName(name),
+    name,
     speciesLink,
     front_default,
     front_shiny,

@@ -12,6 +12,7 @@ import Locations from './Locations'
 import BreedingInfo from './BreedingInfo'
 import MovesLearned from './MovesLearned'
 import TypeChart from './TypeChart';
+import EvolutionChain from './EvolutionChain';
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData';
 import formatName from '../../utils/NameFormatting';
@@ -145,7 +146,7 @@ const PokemonDetail = () => {
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       <div className="text-4xl font-bold flex justify-center">
-        {idInfo.name}
+        {formatName(idInfo.name)}
       </div>
 
       <BasicIntro pokemonData={ BasicInfoProps } />
@@ -178,6 +179,10 @@ const PokemonDetail = () => {
           </div> 
         </section>
       </div>
+
+      <section>
+        <EvolutionChain url={ evolutionChainUrl } />
+      </section>
 
       <section>
         <PokeDexEntry data={ PokeDexEntryProps } />
