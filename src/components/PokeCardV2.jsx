@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import TypeCard from './TypeCard'
+import formatName from '../utils/NameFormatting'
 
 const PokeCardV2 = ({ pokemonData }) => {
   const { name, id, gameSprite, types } = pokemonData
@@ -24,7 +25,7 @@ const PokeCardV2 = ({ pokemonData }) => {
       <div className='flex flex-col'>
         <div> 
           <NavLink to={`/pokemon/${id}`} className='text-blue-500 font-bold hover:text-red-500 hover:underline duration-300'> 
-            { name } 
+            { formatName(name) } 
           </NavLink> 
         </div>
         <div className='flex'> {`#${id}`} / &nbsp;{ typeDiv } </div>

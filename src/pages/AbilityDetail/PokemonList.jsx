@@ -26,7 +26,7 @@ const PokemonList = ({ data }) => {
         icon
       }
     })
-    return (rawInformation?.filter(entry => entry.icon !== null))
+    return (rawInformation?.filter(entry => entry.icon !== null && entry.id <= 10157))
   }
 
   // We now need to query the Pokemon URLs in order to find their icons, and other abilities
