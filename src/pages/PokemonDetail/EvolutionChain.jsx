@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
-import { BsArrowRight, BsArrowDown } from 'react-icons/bs'
+import { BsArrowRight, BsArrowDown, BsArrowUpRight, BsArrowDownRight } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
 import TypeCard from '../../components/TypeCard'
 import fetchData from '../../utils/fetchData'
@@ -85,10 +85,23 @@ const EvolutionChain = ({ url }) => {
   )
 
   // Now perform a join operation on allPokemonData and evolutionChainData on the basis of the pokemon name.
-  const finalPokemonData = allPokemonData?.map(pokemon => {
+  const preFinalPokemonData = allPokemonData?.map(pokemon => {
     const species = evolutionChainData?.find(species => species.speciesName === pokemon.name)
     return { ...pokemon, ...species }
   })
+
+  // Peform an operation for identifying whether the evolution is part of a split evolution.
+  let foundNextEvoSplit = false;
+  const finalPokemonData = preFinalPokemonData?.map((obj) => {
+    const isSplitEvo = foundNextEvoSplit;
+    if (obj.nextEvoSplit) {
+      foundNextEvoSplit = true;
+    }
+
+    return { ...obj, isSplitEvo };
+  });
+
+  console.log(evolutionChainData)
 
   // Define divs for each pokemon in the evolution chain.
   const individualPokemon = finalPokemonData?.map((pokemon) => {
@@ -126,35 +139,67 @@ const EvolutionChain = ({ url }) => {
   })
 
   const finalEvolutionDiv = individualPokemon?.map((pokemon, index) => {
+    const currentPokemonData = finalPokemonData[index]
     const pokemonData = finalPokemonData[(index + 1) % individualPokemon.length]
+    const nextnextData = finalPokemonData[(index + 2) % individualPokemon.length]
+
+    const nextPokemon = individualPokemon[(index + 1) % individualPokemon.length]
+    const nextNextPokemon = individualPokemon[(index + 2) % individualPokemon.length]
 
     const { evolutionDetails } = pokemonData
+    const { evolutionDetails: nextnextEvoDetail } = nextnextData
 
+    
     const evolutionExtractedInfo = evolutionStringFinder(evolutionDetails)
+    const evolutionExtractedInfoNext = evolutionStringFinder(nextnextEvoDetail)
 
-    const [firstElement] = evolutionDetails || []
-    const { min_level: triggerLevel } = firstElement || {}
-
-    return (
-      <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center'>
-        { pokemon }
-        { 
-          index !== individualPokemon.length - 1 && 
-          (
-            <>
-              <div className='md:flex flex-col sm:hidden text-center hidden justify-center items-center w-28'>
-                <BsArrowRight size={60} className='mx-4' />
+    // For split evolutions
+    if (currentPokemonData.nextEvoSplit) {
+      return (
+        <>
+          { pokemon }
+          <div className='flex flex-col gap-y-20'>
+            <div className='md:flex flex-row sm:hidden text-center hidden justify-center items-center'>
+              <div className='flex flex-col w-28'>
+                <BsArrowUpRight size={60} className='mx-4' />
                 { `(${evolutionExtractedInfo})` }
               </div>
-              <div className='md:hidden sm:flex text-center flex flex-col justify-center items-center w-28'>
-                <BsArrowDown size={60} className='my-2' />
-                { `(${evolutionExtractedInfo})` }
+              { nextPokemon }
+            </div>
+            <div className='md:flex flex-row sm:hidden text-center hidden justify-center items-center'>
+              <div className='flex flex-col w-28'>
+                <BsArrowDownRight size={60} className='mx-4' />
+                { `(${evolutionExtractedInfoNext})` }
               </div>
-            </>
-          )
-        }
-      </div>
-    )
+              { nextNextPokemon }
+            </div>
+          </div>
+        </>
+      )
+    } else if (!currentPokemonData.isSplitEvo) {
+      return (
+        <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center'>
+          { pokemon }
+          { 
+            (index !== individualPokemon.length - 1) && (!currentPokemonData.nextEvoSplit) &&
+            (
+              <>
+                <div className='md:flex flex-col sm:hidden text-center hidden justify-center items-center w-28'>
+                  <BsArrowRight size={60} className='mx-4' />
+                  { `(${evolutionExtractedInfo})` }
+                </div>
+                <div className='md:hidden sm:flex text-center flex flex-col justify-center items-center w-28'>
+                  <BsArrowDown size={60} className='my-2' />
+                  { `(${evolutionExtractedInfo})` }
+                </div>
+              </>
+            )
+          }
+        </div>
+      )
+    } else {
+      return null
+    }
   })
 
   return (
