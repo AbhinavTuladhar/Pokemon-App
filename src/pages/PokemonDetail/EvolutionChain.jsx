@@ -67,9 +67,6 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
     const { evolutionDetails: finalEvoDetail } = lastPokemonData || {}
     const evolutionExtractedInfoFinal = evolutionStringFinder(finalEvoDetail)
 
-    console.log('For index number', index)
-    console.log(finalPokemon)
-
     // For split evolutions
     /*
     Note: the middle arrow is only for a three-way evoltuion.

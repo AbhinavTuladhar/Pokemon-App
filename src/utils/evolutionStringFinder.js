@@ -22,10 +22,17 @@ const evolutionStringFinder = evolutionDetails => {
         time_of_day: timeOfDay = undefined,
         held_item: { name: heldItem = undefined } = {},
         gender = undefined,
-        needs_overworld_rain = false
+        needs_overworld_rain = false,
+        relative_physical_stats = undefined
       } = evolutionStep
 
+      // For use in various keys
       const genderName = gender === 2 ? 'Male' : 'Female'
+      const statMapping = {
+        '-1': 'Attack < Defence',
+        '0': 'Attack = Defence',
+        '1': 'Attacl > Defence'
+      }
 
       if (min_happiness && timeOfDay) {
         return `high happiness, ${formatName(timeOfDay)}time`
@@ -49,6 +56,8 @@ const evolutionStringFinder = evolutionDetails => {
         return `level ${min_level}, rain`
       } else if (min_beauty) {
         return `level up with max beauty`
+      } else if (relative_physical_stats !== undefined) {
+        return `level ${min_level}, ${statMapping[String(relative_physical_stats)]}`
       }
       return `level ${min_level}`
 
