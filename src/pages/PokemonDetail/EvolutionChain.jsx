@@ -10,6 +10,42 @@ import formatName from '../../utils/NameFormatting'
 import SectionTitle from '../../components/SectionTitle'
 import evolutionStringFinder from '../../utils/evolutionStringFinder'
 
+const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
+  const { homeSprite, name, id, types } = pokemonData
+  const typeDiv = types.map((type, index) => {
+    const typeName = type.type.name
+    return (
+      <>
+        <TypeCard typeName={typeName} useTextOnly={true} />
+        {index !== types.length - 1 && <span> · </span>}
+      </>
+    )
+  })
+
+  // For the identifying number
+  const formattedId = `#${('00' + id).slice(-3)}`
+
+  return (
+    <div 
+      className={`flex ${splitEvoFlag ? 'flex-col' : 'flex-row sm:flex-row md:flex-col'} justify-center items-center gap-y-2`}
+    >
+      <img src={homeSprite} alt={name} className='h-40 aspect-square' />
+      <div className='flex flex-col items-center justify-center'>
+        { formattedId }
+        <NavLink 
+          to={`/pokemon/${id}`} 
+          className='text-blue-500 font-bold text-md hover:text-red-500 hover:underline duration-500'
+        > 
+          { formatName(name) }
+        </NavLink>
+        <span className='text-center'>
+          { typeDiv }
+        </span>
+      </div>
+    </div>
+  )
+}
+
 
 // A function to find all the keys of an object that are not null, false or ''
 function nonNullValues(obj) {
@@ -101,42 +137,8 @@ const EvolutionChain = ({ url }) => {
     return { ...obj, isSplitEvo };
   });
 
-  console.log(evolutionChainData)
-
   // Define divs for each pokemon in the evolution chain.
-  const individualPokemon = finalPokemonData?.map((pokemon) => {
-    const { homeSprite, name, id, types } = pokemon
-    const typeDiv = types.map((type, index) => {
-      const typeName = type.type.name
-      return (
-        <>
-          <TypeCard typeName={typeName} useTextOnly={true} />
-          {index !== types.length - 1 && <span> · </span>}
-        </>
-      )
-    })
-
-    // For the identifying number
-    const formattedId = `#${('00' + id).slice(-3)}`
-
-    return (
-      <div className='flex flex-row sm:flex-row md:flex-col justify-center items-center gap-y-2'>
-        <img src={homeSprite} alt={name} className='h-40 aspect-square' />
-        <div className='flex flex-col items-center justify-center'>
-          { formattedId }
-          <NavLink 
-            to={`/pokemon/${id}`} 
-            className='text-blue-500 font-bold text-md hover:text-red-500 hover:underline duration-500'
-          > 
-            { formatName(name) }
-          </NavLink>
-          <span className='text-center'>
-            { typeDiv }
-          </span>
-        </div>
-      </div>
-    )
-  })
+  const individualPokemon = finalPokemonData?.map(pokemon => <PokemonCard pokemonData={pokemon} splitEvoFlag={pokemon.isSplitEvo} />)
 
   const finalEvolutionDiv = individualPokemon?.map((pokemon, index) => {
     const currentPokemonData = finalPokemonData[index]
