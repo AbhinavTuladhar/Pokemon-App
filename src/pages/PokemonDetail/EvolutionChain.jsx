@@ -158,17 +158,19 @@ const EvolutionChain = ({ url }) => {
       return (
         <>
           { pokemon }
-          <div className='flex flex-col gap-y-20'>
-            <div className='md:flex flex-row sm:hidden text-center hidden justify-center items-center'>
+          <div className='flex flex-row md:flex-col gap-y-20 justify-between'>
+            <div className='md:flex-row flex-col text-center flex justify-center items-center'>
               <div className='flex flex-col w-28'>
-                <BsArrowUpRight size={60} className='mx-4' />
+                <BsArrowUpRight size={60} className='md:flex hidden mx-4' />
+                <BsArrowDown size={60} className='mx-4 md:hidden flex' />
                 { `(${evolutionExtractedInfo})` }
               </div>
               { nextPokemon }
             </div>
-            <div className='md:flex flex-row sm:hidden text-center hidden justify-center items-center'>
+            <div className='md:flex-row flex-col text-center flex justify-center items-center'>
               <div className='flex flex-col w-28'>
-                <BsArrowDownRight size={60} className='mx-4' />
+                <BsArrowDownRight size={60} className='md:flex hidden mx-4' />
+                <BsArrowDown size={60} className='mx-4 md:hidden flex' />
                 { `(${evolutionExtractedInfoNext})` }
               </div>
               { nextNextPokemon }
@@ -176,6 +178,8 @@ const EvolutionChain = ({ url }) => {
           </div>
         </>
       )
+
+    // For regular, linear evolutions.
     } else if (!currentPokemonData.isSplitEvo) {
       return (
         <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center'>
