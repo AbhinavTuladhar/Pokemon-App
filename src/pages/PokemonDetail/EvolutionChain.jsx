@@ -8,6 +8,7 @@ import fetchData from '../../utils/fetchData'
 import { extractPokemonInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
 import SectionTitle from '../../components/SectionTitle'
+import evolutionStringFinder from '../../utils/evolutionStringFinder'
 
 
 // A function to find all the keys of an object that are not null, false or ''
@@ -125,7 +126,15 @@ const EvolutionChain = ({ url }) => {
   })
 
   const finalEvolutionDiv = individualPokemon?.map((pokemon, index) => {
-    const pokemonData = individualPokemon[index]
+    const pokemonData = finalPokemonData[(index + 1) % individualPokemon.length]
+
+    const { evolutionDetails } = pokemonData
+
+    const evolutionExtractedInfo = evolutionStringFinder(evolutionDetails)
+
+    const [firstElement] = evolutionDetails || []
+    const { min_level: triggerLevel } = firstElement || {}
+
     return (
       <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center'>
         { pokemon }
@@ -133,8 +142,14 @@ const EvolutionChain = ({ url }) => {
           index !== individualPokemon.length - 1 && 
           (
             <>
-              <BsArrowRight size={60} className='md:block sm:hidden hidden mx-4' />
-              <BsArrowDown size={60} className='md:hidden sm:block block my-2' />
+              <div className='md:flex flex-col sm:hidden text-center hidden justify-center items-center w-28'>
+                <BsArrowRight size={60} className='mx-4' />
+                { `(${evolutionExtractedInfo})` }
+              </div>
+              <div className='md:hidden sm:flex text-center flex flex-col justify-center items-center w-28'>
+                <BsArrowDown size={60} className='my-2' />
+                { `(${evolutionExtractedInfo})` }
+              </div>
             </>
           )
         }
