@@ -26,13 +26,17 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ![Detail_3](./Screenshots/PokemonDetail_3.jpg)
 
+![Detail_4](./Screenshots/PokemonDetail_4.jpg)
+
 ### 3. List of all moves (up to generation 7)
 
 ![Detail_3](./Screenshots/MoveList.jpg)
 
 ### 4. Detail of individual moves
 
-![MoveDetail](./Screenshots/MoveDetail.jpg)
+![MoveDetail_1](./Screenshots/MoveDetail_1.jpg)
+
+![MoveDetail_2](./Screenshots/MoveDetail_2.jpg)
 
 ### 5. List of all types
 
@@ -51,3 +55,11 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 ### 8. Details of Individual Abilities
 
 ![AbilityDetail](./Screenshots/AbilityDetail.jpg)
+
+### 9. Reponsive Design
+
+![Responsive_1](./Screenshots/Responsive_1.jpg)
+
+![Responsive_2](./Screenshots/Responsive_2.jpg)
+
+![Responsive_3](./Screenshots/Responsive_3.jpg)
