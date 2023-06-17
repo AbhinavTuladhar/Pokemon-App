@@ -4,9 +4,10 @@ import TypeCard from './TypeCard'
 import formatName from '../utils/NameFormatting'
 
 const PokeCardV2 = ({ pokemonData }) => {
-  const { name, id, gameSprite, types } = pokemonData
+  const { name, id, gameSprite, types, nationalNumber } = pokemonData
+  const properId = `${'00' + nationalNumber}`.slice(-3)
 
-  if (gameSprite === null || id >= 10000)
+  if (gameSprite === null || id >= 10157)
     return
 
   const typeDiv = types.map((type, index) => {
@@ -20,7 +21,7 @@ const PokeCardV2 = ({ pokemonData }) => {
   })
 
   return (
-    <div className='flex w-full sm:w-1/2 md:w-1/3 mdlg:w-1/5 lg:w-1/4 py-4'>
+    <div className='flex w-full sm:w-5/12 md:w-1/3 mdlg:w-1/5 lg:w-1/4 py-4'>
       <img src={gameSprite} className='w=[70px] h-[45px]' alt={name} />
       <div className='flex flex-col'>
         <div> 
@@ -28,7 +29,7 @@ const PokeCardV2 = ({ pokemonData }) => {
             { formatName(name) } 
           </NavLink> 
         </div>
-        <div className='flex'> {`#${id}`} / &nbsp;{ typeDiv } </div>
+        <div className='flex'> {`#${properId}`} / &nbsp;{ typeDiv } </div>
       </div>
     </div>
   )

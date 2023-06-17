@@ -8,7 +8,9 @@ import { extractPokemonInformation } from '../utils/extractInfo'
 
 const PokemonCardList = ({ title, pokemonUrls }) => {
   const transformData = data => {
-    return data.map(obj => extractPokemonInformation(obj))
+    return data
+      .map(obj => extractPokemonInformation(obj))
+      .sort((first, second) => first.nationalNumber >= second.nationalNumber ? 1 : -1)
   }
 
   const { data: pokemonData = [], isLoading } = useQuery(

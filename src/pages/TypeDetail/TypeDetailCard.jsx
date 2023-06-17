@@ -15,16 +15,16 @@ const TypeDetailCard = ({ moveList, pokemonList, typeName}) => {
     ?.length
 
   return (
-    <section className='flex flex-row flex-wrap justify-center mt-6 mb-3 gap-x-20'>
+    <section className='flex flex-row flex-wrap justify-center mt-6 mb-3 gap-x-20 gap-y-10'>
 
-      <div className='flex flex-col items-center justify-center border rounded-lg border-slate-500 p-2' >
+      <div className='w-40 text-center flex flex-col items-center justify-center border rounded-lg border-slate-500 p-2' >
         <span className='text-2xl font-bold'>
           { pokemonCount || <OneLineSkeleton /> }
         </span>
         <span className='text-sm'> { formatName(typeName) } type Pokémon </span>
       </div>
 
-      <div className='flex flex-col items-center justify-center border rounded-lg border-slate-500 p-2' >
+      <div className='w-40 text-center flex flex-col items-center justify-center border rounded-lg border-slate-500 p-2' >
         <span className='text-2xl font-bold'>
           { moveCount || <OneLineSkeleton /> }
         </span>
