@@ -12,6 +12,7 @@ import { extractMoveInformation } from '../utils/extractInfo'
 import movePhysical from '../images/move-physical.png'
 import moveSpecial from '../images/move-special.png'
 import moveStatus from '../images/move-status.png'
+import '../index.css'
 
 // For damage class image.
 const returnMoveImage = damageClass => {
@@ -177,7 +178,7 @@ const MoveListing = () => {
         value: (
           <NavLink to={link}> {formatName(moveName)} </NavLink> 
         ),
-        style: index !== 0 ? 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300' : ''
+        style: index !== 0 ? 'font-bold hoverable-link' : ''
       },
       { 
         key: 'moveType', 

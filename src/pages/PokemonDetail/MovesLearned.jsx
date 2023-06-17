@@ -10,6 +10,7 @@ import { extractMoveInformation } from '../../utils/extractInfo'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
 import moveStatus from '../../images/move-status.png'
+import '../../index.css'
 
 // This is for the headers
 const firstRow = {
@@ -170,7 +171,7 @@ const MovesLearned = ({ data }) => {
       // Check if it is the first column.
       const firstColStyle = move?.levelLearntAt ? '' : 'pl-4'
       // Different colour for the move name column
-      const moveNameStyle = index === 0 ? '' : 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300 hover:cursor-pointer'
+      const moveNameStyle = index === 0 ? '' : 'font-bold hoverable-link hover:cursor-pointer'
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (

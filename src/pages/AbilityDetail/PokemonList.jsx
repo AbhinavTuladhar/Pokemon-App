@@ -6,6 +6,7 @@ import TableContainer from '../../components/TableContainer'
 import formatName from '../../utils/NameFormatting'
 import { extractPokemonInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData'
+import '../../index.css'
 
 const PokemonList = ({ data }) => {
   const { pokemonList, name: abilityName } = data
@@ -68,7 +69,7 @@ const PokemonList = ({ data }) => {
       {
         key: 'pokemonName',
         value: (
-          <NavLink to={`/pokemon/${id}`} className={index > 0 && 'text-blue-500 font-bold hover:text-red-500 hover:underline duration-300'}> 
+          <NavLink to={`/pokemon/${id}`} className={index > 0 && 'font-bold hoverable-link'}> 
             { formatName(name) } 
           </NavLink>
         )
@@ -82,7 +83,7 @@ const PokemonList = ({ data }) => {
           ?
           otherAbilities.map(ability => 
             (<> 
-              <NavLink to={`/ability/${ability}`} className='text-blue-500 hover:text-red-500 hover:underline duration-300'> {formatName(ability)} </NavLink> <br /> 
+              <NavLink to={`/ability/${ability}`} className='hoverable-link'> {formatName(ability)} </NavLink> <br /> 
             </>)
           )
           :

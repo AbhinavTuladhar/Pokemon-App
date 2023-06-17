@@ -9,6 +9,7 @@ import fetchData from '../../utils/fetchData'
 import { extractPokemonInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
 import evolutionStringFinder from '../../utils/evolutionStringFinder'
+import '../../index.css'
 
 const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
   const { homeSprite, name, id, types } = pokemonData
@@ -34,7 +35,7 @@ const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
         { formattedId }
         <NavLink 
           to={`/pokemon/${id}`} 
-          className='text-blue-500 font-bold text-md hover:text-red-500 hover:underline duration-500'
+          className='font-bold hoverable-link'
         > 
           { formatName(name) }
         </NavLink>

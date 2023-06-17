@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .hoverable-link {
+    @apply text-blue-500 hover:text-red-500 hover:underline duration-300
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

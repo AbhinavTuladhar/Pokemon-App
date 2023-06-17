@@ -7,6 +7,7 @@ import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import TableContainer from '../components/TableContainer'
 import formatName from '../utils/NameFormatting'
 import { extrctAbilityInformation } from '../utils/extractInfo'
+import '../index.css'
 
 const AbilityListing = () => {
   const [abilityInfo, setAbilityInfo] = useState([])
@@ -80,7 +81,7 @@ const AbilityListing = () => {
       { 
         key: 'Name', 
         value: (<NavLink to={abilityLink}> {formatName(name)} </NavLink>), 
-        style: index !== 0 ? 'text-blue-400 font-bold hover:text-red-500 hover:underline duration-300 whitespace-nowrap' : '' 
+        style: index !== 0 ? 'font-bold hoverable-link whitespace-nowrap' : '' 
       },
       { key: 'Pokemon', value: pokemonCount, style: index !== 0 ? 'text-right' : '' },
       { key: 'Description', value: shortEntry },
