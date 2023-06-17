@@ -1,6 +1,8 @@
-import { React, useMemo, useEffect, useCallback, useState } from 'react'
-import axios from 'axios'
+import { React, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import Skeleton from 'react-loading-skeleton'
+import fetchData from '../../utils/fetchData'
 import TypeCard from '../../components/TypeCard'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
@@ -8,15 +10,12 @@ import OneLineSkeleton from '../../components/OneLineSkeleton'
 import formatName from '../../utils/NameFormatting'
 
 const PokeDexData = ({ pokemonData }) => {
-  const { id, types, genus, height, weight, abilities, pokedex_numbers, nationalNumber } = pokemonData
-  const [gameData, setGameData] = useState([])
+  const { types, genus, height, weight, abilities, pokedex_numbers, nationalNumber } = pokemonData
 
   const formattedNationalNumber = `${'00' + nationalNumber}`.slice(-3)
 
   /*
   This is for omitting entries for national dex and conquest gallery.
-  Reasoning: national number is equivalent to the id.
-  Conquest gallery doesn't have a game name.
   */
   const excludedRegions = useMemo(() => {
     return ['national', 'conquest-gallery']
@@ -38,21 +37,11 @@ const PokeDexData = ({ pokemonData }) => {
   }, [pokedex_numbers, excludedRegions])
 
   // This is for fetching the names of the games.
-  const fetchGameData = useCallback(async () => {
-    try {
-      const responses = await Promise.all(versionURLs?.map(
-        url => axios.get(url)
-      ))
-      const newData = responses.map(response => response.data)
-      setGameData(newData)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [versionURLs])
-
-  useEffect(() => {
-    fetchGameData()
-  }, [fetchGameData])
+  const { data: gameData = [], isLoading } = useQuery(
+    [nationalNumber],
+    () => Promise.all(versionURLs?.map(fetchData)),
+    { staleTime: Infinity, cacheTime: Infinity }
+  )
 
   // Convert the types of the Pokemon into its corresponding component.
   const typeDiv = typeNames.map(typeName => <TypeCard typeName={typeName} />)
@@ -92,7 +81,7 @@ const PokeDexData = ({ pokemonData }) => {
   This will combine two objects: one object contains the name of the region, while the other contains the name of the games.
   */
   const properGameData = regionNumberValues?.map(obj1 => {
-    const obj2 = gameData.find(obj2 => obj2.name === obj1.region)
+    const obj2 = gameData?.find(obj2 => obj2.name === obj1.region)
     return {
       dexNumber: obj1.number,
       gameNames: obj2?.version_groups.map(version => version.name)
@@ -152,17 +141,33 @@ const PokeDexData = ({ pokemonData }) => {
         </div>
         <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 pl-4 w-9/12'>
           <div className="flex">
-            { row.value ? row.value : <OneLineSkeleton /> }
+            { row.value }
           </div>
         </div>
       </div>
     )
   })
 
+  const skeletonRows = Array(8).fill(0).map(row => (
+    <Skeleton width='100%' height='2.75rem' containerClassName='flex-1 w-full' />
+  ))
+
+  const loadingDiv = (
+    <div className='flex flex-col'>
+      { skeletonRows }
+    </div>
+  )
+
   return (
     <>
       <SectionTitle text={'Pokédex data'} />
-      <TableContainer child={tableEntries} />
+      { 
+        isLoading 
+        ?
+        loadingDiv
+        :
+        <TableContainer child={tableEntries} />
+      }
     </>
   )
 }
