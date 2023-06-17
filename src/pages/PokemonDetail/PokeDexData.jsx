@@ -6,7 +6,7 @@ import fetchData from '../../utils/fetchData'
 import TypeCard from '../../components/TypeCard'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
-import OneLineSkeleton from '../../components/OneLineSkeleton'
+import TabularSkeleton from '../../components/TabularSkeleton'
 import formatName from '../../utils/NameFormatting'
 
 const PokeDexData = ({ pokemonData }) => {
@@ -148,23 +148,13 @@ const PokeDexData = ({ pokemonData }) => {
     )
   })
 
-  const skeletonRows = Array(8).fill(0).map(row => (
-    <Skeleton width='100%' height='2.75rem' containerClassName='flex-1 w-full' />
-  ))
-
-  const loadingDiv = (
-    <div className='flex flex-col'>
-      { skeletonRows }
-    </div>
-  )
-
   return (
     <>
       <SectionTitle text={'Pokédex data'} />
       { 
         isLoading 
         ?
-        loadingDiv
+        <TabularSkeleton />
         :
         <TableContainer child={tableEntries} />
       }
