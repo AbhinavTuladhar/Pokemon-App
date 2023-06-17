@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom'
 import { BsArrowRight, BsArrowDown, BsArrowUpRight, BsArrowDownRight } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
 import TypeCard from '../../components/TypeCard'
+import SectionTitle from '../../components/SectionTitle'
 import fetchData from '../../utils/fetchData'
 import { extractPokemonInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
-import SectionTitle from '../../components/SectionTitle'
 import evolutionStringFinder from '../../utils/evolutionStringFinder'
 
 const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
@@ -172,10 +172,12 @@ const EvolutionChain = ({ url }) => {
         evolves_to: evolvesTo,
         species : { name: speciesName = '', url: speciesUrl = '' }
       } = chain || {}
+      const idNumber = parseInt(speciesUrl.match(/\/(\d+)\/$/)[1])
   
       const evoDetailsNew = evolution_details.map(nonNullValues) || []
   
       information.push({
+        id: idNumber,
         evolutionDetails: evoDetailsNew,
         speciesName,
         speciesUrl,
@@ -195,13 +197,13 @@ const EvolutionChain = ({ url }) => {
   }
 
   const evolutionChainData = getAllData()
+
+  console.log(evolutionChainData)
   
   // Find the urls of all the pokemon in the evolution chain.
   // Find the Pokemon Url, NOT the species url.
   const pokemonUrls = evolutionChainData.map(pokemon => {
-    const speciesUrl = pokemon.speciesUrl
-    const idNumber = parseInt(speciesUrl.match(/\/(\d+)\/$/)[1])
-    return `https://pokeapi.co/api/v2/pokemon/${idNumber}/`
+    return `https://pokeapi.co/api/v2/pokemon/${pokemon.id}/`
   })
 
   // Then perform a get request on all this data, then get the home sprite, and name of the pokemon.
@@ -221,9 +223,9 @@ const EvolutionChain = ({ url }) => {
     }
   )
 
-  // Now perform a join operation on allPokemonData and evolutionChainData on the basis of the pokemon name.
+  // Now perform a join operation on allPokemonData and evolutionChainData on the basis of the pokemon id.
   const preFinalPokemonData = allPokemonData?.map(pokemon => {
-    const species = evolutionChainData?.find(species => species.speciesName === pokemon.name)
+    const species = evolutionChainData?.find(species => species.id === pokemon.id)
     return { ...pokemon, ...species }
   })
 
@@ -312,7 +314,7 @@ const EvolutionChain = ({ url }) => {
           { 
             eeveelutionDiv.map(div => {
               return (
-                <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center gap-y-5'> 
+                <div className='flex flex-col md:flex-row sm:flex-col justify-between sm:justify-center gap-y-5'> 
                   { div } 
                 </div>
               )

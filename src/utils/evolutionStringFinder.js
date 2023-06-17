@@ -6,7 +6,6 @@ const evolutionStringFinder = evolutionDetails => {
   if (evolutionStep?.length === 0 || evolutionStep?.length > 1 || evolutionStep === undefined) {
     return
   }
-
   const { trigger: { name: triggerName = '' } } = evolutionStep
   
   switch(triggerName) {
