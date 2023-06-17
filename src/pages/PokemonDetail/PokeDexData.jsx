@@ -8,8 +8,10 @@ import OneLineSkeleton from '../../components/OneLineSkeleton'
 import formatName from '../../utils/NameFormatting'
 
 const PokeDexData = ({ pokemonData }) => {
-  const { id, types, genus, height, weight, abilities, pokedex_numbers } = pokemonData
+  const { id, types, genus, height, weight, abilities, pokedex_numbers, nationalNumber } = pokemonData
   const [gameData, setGameData] = useState([])
+
+  const formattedNationalNumber = `${'00' + nationalNumber}`.slice(-3)
 
   /*
   This is for omitting entries for national dex and conquest gallery.
@@ -131,7 +133,7 @@ const PokeDexData = ({ pokemonData }) => {
 
   // This is for storing the things to be displayed in each row.
   const tableData = [
-    { label: 'National no.', value: id},
+    { label: 'National no.', value: formattedNationalNumber},
     { label: 'Type', value: typeDiv },
     { label: 'Species', value: genus },
     { label: 'Height', value: formattedHeight },

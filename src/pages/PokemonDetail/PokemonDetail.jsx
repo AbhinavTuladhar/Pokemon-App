@@ -40,6 +40,7 @@ const PokemonDetail = () => {
     id: pokemonId,
     moves,
     name: pokemonName,
+    nationalNumber,
     speciesLink,
     front_default: defaultSprite,
     front_shiny: shinySprite,
@@ -95,6 +96,7 @@ const PokemonDetail = () => {
     ...BasicInfoProps,
     abilities,
     height,
+    nationalNumber,
     weight
   }
 
