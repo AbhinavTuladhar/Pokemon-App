@@ -109,6 +109,7 @@ export const extractPokemonInformation = data => {
     id,
     moves,
     name,
+    order,
     species: { url: speciesLink },
     sprites: { 
       other: { 
@@ -124,6 +125,7 @@ export const extractPokemonInformation = data => {
     types,
     weight
   } = data
+  const nationalNumber = parseInt(speciesLink.match(/\/(\d+)\/$/)[1])
   return {
     abilities,
     base_experience,
@@ -134,6 +136,8 @@ export const extractPokemonInformation = data => {
     id,
     moves,
     name,
+    nationalNumber,
+    order,
     speciesLink,
     front_default,
     front_shiny,
