@@ -22,7 +22,7 @@ const evolutionStringFinder = evolutionDetails => {
         held_item: { name: heldItem = undefined } = {},
         gender = undefined,
         needs_overworld_rain = false,
-        relative_physical_stats = undefined
+        relative_physical_stats = undefined,
       } = evolutionStep
 
       // For use in various keys
@@ -63,9 +63,12 @@ const evolutionStringFinder = evolutionDetails => {
     case 'trade':
       const {
         held_item: { name: heldItemTrade = undefined } = {},
+        trade_species: { name: tradeSpecies = undefined }  = {}
       } = evolutionStep
       if (heldItemTrade) {
         return `trade holding ${formatName(heldItemTrade)}`
+      } else if (tradeSpecies) {
+        return `trade with ${formatName(tradeSpecies)}`
       }
       return ('trade')
 

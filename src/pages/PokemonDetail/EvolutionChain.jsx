@@ -47,13 +47,16 @@ const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
 }
 
 const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
+  const firstPokemonName = (finalPokemonData ?? [])[0]?.name || "";
+  const wurmpleFlag = firstPokemonName === 'wurmple'
+
   return individualPokemon?.map((pokemon, index) => {
     const currentPokemonData = finalPokemonData[index]
     const pokemonData = finalPokemonData[(index + 1) % individualPokemon.length]
     const nextnextData = finalPokemonData[(index + 2) % individualPokemon.length]
 
-    const nextPokemon = individualPokemon[(index + 1) % individualPokemon.length]
-    const nextNextPokemon = individualPokemon[(index + 2) % individualPokemon.length]
+    const nextPokemon = wurmpleFlag ? individualPokemon[(index + 1)] : individualPokemon[(index + 1) % individualPokemon.length]
+    const nextNextPokemon = wurmpleFlag ? individualPokemon[(index + 3) % individualPokemon.length] : individualPokemon[(index + 2) % individualPokemon.length]
     
     const { evolutionDetails } = pokemonData
     const { evolutionDetails: nextnextEvoDetail } = nextnextData
@@ -62,7 +65,7 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
     const evolutionExtractedInfoNext = evolutionStringFinder(nextnextEvoDetail)
     
     // This is for a three-way evolution
-    const finalPokemon = individualPokemon[(index + 3)]
+    const finalPokemon = wurmpleFlag ? undefined : individualPokemon[(index + 3)]
     const lastPokemonData = finalPokemonData[(index + 3)]
     const { evolutionDetails: finalEvoDetail } = lastPokemonData || {}
     const evolutionExtractedInfoFinal = evolutionStringFinder(finalEvoDetail)
@@ -197,8 +200,6 @@ const EvolutionChain = ({ url }) => {
   }
 
   const evolutionChainData = getAllData()
-
-  console.log(evolutionChainData)
   
   // Find the urls of all the pokemon in the evolution chain.
   // Find the Pokemon Url, NOT the species url.
@@ -229,9 +230,13 @@ const EvolutionChain = ({ url }) => {
     return { ...pokemon, ...species }
   })
 
-  // Peform an operation for identifying whether the evolution is part of a split evolution.
-  let foundNextEvoSplit = false;
-  const finalPokemonData = preFinalPokemonData?.map((obj) => {
+  /* 
+    Peform an operation for identifying whether the evolution is part of a split evolution.
+    However, an exception needs to be made for the Wurmple chain.
+  */
+ 
+ let foundNextEvoSplit = false;
+ const finalPokemonDataOld = preFinalPokemonData?.map((obj) => {
     const isSplitEvo = foundNextEvoSplit;
     if (obj.nextEvoSplit) {
       foundNextEvoSplit = true;
@@ -239,15 +244,24 @@ const EvolutionChain = ({ url }) => {
 
     return { ...obj, isSplitEvo };
   });
-
+  
+  const finalPokemonData = finalPokemonDataOld?.map(pokemon => {
+    let { isSplitEvo: splitEvoFlag, id } = pokemon
+    if (id === 267 || id === 269 ) {
+      splitEvoFlag = false
+    }
+    return { ...pokemon, isSplitEvo: splitEvoFlag }
+  })
+  
+  console.log(finalPokemonData)
+  
   // Define divs for each pokemon in the evolution chain.
   const individualPokemon = finalPokemonData?.map(pokemon => <PokemonCard pokemonData={pokemon} splitEvoFlag={pokemon.isSplitEvo} />)
-
+  
   // Eevee is a special case which will be dealt with here.
+  const firstPokemonName = (finalPokemonData ?? [])[0]?.name || "";
   let finalEvolutionDiv = undefined
   let eeveelutionDiv = []
-
-  const firstPokemonName = (finalPokemonData ?? [])[0]?.name || "";
   
   if (firstPokemonName !== 'eevee') {
     finalEvolutionDiv = <EvolutionDiv finalPokemonData={finalPokemonData} individualPokemon={individualPokemon} />
