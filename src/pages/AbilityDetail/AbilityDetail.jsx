@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { motion } from 'framer-motion'
+import Skeleton from 'react-loading-skeleton'
 import AbilityEffect from './AbilityEffect'
 import AbilityDescription from './AbilityDescription'
 import PokemonList from './PokemonList'
@@ -37,7 +38,13 @@ const AbilityDetail = () => {
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       <div className='flex justify-center text-center text-4xl font-bold'>
-        { formatName(abilityInfo.name) } (ability)
+        {
+        abilityInfo.name 
+        ?
+        `${formatName(abilityInfo.name)} (ability)`
+        :
+        <Skeleton width='100%' height='2.75rem' containerClassName='flex-1 w-full' />
+        }
       </div>
       <div className='flex flex-row flex-wrap gap-x-10 mt-4'>
         <div className='flex flex-col lg:w-475/1000 w-full'> 

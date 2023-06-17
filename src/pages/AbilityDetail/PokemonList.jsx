@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
+import TabularSkeleton from '../../components/TabularSkeleton'
 import formatName from '../../utils/NameFormatting'
 import { extractPokemonInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData'
@@ -61,7 +62,7 @@ const PokemonList = ({ data }) => {
         value: (
         <div className='flex items-center'>
           <span> { index !== 0 ? properId : id } </span> 
-          {index > 0 && <img src={icon} alt={name} className='w-[80px]' />}
+          {index > 0 && <img src={icon} alt={name} className='w-[56px]' />}
         </div>
         ),
         style: 'w-32'
@@ -111,8 +112,16 @@ const PokemonList = ({ data }) => {
 
   return (
     <>
-      <SectionTitle text={`Pokemon with ${formatName(abilityName)}`} />
-      <TableContainer child={rowData} />
+      {
+        pokemonList
+        ?
+        <> 
+          <SectionTitle text={`Pokemon with ${formatName(abilityName)}`} />
+          <TableContainer child={rowData} />
+        </>
+        :
+        <TabularSkeleton />
+      }
     </>
   )
 }
