@@ -236,24 +236,36 @@ const EvolutionChain = ({ url }) => {
     However, an exception needs to be made for the Wurmple chain.
   */
  
- let foundNextEvoSplit = false;
- const finalPokemonDataOld = preFinalPokemonData?.map((obj) => {
-    const isSplitEvo = foundNextEvoSplit;
-    if (obj.nextEvoSplit) {
-      foundNextEvoSplit = true;
-    }
+  let foundNextEvoSplit = false;
+  const finalPokemonDataOld = preFinalPokemonData?.map((obj) => {
+      const isSplitEvo = foundNextEvoSplit;
+      if (obj.nextEvoSplit) {
+        foundNextEvoSplit = true;
+      }
 
-    return { ...obj, isSplitEvo };
+      return { ...obj, isSplitEvo };
   });
   
-  const finalPokemonData = finalPokemonDataOld?.map(pokemon => {
-    let { isSplitEvo: splitEvoFlag, id } = pokemon
-    if (id === 267 || id === 269 ) {
-      splitEvoFlag = false
-    }
-    return { ...pokemon, isSplitEvo: splitEvoFlag }
-  })
-  
+  // 267 and 269 are for the Wurmple evolution chain.
+  // 123 is for Scyther, which has a split evolution in gen 8.
+  // 212 is for Scizor.
+  // Also filter out gen 8+ forms.
+  const finalPokemonData = finalPokemonDataOld
+    ?.map(pokemon => {
+      let { isSplitEvo: splitEvoFlag, id, nextEvoSplit } = pokemon
+      if (id === 267 || id === 269 || id === 212) {
+        splitEvoFlag = false
+      }
+      if (id === 123) {
+        nextEvoSplit = false
+      }
+      return { ...pokemon, isSplitEvo: splitEvoFlag, nextEvoSplit }
+    })
+    ?.filter(pokemon => {
+      const { id } = pokemon
+      return (id >= 1 && id <= 809) || (id >= 10001 && id <= 10157)
+    })
+
   console.log(finalPokemonData)
   
   // Define divs for each pokemon in the evolution chain.

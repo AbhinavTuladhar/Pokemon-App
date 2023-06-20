@@ -30,7 +30,7 @@ const evolutionStringFinder = evolutionDetails => {
       const statMapping = {
         '-1': 'Attack < Defence',
         '0': 'Attack = Defence',
-        '1': 'Attacl > Defence'
+        '1': 'Attack > Defence'
       }
 
       if (min_happiness && timeOfDay) {
@@ -77,8 +77,8 @@ const evolutionStringFinder = evolutionDetails => {
         item: { name: itemName },
         gender: genderForItem = undefined
       } = evolutionStep
-
       const genderNameForItem = genderForItem === 2 ? 'Male' : 'Female'
+      
       if (genderForItem) {
         return `use ${formatName(itemName)}, ${genderNameForItem}`
       }
