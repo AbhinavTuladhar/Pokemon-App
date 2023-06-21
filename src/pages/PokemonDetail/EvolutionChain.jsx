@@ -249,14 +249,16 @@ const EvolutionChain = ({ url }) => {
   // 267 and 269 are for the Wurmple evolution chain.
   // 123 is for Scyther, which has a split evolution in gen 8.
   // 212 is for Scizor.
+  // Meowth has a gen 8+ split evolution, so it needs to be dealt with as well.
+  // Meowth = 52, Persian = 53
   // Also filter out gen 8+ forms.
   const finalPokemonData = finalPokemonDataOld
     ?.map(pokemon => {
       let { isSplitEvo: splitEvoFlag, id, nextEvoSplit } = pokemon
-      if (id === 267 || id === 269 || id === 212) {
+      if (id === 267 || id === 269 || id === 212 || id === 53) {
         splitEvoFlag = false
       }
-      if (id === 123) {
+      if (id === 123 || id === 52) {
         nextEvoSplit = false
       }
       return { ...pokemon, isSplitEvo: splitEvoFlag, nextEvoSplit }
@@ -265,8 +267,6 @@ const EvolutionChain = ({ url }) => {
       const { id } = pokemon
       return (id >= 1 && id <= 809) || (id >= 10001 && id <= 10157)
     })
-
-  console.log(finalPokemonData)
   
   // Define divs for each pokemon in the evolution chain.
   const individualPokemon = finalPokemonData?.map(pokemon => <PokemonCard pokemonData={pokemon} splitEvoFlag={pokemon.isSplitEvo} />)
