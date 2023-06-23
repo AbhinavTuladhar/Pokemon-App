@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { motion } from 'framer-motion'
+import { motion, use } from 'framer-motion'
 import BasicIntro from './BasicIntro';
 import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile'
@@ -16,6 +16,20 @@ import EvolutionChain from './EvolutionChain';
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData';
 import formatName from '../../utils/NameFormatting';
+
+
+const FadeInAnimationContainer = ({ children }) => {
+  return (
+    <motion.section
+      initial={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: 'easeIn' }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: false }}
+    >
+      { children }
+    </motion.section>
+  )
+} 
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -174,29 +188,36 @@ const PokemonDetail = () => {
         
         <section className='flex flex-row flex-grow flex-wrap justify-between gap-x-9'>
           <div className='flex flex-col flex-grow w-full mdlg:w-[51%] sm:w-full'>
-            <BaseStat data={ BaseStatProps } />
+            <FadeInAnimationContainer>
+              <BaseStat data={ BaseStatProps } />
+            </FadeInAnimationContainer>
           </div>
           <div className='flex flex-col flex-grow w-full mdlg:w-[16.5%] sm:w-full'>
-            <TypeChart data={ TypeChartProps } />
+            <FadeInAnimationContainer>
+              <TypeChart data={ TypeChartProps } />
+            </FadeInAnimationContainer>
           </div> 
         </section>
       </div>
 
-      <section>
+      <FadeInAnimationContainer>
         <EvolutionChain url={ evolutionChainUrl } />
-      </section>
+      </FadeInAnimationContainer>
 
-      <section>
+      <FadeInAnimationContainer>
         <PokeDexEntry data={ PokeDexEntryProps } />
-      </section>
+      </FadeInAnimationContainer>
 
-      <section className='py-4 gap-y-5'>
-        <MovesLearned data={ MovesLearnedProps } />
-      </section>
+      <FadeInAnimationContainer>
+        <section className='py-4 gap-y-5'>
+          <MovesLearned data={ MovesLearnedProps } />
+        </section>
+      </FadeInAnimationContainer>
       
-      <section>
+      <FadeInAnimationContainer>
         <Locations props={ LocationsProps } />
-      </section>
+      </FadeInAnimationContainer>
+
     </motion.div>
   )
 };
