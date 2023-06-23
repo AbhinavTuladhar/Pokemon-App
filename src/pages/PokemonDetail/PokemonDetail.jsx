@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { motion, use } from 'framer-motion'
+import { motion } from 'framer-motion'
 import BasicIntro from './BasicIntro';
 import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile'
@@ -13,23 +13,11 @@ import BreedingInfo from './BreedingInfo'
 import MovesLearned from './MovesLearned'
 import TypeChart from './TypeChart';
 import EvolutionChain from './EvolutionChain';
+import { FadeInAnimationContainer } from '../../components/AnimatedContainers';
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData';
 import formatName from '../../utils/NameFormatting';
 
-
-const FadeInAnimationContainer = ({ children }) => {
-  return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      transition={{ duration: 0.4, ease: 'easeIn' }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: false }}
-    >
-      { children }
-    </motion.section>
-  )
-} 
 
 const PokemonDetail = () => {
   const { id } = useParams();
@@ -162,27 +150,39 @@ const PokemonDetail = () => {
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       <div className="text-4xl font-bold flex justify-center">
-        {formatName(idInfo.name)}
+        <FadeInAnimationContainer>
+          {formatName(idInfo.name)}
+        </FadeInAnimationContainer>
       </div>
 
-      <BasicIntro pokemonData={ BasicInfoProps } />
+      <FadeInAnimationContainer>
+        <BasicIntro pokemonData={ BasicInfoProps } />
+      </FadeInAnimationContainer>
 
       <div className='flex flex-row flex-wrap gap-x-10'>
 
         <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
-          <ImageTile imageSources={ imageSourceNew } />
+          <FadeInAnimationContainer>
+            <ImageTile imageSources={ imageSourceNew } />
+          </FadeInAnimationContainer>
         </div>
 
         <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
-          <PokeDexData pokemonData={ PokeDexDataProps } />
+          <FadeInAnimationContainer>
+            <PokeDexData pokemonData={ PokeDexDataProps } />
+          </FadeInAnimationContainer>
         </div>
 
         <div className='flex flex-col flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4 gap-y-5'>
           <div className='flex flex-col w-full'>
-            <TrainingInfo data={ TrainingInfoProps } />
+            <FadeInAnimationContainer>
+              <TrainingInfo data={ TrainingInfoProps } />
+            </FadeInAnimationContainer>
           </div>
           <div className='flex flex-col w-full'>
-            <BreedingInfo data={ BreedingInfoProps } />
+            <FadeInAnimationContainer>
+              <BreedingInfo data={ BreedingInfoProps } />
+            </FadeInAnimationContainer>
           </div>
         </div>
         
