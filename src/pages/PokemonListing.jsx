@@ -6,6 +6,7 @@ import axios from 'axios'
 import 'react-loading-skeleton/dist/skeleton.css'
 import PokeCard from '../components/PokeCard'
 import PokeCardSkeleton from '../components/PokeCardSkeleton'
+import { FadeInAnimationContainer, FadeInAnimationCard } from '../components/AnimatedContainers'
 
 const MainPage = ({ idRange }) => {
   const [pokemonInfo, setPokemonInfo] = useState([])
@@ -47,7 +48,11 @@ const MainPage = ({ idRange }) => {
   }, [pokemonData])
 
   // Map each Pokemon to its respective card.
-  const pokemonBoxes = filteredPokemonInfo?.map(pokemon => <PokeCard key={pokemon.id} data={pokemon} />)
+  const pokemonBoxes = filteredPokemonInfo?.map(pokemon => (
+    <FadeInAnimationCard>
+      <PokeCard key={pokemon.id} data={pokemon} />
+    </FadeInAnimationCard>
+  ))
 
   // For handling the search bar.
   const handleChange = event => {
