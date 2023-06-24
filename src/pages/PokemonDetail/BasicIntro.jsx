@@ -10,6 +10,11 @@ const BasicIntro = ({ pokemonData }) => {
   // Don't display for the other Pokemon forms.
   if (id >= 10_000) return
 
+  // For grammatical purposes.
+  const firstType = types[0].type.name
+  const article = firstType.startsWith('e') || firstType.startsWith('i')
+    ? 'an' : 'a'
+
   // Use the national number instead of the ID numbers to take into account the forms.
   // const generationIntroduced = generationMappingV2(pokedex_numbers?.slice(0, 1).entry_number)
   const generationIntroduced = generationMappingV2(id)
@@ -33,7 +38,7 @@ const BasicIntro = ({ pokemonData }) => {
         genus
         ?
         <span>
-          {`${properName} is a`} &nbsp;
+          {`${properName} is ${article}`} &nbsp;
           {typeDiv} &nbsp;
           {`type Pokemon introduced in Generation ${generationIntroduced}. It is also known as the '${genus}'.`}
         </span>
