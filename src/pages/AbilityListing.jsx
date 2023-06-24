@@ -7,6 +7,7 @@ import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import TableContainer from '../components/TableContainer'
 import formatName from '../utils/NameFormatting'
 import { extrctAbilityInformation } from '../utils/extractInfo'
+import { AnimatedTableRowContainer } from '../components/AnimatedContainers'
 import '../index.css'
 
 const AbilityListing = () => {
@@ -97,9 +98,9 @@ const AbilityListing = () => {
     ))
 
     return (
-      <div className='table-row'>
+      <AnimatedTableRowContainer className='table-row' useOnce>
         { tableCells }
-      </div>
+      </AnimatedTableRowContainer>
     )
   })
 
