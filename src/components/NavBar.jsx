@@ -34,7 +34,7 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => {
-    setIsMenuOpen(prevState => !prevState)
+    setIsMenuOpen(!isMenuOpen)
   }
 
   const closeMenu = () => {
@@ -50,7 +50,9 @@ const NavBar = () => {
 
   return (
     <>
-      <div className='bg-slate-900 text-yellow-400 py-2 text-center text-6xl font-extrabold tracking-wider flex flex-wrap justify-center'>
+      <div 
+        className='bg-slate-900 text-yellow-400 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
+      >
         <NavLink to='/'> Pokémon Database </NavLink>
       </div>
       <nav>
