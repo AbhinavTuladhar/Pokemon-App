@@ -1,13 +1,13 @@
 import { React, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import Skeleton from 'react-loading-skeleton'
-import fetchData from '../../utils/fetchData'
-import TypeCard from '../../components/TypeCard'
+import { AnimatedTableRowContainer } from '../../components/AnimatedContainers'
 import SectionTitle from '../../components/SectionTitle'
+import TypeCard from '../../components/TypeCard'
 import TableContainer from '../../components/TableContainer'
 import TabularSkeleton from '../../components/TabularSkeleton'
 import formatName from '../../utils/NameFormatting'
+import fetchData from '../../utils/fetchData'
 
 const PokeDexData = ({ pokemonData }) => {
   const { types, genus, height, weight, abilities, pokedex_numbers, nationalNumber } = pokemonData
@@ -135,7 +135,7 @@ const PokeDexData = ({ pokemonData }) => {
   const tableEntries = tableData.map(row => {
     const spacing = row.label === 'Abilities' || row.label === 'Regional no.'? 'min-h-14' : 'h-12'
     return (
-      <div className={`table-row border-t-[1px] border-gray-200 py-2 ${spacing}`}>
+      <AnimatedTableRowContainer className={`table-row border-t-[1px] border-gray-200 py-2 ${spacing}`} useOnce>
         <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 text-right w-3/12'>
           {row.label}
         </div>
@@ -144,7 +144,7 @@ const PokeDexData = ({ pokemonData }) => {
             { row.value }
           </div>
         </div>
-      </div>
+      </AnimatedTableRowContainer>
     )
   })
 
