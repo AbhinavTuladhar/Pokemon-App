@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 import SectionTitle from '../../components/SectionTitle'
+import { AnimatedTableRowContainer } from '../../components/AnimatedContainers'
 import fetchData from '../../utils/fetchData'
 
 function formatFields(data) {
@@ -87,7 +88,7 @@ const Locations = ({ props }) => {
     return groupedByLocation
   }
 
-  const { data: finalData = []} = useQuery(
+  const { data: finalData = [], isLoading} = useQuery(
     ['locations', id, name],
     () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`),
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
@@ -105,15 +106,15 @@ const Locations = ({ props }) => {
   // Now render the final data.
   const finalTable = preFinalTable?.map(row => {
     return (
-      <div className={`table-row py-2 border-gray-200 border-t-[1px] px-2 mx-2`}>
+      <AnimatedTableRowContainer className={`table-row py-2 border-gray-200 border-t-[1px] px-2 mx-2`} useOnce>
         <div className='table-cell w-2/12 border-gray-200 border-t-[1px] py-2 mx-4 align-middle text-right'> {row.versionName} </div>
         <div className='table-cell border-gray-200 border-t-[1px] py-2 pl-4 align-middle first-line:mx-4'> {row.locationName} </div>
-      </div>
+      </AnimatedTableRowContainer>
     )
   })
 
-  if (!finalData) {
-    return <h1> Loading </h1>
+  if (isLoading) {
+    return
   }
 
   // If there is no encounter data, then nothing is rendered.

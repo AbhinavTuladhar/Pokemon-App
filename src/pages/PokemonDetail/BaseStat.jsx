@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useMemo } from 'react'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
+import { AnimatedTableRowContainer } from '../../components/AnimatedContainers'
 import statCalculator from '../../utils/StatCalculation'
 
 /*
@@ -108,7 +109,10 @@ const BaseStat = ({ data }) => {
     const stringDecoration = index === statDetail.length - 1 ? 'font-bold' : ''
 
     return (
-      <div className='table-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-0'> 
+      <AnimatedTableRowContainer 
+        className='table-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-0'
+        useOnce  
+      > 
         <div className='table-cell text-right border-gray-200 border-t align-middle pr-2'>
           {stat.name}
         </div>
@@ -125,7 +129,7 @@ const BaseStat = ({ data }) => {
         <div className='table-cell px-1 border-gray-200 border-t align-middle text-right'>
           {stat.max}
         </div>
-      </div>
+      </AnimatedTableRowContainer>
     )
   })
 

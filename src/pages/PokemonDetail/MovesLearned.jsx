@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import TypeCard from '../../components/TypeCard'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
+import { AnimatedTableRowContainer } from '../../components/AnimatedContainers'
 import formatName from '../../utils/NameFormatting'
 import { extractMoveInformation } from '../../utils/extractInfo'
 import movePhysical from '../../images/move-physical.png'
@@ -175,7 +176,10 @@ const MovesLearned = ({ data }) => {
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
-        <div className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400`}>
+        <AnimatedTableRowContainer 
+          className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400`}
+          useOnce  
+        >
           {
             move.levelLearntAt &&
             <div className='pl-4 table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
@@ -216,7 +220,7 @@ const MovesLearned = ({ data }) => {
           <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {move?.accuracy}
           </div>
-        </div>
+        </AnimatedTableRowContainer>
       )
     })
   }
