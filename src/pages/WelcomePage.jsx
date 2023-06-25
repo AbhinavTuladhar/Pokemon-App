@@ -44,21 +44,13 @@ const ImageColumn = () => {
 }
 
 const TitleText = () => {
-  const titleVariant = {
-    initial: { opacity: 0 },
-    animate: { 
-      opacity: 1,
-      transition: { delay: 0.5, staggerChildren: 0.5, ease: "easeInOut" }
-    }
-  };
-
   return (
     <>
       <motion.div variants={entryVariantLeft} initial='initial' animate='animate'>
         <motion.span className='text-center' variants={entryVariantLeft}>
           <span className='text-5xl font-bold'>Welcome to</span>
           <br />
-          <span className='text-5xl font-bold bg-gradient-to-r from-blue-500 via-blue-700 to-blue-600 text-transparent bg-clip-text'>Pokémon Database</span>
+          <span className='text-5xl font-bold bg-gradient-to-r from-green-500  to-blue-500 text-transparent bg-clip-text'>Pokémon Database</span>
         </motion.span>
         <small className='text-xs'>'s clone!</small>
       </motion.div>
