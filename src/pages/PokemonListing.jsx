@@ -49,7 +49,7 @@ const MainPage = ({ idRange }) => {
 
   // Map each Pokemon to its respective card.
   const pokemonBoxes = filteredPokemonInfo?.map(pokemon => (
-    <FadeInAnimationCard>
+    <FadeInAnimationCard className='smmd:w-2/12 sm:w-1/3 md:w-1/4 w-full my-2 mx-4 py-2'>
       <PokeCard key={pokemon.id} data={pokemon} />
     </FadeInAnimationCard>
   ))

@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { FadeInAnimationCard } from './AnimatedContainers'
 import TypeCard from './TypeCard'
 import formatName from '../utils/NameFormatting'
 import '../index.css'
@@ -22,7 +23,7 @@ const PokeCardV2 = ({ pokemonData }) => {
   })
 
   return (
-    <div className='flex w-full sm:w-5/12 md:w-1/3 mdlg:w-1/5 lg:w-1/4 py-4'>
+    <FadeInAnimationCard className='flex w-full sm:w-5/12 md:w-1/3 mdlg:w-1/5 lg:w-1/4 py-4'>
       <img src={gameSprite} className='w=[70px] h-[45px]' alt={name} />
       <div className='flex flex-col'>
         <div> 
@@ -32,7 +33,7 @@ const PokeCardV2 = ({ pokemonData }) => {
         </div>
         <div className='flex'> {`#${properId}`} / &nbsp;{ typeDiv } </div>
       </div>
-    </div>
+    </FadeInAnimationCard>
   )
 }
 
