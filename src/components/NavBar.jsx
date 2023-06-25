@@ -51,9 +51,9 @@ const NavBar = () => {
   return (
     <>
       <div 
-        className='bg-slate-900 text-yellow-400 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
+        className='bg-slate-900 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
       >
-        <NavLink to='/'> Pokémon Database </NavLink>
+        <NavLink to='/' className='bg-gradient-to-r from-yellow-300 via-amber-500 to-yellow-500 text-transparent bg-clip-text'> Pokémon Database </NavLink>
       </div>
       <nav>
         <ul className='bg-green-400 flex justify-left list-none flex-wrap'>
