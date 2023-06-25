@@ -6,7 +6,7 @@ const ListItem = ({ items, closeMenu, subMenuFlag }) => {
     items.map((data, index) => (
       <li className={`float-left min-h-full ${subMenuFlag && 'w-full'}`} key={index}>
         <NavLink to={ data.path } onClick={closeMenu}>
-          <span className={`bg-green-400 hover:brightness-110 duration-300 text-white block text-center 
+          <span className={`hover:brightness-110 duration-300 text-white block text-center 
             ${subMenuFlag ? 'p-1' : 'p-4'}`}
           > { data.name } 
           </span>
@@ -56,7 +56,7 @@ const NavBar = () => {
         <NavLink to='/' className='bg-gradient-to-r from-yellow-500 to-indigo-500 text-transparent bg-clip-text'> Pokémon Database </NavLink>
       </div>
       <nav>
-        <ul className='bg-green-400 flex justify-left list-none flex-wrap'>
+        <ul className='bg-gradient-to-r from-green-400 via-blue-400 to-cyan-400  flex justify-left list-none flex-wrap'>
           <li className='float-left'>
             <div
               className='relative group'
@@ -64,13 +64,13 @@ const NavBar = () => {
               onMouseLeave={closeMenu}
               onClick={toggleMenu}
             >
-              <button className='w-full bg-green-400 hover:brightness-110 duration-300 text-white block text-center p-4'>
+              <button className='w-full hover:brightness-110 duration-300 text-white block text-center p-4'>
                 Pokédex <span className='text-yellow-400'>▼</span>
               </button>
               <ul
                 className={`z-10 absolute ${
                   isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                } bg-green-400 text-white text-center py-1 px-0 space-y-2 transition-opacity duration-500`}
+                } text-white text-center py-1 px-0 space-y-2 transition-opacity duration-500`}
                 onClick={closeMenu}
               >
                 { pokemonNavElements }
