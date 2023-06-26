@@ -1,5 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { NavLink } from 'react-router-dom'
 
 const welcomeVariant = {
   initial: { y: "10rem", opacity: 0 },
@@ -79,7 +80,13 @@ const InformativeText = () => {
 
 const IssuesText = () => {
   const listItems = [
-    { text: "Wurmple's evolution chain doesn't work.", style: 'pt-4' },
+    { 
+      text: (<> 
+        <NavLink to='/pokemon/wurmple' className='hoverable-link'> Wurmple</NavLink> 
+        's evolution chain doesn't work. 
+      </>),
+      style: 'pt-4' 
+    },
     { text: "No sprite collection for each Pokémon." },
     { text: "Dual-type chart (not sure if it's even possible)" },
   ]
