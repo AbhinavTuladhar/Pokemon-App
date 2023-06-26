@@ -34,7 +34,7 @@ const PokemonList = ({ data }) => {
     // Now sort by nationalNumber to take into account the mega evolutions and other forms.
     return (
       rawInformation
-        ?.filter(entry => (entry.id >= 1 && entry.id <= 809) || (entry.id >= 10001 && entry.id <= 10157))
+        ?.filter(entry => (entry.id >= 1 && entry.id <= 807) || (entry.id >= 10001 && entry.id <= 10157))
         ?.sort((prev, curr) => prev.nationalNumber >= curr.nationalNumber ? 1 : -1)
     )
   }

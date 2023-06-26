@@ -8,7 +8,7 @@ const generationMappingV2 = id => {
     '387-493': '4',
     '494-649': '5',
     '650-721': '6',
-    '722-809': '7'
+    '722-807': '7'
   }
 
   for (const range in rangeMap) {
