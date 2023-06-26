@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { motion } from 'framer-motion'
+import AdjacentLinks from './AdjacentLinks';
 import BasicIntro from './BasicIntro';
 import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile'
@@ -152,6 +153,10 @@ const PokemonDetail = () => {
         </FadeInAnimationContainer>
       </div>
 
+      <FadeInAnimationContainer className='my-4'>
+        <AdjacentLinks id={pokemonId} />
+      </FadeInAnimationContainer>
+
       <FadeInAnimationContainer>
         <BasicIntro pokemonData={ BasicInfoProps } />
       </FadeInAnimationContainer>
@@ -214,6 +219,8 @@ const PokemonDetail = () => {
       <FadeInAnimationContainer>
         <Locations props={ LocationsProps } />
       </FadeInAnimationContainer>
+
+      <AdjacentLinks id={pokemonId} />
 
     </motion.div>
   )

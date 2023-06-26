@@ -1,13 +1,14 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-const FadeInAnimationContainer = ({ children }) => {
+const FadeInAnimationContainer = ({ children, className }) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: 'easeIn', staggerChildren: 0.2, delayChildren: 0.4 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: false }}
+      className={`${className}`}
     >
       { children }
     </motion.div>
