@@ -38,7 +38,6 @@ const AdjacentLinks = ({ id }) => {
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
   )
 
-  console.log({ url })
   console.log(adjacentData)
     
   // Skip rendering for pokemon forms.
