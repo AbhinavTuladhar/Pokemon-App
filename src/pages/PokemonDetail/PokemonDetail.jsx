@@ -144,10 +144,7 @@ const PokemonDetail = () => {
   return (
     <motion.div 
       className='gap-y-5 md:mx-10 mx-4'
-      initial={{ y: '100%', scale: 0.8, opacity: 0 }}
-      animate={{ y: 0, scale: 1, opacity: 1, transitionDuration: '0.8s' }}
       exit={{ y: '100%', scale: 0.8, opacity: 0, transitionDuration: '0.75s' }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       <div className="text-4xl font-bold flex justify-center">
         <FadeInAnimationContainer>
