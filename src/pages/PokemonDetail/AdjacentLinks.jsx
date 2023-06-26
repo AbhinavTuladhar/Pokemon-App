@@ -13,23 +13,26 @@ const AdjacentLinks = ({ id }) => {
     const { results } = data
     // Get the Pokemon to the left and right of the current Pokemon.
     const [previousPokemon, ...rest] = results
+    // Select the following entry for #001.
     const nextPokemon = id !== 1 ? results[results.length - 1] : rest[0]
 
     // Check for the pokemon which have the first and last id values
     const linkedPokemon = id === 1 ? [nextPokemon] : [previousPokemon, nextPokemon]
 
-    return linkedPokemon.map((pokemon, index) => {
-      const { name } = pokemon
-      const indexOffset = index === 0 ? index - 1 : index
-      const idNumber = id === 1 ? 2 : id + indexOffset
-      // append zeroes to the left of idNumber
-      const formattedId = '#' + `00${idNumber}`.slice(-3)
-      return {
-        id: idNumber,
-        formattedId,
-        name
-      }
-    })
+    return linkedPokemon
+      .map((pokemon, index) => {
+        const { name } = pokemon
+        const indexOffset = index === 0 ? index - 1 : index
+        const idNumber = id === 1 ? 2 : id + indexOffset
+        // append zeroes to the left of idNumber
+        const formattedId = '#' + `00${idNumber}`.slice(-3)
+        return {
+          id: idNumber,
+          formattedId,
+          name
+        }
+      })
+      .filter(pokemon => pokemon.id <= 807) // For the last Pokemon, #807.
   }
 
   const { data: adjacentData = {}, isLoading } = useQuery(
@@ -37,8 +40,6 @@ const AdjacentLinks = ({ id }) => {
     () => fetchData(url),
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
   )
-
-  console.log(adjacentData)
     
   // Skip rendering for pokemon forms.
   if (id >= 10_000) {
@@ -49,6 +50,7 @@ const AdjacentLinks = ({ id }) => {
     return <OneLineSkeleton />
   }
 
+  // Put the link at the end for #001, separate evenly for the rest.
   const alignment = id !== 1 ? 'justify-between' : 'justify-end'
 
   return (
