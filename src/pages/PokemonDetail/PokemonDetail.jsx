@@ -2,8 +2,9 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { motion } from 'framer-motion'
-import AdjacentLinks from './AdjacentLinks';
 import BasicIntro from './BasicIntro';
+import AdjacentLinks from './AdjacentLinks';
+import PageNavigation from './PageNavigation';
 import PokeDexEntry from './PokeDexEntry';
 import ImageTile from './ImageTile'
 import PokeDexData from './PokeDexData'
@@ -158,12 +159,16 @@ const PokemonDetail = () => {
       </FadeInAnimationContainer>
 
       <FadeInAnimationContainer>
+        <PageNavigation />
+      </FadeInAnimationContainer>
+
+      <FadeInAnimationContainer>
         <BasicIntro pokemonData={ BasicInfoProps } />
       </FadeInAnimationContainer>
 
       <div className='flex flex-row flex-wrap gap-x-10'>
 
-        <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
+        <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4' id='info'>
           <FadeInAnimationContainer>
             <ImageTile imageSources={ imageSourceNew } />
           </FadeInAnimationContainer>
@@ -188,7 +193,7 @@ const PokemonDetail = () => {
           </div>
         </div>
         
-        <section className='flex flex-row flex-grow flex-wrap justify-between gap-x-9'>
+        <section className='flex flex-row flex-grow flex-wrap justify-between gap-x-9' id='base-stats'>
           <div className='flex flex-col flex-grow w-full mdlg:w-[51%] sm:w-full'>
             <FadeInAnimationContainer>
               <BaseStat data={ BaseStatProps } />
@@ -202,23 +207,29 @@ const PokemonDetail = () => {
         </section>
       </div>
 
-      <FadeInAnimationContainer>
-        <EvolutionChain url={ evolutionChainUrl } />
-      </FadeInAnimationContainer>
+      <section id='evolution-chain'>
+        <FadeInAnimationContainer>
+          <EvolutionChain url={ evolutionChainUrl } />
+        </FadeInAnimationContainer>
+      </section>
 
-      <FadeInAnimationContainer>
-        <PokeDexEntry data={ PokeDexEntryProps } />
-      </FadeInAnimationContainer>
+      <section id='pokedex-entries'>
+        <FadeInAnimationContainer>
+          <PokeDexEntry data={ PokeDexEntryProps } />
+        </FadeInAnimationContainer>
+      </section>
 
-      <FadeInAnimationContainer>
-        <section className='py-4 gap-y-5'>
-          <MovesLearned data={ MovesLearnedProps } />
-        </section>
-      </FadeInAnimationContainer>
+      <section className='py-4 gap-y-5' id='moves-learned'>
+        <FadeInAnimationContainer>
+            <MovesLearned data={ MovesLearnedProps } />
+        </FadeInAnimationContainer>
+      </section>
       
-      <FadeInAnimationContainer>
-        <Locations props={ LocationsProps } />
-      </FadeInAnimationContainer>
+      <section id='locations'>
+        <FadeInAnimationContainer>
+          <Locations props={ LocationsProps } />
+        </FadeInAnimationContainer>
+      </section>
 
       <AdjacentLinks id={pokemonId} />
 
