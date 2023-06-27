@@ -9,6 +9,7 @@ const PageNavigation = () => {
     { ref: '#evolution-chain', text: 'Evolution chart' },
     { ref: '#pokedex-entries', text: 'Pokédex entries' },
     { ref: '#moves-learned', text: 'Moves learned' },
+    { ref: '#sprite-table', text: 'Sprites'},
     { ref: '#locations', text: 'Locations' },
   ]
   return (
