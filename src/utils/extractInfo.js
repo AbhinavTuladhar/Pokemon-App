@@ -117,7 +117,13 @@ export const extractPokemonInformation = data => {
         'home': { front_default: homeSprite }
       },
       versions: { 
-        'generation-vii': { 'ultra-sun-ultra-moon': { front_default: gameSprite } },
+        'generation-i': { yellow: { front_default: firstGenDefaultSprite }},
+        'generation-ii': { crystal: { front_default: secondGenDefaultSprite, front_shiny: secondGenShinySprite }},
+        'generation-iii': { emerald: { front_default: thirdGenDefaultSprite, front_shiny: thirdGenShinySprite }},
+        'generation-iv': { platinum: { front_default: fourthGenDefaultSprite, front_shiny: fourthGenShinySprite }},
+        'generation-v': { 'black-white': { front_default: fifthGenDefaultSprite, front_shiny: fifthGenShinySprite }},
+        'generation-vi': { 'omegaruby-alphasapphire': { front_default: sixthGenDefaultSprite, front_shiny: sixthGenShinySprite }},
+        'generation-vii': { 'ultra-sun-ultra-moon': { front_default: gameSprite, front_shiny: sevenGenthShinySprite } },
         'generation-viii': { icons: { front_default: icon }}
       }
     },
@@ -125,6 +131,17 @@ export const extractPokemonInformation = data => {
     types,
     weight
   } = data
+
+  const spriteCollection = [
+    { generation: 'generation-i', frontSprite: firstGenDefaultSprite, shinySprite: null },
+    { generation: 'generation-ii', frontSprite: secondGenDefaultSprite, shinySprite: secondGenShinySprite },
+    { generation: 'generation-iiii', frontSprite: thirdGenDefaultSprite, shinySprite: thirdGenShinySprite },
+    { generation: 'generation-iv', frontSprite: fourthGenDefaultSprite, shinySprite: fourthGenShinySprite },
+    { generation: 'generation-v', frontSprite: fifthGenDefaultSprite, shinySprite: fifthGenShinySprite },
+    { generation: 'generation-vi', frontSprite: sixthGenDefaultSprite, shinySprite: sixthGenShinySprite },
+    { generation: 'generation-vii', frontSprite: gameSprite, shinySprite: sevenGenthShinySprite },
+  ]
+
   const nationalNumber = parseInt(speciesLink.match(/\/(\d+)\/$/)[1])
   return {
     abilities,
@@ -143,6 +160,7 @@ export const extractPokemonInformation = data => {
     front_shiny,
     gameSprite,
     icon,
+    spriteCollection,
     stats,
     types,
     weight
