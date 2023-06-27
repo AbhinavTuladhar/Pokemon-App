@@ -10,6 +10,7 @@ import ImageTile from './ImageTile'
 import PokeDexData from './PokeDexData'
 import TrainingInfo from './TrainingInfo'
 import BaseStat from './BaseStat'
+import SpriteTable from './SpriteTable';
 import Locations from './Locations'
 import BreedingInfo from './BreedingInfo'
 import MovesLearned from './MovesLearned'
@@ -49,6 +50,7 @@ const PokemonDetail = () => {
     front_default: defaultSprite,
     front_shiny: shinySprite,
     gameSprite,
+    spriteCollection,
     icon,
     stats,
     types,
@@ -128,6 +130,11 @@ const PokemonDetail = () => {
   }
 
   const PokeDexEntryProps = flavor_text_entries
+
+  const SpriteTableProps = {
+    pokemonName,
+    spriteCollection
+  }
 
   const MovesLearnedProps = {
     moves,
@@ -222,6 +229,12 @@ const PokemonDetail = () => {
       <section className='py-4 gap-y-5' id='moves-learned'>
         <FadeInAnimationContainer>
             <MovesLearned data={ MovesLearnedProps } />
+        </FadeInAnimationContainer>
+      </section>
+
+      <section id='sprite-table'>
+        <FadeInAnimationContainer>
+          <SpriteTable data={ SpriteTableProps} />
         </FadeInAnimationContainer>
       </section>
       

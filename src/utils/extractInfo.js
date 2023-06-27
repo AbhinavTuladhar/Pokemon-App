@@ -135,7 +135,7 @@ export const extractPokemonInformation = data => {
   const spriteCollection = [
     { generation: 'generation-i', frontSprite: firstGenDefaultSprite, shinySprite: null },
     { generation: 'generation-ii', frontSprite: secondGenDefaultSprite, shinySprite: secondGenShinySprite },
-    { generation: 'generation-iiii', frontSprite: thirdGenDefaultSprite, shinySprite: thirdGenShinySprite },
+    { generation: 'generation-iii', frontSprite: thirdGenDefaultSprite, shinySprite: thirdGenShinySprite },
     { generation: 'generation-iv', frontSprite: fourthGenDefaultSprite, shinySprite: fourthGenShinySprite },
     { generation: 'generation-v', frontSprite: fifthGenDefaultSprite, shinySprite: fifthGenShinySprite },
     { generation: 'generation-vi', frontSprite: sixthGenDefaultSprite, shinySprite: sixthGenShinySprite },
