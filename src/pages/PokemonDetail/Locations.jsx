@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import SectionTitle from '../../components/SectionTitle'
 import { AnimatedTableRowContainer } from '../../components/AnimatedContainers'
 import fetchData from '../../utils/fetchData'
+import formatName from '../../utils/NameFormatting'
 
 function formatFields(data) {
   const newData = data.endsWith('area') ? data.replace('area', '') : data
@@ -123,7 +124,7 @@ const Locations = ({ props }) => {
       {
         finalTable.length > 0 &&
         <>
-          <SectionTitle text={`Where to find ${name}`} />
+          <SectionTitle text={`Where to find ${formatName(name)}`} />
           <div className='border-gray-200 border-b-[1px] table w-full'>
             {finalTable}
           </div>

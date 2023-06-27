@@ -133,13 +133,13 @@ export const extractPokemonInformation = data => {
   } = data
 
   const spriteCollection = [
-    { generation: 'generation-i', frontSprite: firstGenDefaultSprite, shinySprite: null },
-    { generation: 'generation-ii', frontSprite: secondGenDefaultSprite, shinySprite: secondGenShinySprite },
-    { generation: 'generation-iii', frontSprite: thirdGenDefaultSprite, shinySprite: thirdGenShinySprite },
-    { generation: 'generation-iv', frontSprite: fourthGenDefaultSprite, shinySprite: fourthGenShinySprite },
-    { generation: 'generation-v', frontSprite: fifthGenDefaultSprite, shinySprite: fifthGenShinySprite },
-    { generation: 'generation-vi', frontSprite: sixthGenDefaultSprite, shinySprite: sixthGenShinySprite },
-    { generation: 'generation-vii', frontSprite: gameSprite, shinySprite: sevenGenthShinySprite },
+    { generation: 'Generation 1', frontSprite: firstGenDefaultSprite, shinySprite: null },
+    { generation: 'Generation 2', frontSprite: secondGenDefaultSprite, shinySprite: secondGenShinySprite },
+    { generation: 'Generation 3', frontSprite: thirdGenDefaultSprite, shinySprite: thirdGenShinySprite },
+    { generation: 'Generation 4', frontSprite: fourthGenDefaultSprite, shinySprite: fourthGenShinySprite },
+    { generation: 'Generation 5', frontSprite: fifthGenDefaultSprite, shinySprite: fifthGenShinySprite },
+    { generation: 'Generation 6', frontSprite: sixthGenDefaultSprite, shinySprite: sixthGenShinySprite },
+    { generation: 'Generation 7', frontSprite: gameSprite, shinySprite: sevenGenthShinySprite },
   ]
 
   const nationalNumber = parseInt(speciesLink.match(/\/(\d+)\/$/)[1])

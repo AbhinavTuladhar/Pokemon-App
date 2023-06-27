@@ -5,13 +5,16 @@ import formatName from '../../utils/NameFormatting'
 const SpriteTable = ({ data }) => {
   const { pokemonName, spriteCollection } = data
 
-  // Get only those objects which don't have two null values for the sprite Url
+  /* 
+  Get only those objects which don't have two null values for the sprite Url
+  Generation 1 has no shiny sprite, hence the threshold.
+  Sprites for the generation below the generation the pokemon was introduced in are ommitted.
+  Gen 6+ pokemon have gen 5-like sprites, as stated in the documentation.
+  */
   const properSpriteCollection = spriteCollection.filter(obj => {
     const nullUndefinedCount = Object.values(obj).filter(value => value === null || value === undefined).length;
     return nullUndefinedCount <= 1;
   });
-
-  console.log(properSpriteCollection)
 
   // Vertical headers
   const headers = [
@@ -20,15 +23,21 @@ const SpriteTable = ({ data }) => {
 
   const tableColumns = [...headers, ...properSpriteCollection].map((row, index) => {
     const { generation, frontSprite, shinySprite } = row
+    const columnWidth = index === 0 ? 'w-24' : 'w-40'
     const normalImage = index === 0 ?
       <span className='font-bold'> { frontSprite } </span>
       :
-      <img src={frontSprite} alt={pokemonName} className='w-24 h-24' />
+      <img src={frontSprite} alt={pokemonName} className='w-36 h-36' />
 
     const shinyImage = index === 0 ?
       <span className='font-bold'> { shinySprite } </span>
       :
-      <img src={shinySprite} alt={pokemonName} className='w-24 h-24' />
+      generation === 'Generation 1'
+      ?
+      // For non-existent generation 1 shiny sprites.
+      <span className='font-bold text-3xl'> — </span>
+      :
+      <img src={shinySprite} alt={pokemonName} className='w-36 h-36' />
 
     // Cell data for each column.
     const cellData = [
@@ -38,14 +47,17 @@ const SpriteTable = ({ data }) => {
     ]
 
     // These cells are aligned vertically.
-    const tableCells = cellData.map(cell => (
-      <div className='flex border border-slate-400 items-center justify-center align-middle text-center h-32 w-32'>
-        { cell.value }
-      </div>
-    )) 
+    const tableCells = cellData.map((cell, cellIndex) => {
+      const cellStyle = cellIndex === 0 ? 'h-16 bg-gray-900' : 'h-48' 
+      return (
+        <div className={`${cellStyle} object-center flex border border-slate-400 items-center justify-center align-middle text-center h-16 min-h-32 ${columnWidth}`}>
+          { cell.value }
+        </div>
+      )
+    }) 
 
     return (
-      <div className='flex flex-col min-h-32 min-w-96'>
+      <div className='flex flex-col'>
         { tableCells }
       </div>
     )
@@ -54,8 +66,12 @@ const SpriteTable = ({ data }) => {
   return (
     <>
       <SectionTitle text={`${formatName(pokemonName)} sprites`} />
-        <div className='flex flex-row justify-center items-center'> 
-          { tableColumns }
+        <div className='flex justify-center items-center'>
+          <div className='overflow-auto'>
+            <div className='inline-flex'> 
+              { tableColumns }
+            </div>
+          </div>
         </div>
     </>
   )
