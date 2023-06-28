@@ -28,6 +28,8 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ![Detail_4](./Screenshots/PokemonDetail_4.jpg)
 
+![Detail_5](./Screenshots/PokemonDetail_5.jpg)
+
 ### 3. List of all moves (up to generation 7)
 
 ![Detail_3](./Screenshots/MoveList.jpg)
@@ -63,3 +65,8 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 ![Responsive_2](./Screenshots/Responsive_2.jpg)
 
 ![Responsive_3](./Screenshots/Responsive_3.jpg)
+
+
+### 10. A very 'professional' landing page :-)
+
+![LandingPage](./Screenshots/LandingPage.jpg)
