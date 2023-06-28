@@ -180,8 +180,10 @@ export const extractSpeciesInformation = data => {
     generation: { name: generationIntroduced },
     growth_rate : {name: growthRateType},
     hatch_counter,
-    pokedex_numbers
+    pokedex_numbers,
+    varieties
   } = data
+  
   // Find only the English genus name of the 'mon.
   const englishGenus = genera.find(entry => entry.language.name === 'en')
   return {
@@ -196,6 +198,7 @@ export const extractSpeciesInformation = data => {
     growth_rate: growthRateType,
     hatch_counter,
     pokedex_numbers,
+    varieties
   }
 }
 

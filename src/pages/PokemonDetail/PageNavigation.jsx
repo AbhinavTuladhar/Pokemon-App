@@ -9,8 +9,9 @@ const PageNavigation = () => {
     { ref: '#evolution-chain', text: 'Evolution chart' },
     { ref: '#pokedex-entries', text: 'Pokédex entries' },
     { ref: '#moves-learned', text: 'Moves learned' },
-    { ref: '#sprite-table', text: 'Sprites'},
+    { ref: '#sprite-table', text: 'Sprites' },
     { ref: '#locations', text: 'Locations' },
+    { ref: '#varieties', text: 'Forms' }
   ]
   return (
     <div className='bg-cyan-300 flex flex-row flex-wrap justify-evenly space-x-6 p-4 rounded-lg'>

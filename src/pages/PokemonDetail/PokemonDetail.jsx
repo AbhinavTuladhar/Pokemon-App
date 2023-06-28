@@ -16,6 +16,7 @@ import BreedingInfo from './BreedingInfo'
 import MovesLearned from './MovesLearned'
 import TypeChart from './TypeChart';
 import EvolutionChain from './EvolutionChain';
+import PokemonVarieties from './PokemonVarieties';
 import { FadeInAnimationContainer } from '../../components/AnimatedContainers';
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData';
@@ -84,7 +85,10 @@ const PokemonDetail = () => {
     growth_rate,
     hatch_counter,
     pokedex_numbers,
+    varieties
   } = speciesDataNew || {}
+
+  console.log(speciesDataNew)
 
   // Setting the title
   document.title = `${formatName(pokemonName)}: stats, moves, evolution and locations | Pokémon Database`
@@ -144,6 +148,11 @@ const PokemonDetail = () => {
   const LocationsProps = {
     id: pokemonId,
     name: pokemonName
+  }
+
+  const PokemonVarietiesProps = {
+    pokemonName,
+    varieties
   }
 
   if (isLoadingPokemonData || isLoadingSpeciesData) {
@@ -241,6 +250,12 @@ const PokemonDetail = () => {
       <section id='locations'>
         <FadeInAnimationContainer>
           <Locations props={ LocationsProps } />
+        </FadeInAnimationContainer>
+      </section>
+
+      <section id='varieties'>
+        <FadeInAnimationContainer>
+          <PokemonVarieties data={ PokemonVarietiesProps }/>
         </FadeInAnimationContainer>
       </section>
 
