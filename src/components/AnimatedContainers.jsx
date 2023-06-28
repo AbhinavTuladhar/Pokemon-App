@@ -35,7 +35,7 @@ const AnimatedTableRowContainer = ({ children, className, useOnce }) => {
   const animateOnce = useOnce ? true : false
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: '1rem' }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className={`${className}`}

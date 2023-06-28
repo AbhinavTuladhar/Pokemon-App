@@ -32,9 +32,9 @@ const SpriteTable = ({ data }) => {
     const shinyImage = index === 0 ?
       <span className='font-bold'> { shinySprite } </span>
       :
-      generation === 'Generation 1'
+      // For non-existent generation 1 shiny sprites and shiny icons
+      ['Generation 1', 'Icon'].includes(generation)
       ?
-      // For non-existent generation 1 shiny sprites.
       <span className='font-bold text-3xl'> — </span>
       :
       <img src={shinySprite} alt={pokemonName} className='w-36 h-36' />

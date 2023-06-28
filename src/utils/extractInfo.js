@@ -140,6 +140,7 @@ export const extractPokemonInformation = data => {
     { generation: 'Generation 5', frontSprite: fifthGenDefaultSprite, shinySprite: fifthGenShinySprite },
     { generation: 'Generation 6', frontSprite: sixthGenDefaultSprite, shinySprite: sixthGenShinySprite },
     { generation: 'Generation 7', frontSprite: gameSprite, shinySprite: sevenGenthShinySprite },
+    { generation: 'Icon', frontSprite: icon, shinySprite: null }
   ]
 
   const nationalNumber = parseInt(speciesLink.match(/\/(\d+)\/$/)[1])
