@@ -5,10 +5,18 @@ import TypeChartFull from '../components/TypeChartFull'
 import TypeMultiplierBox from '../components/TypeMultiplierBox'
 
 const typeVariant = {
-  initial: { y: "5rem", opacity: 0 },
+  initial: { y: "4rem", opacity: 0 },
   animate: { 
     y: 0, opacity: 1,
-    transition: { staggerChildren: 0.075, ease: "easeOut", duration: 0.3 },
+    transition: { staggerChildren: 0.05, ease: "easeOut", duration: 0.5 },
+  },
+}
+
+const fadeInVariant = {
+  initial: { opacity: 0 },
+  animate: { 
+    opacity: 1,
+    transition: { ease: "easeOut", duration: 0.6 },
   },
 }
 
@@ -53,36 +61,38 @@ const TypeListing = () => {
       exit={{ opacity: 0, transitionDuration: '0.5s' }}
       transition={{ ease: 'easeIn'}}
     >
-      <motion.h1 className='flex text-center justify-center text-5xl mb-8 font-bold' variants={typeVariant}>
-        Pokémon types & type chart
-      </motion.h1>
-      <motion.h1 className='flex text-center justify-center text-4xl mb-10 font-bold' variants={typeVariant}> 
-        Type quick-list
-      </motion.h1>
-      <motion.div className='flex flex-row flex-wrap gap-4 justify-center mb-4' variants={typeVariant} initial='initial' animate='animate'>
-        { typeCardList }
-      </motion.div>
+      <motion.section variants={typeVariant} initial='initial' animate='animate'>
+        <motion.h1 className='flex text-center justify-center text-5xl mb-8 font-bold' variants={typeVariant}>
+          Pokémon types & type chart
+        </motion.h1>
+        <motion.h1 className='flex text-center justify-center text-4xl mb-10 font-bold' variants={typeVariant}> 
+          Type quick-list
+        </motion.h1>
+        <motion.div className='flex flex-row flex-wrap gap-4 justify-center mb-4' variants={typeVariant} initial='initial' animate='animate'>
+          { typeCardList }
+        </motion.div>
 
-      <h1 className='text-3xl font-bold mb-4'>
-        Type Chart
-      </h1>
+        <motion.h1 className='text-3xl font-bold mb-4' variants={fadeInVariant}>
+          Type Chart
+        </motion.h1>
 
-      <section className='flex flex-row flex-wrap justify-between'>
-        <div className='w-full mdlg:w-1/3'>
-          <p>
-            The full type chart here displays the strengths and weaknesses of each type. Look down the left hand side for the attacking type, then move across to see how effective it is against each Pokémon type.
-          </p>
-          <div>
-            <h1 className='text-2xl font-bold my-4'>
-              Chart Key
-            </h1>
-            { chartKeyInfo }
+        <motion.section className='flex flex-row flex-wrap justify-between' variants={fadeInVariant}>
+          <div className='w-full mdlg:w-1/3'>
+            <p>
+              The full type chart here displays the strengths and weaknesses of each type. Look down the left hand side for the attacking type, then move across to see how effective it is against each Pokémon type.
+            </p>
+            <div>
+              <h1 className='text-2xl font-bold my-4'>
+                Chart Key
+              </h1>
+              { chartKeyInfo }
+            </div>
           </div>
-        </div>
-        <div className='w-full mdlg:w-2/3 flex justify-center mdlg:justify-end mt-4 mdlg:mt-0'>
-          <TypeChartFull />
-        </div>
-      </section>
+          <div className='w-full mdlg:w-2/3 flex justify-center mdlg:justify-end mt-4 mdlg:mt-0'>
+            <TypeChartFull />
+          </div>
+        </motion.section>
+      </motion.section>
     </motion.div>
   )
 }
