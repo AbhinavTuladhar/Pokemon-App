@@ -207,6 +207,7 @@ export const extractTypeInformation = data => {
     damage_relations: damageRelations,
     moves: moveList,
     pokemon: pokemonList,
+    name
   } = data
   const {
     double_damage_from: doubleDamageFrom,
@@ -228,6 +229,7 @@ export const extractTypeInformation = data => {
     noDamageTo: extractName(noDamageTo),
     moveList: moveList,
     pokemonList: pokemonList.map(pokemon => pokemon.pokemon.url),
+    name
   }
 }
 

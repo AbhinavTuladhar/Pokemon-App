@@ -1,6 +1,6 @@
-import { extractTypeInformation } from "./extractInfo";
-
 const calculateTypeEffectiveness = typeInfo => {
+  if (!typeInfo) return
+  
   const typeList = [
     'normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground',
     'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'
