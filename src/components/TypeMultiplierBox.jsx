@@ -15,7 +15,7 @@ const TypeMultiplierBox = ({ multiplier }) => {
   const backgroundColourMultiplier = `bg-${multiplierColour}`
 
   return (
-    <div className={`${backgroundColourMultiplier} h-9 flex items-center justify-center text-center px-1 mt-1 rounded border border-slate-700`}>
+    <div className={`${backgroundColourMultiplier} h-9 w-9 flex items-center justify-center text-center px-1 mt-1 rounded border border-slate-700`}>
       { icon }
     </div>
   )

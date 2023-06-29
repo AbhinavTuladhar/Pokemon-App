@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import typeMapping from '../utils/typeMapping'
 
-const TypeCard = ( { typeName, useTextOnly }) => {
+const TypeCard = ( { typeName, useTextOnly, className }) => {
   const typeKey = typeName?.toLowerCase(); // convert typeName to lowercase
   const backgroundColour = 'bg-' + typeMapping[typeKey]
   const targetLink = `/types/${typeName}`
@@ -19,7 +19,7 @@ const TypeCard = ( { typeName, useTextOnly }) => {
     )
   } else {
     return(
-      <div className={`${backgroundColour} w-20 px-2 py-1 flex flex-col flex-wrap justify-center items-center rounded-md my-0 mx-1 hover:brightness-110 duration-200 text-sm`}>
+      <div className={`${backgroundColour} ${className} w-20 px-2 py-1 flex flex-col flex-wrap justify-center items-center rounded-md my-0 mx-1 hover:brightness-110 duration-200 text-sm`}>
         <NavLink to={targetLink}>
           {typeName?.toUpperCase()}
         </NavLink>

@@ -1,6 +1,7 @@
 import { React, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import TypeCard from '../components/TypeCard'
+import TypeChartFull from '../components/TypeChartFull'
 
 const typeVariant = {
   initial: { y: "5rem", opacity: 0 },
@@ -27,7 +28,7 @@ const TypeListing = () => {
 
   return (
     <motion.div 
-      className='md:w-3/4 w-full mx-auto p-4'
+      className='w-full md:w-4/5 mx-auto p-4'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.5s' }}
       exit={{ opacity: 0, transitionDuration: '0.5s' }}
@@ -36,9 +37,11 @@ const TypeListing = () => {
       <motion.h1 className='flex text-center justify-center text-4xl mb-10 font-bold' variants={typeVariant}> 
         Type List
       </motion.h1>
-      <motion.div className='flex flex-row flex-wrap gap-4 justify-center' variants={typeVariant} initial='initial' animate='animate'>
+      <motion.div className='flex flex-row flex-wrap gap-4 justify-center mb-4' variants={typeVariant} initial='initial' animate='animate'>
         { typeCardList }
       </motion.div>
+
+      <TypeChartFull />
     </motion.div>
   )
 }
