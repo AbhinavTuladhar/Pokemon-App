@@ -53,7 +53,7 @@ const TypeChartFull = () => {
     </div>
   )
 
-  // An empty array at the beginning for a for-now empty div.
+  // An empty array at the beginning for a div containing info about the axes.
   const fullTypeCards = [[], ...typeList].map((type, index) => {
     if (index === 0) {
       return cornerDiv
@@ -68,6 +68,7 @@ const TypeChartFull = () => {
     </div>
   ))
 
+  // Make a dummy object in order to account for the first row.
   const dummy = [{ typeName: '', typeDefenceInfo: [ {typeName: '', multiplier: 1}] }]
 
   const tableColumns = [dummy, ...extractedInformation]?.map((type, colIndex) => {
@@ -95,18 +96,18 @@ const TypeChartFull = () => {
   })
 
   return (
-    <section className='flex justify-center'>
+    <>
       <div className='overflow-auto'>
-        <div className='flex flex-row'>
+        <div className='inline-flex'>
           <div className='flex flex-col'>
             { finalTypeCards }
           </div>
-          <div className='flex flex-row gap-[2px] justify-center'>
+          <div className='flex flex-row gap-[1px] py-[2px] justify-center'>
             { tableColumns }
           </div>
         </div>
       </div>
-    </section>
+    </>
   )
 }
 
