@@ -35,10 +35,12 @@ const ImageColumn = () => {
       <img
         src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/25.gif'
         className='h-40 flex-grow'
+        alt='Pikachu gif'
       />
       <img
         src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif'
         className='h-40 flex-grow'
+        alt='Charizard gif'
       />
     </motion.div>
   )

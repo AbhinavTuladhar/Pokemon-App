@@ -1,5 +1,6 @@
 import React from 'react'
 import { useQuery } from 'react-query'
+import Skeleton from 'react-loading-skeleton'
 import TypeCard from './TypeCard'
 import MiniTypeCard from './MiniTypeCard'
 import TypeMultiplierBox from './TypeMultiplierBox'
@@ -45,11 +46,15 @@ const TypeChartFull = () => {
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
   )
 
+  if (isLoading) {
+    return <Skeleton width='90%' height='20rem' containerClassName='flex-1 w-full flex justify-end' />
+  }
+
   // To show the defending and attacking types.
   const cornerDiv = (
     <div className='flex flex-col h-9 w-20 text-xs border border-slate-700 rounded-md justify-center items-center'>
       <span> DEFENCE → </span>
-      <span> ATTACK ↴</span>
+      <span> ATTACK ↴ </span>
     </div>
   )
 
@@ -71,7 +76,7 @@ const TypeChartFull = () => {
   // Make a dummy object in order to account for the first row.
   const dummy = [{ typeName: '', typeDefenceInfo: [ {typeName: '', multiplier: 1}] }]
 
-  const tableColumns = [dummy, ...extractedInformation]?.map((type, colIndex) => {
+  const tableColumns = [dummy, ...extractedInformation]?.map(type => {
     const { typeName, typeDefenceInfo: defenceInfo } = type
 
     const tableCells = defenceInfo?.map((defendingType, cellIndex) => {
