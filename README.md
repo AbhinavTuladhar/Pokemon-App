@@ -40,7 +40,7 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ![MoveDetail_2](./Screenshots/MoveDetail_2.jpg)
 
-### 5. List of all types
+### 5. Type list and type chart
 
 ![MoveDetail](./Screenshots/TypeList.jpg)
 
