@@ -67,12 +67,16 @@ const DualTypeChart = ({ data }) => {
 
   return (
     <>
-      <RowContainer>
-        { firstRow }
-      </RowContainer>
-      <RowContainer>
-        { tableRows }
-      </RowContainer>
+      <div className='overflow-auto'>
+        <div className='inline-flex flex-col'>
+          <div className='flex flex-row gap-x-[1px]'>
+            { firstRow }
+          </div>
+          <>
+            { tableRows }
+          </>
+        </div>
+      </div>
     </>
   )
 }
