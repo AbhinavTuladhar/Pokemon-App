@@ -89,15 +89,16 @@ const IssuesText = () => {
       </>),
       style: 'pt-4' 
     },
-    { text: "No sprite collection for each Pokémon." },
-    { text: "Dual-type chart (not sure if it's even possible)" },
+    { text: 'Location-wise encounters for each game' },
+    { text: "No sprite collection for each Pokémon.", style: 'line-through' },
+    { text: "Dual-type chart (not sure if it's even possible)", style: 'line-through' },
   ]
   return (
     <motion.div className='gap-y-5' variants={entryVariantLeft}>
       <motion.span className='text-2xl font-bold' variants={entryVariantLeft}>
         Known issues / Todos
       </motion.span>
-      <motion.ul className='list-inside list-disc space-y-3' variants={entryVariantLeft}>
+      <motion.ul className='list-inside list-disc space-y-3 strik' variants={entryVariantLeft}>
         {listItems.map((item, index) => (
           <motion.li variants={entryVariantLeft} className={item?.style} key={index}> { item.text } </motion.li>
         ))}
