@@ -153,8 +153,6 @@ const TypeDetail = ( ) => {
     noDamageTo,
   }
 
-  console.log(DualTypeChartProps)
-
   return (
     <motion.div 
       className='md:mx-10 mx-4'
@@ -171,24 +169,34 @@ const TypeDetail = ( ) => {
           </motion.div>
         </motion.div>
 
-        <motion.div className='flex flex-row flex-wrap justify-between gap-y-10 mb-10' variants={simpleFadeInNoDelayVariant}>
-          <motion.div variants={simpleFadeInNoDelayVariant} className='w-full lg:w-475/1000 gap-4'>
-            { offensiveDiv }
+        <motion.div className='flex flex-row flex-wrap justify-between mt-4' variants={simpleFadeInNoDelayVariant}>
+
+          <motion.div variants={simpleFadeInNoDelayVariant} className='w-full mdlg:w-1/3'>
+
+            <motion.div variants={simpleFadeInNoDelayVariant} className='mb-10'>
+              { offensiveDiv }
+            </motion.div>
+            <motion.div variants={simpleFadeInNoDelayVariant}>
+              { defensiveDiv }
+            </motion.div>
+
           </motion.div>
-          <motion.div variants={simpleFadeInNoDelayVariant} className='w-full lg:w-475/1000 gap-4'>
-            { defensiveDiv }
+
+          <motion.div variants={simpleFadeInNoDelayVariant} className='flex flex-col w-full mdlg:w-2/3 mt-4 mdlg:mt-0 pl-0 mdlg:pl-16'>
+            <h1 className='text-3xl font-bold'>
+              Dual type attack pros & cons
+            </h1>
+            <p className='my-4'>
+              {`This chart shows the strength of the ${type} type against every type combination. The fraction of damage a ${type} type move will deal is shown - ½ means 50% damage (not very effective), 2 means 200% (super-effective) and so on.`}
+            </p>
+            <DualTypeChart data={DualTypeChartProps} />
           </motion.div>
+
         </motion.div>
 
-        <DualTypeChart data={DualTypeChartProps} />
-
-        {/* 
-          Comment this out when done!!! 
-        */}
-
-        {/* <motion.div variants={simpleFadeInVariant}>
+        <motion.div variants={simpleFadeInVariant}>
           { <PokemonCardList title={`${formatName(type)} Pokemon`} pokemonUrls={extractedInformation.pokemonList} />}
-        </motion.div> */}
+        </motion.div>
 
       </motion.div>
     </motion.div>
