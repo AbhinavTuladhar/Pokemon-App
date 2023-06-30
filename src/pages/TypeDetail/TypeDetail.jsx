@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import TypeCard from '../../components/TypeCard'
 import PokemonCardList from '../../components/PokemonCardList'
 import TypeDetailCard from './TypeDetailCard'
+import DualTypeChart from './DualTypeChart'
 import fetchData from '../../utils/fetchData'
 import { extractTypeInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
@@ -143,6 +144,17 @@ const TypeDetail = ( ) => {
 
   if (isLoading) return
 
+  const { doubleDamageTo, halfDamageTo, noDamageTo } = extractedInformation
+
+  const DualTypeChartProps = {
+    typeName: type,
+    doubleDamageTo,
+    halfDamageTo,
+    noDamageTo,
+  }
+
+  console.log(DualTypeChartProps)
+
   return (
     <motion.div 
       className='md:mx-10 mx-4'
@@ -168,9 +180,15 @@ const TypeDetail = ( ) => {
           </motion.div>
         </motion.div>
 
-        <motion.div variants={simpleFadeInVariant}>
+        <DualTypeChart data={DualTypeChartProps} />
+
+        {/* 
+          Comment this out when done!!! 
+        */}
+
+        {/* <motion.div variants={simpleFadeInVariant}>
           { <PokemonCardList title={`${formatName(type)} Pokemon`} pokemonUrls={extractedInformation.pokemonList} />}
-        </motion.div>
+        </motion.div> */}
 
       </motion.div>
     </motion.div>

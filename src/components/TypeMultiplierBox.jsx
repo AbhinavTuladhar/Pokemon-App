@@ -9,13 +9,13 @@ const effectivenessMapping = {
   0: { icon: '0', colour: 'black'},
 }
 
-const TypeMultiplierBox = ({ multiplier }) => {
+const TypeMultiplierBox = ({ multiplier, className}) => {
   const { icon, colour: multiplierColour } = effectivenessMapping[multiplier]
   // Provide a distinct background colours for each effectiveness value
   const backgroundColourMultiplier = `bg-${multiplierColour}`
 
   return (
-    <div className={`${backgroundColourMultiplier} h-9 w-9 flex items-center justify-center text-center px-1 mt-1 rounded border border-slate-700`}>
+    <div className={`${backgroundColourMultiplier} h-9 w-9 flex items-center justify-center text-center px-1 mt-1 rounded border border-slate-700 ${className}`}>
       { icon }
     </div>
   )
