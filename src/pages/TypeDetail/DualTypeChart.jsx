@@ -4,14 +4,6 @@ import TypeCard from '../../components/TypeCard'
 import TypeMultiplierBox from '../../components/TypeMultiplierBox'
 import calculateOffensiveTypeEffectiveness from '../../utils/typeEffectivenessOffensive'
 
-const RowContainer = ({ children }) => {
-  return (
-    <div className='flex flex-wrap flex-row gap-x-[1px]'>
-      { children }
-    </div>
-  )
-}
-
 const DualTypeChart = ({ data }) => {
   const typeList = [
     'normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy',

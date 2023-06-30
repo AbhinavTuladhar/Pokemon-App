@@ -6,7 +6,7 @@ import axios from 'axios'
 import 'react-loading-skeleton/dist/skeleton.css'
 import PokeCard from '../components/PokeCard'
 import PokeCardSkeleton from '../components/PokeCardSkeleton'
-import { FadeInAnimationContainer, FadeInAnimationCard } from '../components/AnimatedContainers'
+import { FadeInAnimationCard } from '../components/AnimatedContainers'
 
 const MainPage = ({ idRange }) => {
   const [pokemonInfo, setPokemonInfo] = useState([])

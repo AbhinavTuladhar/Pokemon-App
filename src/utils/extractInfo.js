@@ -1,5 +1,4 @@
 import generationMapping from "./generationMapping"
-import formatName from "./NameFormatting";
 
 // Converting Roman to Hindu-Arabic numerals.
 const numberMapper = {

@@ -88,8 +88,6 @@ const PokemonDetail = () => {
     varieties
   } = speciesDataNew || {}
 
-  console.log(speciesDataNew)
-
   // Setting the title
   document.title = `${formatName(pokemonName)}: stats, moves, evolution and locations | Pokémon Database`
 

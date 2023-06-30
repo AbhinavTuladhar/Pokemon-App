@@ -5,7 +5,6 @@ import MoveListingSkeleton from './MoveListingSkeleton'
 import PokeCardV2 from './PokeCardV2'
 import fetchData from '../utils/fetchData'
 import { extractPokemonInformation } from '../utils/extractInfo'
-import { FadeInAnimationCard } from './AnimatedContainers'
 
 const PokemonCardList = ({ title, pokemonUrls }) => {
   const transformData = data => {
