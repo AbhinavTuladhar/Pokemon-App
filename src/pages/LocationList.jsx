@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import fetchData from '../utils/fetchData'
@@ -12,6 +12,9 @@ const extractNumericPart = (str) => {
 };
 
 const LocationList = () => {
+  const [activeTab, setActiveTab] = useState(1)
+  const tabData = []
+
   const locationUrls = useMemo(() => {
     const urlList = []
     for (let i = 1; i <= 7; i++) {
@@ -32,7 +35,6 @@ const LocationList = () => {
         const localUrl = `/location/${locationName}`
         const filteredRoute = locationName.match(/(route-.+)/)
         const properLocationName = filteredRoute !== null ? filteredRoute[1] : locationName
-        console.log(locationName)
         return { locationName: properLocationName, actualUrl, localUrl }
       })
       .sort((prev, curr) => {
@@ -56,29 +58,70 @@ const LocationList = () => {
 
   if (isLoading) return
 
-  const toRender = locationData.map((row) => {
+  const handleClick = id => {
+    setActiveTab(id)
+  }
+
+  // For 
+  locationData.forEach((row, tabIndex) => {
     const { locations, regionName } = row
     const locationItems = locations.map((location) => {
       const { locationName, localUrl } = location
       return (
-        <NavLink to={localUrl} className='hoverable-link'>
+        <NavLink to={localUrl} className='hoverable-link min-w-fit'>
           { formatName(locationName) }
         </NavLink>
       )
     })
+
+    const tabOutput = (
+      <div className='grid grid-cols-2 sm:grid-cols-3 smmd:grid-cols-4 lg:grid-cols-5 justify-self-center'>
+        { locationItems }
+      </div>
+    )
+
+    const currentTabData = { id: tabIndex + 1, tabName: regionName, output: tabOutput }
+    tabData.push(currentTabData)
+  })
+
+  const tabListItems = tabData.map((tab, index) => {
+    const { tabName, id } = tab
     return (
-      <div className='flex flex-col flex-wrap'>
-        <h1 className='text-3xl font-bold my-4'> { formatName(regionName) } </h1>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5'>
-          { locationItems }
-        </div>
+      <li 
+        key={index} 
+        className={`w-20 py-2 mx-1 border-b-2 border-transparent flex justify-center ${
+          activeTab === id ? 'text-blue-500 border-b-2 border-blue-500' : 'hover:text-white hover:border-white'
+        } hover:cursor-pointer duration-300`}
+        onClick={() => handleClick(id)}
+      > { formatName(tabName) } </li> 
+    )
+  })
+
+  const tabContainer = tabData.map((tab, index) => {
+    const { output, id } = tab
+    return (
+      <div
+        key={index}
+        className={`${activeTab === id ? '' : 'hidden'}`}
+      >
+        { output }
       </div>
     )
   })
 
   return (
     <div className='mx-2 md:mx-10'>
-      { toRender }
+      <h1 className='text-4xl text-center font-bold'>
+        Pokémon Location guide
+      </h1>
+      <>
+        <ul className='flex flex-wrap flex-row justify-center items-center my-4'> 
+          { tabListItems }
+        </ul>
+        <>
+          { tabContainer }
+        </>
+      </>
     </div>
   )
 }
