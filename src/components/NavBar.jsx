@@ -6,8 +6,8 @@ const ListItem = ({ items, closeMenu, subMenuFlag }) => {
     items.map((data, index) => (
       <li className={`float-left min-h-full ${subMenuFlag && 'w-full'}`} key={index}>
         <NavLink to={ data.path } onClick={closeMenu}>
-          <span className={`hover:brightness-110 duration-300 text-white block text-center 
-            ${subMenuFlag ? 'py-3 px-2 bg-green-400' : 'p-4'}`}
+          <span className={`hover:brightness-110 duration-300 text-white block text-center px-2
+            ${subMenuFlag ? 'py-3 bg-green-400' : 'py-4'}`}
           > { data.name } 
           </span>
         </NavLink>
@@ -65,7 +65,7 @@ const NavBar = () => {
               onMouseLeave={closeMenu}
               onClick={toggleMenu}
             >
-              <button className='w-full hover:brightness-110 duration-300 text-white block text-center p-4'>
+              <button className='w-full hover:brightness-110 duration-300 text-white block text-center py-4 px-2'>
                 Pokédex <span className='text-yellow-400'>▼</span>
               </button>
               <ul

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import fetchData from '../utils/fetchData'
 import { extractRegionInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
+import { FadeInAnimationContainer } from '../components/AnimatedContainers'
 
 // This is for sorting on the basis of route number, but doesn't seem to work
 const extractNumericPart = (str) => {
@@ -110,7 +111,7 @@ const LocationList = () => {
   })
 
   return (
-    <div className='mx-2 md:mx-10'>
+    <FadeInAnimationContainer className='mx-2 md:mx-10'>
       <h1 className='text-4xl text-center font-bold'>
         Pokémon Location guide
       </h1>
@@ -122,7 +123,7 @@ const LocationList = () => {
           { tabContainer }
         </>
       </>
-    </div>
+    </FadeInAnimationContainer>
   )
 }
 
