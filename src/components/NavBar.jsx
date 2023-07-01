@@ -7,7 +7,7 @@ const ListItem = ({ items, closeMenu, subMenuFlag }) => {
       <li className={`float-left min-h-full ${subMenuFlag && 'w-full'}`} key={index}>
         <NavLink to={ data.path } onClick={closeMenu}>
           <span className={`hover:brightness-110 duration-300 text-white block text-center 
-            ${subMenuFlag ? 'p-1 bg-green-400' : 'p-4'}`}
+            ${subMenuFlag ? 'py-3 px-2 bg-green-400' : 'p-4'}`}
           > { data.name } 
           </span>
         </NavLink>
@@ -70,7 +70,7 @@ const NavBar = () => {
               <ul
                 className={`z-10 absolute ${
                   isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                } bg-green-400 text-white text-center py-1 px-0 space-y-2 transition-opacity duration-500`}
+                } bg-green-400 text-white text-center transition-opacity duration-500`}
                 onClick={closeMenu}
               >
                 { pokemonNavElements }
