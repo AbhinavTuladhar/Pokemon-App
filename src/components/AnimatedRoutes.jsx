@@ -11,6 +11,7 @@ import TypeListing from '../pages/TypeListing'
 import MoveListing from '../pages/MoveListing'
 import AbilityListing from '../pages/AbilityListing'
 import AbilityDetail from '../pages/AbilityDetail/AbilityDetail'
+import LocationList from '../pages/LocationList'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -38,6 +39,7 @@ const AnimatedRoutes = () => {
         <Route path='/types' element={<TypeListing />} />
         <Route path='/moves' element={<MoveListing />} />
         <Route path='/ability' element={<AbilityListing />} />
+        <Route path='/location' element={<LocationList />} />
         {generationRoutes}
         <Route path='/pokemon/:id' element={<PokemonDetail />} />
         <Route path='/types/:type' element={<TypeDetail />} />

@@ -25,10 +25,11 @@ const NavBar = () => {
     { path: '/pokemon/generation-5', name: 'Generation 5' },
     { path: '/pokemon/generation-6', name: 'Generation 6' },
     { path: '/pokemon/generation-7', name: 'Generation 7' },
-    { path: '/pokemon/forms', name: 'Other forms'},
-    { path: '/types', name: 'Types'},
-    { path: '/moves', name: 'Moves'},
-    { path: '/ability', name: 'Abilities'}
+    { path: '/pokemon/forms', name: 'Other forms' },
+    { path: '/types', name: 'Types' },
+    { path: '/moves', name: 'Moves' },
+    { path: '/ability', name: 'Abilities' },
+    { path: '/location', name: 'Locations' }
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)

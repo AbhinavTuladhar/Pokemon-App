@@ -275,3 +275,11 @@ export const extrctAbilityInformation = data => {
     pokemon
   }
 }
+
+export const extractRegionInformation = locationData => {
+  const {
+    name: regionName,
+    locations
+  } = locationData
+  return { regionName, locations }
+}
