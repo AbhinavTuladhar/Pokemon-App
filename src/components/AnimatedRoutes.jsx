@@ -12,6 +12,7 @@ import MoveListing from '../pages/MoveListing'
 import AbilityListing from '../pages/AbilityListing'
 import AbilityDetail from '../pages/AbilityDetail/AbilityDetail'
 import LocationList from '../pages/LocationList'
+import LocationDetail from '../pages/LocationDetail/LocationDetail'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -45,6 +46,7 @@ const AnimatedRoutes = () => {
         <Route path='/types/:type' element={<TypeDetail />} />
         <Route path='/moves/:id' element={<MoveDetail />} />
         <Route path='/ability/:id' element={<AbilityDetail />} />
+        <Route path='/location/:name' element={<LocationDetail />} />
       </Routes>
     </AnimatePresence>
   )

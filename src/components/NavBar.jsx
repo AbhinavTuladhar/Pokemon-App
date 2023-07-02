@@ -65,7 +65,7 @@ const NavBar = () => {
               onMouseLeave={closeMenu}
               onClick={toggleMenu}
             >
-              <button className='w-full hover:brightness-110 duration-300 text-white block text-center py-4 px-2'>
+              <button className='w-28 hover:brightness-110 duration-300 text-white block text-center py-4 px-2'>
                 Pokédex <span className='text-yellow-400'>▼</span>
               </button>
               <ul

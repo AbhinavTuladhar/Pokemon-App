@@ -276,10 +276,15 @@ export const extrctAbilityInformation = data => {
   }
 }
 
-export const extractRegionInformation = locationData => {
+export const extractRegionInformation = regionalData => {
   const {
     name: regionName,
     locations
-  } = locationData
+  } = regionalData
   return { regionName, locations }
+}
+
+export const extractLocationInformation = locationData => {
+  const { areas, name: locationName } = locationData
+  return { subLocations: areas, locationName }
 }
