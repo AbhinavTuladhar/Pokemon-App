@@ -90,8 +90,8 @@ const LocationList = () => {
     return (
       <li 
         key={index} 
-        className={`w-20 py-2 mx-1 border-b-2 border-transparent flex justify-center ${
-          activeTab === id ? 'text-blue-500 border-b-2 border-blue-500' : 'hover:text-white hover:border-white'
+        className={`w-20 py-2 mx-1 border-b-2 flex justify-center ${
+          activeTab === id ? 'text-blue-500 border-blue-500' : 'border-transparent hover:text-white hover:border-white'
         } hover:cursor-pointer duration-300`}
         onClick={() => handleClick(id)}
       > { formatName(tabName) } </li> 
