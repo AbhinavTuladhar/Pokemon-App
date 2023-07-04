@@ -288,3 +288,47 @@ export const extractLocationInformation = locationData => {
   const { areas, name: locationName } = locationData
   return { subLocations: areas, locationName }
 }
+
+// To be used in extractEncounterInformation, not to be exported.
+// This is for dealing with the encounter_details object.
+const extractDetailedEncounterInformation = encounterData => {
+  const { chance, condition_values, max_level, min_level } = encounterData
+  return { max_level, min_level, chance, condition_values }
+}
+
+// To be used in extractLocationAreaInformation, not to be exported!
+// This is for dealing with the version_details object.
+const extractEncounterInformation = encounterData => {
+  const { 
+    pokemon: { name: pokemonName },
+    version_details
+  } = encounterData
+
+  const toReturn = version_details.map(row => {
+    const { 
+      version: { name: gameName },
+      encounter_details
+    } = row
+
+    const extractedEncounterInformation = encounter_details.map(extractDetailedEncounterInformation)
+
+    return { pokemonName, gameName, extractedEncounterInformation }
+  })
+
+  return toReturn.flatMap(({ pokemonName, gameName, extractedEncounterInformation }) => {
+    return extractedEncounterInformation.map(({...rest}) => ({pokemonName, gameName, ...rest}))
+  })
+}
+
+export const extractLocationAreaInformation = locationAreaData => {
+  const { names, pokemon_encounters } = locationAreaData
+  // For getting the 'proper' sub location name
+  const properLocationAreaName = names.find(name => name.language.name === 'en').name
+  // const pokemonNameList = pokemon_encounters.map(extractEncounterInformation)
+  const testData = pokemon_encounters.map(extractEncounterInformation)
+
+  // console.log('For', properLocationAreaName)
+  // console.log(testData)
+
+  return { subLocationName: properLocationAreaName, encounterDetails: testData }
+}
