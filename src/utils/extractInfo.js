@@ -1,4 +1,5 @@
 import generationMapping from "./generationMapping"
+import generationMappingV3 from "./generationMappingV3"
 
 // Converting Roman to Hindu-Arabic numerals.
 const numberMapper = {
@@ -292,8 +293,10 @@ export const extractLocationInformation = locationData => {
 // To be used in extractEncounterInformation, not to be exported.
 // This is for dealing with the encounter_details object.
 const extractDetailedEncounterInformation = encounterData => {
-  const { chance, condition_values, max_level, min_level } = encounterData
-  return { max_level, min_level, chance, condition_values }
+  const { chance, condition_values, max_level, min_level, method: { name: methodName } } = encounterData
+  // Make a string for the level range.
+  const levelRange = min_level === max_level ? min_level : `${min_level}-${max_level}`
+  return { min_level, max_level, chance, condition_values, methodName }
 }
 
 // To be used in extractLocationAreaInformation, not to be exported!
@@ -309,14 +312,42 @@ const extractEncounterInformation = encounterData => {
       version: { name: gameName },
       encounter_details
     } = row
+    const generation = generationMappingV3[gameName]
 
     const extractedEncounterInformation = encounter_details.map(extractDetailedEncounterInformation)
-
-    return { pokemonName, gameName, extractedEncounterInformation }
+    
+    
+    return { pokemonName, gameName, generation, extractedEncounterInformation }
+  })
+  
+  // A flatmap to attach the pokemon name and game nome to each object in the array
+  const expandedDetails = toReturn.flatMap(({ pokemonName, gameName, generation, extractedEncounterInformation }) => {
+    return extractedEncounterInformation.map(({...rest}) => ({pokemonName, gameName, generation, ...rest}))
   })
 
-  return toReturn.flatMap(({ pokemonName, gameName, extractedEncounterInformation }) => {
-    return extractedEncounterInformation.map(({...rest}) => ({pokemonName, gameName, ...rest}))
+  // Now reduce the array of object to reduce them into more compact entries.
+  // Reduction is done on the basis of the Pokemon name and name of the game.
+  const reducedEncounterInformation = expandedDetails.reduce((acc, obj) => {
+    const existingObject = acc.find(item => (
+      obj.pokemonName === item.pokemonName && obj.gameName === item.gameName && obj.generation === item.generation
+    ))
+
+    // If there's a matching object, find the lower value of minimum level, higher value of maximum level and accumulate the encounter chance.
+    if (existingObject) {
+      existingObject.min_level = Math.min(existingObject.min_level, obj.min_level)
+      existingObject.max_level = Math.max(existingObject.max_level, obj.max_level)
+      existingObject.chance += obj.chance
+    } else {
+      acc.push({...obj})
+    }
+    return acc
+  }, [])
+
+  // Further, combine min level and max level 
+  return reducedEncounterInformation.map(pokemonEncounter => {
+    const { min_level, max_level } = pokemonEncounter
+    const levelRange = min_level === max_level ? min_level : `${min_level}-${max_level}`
+    return {...pokemonEncounter, levelRange}
   })
 }
 
@@ -324,11 +355,7 @@ export const extractLocationAreaInformation = locationAreaData => {
   const { names, pokemon_encounters } = locationAreaData
   // For getting the 'proper' sub location name
   const properLocationAreaName = names.find(name => name.language.name === 'en').name
-  // const pokemonNameList = pokemon_encounters.map(extractEncounterInformation)
-  const testData = pokemon_encounters.map(extractEncounterInformation)
+  const encounterDetails = pokemon_encounters.map(extractEncounterInformation)
 
-  // console.log('For', properLocationAreaName)
-  // console.log(testData)
-
-  return { subLocationName: properLocationAreaName, encounterDetails: testData }
+  return { subLocationName: properLocationAreaName, encounterDetails }
 }
