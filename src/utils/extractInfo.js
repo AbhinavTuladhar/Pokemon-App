@@ -355,7 +355,8 @@ export const extractLocationAreaInformation = locationAreaData => {
   const { names, pokemon_encounters } = locationAreaData
   // For getting the 'proper' sub location name
   const properLocationAreaName = names.find(name => name.language.name === 'en').name
-  const encounterDetails = pokemon_encounters.map(extractEncounterInformation)
+  // Use a flat map to convert the array of array of objects to just an array of objects.
+  const encounterDetails = pokemon_encounters.map(extractEncounterInformation).flatMap(row => row)
 
   return { subLocationName: properLocationAreaName, encounterDetails }
 }
