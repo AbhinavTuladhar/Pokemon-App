@@ -58,7 +58,11 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ![AbilityDetail](./Screenshots/AbilityDetail.jpg)
 
-### 9. Reponsive Design
+### 9. Region-wise Location List (WIP)
+
+![Locationlist](./Screenshots/LocationList.jpg)
+
+### 10. Reponsive Design
 
 ![Responsive_1](./Screenshots/Responsive_1.jpg)
 
@@ -67,6 +71,6 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 ![Responsive_3](./Screenshots/Responsive_3.jpg)
 
 
-### 10. A very 'professional' landing page :-)
+### 11. A very 'professional' landing page :-)
 
 ![LandingPage](./Screenshots/LandingPage.jpg)
