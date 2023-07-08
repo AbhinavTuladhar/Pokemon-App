@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import GameBox from './GameBox'
 import fetchData from '../../utils/fetchData'
 import { extractLocationInformation, extractLocationAreaInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
@@ -29,7 +30,34 @@ const LocationDetail = () => {
     { staleTime: Infinity, cacheTime: Infinity, select: transformSubLocationData }
   )
 
+  // Preprocessing the data
+  // Group by generation, and then by encounter method.
+  // IN other words, generation has a higher hierarchy of grouping, and encounter method has a lower level.
+  const finalData = subLocationData?.map(subLocation => {
+    const { encounterDetails, subLocationName } = subLocation
+    const groupByGenerationEncounter = encounterDetails.reduce((acc, item) => {
+      const { methodName, generation } = item
+      
+      if (!acc[generation]) {
+        acc[generation] = []
+      }
+    
+      if (!acc[generation][methodName]) {
+        acc[generation][methodName] = []
+      }
+    
+      acc[generation][methodName].push(item)
+    
+      return acc
+    }, [])
+    return { subLocationName, encounterDetails: groupByGenerationEncounter }
+  })
+
+  console.log('Logging the raw data')
   console.log(subLocationData)
+
+  console.log('Logging the grouped data')
+  console.log(finalData)
 
   if (isLoadingSubLocationData) return
 
@@ -51,7 +79,7 @@ const LocationDetail = () => {
 
       const cellData = [
         { key: 'pokemon', value: formatName(pokemonName) },
-        { key: 'game', value: formatName(gameName) },
+        { key: 'game', value: rowIndex === 0 ? gameName : <GameBox gameName={gameName} activeFlag /> },
         { key: 'generation', value: generation },
         { key: 'chance', value: `${trueChance}%` },
         { key: 'level range', value: levelRange },
