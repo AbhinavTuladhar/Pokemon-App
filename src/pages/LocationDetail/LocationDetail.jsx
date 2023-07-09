@@ -10,6 +10,8 @@ const LocationDetail = () => {
   const { name: locationName } = useParams()
   const locationUrl = `https://pokeapi.co/api/v2/location/${locationName}`
 
+  document.title = `${formatName(locationName)} Pokémon Locations | Pokémon Database`
+
   const { data: locationData = [], isLoading: isLoadingLocationData } = useQuery(
     ['largerLocation', locationName],
     () => fetchData(locationUrl),
@@ -107,6 +109,44 @@ const LocationDetail = () => {
       </div>
     )
   })
+
+  // FOR NEW GROUPED DATA
+  // const subLocationDivsNew = finalData.map(({subLocationName, encounterDetails}) => {
+  //   const generationDiv = 
+  //   const tableRows = [...header, ...encounterDetails].map((encounter, rowIndex) => {
+  //     const { pokemonName, gameName, generation, levelRange, methodName, chance } = encounter
+  //     const trueChance = chance > 100 ? 100 : chance
+
+  //     const cellData = [
+  //       { key: 'pokemon', value: formatName(pokemonName) },
+  //       { key: 'game', value: rowIndex === 0 ? gameName : <GameBox gameName={gameName} activeFlag /> },
+  //       { key: 'generation', value: generation },
+  //       { key: 'chance', value: `${trueChance}%` },
+  //       { key: 'level range', value: levelRange },
+  //       { key: 'method', value: formatName(methodName) },
+  //     ]
+  //     const tableCells = cellData.map(({key, value}) => {
+  //       return (
+  //         <div className={`${rowIndex === 0 && 'bg-gray-900 font-bold'} table-cell h-14 border-t-[1px] border-slate-200 align-middle px-2`}>
+  //           { value }
+  //         </div>
+  //       )
+  //     })
+  //     return (
+  //       <div className='table-row'>
+  //         { tableCells }
+  //       </div>
+  //     )
+  //   })
+  //   return (
+  //     <div>
+  //       <h1 className='text-2xl font-bold my-8'> { subLocationName } </h1>
+  //       <div className='table w-full'>
+  //         { tableRows }
+  //       </div>    
+  //     </div>
+  //   )
+  // })
 
   return (
     <div className='mx-2 md:mx-10'>

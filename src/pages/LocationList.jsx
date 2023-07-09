@@ -13,6 +13,8 @@ const extractNumericPart = (str) => {
 };
 
 const LocationList = () => {
+  document.title = 'Pokémon Location Guide - all routes, all Pokémon! | Pokémon Database'
+
   const [activeTab, setActiveTab] = useState(1)
   const tabData = []
 
