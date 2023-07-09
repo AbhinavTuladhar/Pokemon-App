@@ -303,9 +303,13 @@ const extractDetailedEncounterInformation = encounterData => {
 // This is for dealing with the version_details object.
 const extractEncounterInformation = encounterData => {
   const { 
-    pokemon: { name: pokemonName },
+    pokemon: { name: pokemonName, url: pokemonUrl },
     version_details
   } = encounterData
+
+  // To get the icon url
+  const idNumber = parseInt(pokemonUrl.match(/\/(\d+)\/$/)[1])
+  const iconSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/${idNumber}.png`
 
   const toReturn = version_details.map(row => {
     const { 
@@ -317,12 +321,12 @@ const extractEncounterInformation = encounterData => {
     const extractedEncounterInformation = encounter_details.map(extractDetailedEncounterInformation)
     
     
-    return { pokemonName, gameName, generation, extractedEncounterInformation }
+    return { iconSprite, pokemonName, gameName, generation, extractedEncounterInformation }
   })
   
   // A flatmap to attach the pokemon name and game nome to each object in the array
-  const expandedDetails = toReturn.flatMap(({ pokemonName, gameName, generation, extractedEncounterInformation }) => {
-    return extractedEncounterInformation.map(({...rest}) => ({pokemonName, gameName, generation, ...rest}))
+  const expandedDetails = toReturn.flatMap(({ iconSprite, pokemonName, gameName, generation, extractedEncounterInformation }) => {
+    return extractedEncounterInformation.map(({...rest}) => ({iconSprite, pokemonName, gameName, generation, ...rest}))
   })
 
   // Now reduce the array of object to reduce them into more compact entries.

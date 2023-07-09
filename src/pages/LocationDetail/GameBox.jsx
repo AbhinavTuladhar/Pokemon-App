@@ -32,6 +32,16 @@ const gameMapping = {
   'alpha-sapphire': { icon: 'AS', backgroundColour: 'bg-blue-500' },
 }
 
+const generationWiseGames = {
+  'Generation 1': ['red', 'blue', 'yellow'],
+  'Generation 2': ['gold', 'crystal', 'silver'],
+  'Generation 3': [],
+  'Generation 4': [],
+  'Generation 5': [],
+  'Generation 6': [],
+  'Generation 7': [],
+}
+
 const GameBox = ({ gameName, generation, activeFlag }) => {
   // console.log({gameName})
   const { icon = '', backgroundColour = '' } = gameMapping[gameName]
