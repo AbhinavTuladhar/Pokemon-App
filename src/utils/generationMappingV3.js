@@ -1,6 +1,6 @@
 // For getting the generation from a singular game name.
 
-const generationMappingV3 = {
+export const generationMappingV3 = {
   'red': 'Generation 1',
   'blue': 'Generation 1',
   'yellow': 'Generation 1',
@@ -39,4 +39,19 @@ const generationMappingV3 = {
   'sword-shield': 'Generation 8'
 }
 
-export default generationMappingV3
+export const generationMappingV3Internal = {
+  ...generationMappingV3,
+  'sapphire': 'Generation 3 Hoenn',
+  'ruby': 'Generation 3 Hoenn',
+  'emerald': 'Generation 3 Hoenn',
+
+  'leafgreen': 'Generation 3 remake',
+  'firered': 'Generation 3 remake',
+
+  'diamond': 'Generation 4 Sinnoh',
+  'pearl': 'Generation 4 Sinnoh',
+  'platinum': 'Generation 4 Sinnoh',
+
+  'heartgold': 'Generation 4 remake',
+  'soulsilver': 'Generation 4 remake',
+}

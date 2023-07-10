@@ -4,12 +4,13 @@ import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import GameBox from './GameBox'
 import fetchData from '../../utils/fetchData'
+import { generationToGame } from '../../utils/generationToGame'
 import { extractLocationInformation, extractLocationAreaInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
 
 const TableCell = ({ value, isHeader }) => {
   return (
-    <div className={`${isHeader && 'bg-gray-900 font-bold'} whitespace-nowrap table-cell h-14 border-t-[1px] border-slate-200 align-middle px-2`}>
+    <div className={`${isHeader && 'bg-gray-900 font-bold'} whitespace-nowrap table-cell h-14 border-t-[1px] border-slate-200 align-middle px-4`}>
       { value }
     </div>
   )
@@ -100,6 +101,8 @@ const LocationDetail = () => {
     chance: 'Chance'
   }]
 
+  console.log(groupedByGenerationSubLocationAndMethod)
+
   /*
   This is for creating a more sophisticated version of the tables
   IN the highest level, we have the generation.
@@ -114,20 +117,31 @@ const LocationDetail = () => {
       // Finally, the encounter methods.
       const encounterMethodDiv = methods?.map(({methodName, encounterDetails}) => {
         const tableRows = [...header, ...encounterDetails].map((encounter, rowIndex) => {
-          const { iconSprite, pokemonName, gameName, levelRange, chance } = encounter
+          const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter
           const trueChance = chance > 100 ? 100 : chance
+
           // For the identifying div
           const idDiv = (
             <div className='flex flex-row items-center'>
-              <img src={iconSprite} alt={pokemonName} className='w-[60px]' />
-              <NavLink to={`/pokemon/${pokemonName}`} className='hoverable-link'>
+              <img src={iconSprite} alt={pokemonName} className='w-[66px]' />
+              <NavLink to={`/pokemon/${pokemonName}`} className='hoverable-link font-bold'>
                 { formatName(pokemonName)}
               </NavLink>
             </div>
           )
+
+          // For the game boxes
+          const gameBoxDiv = rowIndex === 0 
+            ? gameName 
+            : (
+              <div className='flex flex-row'>
+                {generationToGame[generationInternal].map(game => <GameBox gameName={game} activeFlag={gameName === game} />)}
+              </div>
+            )
+
           const cellData = [
             { key: 'pokemon', value: rowIndex === 0 ? formatName(pokemonName) : idDiv },
-            { key: 'game', value: rowIndex === 0 ? gameName : <GameBox gameName={gameName} activeFlag /> },
+            { key: 'game', value: gameBoxDiv },
             { key: 'chance', value: `${trueChance}%` },
             { key: 'level range', value: levelRange },
           ]
@@ -136,10 +150,10 @@ const LocationDetail = () => {
         // Now render the sub location name, with the generation as the prefix.
         return (
           <>
-            <h1 className='font-bold text-2xl my-4'> {`By ${methodName}`} </h1>
+            <h1 className='font-bold text-2xl my-4'> {`${formatName(methodName)}`} </h1>
             <div className='flex justify-center'>
-              <div className='overflow-auto w-full'>
-                <div className='table border-b-[1px] border-slate-200 w-7/12 mx-auto'>
+              <div className='overflow-auto w-full lg:w-7/12'>
+                <div className='table border-b-[1px] border-slate-200 mx-auto'>
                   { tableRows }
                 </div>
               </div>  
@@ -149,7 +163,7 @@ const LocationDetail = () => {
       })
       return (
         <>
-          <h1 className='font-bold text-2xl mt-4'> {`${generation} - ${subLocationName}`} </h1>
+          <h1 className='font-bold text-3xl mt-4'> {`${generation} - ${subLocationName}`} </h1>
           <> { encounterMethodDiv } </>
         </>
       )

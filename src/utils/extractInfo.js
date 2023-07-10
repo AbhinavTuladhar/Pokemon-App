@@ -1,5 +1,5 @@
 import generationMapping from "./generationMapping"
-import generationMappingV3 from "./generationMappingV3"
+import { generationMappingV3, generationMappingV3Internal } from "./generationMappingV3"
 
 // Converting Roman to Hindu-Arabic numerals.
 const numberMapper = {
@@ -317,16 +317,17 @@ const extractEncounterInformation = encounterData => {
       encounter_details
     } = row
     const generation = generationMappingV3[gameName]
+    // This is to keep track of the remakes
+    const generationInternal = generationMappingV3Internal[gameName]
 
     const extractedEncounterInformation = encounter_details.map(extractDetailedEncounterInformation)
     
-    
-    return { iconSprite, pokemonName, gameName, generation, extractedEncounterInformation }
+    return { iconSprite, pokemonName, gameName, generation, generationInternal, extractedEncounterInformation }
   })
   
   // A flatmap to attach the pokemon name and game nome to each object in the array
-  const expandedDetails = toReturn.flatMap(({ iconSprite, pokemonName, gameName, generation, extractedEncounterInformation }) => {
-    return extractedEncounterInformation.map(({...rest}) => ({iconSprite, pokemonName, gameName, generation, ...rest}))
+  const expandedDetails = toReturn.flatMap(({ iconSprite, pokemonName, gameName, generation, generationInternal, extractedEncounterInformation }) => {
+    return extractedEncounterInformation.map(({...rest}) => ({iconSprite, pokemonName, gameName, generation, generationInternal, ...rest}))
   })
 
   // Now reduce the array of object to reduce them into more compact entries.

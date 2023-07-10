@@ -5,8 +5,8 @@ const gameMapping = {
   'blue': { icon: 'B', backgroundColour: 'bg-blue-500' },
   'yellow': { icon: 'Y', backgroundColour: 'bg-yellow-500' },
 
-  'gold': { icon: 'G', backgroundColour: 'bg-amber-200' },
-  'crystal': { icon: 'C', backgroundColour: 'bg-indigo-100' },
+  'gold': { icon: 'G', backgroundColour: 'bg-amber-400' },
+  'crystal': { icon: 'C', backgroundColour: 'bg-indigo-400' },
   'silver': { icon: 'S', backgroundColour: 'bg-cyan-200' },
 
   'sapphire': { icon: 'S', backgroundColour: 'bg-blue-500' },
@@ -18,8 +18,8 @@ const gameMapping = {
   'diamond': { icon: 'D', backgroundColour: 'bg-indigo-300' },
   'pearl': { icon: 'P', backgroundColour: 'bg-red-300' },
   'platinum': { icon: 'Pt', backgroundColour: 'bg-indigo-100' },
-  'heartgold': { icon: 'HG', backgroundColour: 'bg-amber-200' },
-  'soulsilver': { icon: 'SS', backgroundColour: 'bg-indigo-100' },
+  'heartgold': { icon: 'HG', backgroundColour: 'bg-amber-400' },
+  'soulsilver': { icon: 'SS', backgroundColour: 'bg-indigo-300' },
 
   'black': { icon: 'B', backgroundColour: 'bg-gray-700' },
   'white': { icon: 'W', backgroundColour: 'bg-gray-200' },
@@ -47,7 +47,7 @@ const GameBox = ({ gameName, generation, activeFlag }) => {
   const { icon = '', backgroundColour = '' } = gameMapping[gameName]
 
   return (
-    <div className={`${activeFlag && backgroundColour} w-14 h-14 text-sm font-bold flex justify-center items-center border border-slate-200`}>
+    <div className={`${activeFlag && backgroundColour} ${activeFlag ? '' : 'text-gray-500'} w-14 h-14 text-lg font-bold flex justify-center items-center border border-slate-200`}>
       { icon }
     </div>
   )
