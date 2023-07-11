@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import fetchData from '../utils/fetchData'
@@ -43,12 +43,6 @@ const LocationList = () => {
       .sort((prev, curr) => {
         return prev.locationName >= curr.locationName ? 1 : -1
       })
-      // .sort((prev, curr) => {
-      //     const numA = extractNumericPart(prev.locationName);
-      //     const numB = extractNumericPart(curr.locationName);
-      //     // return -numA + numB || curr.locationName.localeCompare(prev.locationName); // Handle tie-breaker with localeCompare
-      //     return numA - numB || (prev.locationName >= curr.locationName ? 1 : -1)
-      // })
       return { regionName, locations: locationsNew }
     })
   }
@@ -58,6 +52,21 @@ const LocationList = () => {
     () => Promise.all(locationUrls.map(fetchData)),
     { cacheTime: Infinity, staleTime: Infinity, select: transformData }
   )
+
+  useEffect(() => {
+    // Setting the selected tab using session storage.
+    const storedSelectedTab = sessionStorage.getItem('storedTab')
+    if (storedSelectedTab) {
+      setActiveTab(parseInt(storedSelectedTab))
+    } else {
+      setActiveTab(1)
+    }
+  }, [])
+
+  useEffect(() => {
+    // When navigating back to the location list page, retrieve the stored tab.
+    sessionStorage.setItem('storedTab', activeTab.toString())
+  }, [activeTab])
 
   if (isLoading) return
 
