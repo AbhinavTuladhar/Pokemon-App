@@ -190,7 +190,7 @@ const MovesLearned = ({ data }) => {
             {
               index !== 0 
               ?
-              <NavLink to={`/moves/${move?.id}`}> {formatName(move?.moveName)} </NavLink>
+              <NavLink to={`/moves/${move?.moveName}`}> {formatName(move?.moveName)} </NavLink>
               :
               formatName(move?.moveName)
             }

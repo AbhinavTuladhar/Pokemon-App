@@ -22,9 +22,9 @@ const gameMapping = {
   'soulsilver': { icon: 'SS', backgroundColour: 'bg-indigo-300' },
 
   'black': { icon: 'B', backgroundColour: 'bg-gray-700' },
-  'white': { icon: 'W', backgroundColour: 'bg-gray-200' },
-  'black-2': { icon: 'B2', backgroundColour: 'bg-gray-800' },
-  'white-2': { icon: 'W2', backgroundColour: 'bg-gray-300' },
+  'white': { icon: 'W', backgroundColour: 'bg-gray-300' },
+  'black-2': { icon: 'B2', backgroundColour: 'bg-gray-900' },
+  'white-2': { icon: 'W2', backgroundColour: 'bg-gray-400' },
 
   'x': { icon: 'X', backgroundColour: 'bg-blue-500' },
   'y': { icon: 'Y', backgroundColour: 'bg-red-500' },
@@ -32,18 +32,7 @@ const gameMapping = {
   'alpha-sapphire': { icon: 'AS', backgroundColour: 'bg-blue-500' },
 }
 
-const generationWiseGames = {
-  'Generation 1': ['red', 'blue', 'yellow'],
-  'Generation 2': ['gold', 'crystal', 'silver'],
-  'Generation 3': [],
-  'Generation 4': [],
-  'Generation 5': [],
-  'Generation 6': [],
-  'Generation 7': [],
-}
-
 const GameBox = ({ gameName, generation, activeFlag }) => {
-  // console.log({gameName})
   const { icon = '', backgroundColour = '' } = gameMapping[gameName]
 
   return (

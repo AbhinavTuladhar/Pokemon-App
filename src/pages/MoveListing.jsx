@@ -158,7 +158,7 @@ const MoveListing = () => {
 
   const moveTableRows = [...headers, ...filteredMoves].map((move, index) => {
     const { id, moveName, moveType, damageClass, power, accuracy, machine, PP, shortEntry, effectChance } = move
-    const link = `/moves/${id}`
+    const link = `/moves/${moveName}`
     // Provide a border on all sides and bold the text for the header.
     const headerStyle = index === 0 ? 'font-bold' : ''
     // Separate background colours for the header and odd-even rows.

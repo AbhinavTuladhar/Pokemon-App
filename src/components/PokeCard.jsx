@@ -36,8 +36,8 @@ const PokeCard = ({ data }) => {
     return <TypeCard typeName={type} />
   })
 
-  // When the user clickso n the Pokemon name, they are brought to the detail page.
-  const targetLink = `/pokemon/${id}`
+  // When the user clicks on the Pokemon name, they are brought to the detail page.
+  const targetLink = `/pokemon/${name}`
 
   // Apply a background gardient to the card depending on the types.
   const [firstType, secondType] = typeList

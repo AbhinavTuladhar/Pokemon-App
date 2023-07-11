@@ -56,11 +56,11 @@ const AdjacentLinks = ({ id }) => {
   return (
     <div className={`flex my-4 ${alignment}`}>
       {adjacentData.map((pokemon, index) => {
-        const { id: linkId, name, formattedId } = pokemon
+        const { name, formattedId } = pokemon
         const leftPart = index === 0 && id !== 1 ? '←' : ''
         const rightPart = index !== 0 || id === 1 ? '→' : ''
         return (
-          <NavLink to={`/pokemon/${linkId}`} className='hoverable-link'>
+          <NavLink to={`/pokemon/${name}`} className='hoverable-link'>
             {`${leftPart} ${formattedId} ${formatName(name)} ${rightPart}`}
           </NavLink>
         )

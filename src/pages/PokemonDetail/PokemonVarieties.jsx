@@ -20,9 +20,8 @@ const PokemonVarieties = ({ data }) => {
 
   // Construct a list of all the forms.
   const formsArray = varietiesFiltered.map((form, index) => {
-    const { pokemon: { name: formName, url: pokemonUrl }} = form
-    const idNumber = pokemonUrl.match(/\/(\d+)\/$/)[1]
-    const localUrl = `/pokemon/${idNumber}/`
+    const { pokemon: { name: formName }} = form
+    const localUrl = `/pokemon/${formName}/`
     return (
       <li key={index}>
         <NavLink to={localUrl} className='hoverable-link'>

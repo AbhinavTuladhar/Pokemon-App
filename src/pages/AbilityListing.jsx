@@ -65,8 +65,8 @@ const AbilityListing = () => {
 
   const tableRows = [...headers, ...filteredAbilityInfo].map((row, index) => {
     const { id, name, pokemonCount, shortEntry, generationIntroduced } = row
-    const headerStyle = index === 0 ? 'font-bold sticky top-0' : ''
-    const abilityLink = `/ability/${id}`
+    const headerStyle = index === 0 ? 'font-bold' : ''
+    const abilityLink = `/ability/${name}`
 
     // Separate background colours for the header and odd-even rows.
     let bgColour

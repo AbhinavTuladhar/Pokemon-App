@@ -34,7 +34,7 @@ const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
       <div className='flex flex-col items-center justify-center'>
         { formattedId }
         <NavLink 
-          to={`/pokemon/${id}`} 
+          to={`/pokemon/${name}`} 
           className='font-bold hoverable-link'
         > 
           { formatName(name) }

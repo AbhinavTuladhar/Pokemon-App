@@ -27,7 +27,7 @@ const PokeCardV2 = ({ pokemonData }) => {
       <img src={gameSprite} className='w=[70px] h-[45px]' alt={name} />
       <div className='flex flex-col'>
         <div> 
-          <NavLink to={`/pokemon/${id}`} className='font-bold hoverable-link'> 
+          <NavLink to={`/pokemon/${name}`} className='font-bold hoverable-link'> 
             { formatName(name) } 
           </NavLink> 
         </div>

@@ -12,7 +12,6 @@ const MainPage = ({ idRange }) => {
   const [pokemonInfo, setPokemonInfo] = useState([])
   const [filteredPokemonInfo, setFilteredPokemonInfo] = useState([]);
 
-
   // This is for setting the title of the page.
   const currentLocation = useLocation()
   const generationNumberRaw = currentLocation.pathname.slice(-1)
@@ -46,6 +45,8 @@ const MainPage = ({ idRange }) => {
       setFilteredPokemonInfo(pokemonData);
     }
   }, [pokemonData])
+
+  console.log(filteredPokemonInfo)
 
   // Map each Pokemon to its respective card.
   const pokemonBoxes = filteredPokemonInfo?.map(pokemon => (
