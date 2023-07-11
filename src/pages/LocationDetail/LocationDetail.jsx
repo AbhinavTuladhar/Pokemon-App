@@ -50,6 +50,8 @@ const LocationDetail = () => {
     { staleTime: Infinity, cacheTime: Infinity, select: transformSubLocationData }
   )
 
+  console.log(subLocationData)
+
   // First group by generation, then by sublocation and then by encounter method.
   const groupedByGenerationSubLocationAndMethod = subLocationData?.reduce((result, obj) => {
     const { encounterDetails, subLocationName } = obj

@@ -363,5 +363,23 @@ export const extractLocationAreaInformation = locationAreaData => {
   // Use a flat map to convert the array of array of objects to just an array of objects.
   const encounterDetails = pokemon_encounters.map(extractEncounterInformation).flatMap(row => row)
 
-  return { subLocationName: properLocationAreaName, encounterDetails }
+  // Group the encounter information on the basis of the game names.
+  const groupedEncounterDetailsByGame = encounterDetails?.reduce((acc, encounter) => {
+    const { chance, gameName, generation, generationInternal, levelRange, methodName, pokemonName } = encounter
+    const foundEncounter = acc.find(obj => (
+      obj.chance === chance &&
+      obj.generationInternal === generationInternal &&
+      obj.levelRange === levelRange &&
+      obj.methodName === methodName &&
+      obj.pokemonName === pokemonName
+    ))
+    if (!foundEncounter) {
+      acc.push({...encounter, gameName: [gameName]})
+    } else {
+      foundEncounter.gameName.push(gameName)
+    }
+    return acc
+  }, [])
+
+  return { subLocationName: properLocationAreaName, encounterDetails, groupedEncounterDetailsByGame }
 }
