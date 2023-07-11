@@ -101,7 +101,7 @@ const LocationList = () => {
     return (
       <li 
         key={index} 
-        className={`w-20 py-2 mx-1 border-b-2 flex justify-center ${
+        className={`w-20 py-2 mx-2 border-b-2 flex flex-1 justify-center ${
           activeTab === id ? 'text-blue-500 border-blue-500' : 'border-transparent hover:text-white hover:border-white'
         } hover:cursor-pointer duration-300`}
         onClick={() => handleClick(id)}
@@ -132,7 +132,7 @@ const LocationList = () => {
         Pokémon Location guide
       </h1>
       <>
-        <ul className='flex flex-wrap flex-row justify-center items-center my-4'> 
+        <ul className='flex flex-wrap flex-1 flex-row justify-center items-center my-4'> 
           { tabListItems }
         </ul>
         <>
