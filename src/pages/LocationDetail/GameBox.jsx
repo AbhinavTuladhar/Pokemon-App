@@ -21,8 +21,8 @@ const gameMapping = {
   'heartgold': { icon: 'HG', backgroundColour: 'bg-amber-400' },
   'soulsilver': { icon: 'SS', backgroundColour: 'bg-indigo-300' },
 
-  'black': { icon: 'B', backgroundColour: 'bg-gray-700' },
-  'white': { icon: 'W', backgroundColour: 'bg-gray-300' },
+  'black': { icon: 'B', backgroundColour: 'bg-gray-900' },
+  'white': { icon: 'W', backgroundColour: 'bg-gray-400' },
   'black-2': { icon: 'B2', backgroundColour: 'bg-gray-900' },
   'white-2': { icon: 'W2', backgroundColour: 'bg-gray-400' },
 

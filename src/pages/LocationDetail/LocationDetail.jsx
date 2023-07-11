@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import GameBox from './GameBox'
 import fetchData from '../../utils/fetchData'
 import { generationToGame } from '../../utils/generationToGame'
@@ -51,6 +52,20 @@ const LocationDetail = () => {
   )
 
   if (isLoadingSubLocationData) return
+
+  // Inform the user if there is no encounter information.
+  if (subLocationData?.length === 0) {
+    return (
+      <div className='mx-2 md:mx-10'>
+        <h1 className='text-3xl font-bold text-center'>
+          { formatName(locationName) }
+        </h1>
+        <h1 className='text-2xl font-bold text-center'>
+          Could not find any encounter information for this location.
+        </h1>
+      </div>
+    )
+  }
 
   // First group by generation, then by sublocation and then by encounter method.
   const groupedByGenerationSubLocationAndMethod = subLocationData?.reduce((result, obj) => {
@@ -174,14 +189,19 @@ const LocationDetail = () => {
   })
 
   return (
-    <div className='mx-2 md:mx-10'>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transitionDuration: '0.8s' }}
+      exit={{ opacity: 0, transitionDuration: '0.75s' }}
+      className='md:mx-10 mx-2'
+    >
       <h1 className='text-3xl font-bold text-center'>
         { formatName(locationName) }
       </h1>
       <>
         {generationDiv.map(generation => <div className='flex flex-col'> {generation} </div>)}
       </>
-    </div>
+    </motion.div>
   )
 }
 

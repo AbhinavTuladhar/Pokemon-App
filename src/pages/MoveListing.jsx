@@ -126,12 +126,10 @@ const MoveListing = () => {
   useEffect(() => {
     if (!moveList && !TMData)
       return
-    
     const joinedData = moveList?.map(obj1 => {
       const obj2 = TMData?.find(obj => obj1.moveName === obj.name) 
       return { ...obj1, ...obj2 }
     })
-
     setMoveListReady(joinedData)
     setFilteredMoves(joinedData)
   }, [TMData, moveList])

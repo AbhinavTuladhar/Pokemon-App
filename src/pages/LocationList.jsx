@@ -1,10 +1,10 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import fetchData from '../utils/fetchData'
 import { extractRegionInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
-import { FadeInAnimationContainer } from '../components/AnimatedContainers'
 
 // This is for sorting on the basis of route number, but doesn't seem to work
 const extractNumericPart = (str) => {
@@ -122,7 +122,12 @@ const LocationList = () => {
   })
 
   return (
-    <FadeInAnimationContainer className='mx-2 md:mx-10'>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transitionDuration: '0.8s' }}
+      exit={{ opacity: 0, transitionDuration: '0.75s' }}
+      className='md:mx-10 mx-2'
+    >
       <h1 className='text-4xl text-center font-bold'>
         Pokémon Location guide
       </h1>
@@ -134,7 +139,7 @@ const LocationList = () => {
           { tabContainer }
         </>
       </>
-    </FadeInAnimationContainer>
+    </motion.div>
   )
 }
 
