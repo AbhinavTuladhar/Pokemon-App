@@ -71,9 +71,6 @@ const InformativeText = () => {
         This was made using ReactJS, React Router, Tailwind CSS and some other libraries. 
       </motion.span>
       <motion.span variants={entryVariantLeft}> 
-        See the package.json file in my GitHub repo linked below for details. 
-      </motion.span>
-      <motion.span variants={entryVariantLeft}> 
           You can view the source code <a href='https://github.com/AbhinavTuladhar/Pokemon-App' className='text-blue-500'> here. </a>
       </motion.span>
     </>
@@ -89,7 +86,7 @@ const IssuesText = () => {
       </>),
       style: 'pt-4' 
     },
-    { text: 'Location-wise encounters for each game' },
+    { text: 'Location-wise encounters for each game', style: 'line-through' },
     { text: "No sprite collection for each Pokémon.", style: 'line-through' },
     { text: "Dual-type chart (not sure if it's even possible)", style: 'line-through' },
   ]
