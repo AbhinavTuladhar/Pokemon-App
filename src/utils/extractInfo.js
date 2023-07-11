@@ -295,7 +295,6 @@ export const extractLocationInformation = locationData => {
 const extractDetailedEncounterInformation = encounterData => {
   const { chance, condition_values, max_level, min_level, method: { name: methodName } } = encounterData
   // Make a string for the level range.
-  const levelRange = min_level === max_level ? min_level : `${min_level}-${max_level}`
   return { min_level, max_level, chance, condition_values, methodName }
 }
 
@@ -365,7 +364,7 @@ export const extractLocationAreaInformation = locationAreaData => {
 
   // Group the encounter information on the basis of the game names.
   const groupedEncounterDetailsByGame = encounterDetails?.reduce((acc, encounter) => {
-    const { chance, gameName, generation, generationInternal, levelRange, methodName, pokemonName } = encounter
+    const { chance, gameName, generationInternal, levelRange, methodName, pokemonName } = encounter
     const foundEncounter = acc.find(obj => (
       obj.chance === chance &&
       obj.generationInternal === generationInternal &&
@@ -381,5 +380,5 @@ export const extractLocationAreaInformation = locationAreaData => {
     return acc
   }, [])
 
-  return { subLocationName: properLocationAreaName, encounterDetails, groupedEncounterDetailsByGame }
+  return { subLocationName: properLocationAreaName, encounterDetails: groupedEncounterDetailsByGame }
 }

@@ -10,7 +10,7 @@ import formatName from '../../utils/NameFormatting'
 
 const TableCell = ({ value, isHeader }) => {
   return (
-    <div className={`${isHeader && 'bg-gray-900 font-bold'} whitespace-nowrap table-cell h-14 border-t-[1px] border-slate-200 align-middle px-4`}>
+    <div className={`${isHeader && 'bg-gray-900 font-bold'} whitespace-nowrap table-cell h-14 border-t-[1px] border-slate-200 align-middle text-center px-4`}>
       { value }
     </div>
   )
@@ -50,7 +50,7 @@ const LocationDetail = () => {
     { staleTime: Infinity, cacheTime: Infinity, select: transformSubLocationData }
   )
 
-  console.log(subLocationData)
+  if (isLoadingSubLocationData) return
 
   // First group by generation, then by sublocation and then by encounter method.
   const groupedByGenerationSubLocationAndMethod = subLocationData?.reduce((result, obj) => {
@@ -91,19 +91,15 @@ const LocationDetail = () => {
     return result;
   }, []).sort((prev, curr) => prev.generation <= curr.generation ? 1 : -1) // Next sort by the generation.
 
-  if (isLoadingSubLocationData) return
-
   // Table headers
   const header = [{
     pokemonName: 'Pokemon',
     gameName: 'Games',
     generation: 'Generation',
-    levelRange: 'Level range',
+    levelRange: 'Levels',
     methodName: 'Encounter method',
     chance: 'Chance'
   }]
-
-  console.log(groupedByGenerationSubLocationAndMethod)
 
   /*
   This is for creating a more sophisticated version of the tables
@@ -124,7 +120,7 @@ const LocationDetail = () => {
 
           // For the identifying div
           const idDiv = (
-            <div className='flex flex-row items-center'>
+            <div className='flex flex-row items-center pr-16 md:pr-4'>
               <img src={iconSprite} alt={pokemonName} className='w-[66px]' />
               <NavLink to={`/pokemon/${pokemonName}`} className='hoverable-link font-bold'>
                 { formatName(pokemonName)}
@@ -137,7 +133,7 @@ const LocationDetail = () => {
             ? gameName 
             : (
               <div className='flex flex-row'>
-                {generationToGame[generationInternal].map(game => <GameBox gameName={game} activeFlag={gameName === game} />)}
+                {generationToGame[generationInternal].map(game => <GameBox gameName={game} activeFlag={gameName.includes(game)} />)}
               </div>
             )
 
