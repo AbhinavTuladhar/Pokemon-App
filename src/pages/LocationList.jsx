@@ -87,7 +87,7 @@ const LocationList = () => {
     })
 
     const tabOutput = (
-      <div className='grid grid-cols-2 sm:grid-cols-3 smmd:grid-cols-4 lg:grid-cols-5 justify-self-center'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center'>
         { locationItems }
       </div>
     )
@@ -101,9 +101,9 @@ const LocationList = () => {
     return (
       <li 
         key={index} 
-        className={`w-20 py-2 mx-2 border-b-2 flex flex-1 justify-center ${
+        className={`w-20 py-3 border-b-2 flex flex-1 justify-center ${
           activeTab === id ? 'text-blue-500 border-blue-500' : 'border-transparent hover:text-white hover:border-white'
-        } hover:cursor-pointer duration-300`}
+        } hover:cursor-pointer hover:brightness-110 bg-gray-900 duration-300`}
         onClick={() => handleClick(id)}
       > { formatName(tabName) } </li> 
     )

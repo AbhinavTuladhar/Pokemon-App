@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 const ListItem = ({ items, closeMenu, subMenuFlag }) => {
   return (
     items.map((data, index) => (
-      <li className={`float-left min-h-full ${subMenuFlag && 'w-full'}`} key={index}>
+      <li className={`float-left min-h-full flex-1 ${subMenuFlag && 'w-full'}`} key={index}>
         <NavLink to={ data.path } onClick={closeMenu}>
-          <span className={`hover:brightness-110 duration-300 text-white block text-center px-2
-            ${subMenuFlag ? 'py-3 bg-green-400' : 'py-4'}`}
+          <span className={`hover:brightness-150 duration-300 text-white block text-center px-2 bg-gray-900
+            ${subMenuFlag ? 'py-3' : 'py-4'}`}
           > { data.name } 
           </span>
         </NavLink>
@@ -18,14 +18,14 @@ const ListItem = ({ items, closeMenu, subMenuFlag }) => {
 
 const NavBar = () => {
   const linkData = [
-    { path: '/pokemon/generation-1', name: 'Generation 1' },
-    { path: '/pokemon/generation-2', name: 'Generation 2' },
-    { path: '/pokemon/generation-3', name: 'Generation 3' },
-    { path: '/pokemon/generation-4', name: 'Generation 4' },
-    { path: '/pokemon/generation-5', name: 'Generation 5' },
-    { path: '/pokemon/generation-6', name: 'Generation 6' },
-    { path: '/pokemon/generation-7', name: 'Generation 7' },
-    { path: '/pokemon/forms', name: 'Other forms' },
+    { path: '/pokemon/generation-1', name: 'Gen 1' },
+    { path: '/pokemon/generation-2', name: 'Gen 2' },
+    { path: '/pokemon/generation-3', name: 'Gen 3' },
+    { path: '/pokemon/generation-4', name: 'Gen 4' },
+    { path: '/pokemon/generation-5', name: 'Gen 5' },
+    { path: '/pokemon/generation-6', name: 'Gen 6' },
+    { path: '/pokemon/generation-7', name: 'Gen 7' },
+    { path: '/pokemon/forms', name: 'Forms' },
     { path: '/types', name: 'Types' },
     { path: '/moves', name: 'Moves' },
     { path: '/ability', name: 'Abilities' },
@@ -52,20 +52,20 @@ const NavBar = () => {
   return (
     <>
       <div 
-        className='bg-slate-900 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
+        className='bg-slate-950 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
       >
         <NavLink to='/' className='bg-gradient-to-r from-yellow-500 to-indigo-500 text-transparent bg-clip-text'> Pokémon Database </NavLink>
       </div>
       <nav>
-        <ul className='bg-gradient-to-r from-green-400 via-blue-400 to-cyan-400  flex justify-left list-none flex-wrap'>
-          <li className='float-left'>
+        <ul className='flex justify-left list-none flex-wrap'>
+          <li className='float-left flex-1'>
             <div
               className='relative group'
               onMouseEnter={openMenu}
               onMouseLeave={closeMenu}
               onClick={toggleMenu}
             >
-              <button className='w-28 hover:brightness-110 duration-300 text-white block text-center py-4 px-2'>
+              <button className='w-full hover:brightness-150 duration-300 text-white bg-gray-900 block text-center py-4 px-2'>
                 Pokédex <span className='text-yellow-400'>▼</span>
               </button>
               <ul
