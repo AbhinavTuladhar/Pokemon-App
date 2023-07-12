@@ -14,11 +14,15 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ## Features:
 
-### 1. List of Pokemon by Generation (up to generation 7) and different forms
+### 1. A very 'professional' landing page :-)
+
+![LandingPage](./Screenshots/LandingPage.jpg)
+
+### 2. List of Pokemon by Generation (up to generation 7) and different forms
 
 ![PokemonList](./Screenshots/PokemonList.jpg)
 
-### 2. Details of individual Pokemon
+### 3. Details of individual Pokemon
 
 ![Detail_1](./Screenshots/PokemonDetail_1.jpg)
 
@@ -30,47 +34,42 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ![Detail_5](./Screenshots/PokemonDetail_5.jpg)
 
-### 3. List of all moves (up to generation 7)
+### 4. List of all moves (up to generation 7)
 
 ![Detail_3](./Screenshots/MoveList.jpg)
 
-### 4. Detail of individual moves
+### 5. Detail of individual moves
 
 ![MoveDetail_1](./Screenshots/MoveDetail_1.jpg)
 
 ![MoveDetail_2](./Screenshots/MoveDetail_2.jpg)
 
-### 5. Type list and type chart
+### 6. Type list and type chart
 
 ![MoveDetail](./Screenshots/TypeList.jpg)
 
-### 6. Detail of the types
+### 7. Detail of the types
 
 ![TypeDetail1](./Screenshots/TypeDetail_1.jpg)
 
 ![TypeDetail1](./Screenshots/TypeDetail_2.jpg)
 
-### 7. List of all abilities
+### 8. List of all abilities
 
 ![AbilityList](./Screenshots/AbilityList.jpg)
 
-### 8. Details of Individual Abilities
+### 9. Details of Individual Abilities
 
 ![AbilityDetail](./Screenshots/AbilityDetail.jpg)
 
-### 9. Region-wise Location List (WIP)
+### 10. Region-wise Location List (WIP)
 
 ![Locationlist](./Screenshots/LocationList.jpg)
 
-### 10. Reponsive Design
+### 11. Reponsive Design
 
 ![Responsive_1](./Screenshots/Responsive_1.jpg)
 
 ![Responsive_2](./Screenshots/Responsive_2.jpg)
 
 ![Responsive_3](./Screenshots/Responsive_3.jpg)
-
-
-### 11. A very 'professional' landing page :-)
-
-![LandingPage](./Screenshots/LandingPage.jpg)
