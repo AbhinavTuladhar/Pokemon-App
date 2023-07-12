@@ -41,7 +41,9 @@ const LocationList = () => {
         return { locationName: properLocationName, actualUrl, localUrl }
       })
       .sort((prev, curr) => {
-        return prev.locationName >= curr.locationName ? 1 : -1
+        // return prev.locationName >= curr.locationName ? 1 : -1
+        // using localeCompare to take into consideration the route numbers.
+        return prev.locationName.localeCompare(curr.locationName, undefined, {numeric: true, sensitivity: 'base'})
       })
       return { regionName, locations: locationsNew }
     })
