@@ -46,4 +46,19 @@ const AnimatedTableRowContainer = ({ children, className, useOnce }) => {
   )
 }
 
-export { FadeInAnimationContainer, FadeInAnimationCard, AnimatedTableRowContainer }
+const FadeInAnimatedTableRowContainer = ({ children, className, useOnce }) => {
+  const animateOnce = useOnce ? true : false
+  return (
+    <motion.div
+      initial={{ opacity: 0}}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className={`${className}`}
+      viewport={{ once: animateOnce }}
+    >
+      { children }
+    </motion.div>
+  )
+}
+
+export { FadeInAnimationContainer, FadeInAnimationCard, AnimatedTableRowContainer, FadeInAnimatedTableRowContainer }

@@ -3,11 +3,18 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import Skeleton from 'react-loading-skeleton'
 import GameBox from './GameBox'
+import { FadeInAnimatedTableRowContainer, FadeInAnimationContainer } from '../../components/AnimatedContainers'
+import TabularSkeleton from '../../components/TabularSkeleton'
 import fetchData from '../../utils/fetchData'
 import { generationToGame } from '../../utils/generationToGame'
 import { extractLocationInformation, extractLocationAreaInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
+
+const SimpleSkeletonRow = ({ width }) => {
+  return <Skeleton width={width} height='2.75rem' containerClassName='flex-1 w-full' />  
+}
 
 const TableCell = ({ value, isHeader }) => {
   return (
@@ -19,11 +26,11 @@ const TableCell = ({ value, isHeader }) => {
 
 const TableRow = ({ rowIndex, rowData }) => {
   return (
-    <div className='table-row'>
+    <FadeInAnimatedTableRowContainer className='table-row'>
       {rowData.map(( { key, value }) => (
         <TableCell value={value} key={key} isHeader={rowIndex === 0} />
       ))}
-    </div>
+    </FadeInAnimatedTableRowContainer>
   )
 }
 
@@ -50,8 +57,6 @@ const LocationDetail = () => {
     () => Promise.all(subLocationUrls.map(fetchData)),
     { staleTime: Infinity, cacheTime: Infinity, select: transformSubLocationData }
   )
-
-  if (isLoadingSubLocationData) return
 
   // Inform the user if there is no encounter information.
   if (subLocationData?.length === 0) {
@@ -163,7 +168,16 @@ const LocationDetail = () => {
         // Now render the sub location name, with the generation as the prefix.
         return (
           <>
-            <h1 className='font-bold text-2xl my-4'> {`${formatName(methodName)}`} </h1>
+            { isLoadingSubLocationData
+            ?
+            <SimpleSkeletonRow width='20%' />
+            :
+            <FadeInAnimationContainer>
+              <h1 className='font-bold text-2xl my-4'> 
+                {`${formatName(methodName)}`} 
+              </h1>
+            </FadeInAnimationContainer>
+            }
             <div className='flex justify-center'>
               <div className='overflow-auto w-full lg:w-7/12'>
                 <div className='table border-b-[1px] border-slate-200 mx-auto'>
@@ -176,7 +190,16 @@ const LocationDetail = () => {
       })
       return (
         <>
-          <h1 className='font-bold text-3xl mt-4'> {`${generation} - ${subLocationName}`} </h1>
+          { isLoadingSubLocationData 
+          ?
+          <SimpleSkeletonRow width='60%' />
+          :
+          <FadeInAnimationContainer>
+            <h1 className='font-bold text-3xl mt-4'> 
+              {`${generation} - ${subLocationName}`}
+            </h1>
+          </FadeInAnimationContainer>
+          }
           <> { encounterMethodDiv } </>
         </>
       )
@@ -196,10 +219,32 @@ const LocationDetail = () => {
       className='md:mx-10 mx-2'
     >
       <h1 className='text-3xl font-bold text-center'>
-        { formatName(locationName) }
+        {
+          isLoadingSubLocationData
+          ?
+          <SimpleSkeletonRow width='50%' />
+          :
+          <FadeInAnimationContainer>
+            {formatName(locationName)}
+          </FadeInAnimationContainer>
+        }
       </h1>
+      
+      {/* For rendering skeleton when the content has not been loaded */}
       <>
-        {generationDiv.map(generation => <div className='flex flex-col'> {generation} </div>)}
+        {
+          isLoadingSubLocationData && (
+            <div className='flex flex-col gap-y-5 mt-4'>
+              <SimpleSkeletonRow width='50%' />
+              <SimpleSkeletonRow width='30%' />
+              <TabularSkeleton />
+            </div>
+          )
+        }
+      </>
+
+      <>
+        {generationDiv?.map(generation => <div className='flex flex-col'> {generation} </div>)}
       </>
     </motion.div>
   )
