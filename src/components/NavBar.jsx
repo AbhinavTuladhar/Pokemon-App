@@ -6,7 +6,7 @@ const ListItem = ({ items, closeMenu, subMenuFlag }) => {
     items.map((data, index) => (
       <li className={`float-left min-h-full flex-1 ${subMenuFlag && 'w-full'}`} key={index}>
         <NavLink to={ data.path } onClick={closeMenu}>
-          <span className={`hover:brightness-150 duration-300 text-white block text-center px-2 bg-gray-900
+          <span className={`hover:brightness-125 duration-300 text-white block text-center px-2 bg-gray-800
             ${subMenuFlag ? 'py-3' : 'py-4'}`}
           > { data.name } 
           </span>
@@ -52,7 +52,7 @@ const NavBar = () => {
   return (
     <>
       <div 
-        className='bg-slate-950 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
+        className='bg-gradient-to-t from-slate-900 to-slate-800 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
       >
         <NavLink to='/' className='bg-gradient-to-r from-yellow-500 to-indigo-500 text-transparent bg-clip-text'> Pokémon Database </NavLink>
       </div>
@@ -65,7 +65,7 @@ const NavBar = () => {
               onMouseLeave={closeMenu}
               onClick={toggleMenu}
             >
-              <button className='w-full hover:brightness-150 duration-300 text-white bg-gray-900 block text-center py-4 px-2'>
+              <button className='w-full hover:brightness-125 duration-300 text-white bg-gray-800 block text-center py-4 px-2'>
                 Pokédex <span className='text-yellow-400'>▼</span>
               </button>
               <ul

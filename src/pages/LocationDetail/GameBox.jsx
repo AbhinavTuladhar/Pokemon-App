@@ -17,7 +17,7 @@ const gameMapping = {
 
   'diamond': { icon: 'D', backgroundColour: 'bg-indigo-300' },
   'pearl': { icon: 'P', backgroundColour: 'bg-red-300' },
-  'platinum': { icon: 'Pt', backgroundColour: 'bg-indigo-100' },
+  'platinum': { icon: 'Pt', backgroundColour: 'bg-indigo-200' },
   'heartgold': { icon: 'HG', backgroundColour: 'bg-amber-400' },
   'soulsilver': { icon: 'SS', backgroundColour: 'bg-indigo-300' },
 
