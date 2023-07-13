@@ -170,7 +170,7 @@ const LocationDetail = () => {
           <>
             { isLoadingSubLocationData
             ?
-            <SimpleSkeletonRow width='20%' />
+            <SimpleSkeletonRow width='20vw' />
             :
             <FadeInAnimationContainer>
               <h1 className='font-bold text-2xl my-4'> 
@@ -192,7 +192,7 @@ const LocationDetail = () => {
         <>
           { isLoadingSubLocationData 
           ?
-          <SimpleSkeletonRow width='60%' />
+          <SimpleSkeletonRow width='60vw' />
           :
           <FadeInAnimationContainer>
             <h1 className='font-bold text-3xl mt-4'> 
@@ -222,7 +222,7 @@ const LocationDetail = () => {
         {
           isLoadingSubLocationData
           ?
-          <SimpleSkeletonRow width='50%' />
+          <SimpleSkeletonRow width='50vw' />
           :
           <FadeInAnimationContainer>
             {formatName(locationName)}
