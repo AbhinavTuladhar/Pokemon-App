@@ -81,11 +81,12 @@ const IssuesText = () => {
   const listItems = [
     { 
       text: (<> 
-        <NavLink to='/pokemon/wurmple' className='hoverable-link'> Wurmple</NavLink> 
+        <NavLink to='/pokemon/wurmple' className='hoverable-link'> Wurmple </NavLink> 
         's evolution chain doesn't work. 
       </>),
       style: 'pt-4' 
     },
+    { text: 'Egg groups' },
     { text: 'Location-wise encounters for each game', style: 'line-through' },
     { text: "No sprite collection for each Pokémon.", style: 'line-through' },
     { text: "Dual-type chart (not sure if it's even possible)", style: 'line-through' },

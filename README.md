@@ -62,7 +62,7 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ![AbilityDetail](./Screenshots/AbilityDetail.jpg)
 
-### 10. Region-wise Location List (WIP)
+### 10. Region-wise Location List
 
 ![Locationlist](./Screenshots/LocationList.jpg)
 
