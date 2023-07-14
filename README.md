@@ -66,7 +66,11 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 
 ![Locationlist](./Screenshots/LocationList.jpg)
 
-### 11. Reponsive Design
+### 11. Encounters of each (sub)location
+
+![LocationDetail](./Screenshots/LocationDetail.jpg)
+
+### 12. Reponsive Design
 
 ![Responsive_1](./Screenshots/Responsive_1.jpg)
 
