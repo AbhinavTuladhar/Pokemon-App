@@ -11,6 +11,24 @@ import fetchData from '../../utils/fetchData'
 import { generationToGame } from '../../utils/generationToGame'
 import { extractLocationInformation, extractLocationAreaInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
+import commonRarity from '../../images/rarity-common.png'
+import uncommonRarity from '../../images/rarity-uncommon.png'
+import rareRarity from '../../images/rarity-rare.png'
+
+/**
+ * For mapping the encounter chance to the corresponding pie chart image
+ * @param (chance) the encounter chance.
+ * @returns the corresponding image source.
+ */
+const getRarityImage = chance => {
+  if (chance >= 50) {
+    return commonRarity
+  } else if (chance >= 20 && chance < 50) {
+    return uncommonRarity
+  } else {
+    return rareRarity
+  }
+}
 
 const SimpleSkeletonRow = ({ width }) => {
   return <Skeleton width={width} height='2.75rem' containerClassName='flex-1 w-full' />  
@@ -136,7 +154,8 @@ const LocationDetail = () => {
       const encounterMethodDiv = methods?.map(({methodName, encounterDetails}) => {
         const tableRows = [...header, ...encounterDetails].map((encounter, rowIndex) => {
           const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter
-          const trueChance = chance > 100 ? 100 : chance
+          // const trueChance = chance > 100 ? 100 : chance
+          const chanceImage = getRarityImage(chance)
 
           // For the identifying div
           const idDiv = (
@@ -157,10 +176,13 @@ const LocationDetail = () => {
               </div>
             )
 
+          // For the pie-chart rarity image
+          const rarityImage = <img src={chanceImage} alt={chance } className='w-[30px]' />
+
           const cellData = [
             { key: 'pokemon', value: rowIndex === 0 ? formatName(pokemonName) : idDiv },
             { key: 'game', value: gameBoxDiv },
-            { key: 'chance', value: `${trueChance}%` },
+            { key: 'chance', value: rowIndex === 0 ? 'Rarity' : rarityImage },
             { key: 'level range', value: levelRange },
           ]
           return <TableRow rowData={cellData} rowIndex={rowIndex} key={rowIndex} />
