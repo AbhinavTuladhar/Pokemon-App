@@ -13,8 +13,8 @@ const App = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-          <NavBar />
-          <div className='py-4 text-white bg-gray-950 min-h-screen max-w-full'>
+          <div className='text-white bg-gray-950 min-h-screen max-w-full'>
+            <NavBar />
             <ScrollToTop />
             <AnimatedRoutes />
           </div>
