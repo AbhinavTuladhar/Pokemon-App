@@ -50,7 +50,7 @@ const NavBar = () => {
   const otherNavElements = <ListItem items={linkData.slice(8)} closeMenu={closeMenu} subMenuFlag={false} />
 
   return (
-    <>
+    <section className='mb-4'>
       <div 
         className='bg-gradient-to-t from-slate-900 to-slate-800 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
       >
@@ -81,7 +81,7 @@ const NavBar = () => {
           { otherNavElements }
         </ul>
       </nav>
-    </>
+    </section>
   )
 }
 
