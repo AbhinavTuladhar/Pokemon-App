@@ -33,7 +33,7 @@ const firstRowLevelUp = {
 const separateMoves = ({ data, learnMethod }) => {
   const movesLearnt = data.map(move => {
     const { version_group_details } = move // this is an array
-    const filteredMoves = version_group_details.filter(version => 
+    const filteredMoves = version_group_details.filter(version =>
       version.move_learn_method.name === learnMethod
     )
     return {
@@ -65,11 +65,11 @@ const MovesLearned = ({ data }) => {
   // Consider that the latest gen is 7.
   const SMData = moves?.flatMap(move => {
     const { version_group_details } = move
-    const SMInfo = version_group_details.filter(version => 
+    const SMInfo = version_group_details.filter(version =>
       version.version_group.name === 'ultra-sun-ultra-moon'
     )
     return {
-      ...move, 
+      ...move,
       version_group_details: SMInfo
     }
   })
@@ -77,19 +77,19 @@ const MovesLearned = ({ data }) => {
   // Filter out the details in the version group details array is empty
   const finalSMData = SMData.filter(move => move.version_group_details.length > 0)
   const moveData = finalSMData
-  
+
   // This is for separating out the moves learnt by level up, TM/HM and by breeding.
-  const levelUpMoves = separateMoves({data: moveData, learnMethod: 'level-up'})
-  const machineMoves = separateMoves({data: moveData, learnMethod: 'machine'})
-  const eggMoves = separateMoves({data: moveData, learnMethod: 'egg'})
-  const tutorMoves = separateMoves({data: moveData, learnMethod: 'tutor'})
+  const levelUpMoves = separateMoves({ data: moveData, learnMethod: 'level-up' })
+  const machineMoves = separateMoves({ data: moveData, learnMethod: 'machine' })
+  const eggMoves = separateMoves({ data: moveData, learnMethod: 'egg' })
+  const tutorMoves = separateMoves({ data: moveData, learnMethod: 'tutor' })
 
   // Now sort the moves by some conditions.
   // sort level up moves by the level learnt.
   const sortedLevelMoves = levelUpMoves.sort((curr, next) => {
     const levelLearntCurrent = curr.version_group_details[curr.version_group_details.length - 1].level_learned_at
     const levelLearntNext = next.version_group_details[next.version_group_details.length - 1].level_learned_at
-    if (levelLearntCurrent < levelLearntNext) 
+    if (levelLearntCurrent < levelLearntNext)
       return -1
     else if (levelLearntCurrent > levelLearntNext)
       return 1
@@ -123,25 +123,25 @@ const MovesLearned = ({ data }) => {
   }
 
   const { data: levelMoveDetails, isLoading: isLoadingLevel } = useQuery(
-    ['levelDetails', moveUrls.level], 
+    ['levelDetails', moveUrls.level],
     () => fetchData(moveUrls.level),
     { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
   )
 
   const { data: tutorMoveDetails, isLoading: isLoadingTutor } = useQuery(
-    ['tutorDetails', moveUrls.tutor], 
+    ['tutorDetails', moveUrls.tutor],
     () => fetchData(moveUrls.tutor),
     { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
   )
 
   const { data: machineMoveDetails, isLoading: isLoadingMachine } = useQuery(
-    ['machineDetails', moveUrls.machine], 
+    ['machineDetails', moveUrls.machine],
     () => fetchData(moveUrls.machine),
     { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
   )
 
   const { data: eggMoveDetails, isLoading: isLoadingEgg } = useQuery(
-    ['eggDetails', moveUrls.egg], 
+    ['eggDetails', moveUrls.egg],
     () => fetchData(moveUrls.egg),
     { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
   )
@@ -152,7 +152,7 @@ const MovesLearned = ({ data }) => {
 
   const combinedLevelDetails = levelLearntData?.map(obj1 => {
     const obj2 = levelMoveDetails?.find(obj => obj?.moveName === obj1?.name)
-    return {...obj1, ...obj2}
+    return { ...obj1, ...obj2 }
   })
 
   const finalMoveDetails = {
@@ -176,9 +176,9 @@ const MovesLearned = ({ data }) => {
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
-        <AnimatedTableRowContainer 
+        <AnimatedTableRowContainer
           className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400`}
-          useOnce  
+          useOnce
         >
           {
             move.levelLearntAt &&
@@ -188,32 +188,32 @@ const MovesLearned = ({ data }) => {
           }
           <div className={`${firstColStyle} ${moveNameStyle} whitespace-nowrap table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2 `}>
             {
-              index !== 0 
-              ?
-              <NavLink to={`/moves/${move?.moveName}`}> {formatName(move?.moveName)} </NavLink>
-              :
-              formatName(move?.moveName)
+              index !== 0
+                ?
+                <NavLink to={`/moves/${move?.moveName}`}> {formatName(move?.moveName)} </NavLink>
+                :
+                formatName(move?.moveName)
             }
           </div>
           <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {
-              index === 0 ? 
-              'Type' :
-              <TypeCard typeName={move?.moveType} />
+              index === 0 ?
+                'Type' :
+                <TypeCard typeName={move?.moveType} />
             }
-          </div>  
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'> 
+          </div>
+          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {
-              moveClassImage === '' 
-              ?
-              move.damageClass
-              :
-              <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move?.damageClass} />
+              moveClassImage === ''
+                ?
+                move.damageClass
+                :
+                <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move?.damageClass} />
             }
-          </div>    
+          </div>
           <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {move?.PP}
-          </div>   
+          </div>
           <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
             {move?.power}
           </div>
@@ -231,62 +231,62 @@ const MovesLearned = ({ data }) => {
   const eggTable = returnMoveTable(finalMoveDetails?.egg)
 
   return (
-    <div className='flex flex-row justify-between w-full flex-wrap'>
-      <div className='flex flex-col lg:w-475/1000 w-full'>
+    <div className='flex flex-row flex-wrap justify-between w-full'>
+      <div className='flex flex-col w-full lg:w-475/1000'>
         <SectionTitle text={'Moves learnt by level up'} />
         {
-          finalMoveDetails?.level?.length > 1 
-          ?
-          <>
-            <span className='mb-4'>
-              {`${properPokemonName} learns the following moves in generation 7 at the levels specified.`}
-            </span>
-            <TableContainer child={levelUpTable}  />
-          </>
-          :
-          `${properPokemonName} does not learn any moves by level up`
+          finalMoveDetails?.level?.length > 1
+            ?
+            <>
+              <span className='mb-4'>
+                {`${properPokemonName} learns the following moves in generation 7 at the levels specified.`}
+              </span>
+              <TableContainer child={levelUpTable} />
+            </>
+            :
+            `${properPokemonName} does not learn any moves by level up`
         }
 
         <SectionTitle text={'Moves learnt by tutor'} />
         {
           finalMoveDetails?.tutor?.length > 1
-          ?
-          <>
-            <span className='mb-4'>
-              {`${properPokemonName} can be taught the following moves in generation 7 by move tutors.`}
-            </span>
-            <TableContainer child={tutorTable} />
-          </>
-          :
-          `${properPokemonName} does not learn any move taught by a tutor.`
+            ?
+            <>
+              <span className='mb-4'>
+                {`${properPokemonName} can be taught the following moves in generation 7 by move tutors.`}
+              </span>
+              <TableContainer child={tutorTable} />
+            </>
+            :
+            `${properPokemonName} does not learn any move taught by a tutor.`
         }
         <SectionTitle text={'Moves learnt by Breeding'} />
         {
           finalMoveDetails?.egg?.length > 1
-          ?
-          <>
-            <span className='mb-4'>
-              {`${properPokemonName} learns the following moves in generation 7 by breeding.`}
-            </span>
-            <TableContainer child={eggTable} />
-          </>
-          :
-          `${properPokemonName} does not learn any moves by breeding.`
+            ?
+            <>
+              <span className='mb-4'>
+                {`${properPokemonName} learns the following moves in generation 7 by breeding.`}
+              </span>
+              <TableContainer child={eggTable} />
+            </>
+            :
+            `${properPokemonName} does not learn any moves by breeding.`
         }
       </div>
-      <div className='flex flex-col lg:w-475/1000 w-full'>
+      <div className='flex flex-col w-full lg:w-475/1000'>
         <SectionTitle text={'Moves learnt by HM/TM'} />
         {
-          finalMoveDetails?.machine?.length > 1 
-          ?
-          <>
-            <span className='mb-4'>
-              {`${properPokemonName} is compatible with these Technical Machines in Generation 7:`}
-            </span>
-            <TableContainer child={machineTable} />
-          </>
-          :
-          `${properPokemonName} does not learn any moves by TM or HM.`
+          finalMoveDetails?.machine?.length > 1
+            ?
+            <>
+              <span className='mb-4'>
+                {`${properPokemonName} is compatible with these Technical Machines in Generation 7:`}
+              </span>
+              <TableContainer child={machineTable} />
+            </>
+            :
+            `${properPokemonName} does not learn any moves by TM or HM.`
         }
       </div>
     </div>

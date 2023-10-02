@@ -30,20 +30,20 @@ const TrainingInfo = ({ data }) => {
   const evFormatted = evStats.map(stat => {
     // First format the stat field. hp -> HP, rest => special-attack => Special Attack
     const statName = stat.stat.name
-    const formattedStatName = statName === 'hp' ? 'HP': formatField(stat.stat.name.toString())
-    return {name: formattedStatName, value: stat.effort}
+    const formattedStatName = statName === 'hp' ? 'HP' : formatField(stat.stat.name.toString())
+    return { name: formattedStatName, value: stat.effort }
   })
-  
+
   // Joining all the EV stats given by commas.
   const evString = evFormatted.map(obj => `${obj.value} ${obj.name}`).join(', ');
 
   // Define all the things that is to be displayed.
   const tableData = [
-    { label: "EV Yield", value: evString},
-    { label: "Capture Rate", value: capture_rate},
-    { label: "Base Friendship", value: base_happiness},
-    { label: "Base exp.", value: base_experience},
-    { label: "Growth rate", value: growth},
+    { label: "EV Yield", value: evString },
+    { label: "Capture Rate", value: capture_rate },
+    { label: "Base Friendship", value: base_happiness },
+    { label: "Base exp.", value: base_experience },
+    { label: "Growth rate", value: growth },
   ]
 
   const tableDiv = tableData.map(row => {

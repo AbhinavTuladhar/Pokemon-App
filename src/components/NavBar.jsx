@@ -5,10 +5,10 @@ const ListItem = ({ items, closeMenu, subMenuFlag }) => {
   return (
     items.map((data, index) => (
       <li className={`float-left min-h-full flex-1 ${subMenuFlag && 'w-full'}`} key={index}>
-        <NavLink to={ data.path } onClick={closeMenu}>
+        <NavLink to={data.path} onClick={closeMenu}>
           <span className={`hover:brightness-125 duration-300 text-white block text-center px-2 bg-gray-800
             ${subMenuFlag ? 'py-3' : 'py-4'}`}
-          > { data.name } 
+          > {data.name}
           </span>
         </NavLink>
       </li>
@@ -51,34 +51,33 @@ const NavBar = () => {
 
   return (
     <section className='mb-4'>
-      <div 
-        className='bg-gradient-to-t from-slate-900 to-slate-800 py-2 text-center tracking-tight flex flex-wrap justify-center text-5xl lg:text-6xl font-semibold lg:font-bold'
+      <div
+        className='flex flex-wrap justify-center py-2 text-5xl font-semibold tracking-tight text-center bg-gradient-to-t from-slate-900 to-slate-800 lg:text-6xl lg:font-bold'
       >
-        <NavLink to='/' className='bg-gradient-to-r from-yellow-500 to-indigo-500 text-transparent bg-clip-text'> Pokémon Database </NavLink>
+        <NavLink to='/' className='text-transparent bg-gradient-to-r from-yellow-500 to-indigo-500 bg-clip-text'> Pokémon Database </NavLink>
       </div>
       <nav>
-        <ul className='flex justify-left list-none flex-wrap'>
-          <li className='float-left flex-1'>
+        <ul className='flex flex-wrap list-none justify-left'>
+          <li className='flex-1 float-left'>
             <div
               className='relative group'
               onMouseEnter={openMenu}
               onMouseLeave={closeMenu}
               onClick={toggleMenu}
             >
-              <button className='w-full whitespace-nowrap hover:brightness-125 duration-300 text-white bg-gray-800 block text-center py-4 px-2'>
+              <button className='block w-full px-2 py-4 text-center text-white duration-300 bg-gray-800 whitespace-nowrap hover:brightness-125'>
                 Pokédex <span className='text-yellow-400'>▼</span>
               </button>
               <ul
-                className={`z-10 absolute ${
-                  isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                } bg-green-400 text-white text-center transition-opacity duration-500`}
+                className={`z-10 absolute ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  } bg-green-400 text-white text-center transition-opacity duration-500`}
                 onClick={closeMenu}
               >
-                { pokemonNavElements }
+                {pokemonNavElements}
               </ul>
             </div>
           </li>
-          { otherNavElements }
+          {otherNavElements}
         </ul>
       </nav>
     </section>

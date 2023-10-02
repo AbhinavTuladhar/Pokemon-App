@@ -8,7 +8,7 @@ const TabularSkeleton = () => {
 
   return (
     <div className='flex flex-col'>
-      { skeletonRows }
+      {skeletonRows}
     </div>
   )
 }

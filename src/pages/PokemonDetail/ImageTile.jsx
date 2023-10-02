@@ -15,21 +15,21 @@ const ImageTile = ({ imageSources }) => {
       return prevStatus === 'normal' ? 'shiny' : 'normal'
     })
   }
-  
+
   return (
     <div className='flex flex-col mt-5'>
-      <div className='flex flex-row gap-x-4 justify-center my-2'>
-        <button 
-          className={selectedImage === 'normal' ? selectedButtonStyle : unselectedButtonStyle }
+      <div className='flex flex-row justify-center my-2 gap-x-4'>
+        <button
+          className={selectedImage === 'normal' ? selectedButtonStyle : unselectedButtonStyle}
           onClick={handleClick}
         >
-           Normal
+          Normal
         </button>
-        <button 
-          className={selectedImage === 'normal' ? unselectedButtonStyle : selectedButtonStyle }
+        <button
+          className={selectedImage === 'normal' ? unselectedButtonStyle : selectedButtonStyle}
           onClick={handleClick}
         >
-           Shiny
+          Shiny
         </button>
       </div>
       <div className='flex flex-row justify-center'>

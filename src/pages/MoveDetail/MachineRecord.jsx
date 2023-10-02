@@ -25,7 +25,7 @@ const MachineRecord = ({ machineList }) => {
         }
       })
       ?.filter(machine => machine.versionName !== 'colosseum' && machine.versionName !== 'xd')
-      
+
     // Now group the formattedData by generation.
     const transformedData = formattedData?.reduce((accumulator, item) => {
       const { machine, generation, versionName } = item;
@@ -57,13 +57,13 @@ const MachineRecord = ({ machineList }) => {
       <div className='table-row'>
         <div className='table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle text-right'>
           <ul>
-            { machine.versionName?.map(version => {
-              return (<li className='list-none' key={ version }> { formatName(version) } </li>)
+            {machine.versionName?.map(version => {
+              return (<li className='list-none' key={version}> {formatName(version)} </li>)
             })}
           </ul>
         </div>
         <div className='table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle'>
-          { machine?.machine }
+          {machine?.machine}
         </div>
       </div>
     )
@@ -73,7 +73,7 @@ const MachineRecord = ({ machineList }) => {
     <>
       <SectionTitle text={'Machine/Record'} />
       <div className='w-full'>
-        <TableContainer child={ tableRows } />
+        <TableContainer child={tableRows} />
       </div>
     </>
   )

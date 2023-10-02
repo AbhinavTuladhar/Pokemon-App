@@ -31,13 +31,13 @@ const getRarityImage = chance => {
 }
 
 const SimpleSkeletonRow = ({ width }) => {
-  return <Skeleton width={width} height='2.75rem' containerClassName='flex-1 w-full' />  
+  return <Skeleton width={width} height='2.75rem' containerClassName='flex-1 w-full' />
 }
 
 const TableCell = ({ value, isHeader }) => {
   return (
     <div className={`${isHeader && 'bg-gray-900 font-bold'} whitespace-nowrap table-cell h-14 border-t-[1px] border-slate-200 align-middle text-center px-4`}>
-      { value }
+      {value}
     </div>
   )
 }
@@ -45,7 +45,7 @@ const TableCell = ({ value, isHeader }) => {
 const TableRow = ({ rowIndex, rowData }) => {
   return (
     <FadeInAnimatedTableRowContainer className='table-row'>
-      {rowData.map(( { key, value }) => (
+      {rowData.map(({ key, value }) => (
         <TableCell value={value} key={key} isHeader={rowIndex === 0} />
       ))}
     </FadeInAnimatedTableRowContainer>
@@ -81,7 +81,7 @@ const LocationDetail = () => {
     return (
       <div className='mx-2 md:mx-10'>
         <h1 className='text-3xl font-bold text-center'>
-          { formatName(locationName) }
+          {formatName(locationName)}
         </h1>
         <h1 className='text-2xl font-bold text-center'>
           Could not find any encounter information for this location.
@@ -93,18 +93,18 @@ const LocationDetail = () => {
   // First group by generation, then by sublocation and then by encounter method.
   const groupedByGenerationSubLocationAndMethod = subLocationData?.reduce((result, obj) => {
     const { encounterDetails, subLocationName } = obj
-  
+
     encounterDetails.forEach((encounter) => {
       const { generation, methodName } = encounter
-  
+
       const existingGenerationGroup = result.find((group) => group.generation === generation);
-  
+
       if (existingGenerationGroup) {
         const existingSubLocationGroup = existingGenerationGroup.subLocations.find((subLocation) => subLocation.subLocationName === subLocationName);
-  
+
         if (existingSubLocationGroup) {
           const existingMethodGroup = existingSubLocationGroup.methods.find((method) => method.methodName === methodName);
-  
+
           if (existingMethodGroup) {
             existingMethodGroup.encounterDetails.push(encounter);
           } else {
@@ -114,15 +114,15 @@ const LocationDetail = () => {
             });
           }
         } else {
-          existingGenerationGroup.subLocations.push({ 
-            subLocationName, 
-            methods: [{ methodName, encounterDetails: [encounter]}]
+          existingGenerationGroup.subLocations.push({
+            subLocationName,
+            methods: [{ methodName, encounterDetails: [encounter] }]
           });
         }
       } else {
         result.push({
           generation,
-          subLocations: [{ subLocationName, methods: [{ methodName, encounterDetails: [encounter] }]}],
+          subLocations: [{ subLocationName, methods: [{ methodName, encounterDetails: [encounter] }] }],
         })
       }
     })
@@ -147,11 +147,11 @@ const LocationDetail = () => {
   Since all the above information have already been rendered, we omit them from the table.
   */
   // Generation is at the highest level, so the generation divs come first.
-  const generationDiv = groupedByGenerationSubLocationAndMethod?.map(({generation, subLocations}) => {
+  const generationDiv = groupedByGenerationSubLocationAndMethod?.map(({ generation, subLocations }) => {
     // Next is the sub location div.
-    const subLocationDivNew = subLocations?.map(({subLocationName, methods}) => {
+    const subLocationDivNew = subLocations?.map(({ subLocationName, methods }) => {
       // Finally, the encounter methods.
-      const encounterMethodDiv = methods?.map(({methodName, encounterDetails}) => {
+      const encounterMethodDiv = methods?.map(({ methodName, encounterDetails }) => {
         const tableRows = [...header, ...encounterDetails].map((encounter, rowIndex) => {
           const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter
           // const trueChance = chance > 100 ? 100 : chance
@@ -161,15 +161,15 @@ const LocationDetail = () => {
           const idDiv = (
             <div className='flex flex-row items-center pr-16 md:pr-4'>
               <img src={iconSprite} alt={pokemonName} className='w-[66px]' />
-              <NavLink to={`/pokemon/${pokemonName}`} className='hoverable-link font-bold'>
-                { formatName(pokemonName)}
+              <NavLink to={`/pokemon/${pokemonName}`} className='font-bold hoverable-link'>
+                {formatName(pokemonName)}
               </NavLink>
             </div>
           )
 
           // For the game boxes
-          const gameBoxDiv = rowIndex === 0 
-            ? gameName 
+          const gameBoxDiv = rowIndex === 0
+            ? gameName
             : (
               <div className='flex flex-row'>
                 {generationToGame[generationInternal].map(game => <GameBox gameName={game} activeFlag={gameName.includes(game)} />)}
@@ -177,7 +177,7 @@ const LocationDetail = () => {
             )
 
           // For the pie-chart rarity image
-          const rarityImage = <img src={chanceImage} alt={chance } className='w-[30px]' />
+          const rarityImage = <img src={chanceImage} alt={chance} className='w-[30px]' />
 
           const cellData = [
             { key: 'pokemon', value: rowIndex === 0 ? formatName(pokemonName) : idDiv },
@@ -190,73 +190,73 @@ const LocationDetail = () => {
         // Now render the sub location name, with the generation as the prefix.
         return (
           <>
-            { isLoadingSubLocationData
-            ?
-            <SimpleSkeletonRow width='20vw' />
-            :
-            <FadeInAnimationContainer>
-              <h1 className='font-bold text-2xl my-4'> 
-                {`${formatName(methodName)}`} 
-              </h1>
-            </FadeInAnimationContainer>
+            {isLoadingSubLocationData
+              ?
+              <SimpleSkeletonRow width='20vw' />
+              :
+              <FadeInAnimationContainer>
+                <h1 className='my-4 text-2xl font-bold'>
+                  {`${formatName(methodName)}`}
+                </h1>
+              </FadeInAnimationContainer>
             }
             <div className='flex justify-center'>
-              <div className='overflow-auto w-full lg:w-7/12'>
+              <div className='w-full overflow-auto lg:w-7/12'>
                 <div className='table border-b-[1px] border-slate-200 mx-auto'>
-                  { tableRows }
+                  {tableRows}
                 </div>
-              </div>  
-            </div> 
+              </div>
+            </div>
           </>
         )
       })
       return (
         <>
-          { isLoadingSubLocationData 
-          ?
-          <SimpleSkeletonRow width='60vw' />
-          :
-          <FadeInAnimationContainer>
-            <h1 className='font-bold text-3xl mt-4'> 
-              {`${generation} - ${subLocationName}`}
-            </h1>
-          </FadeInAnimationContainer>
+          {isLoadingSubLocationData
+            ?
+            <SimpleSkeletonRow width='60vw' />
+            :
+            <FadeInAnimationContainer>
+              <h1 className='mt-4 text-3xl font-bold'>
+                {`${generation} - ${subLocationName}`}
+              </h1>
+            </FadeInAnimationContainer>
           }
-          <> { encounterMethodDiv } </>
+          <> {encounterMethodDiv} </>
         </>
       )
     })
     return (
       <>
-        { subLocationDivNew }
-      </>    
+        {subLocationDivNew}
+      </>
     )
   })
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='md:mx-10 mx-2 pb-4'
+      className='pb-4 mx-2 md:mx-10'
     >
       <h1 className='text-3xl font-bold text-center'>
         {
           isLoadingSubLocationData
-          ?
-          <SimpleSkeletonRow width='50vw' />
-          :
-          <FadeInAnimationContainer>
-            {formatName(locationName)}
-          </FadeInAnimationContainer>
+            ?
+            <SimpleSkeletonRow width='50vw' />
+            :
+            <FadeInAnimationContainer>
+              {formatName(locationName)}
+            </FadeInAnimationContainer>
         }
       </h1>
-      
+
       {/* For rendering skeleton when the content has not been loaded */}
       <>
         {
           isLoadingSubLocationData && (
-            <div className='flex flex-col gap-y-5 mt-4'>
+            <div className='flex flex-col mt-4 gap-y-5'>
               <SimpleSkeletonRow width='50%' />
               <SimpleSkeletonRow width='30%' />
               <TabularSkeleton />

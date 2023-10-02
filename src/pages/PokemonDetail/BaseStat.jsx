@@ -26,9 +26,9 @@ const useStatDetail = (stats) => {
       "speed": "Speed"
     }
   }, [])
-  
+
   // This state variable is for storing the stat details.
-  const [ statDetail, setStatDetail ] = useState([])
+  const [statDetail, setStatDetail] = useState([])
 
   useEffect(() => {
     // Finding the maximum and minimum values of each stat.
@@ -70,26 +70,26 @@ const useStatDetail = (stats) => {
     These objects are joined using the stat name as the common key-value pair.
     */
     setStatDetail(() => {
-      const details =  statValues.map(obj1 => {
+      const details = statValues.map(obj1 => {
         const obj2 = minMaxValues.find(obj => obj.name === obj1.name)
-        return {...obj1, ...obj2}
+        return { ...obj1, ...obj2 }
       })
 
       /*
       This next bit for dealing with the final row. 
       In the final row, we want the form - 'Total' - (sum of base stats) - transparent bar graph - 'min' - 'max'
       */
- 
+
       // First we find the sum of the base stats.
       const baseStatTotal = details.reduce((acc, stat) => acc + stat.value, 0)
 
       // Push the aforementioned details of the final row in the array.
-      details.push({ 
-        name: 'Total', 
-        value: baseStatTotal, 
-        width: '100%', 
-        colour: 'transparent', 
-        min: 'Min', 
+      details.push({
+        name: 'Total',
+        value: baseStatTotal,
+        width: '100%',
+        colour: 'transparent',
+        min: 'Min',
         max: 'Max'
       })
       return details
@@ -109,24 +109,24 @@ const BaseStat = ({ data }) => {
     const stringDecoration = index === statDetail.length - 1 ? 'font-bold' : ''
 
     return (
-      <AnimatedTableRowContainer 
+      <AnimatedTableRowContainer
         className='table-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-0'
-        useOnce  
-      > 
-        <div className='table-cell text-right border-gray-200 border-t align-middle pr-2'>
+        useOnce
+      >
+        <div className='table-cell pr-2 text-right align-middle border-t border-gray-200'>
           {stat.name}
         </div>
-        <div className='table-cell px-1 border-gray-200 border-t text-right align-middle'>
+        <div className='table-cell px-1 text-right align-middle border-t border-gray-200'>
           <span className={`${stringDecoration} text-left`}> {stat.value} </span>
         </div>
-        <div className='w-full table-cell border-gray-200 border-t align-middle h-full mx-0 px-0'>
-          <div className='my-0 h-3 rounded ml-2' style={{width: stat.width, minWidth: '0.25em', maxWidth: '100%', backgroundColor: stat.colour}}> &nbsp;
+        <div className='table-cell w-full h-full px-0 mx-0 align-middle border-t border-gray-200'>
+          <div className='h-3 my-0 ml-2 rounded' style={{ width: stat.width, minWidth: '0.25em', maxWidth: '100%', backgroundColor: stat.colour }}> &nbsp;
           </div>
         </div>
-        <div className='table-cell px-1 pl-3 border-gray-200 border-t align-middle text-right'>
+        <div className='table-cell px-1 pl-3 text-right align-middle border-t border-gray-200'>
           {stat.min}
         </div>
-        <div className='table-cell px-1 border-gray-200 border-t align-middle text-right'>
+        <div className='table-cell px-1 text-right align-middle border-t border-gray-200'>
           {stat.max}
         </div>
       </AnimatedTableRowContainer>

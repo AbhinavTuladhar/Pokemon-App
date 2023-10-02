@@ -25,40 +25,40 @@ const SpriteTable = ({ data }) => {
     const { generation, frontSprite, shinySprite } = row
     const columnWidth = index === 0 ? 'w-24' : 'w-40'
     const normalImage = index === 0 ?
-      <span className='font-bold'> { frontSprite } </span>
+      <span className='font-bold'> {frontSprite} </span>
       :
       <img src={frontSprite} alt={pokemonName} className='w-36 h-36' />
 
     const shinyImage = index === 0 ?
-      <span className='font-bold'> { shinySprite } </span>
+      <span className='font-bold'> {shinySprite} </span>
       :
       // For non-existent generation 1 shiny sprites and shiny icons
       ['Generation 1', 'Icon'].includes(generation)
-      ?
-      <span className='font-bold text-3xl'> — </span>
-      :
-      <img src={shinySprite} alt={pokemonName} className='w-36 h-36' />
+        ?
+        <span className='text-3xl font-bold'> — </span>
+        :
+        <img src={shinySprite} alt={pokemonName} className='w-36 h-36' />
 
     // Cell data for each column.
     const cellData = [
-      { key: 'Generation', value: <span className='font-bold'> { generation } </span> },
+      { key: 'Generation', value: <span className='font-bold'> {generation} </span> },
       { key: 'Normal Sprite', value: normalImage },
       { key: 'Shiny Sprite', value: shinyImage }
     ]
 
     // These cells are aligned vertically.
     const tableCells = cellData.map((cell, cellIndex) => {
-      const cellStyle = cellIndex === 0 ? 'h-16 bg-gray-900' : 'h-48' 
+      const cellStyle = cellIndex === 0 ? 'h-16 bg-gray-900' : 'h-48'
       return (
         <div className={`${cellStyle} object-center flex border border-slate-400 items-center justify-center align-middle text-center h-16 min-h-32 ${columnWidth}`}>
-          { cell.value }
+          {cell.value}
         </div>
       )
-    }) 
+    })
 
     return (
       <div className='flex flex-col'>
-        { tableCells }
+        {tableCells}
       </div>
     )
   })
@@ -66,13 +66,13 @@ const SpriteTable = ({ data }) => {
   return (
     <>
       <SectionTitle text={`${formatName(pokemonName)} sprites`} />
-        <div className='flex justify-center items-center'>
-          <div className='overflow-auto'>
-            <div className='inline-flex'> 
-              { tableColumns }
-            </div>
+      <div className='flex items-center justify-center'>
+        <div className='overflow-auto'>
+          <div className='inline-flex'>
+            {tableColumns}
           </div>
         </div>
+      </div>
     </>
   )
 }

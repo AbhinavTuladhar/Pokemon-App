@@ -28,11 +28,11 @@ const returnMoveImage = damageClass => {
 }
 
 const MoveListing = () => {
-  const [ moveList, setMoveList ] = useState([])
-  const [ moveListReady, setMoveListReady ] = useState([])
-  const [ filteredMoves, setFilteredMoves ] = useState([])
-  const [ TMURLs, setTMURLs ] = useState([])
-  const [ TMData, setTMData ] = useState([])
+  const [moveList, setMoveList] = useState([])
+  const [moveListReady, setMoveListReady] = useState([])
+  const [filteredMoves, setFilteredMoves] = useState([])
+  const [TMURLs, setTMURLs] = useState([])
+  const [TMData, setTMData] = useState([])
 
   // For changing the page title.
   const location = useLocation()
@@ -75,7 +75,7 @@ const MoveListing = () => {
       // sorting alphabetically
       return extractedNew.sort((prev, curr) => prev.moveName > curr.moveName ? 1 : -1)
     })
-    }, [moveData])
+  }, [moveData])
 
   // Find the tm.
   useEffect(() => {
@@ -127,7 +127,7 @@ const MoveListing = () => {
     if (!moveList && !TMData)
       return
     const joinedData = moveList?.map(obj1 => {
-      const obj2 = TMData?.find(obj => obj1.moveName === obj.name) 
+      const obj2 = TMData?.find(obj => obj1.moveName === obj.name)
       return { ...obj1, ...obj2 }
     })
     setMoveListReady(joinedData)
@@ -142,7 +142,7 @@ const MoveListing = () => {
     accuracy: 'Acc.',
     PP: 'PP',
     machine: 'TM',
-    shortEntry: 'Effect',    
+    shortEntry: 'Effect',
     effectChance: 'Prob. (%)'
   }]
 
@@ -155,7 +155,7 @@ const MoveListing = () => {
   }
 
   const moveTableRows = [...headers, ...filteredMoves].map((move, index) => {
-    const { id, moveName, moveType, damageClass, power, accuracy, machine, PP, shortEntry, effectChance } = move
+    const { moveName, moveType, damageClass, power, accuracy, machine, PP, shortEntry, effectChance } = move
     const link = `/moves/${moveName}`
     // Provide a border on all sides and bold the text for the header.
     const headerStyle = index === 0 ? 'font-bold' : ''
@@ -172,88 +172,88 @@ const MoveListing = () => {
     const moveClassImage = returnMoveImage(damageClass)
     // Creating an object for the table cells, abiding by the DRY principle.
     const tableCellData = [
-      { 
-        key: 'moveName', 
+      {
+        key: 'moveName',
         value: (
-          <NavLink to={link}> {formatName(moveName)} </NavLink> 
+          <NavLink to={link}> {formatName(moveName)} </NavLink>
         ),
         style: index !== 0 ? 'font-bold hoverable-link' : ''
       },
-      { 
-        key: 'moveType', 
-        value: index === 0 ? moveType : <TypeCard typeName={ moveType } /> 
+      {
+        key: 'moveType',
+        value: index === 0 ? moveType : <TypeCard typeName={moveType} />
       },
-      { 
-        key: 'damageClass', 
-        value: index === 0 ? damageClass : <img src={moveClassImage} className='h-[20px] w-[30px]' alt={damageClass} /> 
+      {
+        key: 'damageClass',
+        value: index === 0 ? damageClass : <img src={moveClassImage} className='h-[20px] w-[30px]' alt={damageClass} />
       },
-      { 
-        key: 'power', 
-        value: power 
+      {
+        key: 'power',
+        value: power
       },
-      { 
-        key: 'accuracy', 
-        value: accuracy 
+      {
+        key: 'accuracy',
+        value: accuracy
       },
-      { 
-        key: 'PP', 
-        value: PP 
+      {
+        key: 'PP',
+        value: PP
       },
-      { 
-        key: 'machine', 
-        value: machine 
+      {
+        key: 'machine',
+        value: machine
       },
-      { 
-        key: 'shortEntry', 
-        value: (<div className='w-[36rem]'> { shortEntry?.replace('$effect_chance% ', '') } </div>),
+      {
+        key: 'shortEntry',
+        value: (<div className='w-[36rem]'> {shortEntry?.replace('$effect_chance% ', '')} </div>),
         style: 'pr-8 w-[36rem]'
       },
-      { 
-        key: 'effectChance', 
-        value: effectChance ,
+      {
+        key: 'effectChance',
+        value: effectChance,
         style: 'whitespace-nowrap'
       },
     ];
     const tableCells = tableCellData.map(cell => {
       return (
-        <div 
+        <div
           className={`${cell.style} ${headerStyle} ${bgColour} border-gray-500 border-t-[1px] table-cell h-12 align-middle p-2`}
-        > 
-          { cell.value }
+        >
+          {cell.value}
         </div>
       )
     })
     return (
       <AnimatedTableRowContainer className='table-row' useOnce>
-        { tableCells }
+        {tableCells}
       </AnimatedTableRowContainer>
     )
-  }) 
+  })
 
   document.title = 'Pokémon moves list | Pokémon database'
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='md:mx-10 mx-4'
+      className='mx-4 md:mx-10'
     >
-      <div className='flex justify-center items-center'>
-        <input 
-          className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search' 
-          placeholder='Search for a move' 
+      <div className='flex items-center justify-center'>
+        <input
+          className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
+          placeholder='Search for a move'
           disabled={moveTableRows?.length < 2 && TMData.length === 0 ? true : false}
           onChange={handleChange}
         />
       </div>
-      { 
+      {
         // Checking if data is present
-        (moveTableRows?.length < 2 && TMData.length === 0) 
-        ?
-        <MoveListingSkeleton rowCount={20} />
-        :
-        <TableContainer child={moveTableRows} />
+        (moveTableRows?.length < 2 && TMData.length === 0)
+          ?
+          <MoveListingSkeleton rowCount={20} />
+          :
+          <TableContainer child={moveTableRows} />
       }
     </motion.div>
   )

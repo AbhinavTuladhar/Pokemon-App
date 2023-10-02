@@ -57,14 +57,14 @@ const AbilityListing = () => {
 
   // Headers that are used in the table.
   const headers = [{
-     name: 'Name',
-     pokemonCount: 'Pokemon',
-     shortEntry: 'Description' ,
-     generationIntroduced: 'Gen.' ,
+    name: 'Name',
+    pokemonCount: 'Pokemon',
+    shortEntry: 'Description',
+    generationIntroduced: 'Gen.',
   }]
 
   const tableRows = [...headers, ...filteredAbilityInfo].map((row, index) => {
-    const { id, name, pokemonCount, shortEntry, generationIntroduced } = row
+    const { name, pokemonCount, shortEntry, generationIntroduced } = row
     const headerStyle = index === 0 ? 'font-bold' : ''
     const abilityLink = `/ability/${name}`
 
@@ -77,29 +77,29 @@ const AbilityListing = () => {
     } else {
       bgColour = ''
     }
-    
+
     const cellData = [
-      { 
-        key: 'Name', 
-        value: (<NavLink to={abilityLink}> {formatName(name)} </NavLink>), 
-        style: index !== 0 ? 'font-bold hoverable-link whitespace-nowrap' : '' 
+      {
+        key: 'Name',
+        value: (<NavLink to={abilityLink}> {formatName(name)} </NavLink>),
+        style: index !== 0 ? 'font-bold hoverable-link whitespace-nowrap' : ''
       },
       { key: 'Pokemon', value: pokemonCount, style: index !== 0 ? 'text-right' : '' },
       { key: 'Description', value: shortEntry },
-      { 
-        key: 'Generation', 
-        value: index === 0 ? generationIntroduced : generationIntroduced?.slice(-1) 
+      {
+        key: 'Generation',
+        value: index === 0 ? generationIntroduced : generationIntroduced?.slice(-1)
       },
     ]
     const tableCells = cellData.map(cell => (
       <div className={`${headerStyle} ${bgColour} ${cell?.style} table-cell border-gray-500 border-t-[1px] h-12 align-middle py-2 px-4`}>
-        { cell.value }
+        {cell.value}
       </div>
     ))
 
     return (
       <AnimatedTableRowContainer className='table-row' useOnce>
-        { tableCells }
+        {tableCells}
       </AnimatedTableRowContainer>
     )
   })
@@ -112,23 +112,23 @@ const AbilityListing = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='md:mx-10 mx-4'
+      className='mx-4 md:mx-10'
     >
-      <div className='flex justify-center items-center'>
-        <input 
-          className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search' 
-          placeholder='Search for an ability...' 
+      <div className='flex items-center justify-center'>
+        <input
+          className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
+          placeholder='Search for an ability...'
           disabled={tableRows?.length < 2 && abilityInfo?.length === 0 ? true : false}
           onChange={handleChange}
         />
       </div>
-      { 
+      {
         // Checking if data is present
-        (tableRows?.length < 2 && abilityInfo?.length === 0) 
-        ?
-        <MoveListingSkeleton rowCount={20} />
-        :
-        <TableContainer child={tableRows} />
+        (tableRows?.length < 2 && abilityInfo?.length === 0)
+          ?
+          <MoveListingSkeleton rowCount={20} />
+          :
+          <TableContainer child={tableRows} />
       }
     </motion.div>
   )

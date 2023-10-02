@@ -50,7 +50,7 @@ const MainPage = ({ idRange }) => {
 
   // Map each Pokemon to its respective card.
   const pokemonBoxes = filteredPokemonInfo?.map(pokemon => (
-    <FadeInAnimationCard className='smmd:w-2/12 sm:w-1/3 md:w-1/4 w-full my-2 mx-4 py-2'>
+    <FadeInAnimationCard className='w-full py-2 mx-4 my-2 smmd:w-2/12 sm:w-1/3 md:w-1/4'>
       <PokeCard key={pokemon.id} data={pokemon} />
     </FadeInAnimationCard>
   ))
@@ -67,32 +67,32 @@ const MainPage = ({ idRange }) => {
   document.title = `${titlePrefix} ${titleSuffix}`
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ x: '-100%', opacity: 0 }}
       animate={{ x: 0, opacity: 1, transitionDuration: '0.3s' }}
       exit={{ x: '100%', opacity: 0, transitionDuration: '0.5s' }}
-      transition={{ ease: 'easeIn'}}
+      transition={{ ease: 'easeIn' }}
     >
-      <div className='flex justify-center items-center'>
-        <input 
-          className='text-black rounded-xl mx-4 py-2 px-4 w-full lg:w-[20rem]' type='search' 
-          placeholder='Search for a Pokemon' 
+      <div className='flex items-center justify-center'>
+        <input
+          className='text-black rounded-xl mx-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
+          placeholder='Search for a Pokemon'
           disabled={Boolean(isLoading)}
           onChange={handleChange}
         />
       </div>
       {
-        isLoading 
-        ? 
-        <div className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'>
-          <PokeCardSkeleton cardCount={20} />
-        </div>
-        : 
-        <>
-          <div className='gap-x-2 gap-y-3 px-0 py-4 flex flex-wrap justify-center items-center'>
-            { pokemonBoxes }
+        isLoading
+          ?
+          <div className='flex flex-wrap items-center justify-center px-0 py-4 gap-x-2 gap-y-3'>
+            <PokeCardSkeleton cardCount={20} />
           </div>
-        </>
+          :
+          <>
+            <div className='flex flex-wrap items-center justify-center px-0 py-4 gap-x-2 gap-y-3'>
+              {pokemonBoxes}
+            </div>
+          </>
       }
     </motion.div>
   )

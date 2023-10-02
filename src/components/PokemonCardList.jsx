@@ -26,21 +26,19 @@ const PokemonCardList = ({ title, pokemonUrls }) => {
 
   return (
     <>
-      {
-        isLoading
-        ?
+      {isLoading ? (
         <>
           <SectionTitle text='Loading Pokemon data...' />
           <MoveListingSkeleton rowCount={10} />
         </>
-        :
+      ) : (
         <>
           <SectionTitle text={title} />
           <div className='flex flex-row flex-wrap'>
-            { pokeCards }
+            {pokeCards}
           </div>
         </>
-      }
+      )}
     </>
   )
 }

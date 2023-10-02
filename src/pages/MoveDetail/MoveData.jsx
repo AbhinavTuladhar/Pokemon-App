@@ -21,7 +21,7 @@ const returnMoveImage = damageClass => {
 
 const MoveData = ({ moveInfo }) => {
   const {
-    moveType, 
+    moveType,
     damageClass,
     power,
     accuracy,
@@ -29,13 +29,13 @@ const MoveData = ({ moveInfo }) => {
     generationIntroduced,
     priority
   } = moveInfo
-  
+
   const rowData = [
-    { header: 'Type', value: <TypeCard typeName={ moveType } /> },
-    { 
-      header: 'Category', 
-      value: 
-        (<div className='flex flex-row gap-x-4 items-center'>
+    { header: 'Type', value: <TypeCard typeName={moveType} /> },
+    {
+      header: 'Category',
+      value:
+        (<div className='flex flex-row items-center gap-x-4'>
           <img src={returnMoveImage(damageClass)} className='h-[20px] w-[30px]' alt={damageClass} />
           <> {formatName(damageClass)} </>
         </div>)
@@ -43,7 +43,7 @@ const MoveData = ({ moveInfo }) => {
     { header: 'Power', value: power, },
     { header: 'Accuracy', value: accuracy, },
     { header: 'Priority', value: priority },
-    { header: 'PP', value: <> { `${PP} (max. ${Math.floor(PP*1.6)})` } </>, },
+    { header: 'PP', value: <> {`${PP} (max. ${Math.floor(PP * 1.6)})`} </>, },
     { header: 'Introduced', value: generationIntroduced }
   ]
 
@@ -56,11 +56,11 @@ const MoveData = ({ moveInfo }) => {
     const rowValue = row.header === 'Priority' && parseInt(row.value) > 0 ? `+${row.value}` : row.value
     return (
       <div className='table-row h-12'>
-        <div key={ row.header } className="table-cell align-middle text-right border-t-[1px] py-2 pr-8 border-slate-200"> 
-          { row.header }
+        <div key={row.header} className="table-cell align-middle text-right border-t-[1px] py-2 pr-8 border-slate-200">
+          {row.header}
         </div>
-        <div key={ row.value } className="table-cell align-middle border-t-[1px] py-2 border-slate-200"> 
-          { rowValue }
+        <div key={row.value} className="table-cell align-middle border-t-[1px] py-2 border-slate-200">
+          {rowValue}
         </div>
       </div>
     )

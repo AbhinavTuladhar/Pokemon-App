@@ -52,7 +52,7 @@ const TypeChartFull = () => {
 
   // To show the defending and attacking types.
   const cornerDiv = (
-    <div className='flex flex-col h-9 w-20 text-xs border border-slate-700 rounded-md justify-center items-center'>
+    <div className='flex flex-col items-center justify-center w-20 text-xs border rounded-md h-9 border-slate-700'>
       <span> DEFENCE → </span>
       <span> ATTACK ↴ </span>
     </div>
@@ -69,12 +69,12 @@ const TypeChartFull = () => {
 
   const finalTypeCards = fullTypeCards.map(typeCard => (
     <div className='flex justify-center items-center my-[2px]'>
-      { typeCard }
+      {typeCard}
     </div>
   ))
 
   // Make a dummy object in order to account for the first row.
-  const dummy = [{ typeName: '', typeDefenceInfo: [ {typeName: '', multiplier: 1}] }]
+  const dummy = [{ typeName: '', typeDefenceInfo: [{ typeName: '', multiplier: 1 }] }]
 
   const tableColumns = [dummy, ...extractedInformation]?.map(type => {
     const { typeName, typeDefenceInfo: defenceInfo } = type
@@ -95,7 +95,7 @@ const TypeChartFull = () => {
 
     return (
       <div className='flex flex-col'>
-        { tableCells }
+        {tableCells}
       </div>
     )
   })
@@ -105,10 +105,10 @@ const TypeChartFull = () => {
       <div className='overflow-auto'>
         <div className='inline-flex'>
           <div className='flex flex-col'>
-            { finalTypeCards }
+            {finalTypeCards}
           </div>
           <div className='flex flex-row gap-[1px] py-[2px] justify-center'>
-            { tableColumns }
+            {tableColumns}
           </div>
         </div>
       </div>

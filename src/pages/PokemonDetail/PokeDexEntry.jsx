@@ -12,18 +12,18 @@ const groupByDescription = data => {
     if (index !== -1) {
       acc[index].versionName.push(current.versionName)
     } else {
-      acc.push({ versionName: [current.versionName], description: current.description})
+      acc.push({ versionName: [current.versionName], description: current.description })
     }
     return acc
   }, [])
 }
 
-const PokeDexEntry = ( { data }) => {
+const PokeDexEntry = ({ data }) => {
   if (!Array.isArray(data)) return null
 
   // Let's find all the English entries first.
   const englishEntries = data.filter(entry => entry.language.name === 'en')
-  
+
   // Find an object containing the version anme and the Pokedex entry.
   const englishInfo = englishEntries.map(entry => {
     const rawText = entry.flavor_text
@@ -45,17 +45,17 @@ const PokeDexEntry = ( { data }) => {
       return <li key={index}> {version} </li>
     })
     const gameList = (<ul className='list-none list-inside'> {gameListItems} </ul>)
-    return {versionName: gameList, description: entry.description }
+    return { versionName: gameList, description: entry.description }
   })
 
   const entryRows = finalEntry.map((entry, i) => {
     return (
       <AnimatedTableRowContainer className='table-row border-t-[1px] border-gray-200 h-12' useOnce>
-        <div className='border-t-[1px] align-middle border-gray-200 table-cell text-right py-2'> 
-          {entry.versionName} 
+        <div className='border-t-[1px] align-middle border-gray-200 table-cell text-right py-2'>
+          {entry.versionName}
         </div>
-        <div className='border-t-[1px] align-middle border-gray-200 table-cell pl-4 py-2'> 
-          {entry.description} 
+        <div className='border-t-[1px] align-middle border-gray-200 table-cell pl-4 py-2'>
+          {entry.description}
         </div>
       </AnimatedTableRowContainer>
     )

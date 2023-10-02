@@ -27,20 +27,20 @@ const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
   const formattedId = `#${('00' + id).slice(-3)}`
 
   return (
-    <div 
+    <div
       className={`flex ${splitEvoFlag ? 'flex-col' : 'flex-row sm:flex-row md:flex-col'} justify-center items-center gap-y-2`}
     >
       <img src={homeSprite} alt={name} className='h-32 aspect-square' />
       <div className='flex flex-col items-center justify-center'>
-        { formattedId }
-        <NavLink 
-          to={`/pokemon/${name}`} 
+        {formattedId}
+        <NavLink
+          to={`/pokemon/${name}`}
           className='font-bold hoverable-link'
-        > 
-          { formatName(name) }
+        >
+          {formatName(name)}
         </NavLink>
         <span className='text-center'>
-          { typeDiv }
+          {typeDiv}
         </span>
       </div>
     </div>
@@ -58,13 +58,13 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
 
     const nextPokemon = wurmpleFlag ? individualPokemon[(index + 1)] : individualPokemon[(index + 1) % individualPokemon.length]
     const nextNextPokemon = wurmpleFlag ? individualPokemon[(index + 3) % individualPokemon.length] : individualPokemon[(index + 2) % individualPokemon.length]
-    
+
     const { evolutionDetails } = pokemonData
     const { evolutionDetails: nextnextEvoDetail } = nextnextData
-    
+
     const evolutionExtractedInfo = evolutionStringFinder(evolutionDetails)
     const evolutionExtractedInfoNext = evolutionStringFinder(nextnextEvoDetail)
-    
+
     // This is for a three-way evolution
     const finalPokemon = wurmpleFlag ? undefined : individualPokemon[(index + 3)]
     const lastPokemonData = finalPokemonData[(index + 3)]
@@ -74,71 +74,71 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
     // For split evolutions
     /*
     Note: the middle arrow is only for a three-way evoltuion.
-    */ 
+    */
     if (currentPokemonData.nextEvoSplit) {
       return (
         <>
-          { pokemon }
-          <div className='flex flex-row md:flex-col gap-y-10 justify-between'>
-            <div className='md:flex-row flex-col text-center flex justify-center items-center'>
-              <div className='flex flex-col w-28 mx-4 justify-center items-center'>
-                <BsArrowUpRight size={60} className='md:flex hidden' />
-                <BsArrowDown size={60} className='mx-4 md:hidden flex' />
-                { `(${evolutionExtractedInfo})` }
+          {pokemon}
+          <div className='flex flex-row justify-between md:flex-col gap-y-10'>
+            <div className='flex flex-col items-center justify-center text-center md:flex-row'>
+              <div className='flex flex-col items-center justify-center mx-4 w-28'>
+                <BsArrowUpRight size={60} className='hidden md:flex' />
+                <BsArrowDown size={60} className='flex mx-4 md:hidden' />
+                {`(${evolutionExtractedInfo})`}
               </div>
-              { nextPokemon }
+              {nextPokemon}
             </div>
-            <div className='md:flex-row flex-col text-center flex justify-center items-center'>
-              <div className='flex flex-col w-28 mx-4 justify-center items-center'>
+            <div className='flex flex-col items-center justify-center text-center md:flex-row'>
+              <div className='flex flex-col items-center justify-center mx-4 w-28'>
                 {
                   finalPokemon
-                  ?
-                  <BsArrowRight size={60} className='md:flex hidden' />
-                  :
-                  <BsArrowDownRight size={60} className='md:flex hidden' />
-                }
-                <BsArrowDown size={60} className='mx-4 md:hidden flex' />
-                { `(${evolutionExtractedInfoNext})` }
-              </div>
-              { nextNextPokemon }
-            </div>
-            { 
-              finalPokemon &&
-              <div className='md:flex-row flex-col text-center flex justify-center items-center'>
-                <div className='flex flex-col w-28 mx-4 justify-center items-center'>
-                  <BsArrowDownRight size={60} className='md:flex hidden' />
-                  <BsArrowDown size={60} className='mx-4 md:hidden flex' />
-                  { 
-                    evolutionExtractedInfoFinal 
                     ?
-                    `(${evolutionExtractedInfoFinal})`
+                    <BsArrowRight size={60} className='hidden md:flex' />
                     :
-                    `(${evolutionExtractedInfoNext})`
+                    <BsArrowDownRight size={60} className='hidden md:flex' />
+                }
+                <BsArrowDown size={60} className='flex mx-4 md:hidden' />
+                {`(${evolutionExtractedInfoNext})`}
+              </div>
+              {nextNextPokemon}
+            </div>
+            {
+              finalPokemon &&
+              <div className='flex flex-col items-center justify-center text-center md:flex-row'>
+                <div className='flex flex-col items-center justify-center mx-4 w-28'>
+                  <BsArrowDownRight size={60} className='hidden md:flex' />
+                  <BsArrowDown size={60} className='flex mx-4 md:hidden' />
+                  {
+                    evolutionExtractedInfoFinal
+                      ?
+                      `(${evolutionExtractedInfoFinal})`
+                      :
+                      `(${evolutionExtractedInfoNext})`
                   }
                 </div>
-                { finalPokemon }
+                {finalPokemon}
               </div>
             }
           </div>
         </>
       )
 
-    // For regular, linear evolutions.
+      // For regular, linear evolutions.
     } else if (!currentPokemonData.isSplitEvo) {
       return (
-        <div className='flex flex-col md:flex-row sm:flex-col justify-center items-center'>
-          { pokemon }
-          { 
+        <div className='flex flex-col items-center justify-center md:flex-row sm:flex-col'>
+          {pokemon}
+          {
             (index !== individualPokemon.length - 1) && (!currentPokemonData.nextEvoSplit) &&
             (
               <>
-                <div className='md:flex flex-col sm:hidden text-center hidden justify-center items-center w-28'>
+                <div className='flex-col items-center justify-center hidden text-center md:flex sm:hidden w-28'>
                   <BsArrowRight size={60} className='mx-4' />
-                  { `(${evolutionExtractedInfo})` }
+                  {`(${evolutionExtractedInfo})`}
                 </div>
-                <div className='md:hidden sm:flex text-center flex flex-col justify-center items-center w-28'>
+                <div className='flex flex-col items-center justify-center text-center md:hidden sm:flex w-28'>
                   <BsArrowDown size={60} className='my-2' />
-                  { `(${evolutionExtractedInfo})` }
+                  {`(${evolutionExtractedInfo})`}
                 </div>
               </>
             )
@@ -174,12 +174,12 @@ const EvolutionChain = ({ url }) => {
       const {
         evolution_details,
         evolves_to: evolvesTo,
-        species : { name: speciesName = '', url: speciesUrl = '' }
+        species: { name: speciesName = '', url: speciesUrl = '' }
       } = chain || {}
       const idNumber = parseInt(speciesUrl.match(/\/(\d+)\/$/)[1])
-  
+
       const evoDetailsNew = evolution_details.map(nonNullValues) || []
-  
+
       information.push({
         id: idNumber,
         evolutionDetails: evoDetailsNew,
@@ -187,7 +187,7 @@ const EvolutionChain = ({ url }) => {
         speciesUrl,
         nextEvoSplit: evolvesTo.length > 1
       })
-  
+
       if (evolvesTo.length > 0) {
         evolvesTo.forEach(evolution => {
           traverseChain(evolution)
@@ -201,7 +201,7 @@ const EvolutionChain = ({ url }) => {
   }
 
   const evolutionChainData = getAllData()
-  
+
   // Find the urls of all the pokemon in the evolution chain.
   // Find the Pokemon Url, NOT the species url.
   const pokemonUrls = evolutionChainData.map(pokemon => {
@@ -212,9 +212,9 @@ const EvolutionChain = ({ url }) => {
   const { data: allPokemonData, isLoading: isLoadingPokemonData } = useQuery(
     pokemonUrls,
     () => Promise.all(pokemonUrls.map(fetchData)),
-    { 
+    {
       staleTime: Infinity,
-      cacheTime: Infinity, 
+      cacheTime: Infinity,
       select: pokemonDataList => {
         return pokemonDataList.map(pokemon => {
           const extractedInformation = extractPokemonInformation(pokemon)
@@ -235,17 +235,17 @@ const EvolutionChain = ({ url }) => {
     Peform an operation for identifying whether the evolution is part of a split evolution.
     However, an exception needs to be made for the Wurmple chain.
   */
- 
+
   let foundNextEvoSplit = false;
   const finalPokemonDataOld = preFinalPokemonData?.map((obj) => {
-      const isSplitEvo = foundNextEvoSplit;
-      if (obj.nextEvoSplit) {
-        foundNextEvoSplit = true;
-      }
+    const isSplitEvo = foundNextEvoSplit;
+    if (obj.nextEvoSplit) {
+      foundNextEvoSplit = true;
+    }
 
-      return { ...obj, isSplitEvo };
+    return { ...obj, isSplitEvo };
   });
-  
+
   // 267 and 269 are for the Wurmple evolution chain.
   // 123 is for Scyther, which has a split evolution in gen 8.
   // 212 is for Scizor.
@@ -267,15 +267,15 @@ const EvolutionChain = ({ url }) => {
       const { id } = pokemon
       return (id >= 1 && id <= 809) || (id >= 10001 && id <= 10157)
     })
-  
+
   // Define divs for each pokemon in the evolution chain.
   const individualPokemon = finalPokemonData?.map(pokemon => <PokemonCard pokemonData={pokemon} splitEvoFlag={pokemon.isSplitEvo} />)
-  
+
   // Eevee is a special case which will be dealt with here.
   const firstPokemonName = (finalPokemonData ?? [])[0]?.name || "";
   let finalEvolutionDiv = undefined
   let eeveelutionDiv = []
-  
+
   if (firstPokemonName !== 'eevee') {
     finalEvolutionDiv = <EvolutionDiv finalPokemonData={finalPokemonData} individualPokemon={individualPokemon} />
   } else {
@@ -307,8 +307,8 @@ const EvolutionChain = ({ url }) => {
     ]
     eeveelutionDiv.push(<EvolutionDiv finalPokemonData={friendEvolutionsData} individualPokemon={friendEvolutionsDivs} />)
 
-     // For the location ones
-     let locationEvolutionsData = [
+    // For the location ones
+    let locationEvolutionsData = [
       finalPokemonData[0],
       finalPokemonData[6],
       finalPokemonData[7],
@@ -328,26 +328,26 @@ const EvolutionChain = ({ url }) => {
       <SectionTitle text='Evolution Chart' />
       {
         isLoading || isLoadingPokemonData
-        ?
-        <Skeleton width='100%' height='12rem' containerClassName='flex-1 w-full' />
-        :
-        finalEvolutionDiv
-        ?
-        <div className='flex flex-col md:flex-row sm:flex-col justify-center gap-x-5'>
-          { finalEvolutionDiv }
-        </div>
-        :
-        <> 
-          { 
-            eeveelutionDiv.map(div => {
-              return (
-                <div className='flex flex-col md:flex-row sm:flex-col justify-between sm:justify-center gap-y-5'> 
-                  { div } 
-                </div>
-              )
-            })
-          }
-        </>
+          ?
+          <Skeleton width='100%' height='12rem' containerClassName='flex-1 w-full' />
+          :
+          finalEvolutionDiv
+            ?
+            <div className='flex flex-col justify-center md:flex-row sm:flex-col gap-x-5'>
+              {finalEvolutionDiv}
+            </div>
+            :
+            <>
+              {
+                eeveelutionDiv.map(div => {
+                  return (
+                    <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5'>
+                      {div}
+                    </div>
+                  )
+                })
+              }
+            </>
       }
     </>
   )

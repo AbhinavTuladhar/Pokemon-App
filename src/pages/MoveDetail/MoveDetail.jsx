@@ -21,7 +21,7 @@ const MoveDetail = () => {
     return extractedInformation
   }
 
-  const { data: moveInfo = []} = useQuery(
+  const { data: moveInfo = [] } = useQuery(
     ['moveData', id],
     () => fetchData(url),
     { select: transformData, staleTime: Infinity, cacheTime: Infinity }
@@ -33,24 +33,24 @@ const MoveDetail = () => {
 
   return (
     <motion.div
-      className='md:mx-10 mx-4'
+      className='mx-4 md:mx-10'
       initial={{ y: '100%', opacity: 0 }}
       animate={{ y: 0, opacity: 1, transitionDuration: '0.8s' }}
       exit={{ y: '100%', opacity: 0, transitionDuration: '0.75s' }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
-      <div className='flex justify-center text-center text-4xl font-bold'>
-        { formatName(moveInfo.moveName) } (move)
+      <div className='flex justify-center text-4xl font-bold text-center'>
+        {formatName(moveInfo.moveName)} (move)
       </div>
       <div className='flex flex-row flex-wrap justify-between mt-4'>
-        <div className='flex flex-col lg:w-3/12 sm:w-4/12 md:w-4/12 w-full'>
-          <MoveData moveInfo={ moveInfo } />
+        <div className='flex flex-col w-full lg:w-3/12 sm:w-4/12 md:w-4/12'>
+          <MoveData moveInfo={moveInfo} />
           {
             moveInfo?.machines?.length > 0 &&
-            <MachineRecord machineList={ moveInfo.machines} />
+            <MachineRecord machineList={moveInfo.machines} />
           }
         </div>
-        <div className='flex flex-col lg:w-8/12 sm:w-7/12 md:w-7/12 w-full'>
+        <div className='flex flex-col w-full lg:w-8/12 sm:w-7/12 md:w-7/12'>
           <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
           <GameDescription descriptions={moveInfo.descriptions} />
         </div>

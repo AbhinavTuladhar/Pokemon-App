@@ -22,8 +22,8 @@ const PokeDexData = ({ pokemonData }) => {
   }, [])
 
   // This is for unit conversion of the height and weight.
-  const formattedHeight = `${(height*0.1).toFixed(2)} m`
-  const formattedWeight = `${(weight*0.1).toFixed(2)} kg`
+  const formattedHeight = `${(height * 0.1).toFixed(2)} m`
+  const formattedWeight = `${(weight * 0.1).toFixed(2)} kg`
 
   // Change the types into visual form.
   const typeNames = types.map(type => type.type.name)
@@ -49,20 +49,20 @@ const PokeDexData = ({ pokemonData }) => {
   // Making an actual list of all the abilities.
   const abilityList = abilities.map((ability, index) => {
     const name = ability.ability.name
-    const prefix = ability.is_hidden === true ? '' : `${index+1}. ` 
+    const prefix = ability.is_hidden === true ? '' : `${index + 1}. `
     const hiddenExtraText = ability.is_hidden === true ? ' (hidden ability)' : ''
     return (
-      <li key={index}> 
+      <li key={index}>
         <> {prefix} </>
-        <NavLink to={`/ability/${name}`} className='text-blue-400 hover:text-red-400 hover:underline duration-300'>
-          { formatName(name) }
+        <NavLink to={`/ability/${name}`} className='text-blue-400 duration-300 hover:text-red-400 hover:underline'>
+          {formatName(name)}
         </NavLink>
-        <> { hiddenExtraText } </>
+        <> {hiddenExtraText} </>
       </li>
     )
   })
   const abilityListFinal = (
-    <ol className='list-inside list-none'>
+    <ol className='list-none list-inside'>
       {abilityList}
     </ol>
   )
@@ -94,9 +94,9 @@ const PokeDexData = ({ pokemonData }) => {
     const gameList = gameNames?.map(item => {
       const individualGames = item.split('-').map(game => game.toLowerCase())
       const formattedIndividualGames = individualGames?.map(game =>
-        game.charAt(0).toUpperCase() + game.slice(1)  
+        game.charAt(0).toUpperCase() + game.slice(1)
       )
-      const gameListTemp =  formattedIndividualGames?.join(' / ')
+      const gameListTemp = formattedIndividualGames?.join(' / ')
       return gameListTemp
     })
     return { dexNumber: game.dexNumber, game: gameList?.join(' / ') }
@@ -106,10 +106,10 @@ const PokeDexData = ({ pokemonData }) => {
     return (
       <div className='table-row'>
         <div className='table-cell px-1'>
-          { number.dexNumber }
+          {number.dexNumber}
         </div>
         <div className='table-cell px-1 brightness-90'>
-          { number.game }
+          {number.game}
         </div>
       </div>
     )
@@ -122,7 +122,7 @@ const PokeDexData = ({ pokemonData }) => {
 
   // This is for storing the things to be displayed in each row.
   const tableData = [
-    { label: 'National no.', value: formattedNationalNumber},
+    { label: 'National no.', value: formattedNationalNumber },
     { label: 'Type', value: typeDiv },
     { label: 'Species', value: genus },
     { label: 'Height', value: formattedHeight },
@@ -133,7 +133,7 @@ const PokeDexData = ({ pokemonData }) => {
 
   // Now define the JSX component for all the entries.
   const tableEntries = tableData.map(row => {
-    const spacing = row.label === 'Abilities' || row.label === 'Regional no.'? 'min-h-14' : 'h-12'
+    const spacing = row.label === 'Abilities' || row.label === 'Regional no.' ? 'min-h-14' : 'h-12'
     return (
       <AnimatedTableRowContainer className={`table-row border-t-[1px] border-gray-200 py-2 ${spacing}`} useOnce>
         <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 text-right w-3/12'>
@@ -141,7 +141,7 @@ const PokeDexData = ({ pokemonData }) => {
         </div>
         <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 pl-4 w-9/12'>
           <div className="flex">
-            { row.value }
+            {row.value}
           </div>
         </div>
       </AnimatedTableRowContainer>
@@ -151,12 +151,12 @@ const PokeDexData = ({ pokemonData }) => {
   return (
     <>
       <SectionTitle text={'Pokédex data'} />
-      { 
-        isLoading 
-        ?
-        <TabularSkeleton />
-        :
-        <TableContainer child={tableEntries} />
+      {
+        isLoading
+          ?
+          <TabularSkeleton />
+          :
+          <TableContainer child={tableEntries} />
       }
     </>
   )

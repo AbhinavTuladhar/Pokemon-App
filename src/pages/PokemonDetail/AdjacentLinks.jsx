@@ -40,7 +40,7 @@ const AdjacentLinks = ({ id }) => {
     () => fetchData(url),
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
   )
-    
+
   // Skip rendering for pokemon forms.
   if (id >= 10_000) {
     return
@@ -54,7 +54,7 @@ const AdjacentLinks = ({ id }) => {
   const alignment = id !== 1 ? 'justify-between' : 'justify-end'
 
   return (
-    <div className={`flex my-4 ${alignment}`}>
+    <div className={`flex ${alignment}`}>
       {adjacentData.map((pokemon, index) => {
         const { name, formattedId } = pokemon
         const leftPart = index === 0 && id !== 1 ? '←' : ''

@@ -40,11 +40,11 @@ const LocationList = () => {
         const properLocationName = filteredRoute !== null ? filteredRoute[1] : locationName
         return { locationName: properLocationName, actualUrl, localUrl }
       })
-      .sort((prev, curr) => {
-        // return prev.locationName >= curr.locationName ? 1 : -1
-        // using localeCompare to take into consideration the route numbers.
-        return prev.locationName.localeCompare(curr.locationName, undefined, {numeric: true, sensitivity: 'base'})
-      })
+        .sort((prev, curr) => {
+          // return prev.locationName >= curr.locationName ? 1 : -1
+          // using localeCompare to take into consideration the route numbers.
+          return prev.locationName.localeCompare(curr.locationName, undefined, { numeric: true, sensitivity: 'base' })
+        })
       return { regionName, locations: locationsNew }
     })
   }
@@ -83,14 +83,14 @@ const LocationList = () => {
       const { locationName, localUrl } = location
       return (
         <NavLink to={localUrl} className='hoverable-link min-w-fit'>
-          { formatName(locationName) }
+          {formatName(locationName)}
         </NavLink>
       )
     })
 
     const tabOutput = (
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center'>
-        { locationItems }
+        {locationItems}
       </div>
     )
 
@@ -101,13 +101,12 @@ const LocationList = () => {
   const tabListItems = tabData.map((tab, index) => {
     const { tabName, id } = tab
     return (
-      <li 
-        key={index} 
-        className={`w-20 py-3 border-b-2 flex flex-1 justify-center ${
-          activeTab === id ? 'text-blue-500 border-blue-500' : 'border-transparent hover:text-white hover:border-white'
-        } hover:cursor-pointer hover:brightness-110 bg-gray-900 duration-300`}
+      <li
+        key={index}
+        className={`w-20 py-3 border-b-2 flex flex-1 justify-center ${activeTab === id ? 'text-blue-500 border-blue-500' : 'border-transparent hover:text-white hover:border-white'
+          } hover:cursor-pointer hover:brightness-110 bg-gray-900 duration-300`}
         onClick={() => handleClick(id)}
-      > { formatName(tabName) } </li> 
+      > {formatName(tabName)} </li>
     )
   })
 
@@ -118,27 +117,27 @@ const LocationList = () => {
         key={index}
         className={`${activeTab === id ? '' : 'hidden'}`}
       >
-        { output }
+        {output}
       </div>
     )
   })
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='md:mx-10 mx-2 pb-4'
+      className='pb-4 mx-2 md:mx-10'
     >
-      <h1 className='text-4xl text-center font-bold'>
+      <h1 className='text-4xl font-bold text-center'>
         Pokémon Location guide
       </h1>
       <>
-        <ul className='flex flex-wrap flex-1 flex-row justify-center items-center my-4'> 
-          { tabListItems }
+        <ul className='flex flex-row flex-wrap items-center justify-center flex-1 my-4'>
+          {tabListItems}
         </ul>
         <>
-          { tabContainer }
+          {tabContainer}
         </>
       </>
     </motion.div>

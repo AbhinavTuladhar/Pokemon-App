@@ -19,13 +19,13 @@ function formatFields(data) {
 // For extracting the information from the complex object.
 function extractInformation(data) {
   const information = data?.flatMap(encounter => {
-    const { 
-      location_area: { name: locationName }, 
-      version_details: encounterList 
+    const {
+      location_area: { name: locationName },
+      version_details: encounterList
     } = encounter
     const encounterData = encounterList?.map(version => {
-      const { 
-        version: {name: versionName}, 
+      const {
+        version: { name: versionName },
       } = version
       return {
         locationName: formatFields(locationName).trim(),
@@ -89,18 +89,18 @@ const Locations = ({ props }) => {
     return groupedByLocation
   }
 
-  const { data: finalData = [], isLoading} = useQuery(
+  const { data: finalData = [], isLoading } = useQuery(
     ['locations', id, name],
     () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`),
     { staleTime: Infinity, cacheTime: Infinity, select: transformData }
   )
-    
+
   // some formatting of the data
   const preFinalTable = finalData?.map(entry => {
     const listItems = entry.versionName.map((version, index) => {
       return <li key={index}> {version} </li>
     })
-    const gameList = (<ul className='list-none list-inside'> { listItems } </ul>)
+    const gameList = (<ul className='list-none list-inside'> {listItems} </ul>)
     return { versionName: gameList, locationName: entry.locationName }
   })
 

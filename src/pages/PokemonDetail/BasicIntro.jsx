@@ -33,17 +33,17 @@ const BasicIntro = ({ pokemonData }) => {
 
 
   return (
-    <div className='mt-8 mb-2 flex flex-row flex-wrap'>
+    <div className='flex flex-row flex-wrap mt-8 mb-2'>
       {
         genus
-        ?
-        <span>
-          {`${properName} is ${article}`} &nbsp;
-          {typeDiv} &nbsp;
-          {`type Pokemon introduced in Generation ${generationIntroduced}. It is also known as the '${genus}'.`}
-        </span>
-        :
-        <OneLineSkeleton />
+          ?
+          <span>
+            {`${properName} is ${article}`} &nbsp;
+            {typeDiv} &nbsp;
+            {`type Pokemon introduced in Generation ${generationIntroduced}. It is also known as the '${genus}'.`}
+          </span>
+          :
+          <OneLineSkeleton />
       }
     </div>
   )

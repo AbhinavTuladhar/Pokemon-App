@@ -34,7 +34,7 @@ const PokemonDetail = () => {
     ['pokemonData', id],
     () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/`),
     { staleTime: Infinity, cacheTime: Infinity, select: transformPokemonData }
-  ) 
+  )
 
   // Destructure the pokemoNData object and assign them to several variables.
   const {
@@ -73,7 +73,7 @@ const PokemonDetail = () => {
     { staleTime: Infinity, cacheTime: Infinity, select: transformSpeciesData }
   )
 
-  const { 
+  const {
     base_happiness,
     capture_rate,
     egg_groups,
@@ -158,11 +158,11 @@ const PokemonDetail = () => {
   }
 
   return (
-    <motion.div 
-      className='flex flex-col md:mx-10 mx-4'
+    <motion.div
+      className='flex flex-col mx-4 md:mx-10'
       exit={{ y: '100%', scale: 0.8, opacity: 0, transitionDuration: '0.75s' }}
     >
-      <div className="text-4xl font-bold flex justify-center">
+      <div className="flex justify-center text-4xl font-bold">
         <FadeInAnimationContainer>
           {formatName(idInfo.name)}
         </FadeInAnimationContainer>
@@ -177,83 +177,83 @@ const PokemonDetail = () => {
       </FadeInAnimationContainer>
 
       <FadeInAnimationContainer>
-        <BasicIntro pokemonData={ BasicInfoProps } />
+        <BasicIntro pokemonData={BasicInfoProps} />
       </FadeInAnimationContainer>
 
       <div className='flex flex-row flex-wrap gap-x-10'>
 
-        <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4' id='info'>
+        <div className='flex-grow w-full py-4 mdlg:w-1/4 md:w-1/3' id='info'>
           <FadeInAnimationContainer>
-            <ImageTile imageSources={ imageSourceNew } />
+            <ImageTile imageSources={imageSourceNew} />
           </FadeInAnimationContainer>
         </div>
 
-        <div className='flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4'>
+        <div className='flex-grow w-full py-4 mdlg:w-1/4 md:w-1/3'>
           <FadeInAnimationContainer>
-            <PokeDexData pokemonData={ PokeDexDataProps } />
+            <PokeDexData pokemonData={PokeDexDataProps} />
           </FadeInAnimationContainer>
         </div>
 
-        <div className='flex flex-col flex-grow w-full mdlg:w-1/4 md:w-1/3 py-4 gap-y-5'>
+        <div className='flex flex-col flex-grow w-full py-4 mdlg:w-1/4 md:w-1/3 gap-y-5'>
           <div className='flex flex-col w-full'>
             <FadeInAnimationContainer>
-              <TrainingInfo data={ TrainingInfoProps } />
+              <TrainingInfo data={TrainingInfoProps} />
             </FadeInAnimationContainer>
           </div>
           <div className='flex flex-col w-full'>
             <FadeInAnimationContainer>
-              <BreedingInfo data={ BreedingInfoProps } />
+              <BreedingInfo data={BreedingInfoProps} />
             </FadeInAnimationContainer>
           </div>
         </div>
-        
-        <section className='flex flex-row flex-grow flex-wrap justify-between gap-x-9' id='base-stats'>
+
+        <section className='flex flex-row flex-wrap justify-between flex-grow gap-x-9' id='base-stats'>
           <div className='flex flex-col flex-grow w-full mdlg:w-[51%] sm:w-full'>
             <FadeInAnimationContainer>
-              <BaseStat data={ BaseStatProps } />
+              <BaseStat data={BaseStatProps} />
             </FadeInAnimationContainer>
           </div>
           <div className='flex flex-col flex-grow w-full mdlg:w-[16.5%] sm:w-full'>
             <FadeInAnimationContainer>
-              <TypeChart data={ TypeChartProps } />
+              <TypeChart data={TypeChartProps} />
             </FadeInAnimationContainer>
-          </div> 
+          </div>
         </section>
       </div>
 
       <section id='evolution-chain'>
         <FadeInAnimationContainer>
-          <EvolutionChain url={ evolutionChainUrl } />
+          <EvolutionChain url={evolutionChainUrl} />
         </FadeInAnimationContainer>
       </section>
 
       <section id='pokedex-entries'>
         <FadeInAnimationContainer>
-          <PokeDexEntry data={ PokeDexEntryProps } />
+          <PokeDexEntry data={PokeDexEntryProps} />
         </FadeInAnimationContainer>
       </section>
 
       <section className='py-4 gap-y-5' id='moves-learned'>
         <FadeInAnimationContainer>
-            <MovesLearned data={ MovesLearnedProps } />
+          <MovesLearned data={MovesLearnedProps} />
         </FadeInAnimationContainer>
       </section>
 
       <section id='sprite-table'>
         <FadeInAnimationContainer>
-          <SpriteTable data={ SpriteTableProps} />
+          <SpriteTable data={SpriteTableProps} />
         </FadeInAnimationContainer>
       </section>
-      
+
       <section id='locations'>
         <FadeInAnimationContainer>
-          <Locations props={ LocationsProps } />
+          <Locations props={LocationsProps} />
         </FadeInAnimationContainer>
       </section>
 
       <section id='varieties'>
         <FadeInAnimationContainer>
-          <PokemonVarieties data={ PokemonVarietiesProps }/>
+          <PokemonVarieties data={PokemonVarietiesProps} />
         </FadeInAnimationContainer>
       </section>
 

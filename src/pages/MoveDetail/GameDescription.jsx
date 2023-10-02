@@ -16,7 +16,7 @@ const GameDescription = ({ descriptions }) => {
       acc[generation] = {
         description, generation, version: [version]
       }
-    // Games in the same generation may have different descriptions. So another key is allocated here
+      // Games in the same generation may have different descriptions. So another key is allocated here
     } else if (acc[generation].description !== description) {
       const newGeneration = `${generation}_new`
       acc[newGeneration] = {
@@ -35,13 +35,13 @@ const GameDescription = ({ descriptions }) => {
       <div className='table-row'>
         <div className='table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle text-right'>
           <ul>
-            { row?.version?.map(version => {
-              return (<li className='list-none' key={ version }> { formatName(version) } </li>)
+            {row?.version?.map(version => {
+              return (<li className='list-none' key={version}> {formatName(version)} </li>)
             })}
           </ul>
         </div>
         <div className='table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle'>
-          { row?.description }
+          {row?.description}
         </div>
       </div>
     )

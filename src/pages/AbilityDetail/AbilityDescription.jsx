@@ -13,12 +13,12 @@ const AbilityDescription = ({ descriptions }) => {
       acc[generation] = {
         description, generation, versionName: [versionName]
       }
-    // Games in the same generation may have different descriptions. So another key is allocated here
-    // } else if (acc[generation].description !== description) {
-    //   const newGeneration = `${generation}_new`
-    //   acc[newGeneration] = {
-    //     description, generation: newGeneration, versionName: [versionName]
-    //   }
+      // Games in the same generation may have different descriptions. So another key is allocated here
+      // } else if (acc[generation].description !== description) {
+      //   const newGeneration = `${generation}_new`
+      //   acc[newGeneration] = {
+      //     description, generation: newGeneration, versionName: [versionName]
+      //   }
     } else {
       acc[generation].versionName.push(versionName)
     }
@@ -33,13 +33,13 @@ const AbilityDescription = ({ descriptions }) => {
       <div className='table-row'>
         <div className='table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle text-right'>
           <ul>
-            { row?.versionName?.map(version => {
-              return (<li className='list-none' key={ version }> { formatName(version) } </li>)
+            {row?.versionName?.map(version => {
+              return (<li className='list-none' key={version}> {formatName(version)} </li>)
             })}
           </ul>
         </div>
         <div className='table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle'>
-          { row?.description }
+          {row?.description}
         </div>
       </div>
     )
@@ -48,12 +48,12 @@ const AbilityDescription = ({ descriptions }) => {
   return (
     <>
       <SectionTitle text={'Game Descriptions'} />
-      { 
+      {
         descriptions
-        ? 
-        <TableContainer child={tableRows} />
-        : 
-        <TabularSkeleton />
+          ?
+          <TableContainer child={tableRows} />
+          :
+          <TabularSkeleton />
       }
     </>
   )

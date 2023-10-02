@@ -26,7 +26,7 @@ const BreedingInfo = ({ data }) => {
   const [maleRatio, femaleRatio] = generateGenderInfo(gender_rate)
   const genderRow = (
     <>
-      <span className={maleRatio !== 'Genderless' ? 'text-blue-500': ''}>
+      <span className={maleRatio !== 'Genderless' ? 'text-blue-500' : ''}>
         {maleRatio}
       </span>
       {
@@ -34,8 +34,8 @@ const BreedingInfo = ({ data }) => {
         <>
           ,&nbsp;
           <span className='text-pink-400'>
-          {femaleRatio}
-        </span>
+            {femaleRatio}
+          </span>
         </>
       }
     </>
@@ -55,7 +55,7 @@ const BreedingInfo = ({ data }) => {
 
   const tableDiv = tableRows.map(row => {
     return (
-      <AnimatedTableRowContainer className='table-row py-2 h-12' useOnce>
+      <AnimatedTableRowContainer className='table-row h-12 py-2' useOnce>
         <div className='table-cell border-t-[1px] border-gray-200 align-middle w-4/12 text-right'> {row.label} </div>
         <div className='table-cell border-t-[1px] border-gray-200 align-middle pl-4 w-8/12 items-center'> {row.value} </div>
       </AnimatedTableRowContainer>

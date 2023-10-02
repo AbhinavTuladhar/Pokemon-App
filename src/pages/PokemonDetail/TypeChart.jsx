@@ -40,10 +40,10 @@ const TypeChart = ({ data }) => {
       <SectionTitle text='Type Defenses' />
       <span> {`The effectiveness of each type on ${formatName(name)}: `} </span>
 
-      <div className='flex flex-col md:flex-row mdlg:flex-col sm:flex-row justify-center'>
+      <div className='flex flex-col justify-center md:flex-row mdlg:flex-col sm:flex-row'>
         <div className='flex flex-row flex-wrap mt-6 gap-x-[1px] justify-center'>
           {typeDefenseInfo.slice(0, 9).map(row => (
-            <div className='flex flex-col w-9 text-center'>
+            <div className='flex flex-col text-center w-9'>
               <MiniTypeCard typeName={row.type} />
               <TypeMultiplierBox multiplier={row.multiplier} />
             </div>
@@ -52,7 +52,7 @@ const TypeChart = ({ data }) => {
 
         <div className='flex flex-row flex-wrap mt-2 md:mt-6 sm:mt-6 gap-x-[1px] justify-center'>
           {typeDefenseInfo.slice(9).map(row => (
-            <div className='flex flex-col w-9 text-center'>
+            <div className='flex flex-col text-center w-9'>
               <MiniTypeCard typeName={row.type} />
               <TypeMultiplierBox multiplier={row.multiplier} />
             </div>
