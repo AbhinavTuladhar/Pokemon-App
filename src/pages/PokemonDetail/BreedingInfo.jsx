@@ -1,5 +1,4 @@
 import { React } from 'react'
-import { AnimatedTableRowContainer } from '../../components/AnimatedContainers'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
 import formatName from '../../utils/NameFormatting'
@@ -55,10 +54,10 @@ const BreedingInfo = ({ data }) => {
 
   const tableDiv = tableRows.map(row => {
     return (
-      <AnimatedTableRowContainer className='table-row h-12 py-2' useOnce>
+      <div className='table-row h-12 py-2'>
         <div className='table-cell border-t-[1px] border-gray-200 align-middle w-4/12 text-right'> {row.label} </div>
         <div className='table-cell border-t-[1px] border-gray-200 align-middle pl-4 w-8/12 items-center'> {row.value} </div>
-      </AnimatedTableRowContainer>
+      </div>
     )
   })
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import SectionTitle from '../../components/SectionTitle'
-import { AnimatedTableRowContainer } from '../../components/AnimatedContainers'
 
 // This is for grouping the name of the games if they have the same description for the Pokemon.
 const groupByDescription = data => {
@@ -50,14 +49,14 @@ const PokeDexEntry = ({ data }) => {
 
   const entryRows = finalEntry.map((entry, i) => {
     return (
-      <AnimatedTableRowContainer className='table-row border-t-[1px] border-gray-200 h-12' useOnce>
+      <div className='table-row border-t-[1px] border-gray-200 h-12'>
         <div className='border-t-[1px] align-middle border-gray-200 table-cell text-right py-2'>
           {entry.versionName}
         </div>
         <div className='border-t-[1px] align-middle border-gray-200 table-cell pl-4 py-2'>
           {entry.description}
         </div>
-      </AnimatedTableRowContainer>
+      </div>
     )
   })
 

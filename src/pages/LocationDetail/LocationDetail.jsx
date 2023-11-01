@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Skeleton from 'react-loading-skeleton'
 import GameBox from './GameBox'
-import { FadeInAnimatedTableRowContainer, FadeInAnimationContainer } from '../../components/AnimatedContainers'
+import { FadeInAnimationContainer } from '../../components/AnimatedContainers'
 import TabularSkeleton from '../../components/TabularSkeleton'
 import fetchData from '../../utils/fetchData'
 import { generationToGame } from '../../utils/generationToGame'
@@ -44,11 +44,11 @@ const TableCell = ({ value, isHeader }) => {
 
 const TableRow = ({ rowIndex, rowData }) => {
   return (
-    <FadeInAnimatedTableRowContainer className='table-row'>
+    <div className='table-row'>
       {rowData.map(({ key, value }) => (
         <TableCell value={value} key={key} isHeader={rowIndex === 0} />
       ))}
-    </FadeInAnimatedTableRowContainer>
+    </div>
   )
 }
 

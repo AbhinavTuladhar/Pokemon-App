@@ -7,7 +7,6 @@ import axios from 'axios'
 import TableContainer from '../components/TableContainer'
 import TypeCard from '../components/TypeCard'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
-import { AnimatedTableRowContainer } from '../components/AnimatedContainers'
 import formatName from '../utils/NameFormatting'
 import { extractMoveInformation } from '../utils/extractInfo'
 import movePhysical from '../images/move-physical.png'
@@ -224,9 +223,9 @@ const MoveListing = () => {
       )
     })
     return (
-      <AnimatedTableRowContainer className='table-row' useOnce>
+      <div className='table-row'>
         {tableCells}
-      </AnimatedTableRowContainer>
+      </div>
     )
   })
 

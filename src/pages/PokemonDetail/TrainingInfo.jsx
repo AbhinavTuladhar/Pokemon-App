@@ -1,5 +1,4 @@
 import React from "react"
-import { AnimatedTableRowContainer } from "../../components/AnimatedContainers"
 import SectionTitle from "../../components/SectionTitle"
 import TableContainer from "../../components/TableContainer"
 
@@ -48,10 +47,10 @@ const TrainingInfo = ({ data }) => {
 
   const tableDiv = tableData.map(row => {
     return (
-      <AnimatedTableRowContainer className='table-row border-t-[1px] border-gray-200 py-2 h-12' useOnce>
+      <div className='table-row border-t-[1px] border-gray-200 py-2 h-12'>
         <div className='table-cell border-t-[1px] border-gray-200 align-middle text-right w-4/12'> {row.label} </div>
         <div className='table-cell border-t-[1px] border-gray-200 pl-4 align-middle items-center'> {row.value} </div>
-      </AnimatedTableRowContainer>
+      </div>
     )
   })
 

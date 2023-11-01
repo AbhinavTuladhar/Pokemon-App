@@ -1,7 +1,6 @@
 import { React, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { AnimatedTableRowContainer } from '../../components/AnimatedContainers'
 import SectionTitle from '../../components/SectionTitle'
 import TypeCard from '../../components/TypeCard'
 import TableContainer from '../../components/TableContainer'
@@ -135,7 +134,7 @@ const PokeDexData = ({ pokemonData }) => {
   const tableEntries = tableData.map(row => {
     const spacing = row.label === 'Abilities' || row.label === 'Regional no.' ? 'min-h-14' : 'h-12'
     return (
-      <AnimatedTableRowContainer className={`table-row border-t-[1px] border-gray-200 py-2 ${spacing}`} useOnce>
+      <div className={`table-row border-t-[1px] border-gray-200 py-2 ${spacing}`}>
         <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 text-right w-3/12'>
           {row.label}
         </div>
@@ -144,7 +143,7 @@ const PokeDexData = ({ pokemonData }) => {
             {row.value}
           </div>
         </div>
-      </AnimatedTableRowContainer>
+      </div>
     )
   })
 

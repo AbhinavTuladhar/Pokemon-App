@@ -257,7 +257,9 @@ const PokemonDetail = () => {
         </FadeInAnimationContainer>
       </section>
 
-      <AdjacentLinks id={pokemonId} />
+      <FadeInAnimationContainer className='my-4'>
+        <AdjacentLinks id={pokemonId} />
+      </FadeInAnimationContainer>
 
     </motion.div>
   )
