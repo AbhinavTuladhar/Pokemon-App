@@ -7,13 +7,13 @@ const FadeInAnimationContainer = ({ children, className }) => {
       initial={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: 'easeIn', staggerChildren: 0.2, delayChildren: 0.4 }}
       whileInView={{ opacity: 1 }}
-      viewport={{ once: false }}
+      viewport={{ once: true }}
       className={`${className}`}
     >
-      { children }
+      {children}
     </motion.div>
   )
-} 
+}
 
 // An exclusive animated div for PokemonCard
 const FadeInAnimationCard = ({ children, className }) => {
@@ -25,10 +25,10 @@ const FadeInAnimationCard = ({ children, className }) => {
       viewport={{ once: false }}
       className={`${className}`}
     >
-      { children }
+      {children}
     </motion.div>
   )
-} 
+}
 
 // This is for the table rows.
 const AnimatedTableRowContainer = ({ children, className, useOnce }) => {
@@ -41,7 +41,7 @@ const AnimatedTableRowContainer = ({ children, className, useOnce }) => {
       className={`${className}`}
       viewport={{ once: animateOnce }}
     >
-      { children }
+      {children}
     </motion.div>
   )
 }
@@ -50,13 +50,13 @@ const FadeInAnimatedTableRowContainer = ({ children, className, useOnce }) => {
   const animateOnce = useOnce ? true : false
   return (
     <motion.div
-      initial={{ opacity: 0}}
+      initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className={`${className}`}
       viewport={{ once: animateOnce }}
     >
-      { children }
+      {children}
     </motion.div>
   )
 }

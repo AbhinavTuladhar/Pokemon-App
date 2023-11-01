@@ -7,6 +7,7 @@ import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
 import formatName from '../../utils/NameFormatting'
 import { extractMoveInformation } from '../../utils/extractInfo'
+import { FadeInAnimationContainer } from '../../components/AnimatedContainers'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
 import moveStatus from '../../images/move-status.png'
@@ -237,7 +238,9 @@ const MovesLearned = ({ data }) => {
               <span className='mb-4'>
                 {`${properPokemonName} learns the following moves in generation 7 at the levels specified.`}
               </span>
-              <TableContainer child={levelUpTable} />
+              <FadeInAnimationContainer>
+                <TableContainer child={levelUpTable} />
+              </FadeInAnimationContainer>
             </>
             :
             `${properPokemonName} does not learn any moves by level up`
@@ -251,7 +254,9 @@ const MovesLearned = ({ data }) => {
               <span className='mb-4'>
                 {`${properPokemonName} can be taught the following moves in generation 7 by move tutors.`}
               </span>
-              <TableContainer child={tutorTable} />
+              <FadeInAnimationContainer>
+                <TableContainer child={tutorTable} />
+              </FadeInAnimationContainer>
             </>
             :
             `${properPokemonName} does not learn any move taught by a tutor.`
@@ -264,7 +269,9 @@ const MovesLearned = ({ data }) => {
               <span className='mb-4'>
                 {`${properPokemonName} learns the following moves in generation 7 by breeding.`}
               </span>
-              <TableContainer child={eggTable} />
+              <FadeInAnimationContainer>
+                <TableContainer child={eggTable} />
+              </FadeInAnimationContainer>
             </>
             :
             `${properPokemonName} does not learn any moves by breeding.`
@@ -279,7 +286,9 @@ const MovesLearned = ({ data }) => {
               <span className='mb-4'>
                 {`${properPokemonName} is compatible with these Technical Machines in Generation 7:`}
               </span>
-              <TableContainer child={machineTable} />
+              <FadeInAnimationContainer>
+                <TableContainer child={machineTable} />
+              </FadeInAnimationContainer>
             </>
             :
             `${properPokemonName} does not learn any moves by TM or HM.`
