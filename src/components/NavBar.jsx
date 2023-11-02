@@ -52,7 +52,7 @@ const NavBar = () => {
   return (
     <section className='mb-4'>
       <div
-        className='flex flex-wrap justify-center py-2 text-5xl font-semibold tracking-tight text-center bg-gradient-to-t from-slate-900 to-slate-800 lg:text-6xl lg:font-bold'
+        className='flex flex-wrap justify-center p-2 text-5xl font-semibold tracking-tight text-center bg-gradient-to-t from-slate-900 to-slate-800 lg:text-6xl lg:font-bold'
       >
         <NavLink to='/' className='text-transparent bg-gradient-to-r from-yellow-500 to-indigo-500 bg-clip-text'> Pokémon Database </NavLink>
       </div>

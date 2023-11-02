@@ -17,6 +17,7 @@ import MovesLearned from './MovesLearned'
 import TypeChart from './TypeChart';
 import EvolutionChain from './EvolutionChain';
 import PokemonVarieties from './PokemonVarieties';
+import OtherLanguages from './OtherLanguages';
 import { FadeInAnimationContainer } from '../../components/AnimatedContainers';
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData';
@@ -35,6 +36,8 @@ const PokemonDetail = () => {
     () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/`),
     { staleTime: Infinity, cacheTime: Infinity, select: transformPokemonData }
   )
+
+  console.log(pokemonData)
 
   // Destructure the pokemoNData object and assign them to several variables.
   const {
@@ -67,7 +70,7 @@ const PokemonDetail = () => {
     return extractSpeciesInformation(data)
   }
 
-  const { data: speciesDataNew, isLoading: isLoadingSpeciesData } = useQuery(
+  const { data: speciesData, isLoading: isLoadingSpeciesData } = useQuery(
     ['speciesData', speciesLink],
     () => fetchData(speciesLink),
     { staleTime: Infinity, cacheTime: Infinity, select: transformSpeciesData }
@@ -80,13 +83,15 @@ const PokemonDetail = () => {
     evolutionChainUrl,
     flavor_text_entries,
     gender_rate,
+    genera,
     generationIntroduced,
     genus,
     growth_rate,
     hatch_counter,
+    names,
     pokedex_numbers,
-    varieties
-  } = speciesDataNew || {}
+    varieties,
+  } = speciesData || {}
 
   // Setting the title
   document.title = `${formatName(pokemonName)}: stats, moves, evolution and locations | Pokémon Database`
@@ -151,6 +156,11 @@ const PokemonDetail = () => {
   const PokemonVarietiesProps = {
     pokemonName,
     varieties
+  }
+
+  const OtherLanguagesProps = {
+    names,
+    genera
   }
 
   if (isLoadingPokemonData || isLoadingSpeciesData) {
@@ -250,6 +260,10 @@ const PokemonDetail = () => {
           <Locations props={LocationsProps} />
         </FadeInAnimationContainer>
       </section>
+
+      <FadeInAnimationContainer>
+        <OtherLanguages data={OtherLanguagesProps} />
+      </FadeInAnimationContainer>
 
       <section id='varieties'>
         <FadeInAnimationContainer>

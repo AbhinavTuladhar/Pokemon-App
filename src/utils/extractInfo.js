@@ -180,6 +180,7 @@ export const extractSpeciesInformation = data => {
     generation: { name: generationIntroduced },
     growth_rate : {name: growthRateType},
     hatch_counter,
+    names,
     pokedex_numbers,
     varieties
   } = data
@@ -194,9 +195,11 @@ export const extractSpeciesInformation = data => {
     flavor_text_entries,
     gender_rate,
     generationIntroduced,
+    genera,
     genus: englishGenus.genus,
     growth_rate: growthRateType,
     hatch_counter,
+    names,
     pokedex_numbers,
     varieties
   }
