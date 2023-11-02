@@ -305,7 +305,6 @@ const EvolutionChain = ({ url }) => {
     ]
     eeveelutionDiv.push(<EvolutionDiv finalPokemonData={locationEvolutionsData} individualPokemon={locationEvolutionsDivs} />)
   } else if (firstPokemonName === 'wurmple') {
-    console.log(finalPokemonData)
     let wormData = [
       finalPokemonData[0], finalPokemonData[1], finalPokemonData[3]
     ]

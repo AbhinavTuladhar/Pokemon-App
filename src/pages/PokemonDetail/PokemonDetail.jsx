@@ -37,8 +37,6 @@ const PokemonDetail = () => {
     { staleTime: Infinity, cacheTime: Infinity, select: transformPokemonData }
   )
 
-  console.log(pokemonData)
-
   // Destructure the pokemoNData object and assign them to several variables.
   const {
     abilities,

@@ -1,6 +1,5 @@
 import React from 'react'
 import SectionTitle from '../../components/SectionTitle'
-import TableContainer from '../../components/TableContainer'
 import { languageNameMapping } from '../../utils/languageNameMapping'
 
 const customOrder = {
@@ -25,6 +24,22 @@ function processLanuages(arr) {
   return properLanguages.sort((a, b) => customOrder[a.languageName] - customOrder[b.languageName])
 }
 
+const LanguageCell = ({ children }) => {
+  return (
+    <div className='w-2/5 border-t align-middle border-gray-200 table-cell text-right font-thin'>
+      {children}
+    </div>
+  )
+}
+
+const NameCell = ({ children }) => {
+  return (
+    <div className='border-t align-middle border-gray-200 table-cell pl-4'>
+      {children}
+    </div>
+  )
+}
+
 const OtherLanguages = ({ data }) => {
   const { names, genera } = data
 
@@ -44,12 +59,12 @@ const OtherLanguages = ({ data }) => {
   const nameRows = languagesList.map((row, index) => {
     return (
       <div className='table-row border-t border-gray-200 h-12'>
-        <div className='w-2/5 border-t align-middle border-gray-200 table-cell text-right font-thin'>
+        <LanguageCell>
           {row.languageName}
-        </div>
-        <div className='border-t align-middle border-gray-200 table-cell pl-4'>
+        </LanguageCell>
+        <NameCell>
           {row.pokemonName}
-        </div>
+        </NameCell>
       </div>
     )
   })
@@ -57,12 +72,12 @@ const OtherLanguages = ({ data }) => {
   const genusRows = generaList.map((row, index) => {
     return (
       <div className='table-row border-t border-gray-200 h-12 w-screen'>
-        <div className='w-2/5 border-t align-middle border-gray-200 table-cell text-right font-thin'>
+        <LanguageCell>
           {row.languageName}
-        </div>
-        <div className='border-t align-middle border-gray-200 table-cell pl-4'>
+        </LanguageCell>
+        <NameCell>
           {row.genusName}
-        </div>
+        </NameCell>
       </div>
     )
   })
