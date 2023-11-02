@@ -13,18 +13,19 @@ import AbilityListing from '../pages/AbilityListing'
 import AbilityDetail from '../pages/AbilityDetail/AbilityDetail'
 import LocationList from '../pages/LocationList'
 import LocationDetail from '../pages/LocationDetail/LocationDetail'
+import EggGroupListing from '../pages/EggGroupListing'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
   const generationRouteData = [
-    { path: '/pokemon/generation-1', idRange: [1, 151]},
-    { path: '/pokemon/generation-2', idRange: [152, 251]},
-    { path: '/pokemon/generation-3', idRange: [252, 386]},
-    { path: '/pokemon/generation-4', idRange: [387, 493]},
-    { path: '/pokemon/generation-5', idRange: [494, 649]},
-    { path: '/pokemon/generation-6', idRange: [650, 721]},
-    { path: '/pokemon/generation-7', idRange: [722, 807]},
-    { path: '/pokemon/forms', idRange: [10001, 10157]},
+    { path: '/pokemon/generation-1', idRange: [1, 151] },
+    { path: '/pokemon/generation-2', idRange: [152, 251] },
+    { path: '/pokemon/generation-3', idRange: [252, 386] },
+    { path: '/pokemon/generation-4', idRange: [387, 493] },
+    { path: '/pokemon/generation-5', idRange: [494, 649] },
+    { path: '/pokemon/generation-6', idRange: [650, 721] },
+    { path: '/pokemon/generation-7', idRange: [722, 807] },
+    { path: '/pokemon/forms', idRange: [10001, 10157] },
   ]
 
   const generationRoutes = generationRouteData.map(gen => {
@@ -41,6 +42,7 @@ const AnimatedRoutes = () => {
         <Route path='/moves' element={<MoveListing />} />
         <Route path='/ability' element={<AbilityListing />} />
         <Route path='/location' element={<LocationList />} />
+        <Route path='/egg-group' element={<EggGroupListing />} />
         {generationRoutes}
         <Route path='/pokemon/:id' element={<PokemonDetail />} />
         <Route path='/types/:type' element={<TypeDetail />} />

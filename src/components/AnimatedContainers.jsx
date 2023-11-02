@@ -22,7 +22,7 @@ const FadeInAnimationCard = ({ children, className }) => {
       initial={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: 'easeIn' }}
       whileInView={{ opacity: 1 }}
-      viewport={{ once: false }}
+      viewport={{ once: true }}
       className={`${className}`}
     >
       {children}

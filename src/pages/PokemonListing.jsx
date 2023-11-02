@@ -79,18 +79,17 @@ const MainPage = ({ idRange }) => {
           onChange={handleChange}
         />
       </div>
-      {
-        isLoading
-          ?
+      {isLoading ? (
+        <div className='flex flex-wrap items-center justify-center px-0 py-4 gap-x-2 gap-y-3'>
+          <PokeCardSkeleton cardCount={20} />
+        </div>
+      ) : (
+        <>
           <div className='flex flex-wrap items-center justify-center px-0 py-4 gap-x-2 gap-y-3'>
-            <PokeCardSkeleton cardCount={20} />
+            {pokemonBoxes}
           </div>
-          :
-          <>
-            <div className='flex flex-wrap items-center justify-center px-0 py-4 gap-x-2 gap-y-3'>
-              {pokemonBoxes}
-            </div>
-          </>
+        </>
+      )
       }
     </motion.div>
   )
