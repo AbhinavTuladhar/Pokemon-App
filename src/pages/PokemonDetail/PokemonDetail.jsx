@@ -41,8 +41,6 @@ const PokemonDetail = () => {
   const {
     abilities,
     base_experience,
-    forms,
-    game_indices,
     height,
     id: pokemonId,
     moves,
@@ -51,7 +49,6 @@ const PokemonDetail = () => {
     speciesLink,
     front_default: defaultSprite,
     front_shiny: shinySprite,
-    gameSprite,
     spriteCollection,
     icon,
     stats,
@@ -82,7 +79,6 @@ const PokemonDetail = () => {
     flavor_text_entries,
     gender_rate,
     genera,
-    generationIntroduced,
     genus,
     growth_rate,
     hatch_counter,
@@ -259,9 +255,11 @@ const PokemonDetail = () => {
         </FadeInAnimationContainer>
       </section>
 
-      <FadeInAnimationContainer>
-        <OtherLanguages data={OtherLanguagesProps} />
-      </FadeInAnimationContainer>
+      <section id='languages'>
+        <FadeInAnimationContainer>
+          <OtherLanguages data={OtherLanguagesProps} />
+        </FadeInAnimationContainer>
+      </section>
 
       <section id='varieties'>
         <FadeInAnimationContainer>

@@ -9,7 +9,8 @@ const PageNavigation = () => {
     { ref: '#moves-learned', text: 'Moves learned' },
     { ref: '#sprite-table', text: 'Sprites' },
     { ref: '#locations', text: 'Locations' },
-    { ref: '#varieties', text: 'Forms' }
+    { ref: '#varieties', text: 'Forms' },
+    { ref: '#languages', text: 'Languages' }
   ]
   return (
     <div className='flex flex-row flex-wrap p-4 space-x-6 rounded-lg bg-cyan-300 justify-evenly'>
