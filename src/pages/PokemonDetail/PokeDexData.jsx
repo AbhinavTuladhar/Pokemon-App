@@ -150,12 +150,10 @@ const PokeDexData = ({ pokemonData }) => {
   return (
     <>
       <SectionTitle text={'Pokédex data'} />
-      {
-        isLoading
-          ?
-          <TabularSkeleton />
-          :
-          <TableContainer child={tableEntries} />
+      {isLoading ?
+        <TabularSkeleton />
+        :
+        <TableContainer child={tableEntries} />
       }
     </>
   )

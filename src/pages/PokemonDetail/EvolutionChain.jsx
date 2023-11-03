@@ -348,38 +348,31 @@ const EvolutionChain = ({ url }) => {
   return (
     <>
       <SectionTitle text='Evolution Chart' />
-      {
-        isLoading || isLoadingPokemonData
-          ?
-          <Skeleton width='100%' height='12rem' containerClassName='flex-1 w-full' />
-          :
-          finalEvolutionDiv
-            ?
-            <div className='flex flex-col justify-center md:flex-row sm:flex-col gap-x-5'>
-              {finalEvolutionDiv}
-            </div>
-            :
-            <>
-              {
-                eeveelutionDiv.length > 0 ? (
-                  eeveelutionDiv.map(div => {
-                    return (
-                      <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5'>
-                        {div}
-                      </div>
-                    )
-                  })
-                ) : (
-                  wurmpleDiv.map(div => {
-                    return (
-                      <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5'>
-                        {div}
-                      </div>
-                    )
-                  })
-                )
-              }
-            </>
+      {isLoading || isLoadingPokemonData ? (
+        <Skeleton width='100%' height='12rem' containerClassName='flex-1 w-full' />
+      ) : (
+        finalEvolutionDiv ? (
+          <div className='flex flex-col justify-center md:flex-row sm:flex-col gap-x-5'>
+            {finalEvolutionDiv}
+          </div>
+        ) : (eeveelutionDiv.length > 0 ? (
+          eeveelutionDiv.map(div => {
+            return (
+              <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5'>
+                {div}
+              </div>
+            )
+          })
+        ) : (
+          wurmpleDiv.map(div => {
+            return (
+              <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5'>
+                {div}
+              </div>
+            )
+          })
+        )
+        ))
       }
     </>
   )

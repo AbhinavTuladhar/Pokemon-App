@@ -5,7 +5,7 @@ import generationMappingV2 from '../../utils/generationMappingV2'
 import OneLineSkeleton from '../../components/OneLineSkeleton'
 
 const BasicIntro = ({ pokemonData }) => {
-  const { id, pokedex_numbers, name, types, genus } = pokemonData
+  const { id, name, types, genus } = pokemonData
 
   // Don't display for the other Pokemon forms.
   if (id >= 10_000) return
@@ -34,16 +34,14 @@ const BasicIntro = ({ pokemonData }) => {
 
   return (
     <div className='flex flex-row flex-wrap mt-8 mb-2'>
-      {
-        genus
-          ?
-          <span>
-            {`${properName} is ${article}`} &nbsp;
-            {typeDiv} &nbsp;
-            {`type Pokemon introduced in Generation ${generationIntroduced}. It is also known as the '${genus}'.`}
-          </span>
-          :
-          <OneLineSkeleton />
+      {genus ? (
+        <span>
+          {`${properName} is ${article}`} &nbsp;
+          {typeDiv} &nbsp;
+          {`type Pokemon introduced in Generation ${generationIntroduced}. It is also known as the '${genus}'.`}
+        </span>
+      ) :
+        <OneLineSkeleton />
       }
     </div>
   )

@@ -241,28 +241,24 @@ const LocationDetail = () => {
       className='pb-4 mx-2 md:mx-10'
     >
       <h1 className='text-3xl font-bold text-center'>
-        {
-          isLoadingSubLocationData
-            ?
-            <SimpleSkeletonRow width='50vw' />
-            :
+        {isLoadingSubLocationData ?
+          <SimpleSkeletonRow width='50vw' />
+          : (
             <FadeInAnimationContainer>
               {formatName(locationName)}
             </FadeInAnimationContainer>
-        }
+          )}
       </h1>
 
       {/* For rendering skeleton when the content has not been loaded */}
       <>
-        {
-          isLoadingSubLocationData && (
-            <div className='flex flex-col mt-4 gap-y-5'>
-              <SimpleSkeletonRow width='50%' />
-              <SimpleSkeletonRow width='30%' />
-              <TabularSkeleton />
-            </div>
-          )
-        }
+        {isLoadingSubLocationData && (
+          <div className='flex flex-col mt-4 gap-y-5'>
+            <SimpleSkeletonRow width='50%' />
+            <SimpleSkeletonRow width='30%' />
+            <TabularSkeleton />
+          </div>
+        )}
       </>
       <>
         {generationDiv?.map(generation => <div className='flex flex-col'> {generation} </div>)}

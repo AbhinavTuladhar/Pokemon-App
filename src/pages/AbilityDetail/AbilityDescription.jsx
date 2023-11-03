@@ -48,13 +48,11 @@ const AbilityDescription = ({ descriptions }) => {
   return (
     <>
       <SectionTitle text={'Game Descriptions'} />
-      {
-        descriptions
-          ?
-          <TableContainer child={tableRows} />
-          :
-          <TabularSkeleton />
-      }
+      {descriptions ? (
+        <TableContainer child={tableRows} />
+      ) : (
+        <TabularSkeleton />
+      )}
     </>
   )
 }

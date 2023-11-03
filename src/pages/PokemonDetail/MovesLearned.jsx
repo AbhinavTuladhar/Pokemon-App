@@ -231,67 +231,59 @@ const MovesLearned = ({ data }) => {
     <div className='flex flex-row flex-wrap justify-between w-full'>
       <div className='flex flex-col w-full lg:w-475/1000'>
         <SectionTitle text={'Moves learnt by level up'} />
-        {
-          finalMoveDetails?.level?.length > 1
-            ?
-            <>
-              <span className='mb-4'>
-                {`${properPokemonName} learns the following moves in generation 7 at the levels specified.`}
-              </span>
-              <FadeInAnimationContainer>
-                <TableContainer child={levelUpTable} />
-              </FadeInAnimationContainer>
-            </>
-            :
-            `${properPokemonName} does not learn any moves by level up`
+        {finalMoveDetails?.level?.length > 1 ? (
+          <>
+            <span className='mb-4'>
+              {`${properPokemonName} learns the following moves in generation 7 at the levels specified.`}
+            </span>
+            <FadeInAnimationContainer>
+              <TableContainer child={levelUpTable} />
+            </FadeInAnimationContainer>
+          </>
+        ) :
+          `${properPokemonName} does not learn any moves by level up`
         }
 
         <SectionTitle text={'Moves learnt by tutor'} />
-        {
-          finalMoveDetails?.tutor?.length > 1
-            ?
-            <>
-              <span className='mb-4'>
-                {`${properPokemonName} can be taught the following moves in generation 7 by move tutors.`}
-              </span>
-              <FadeInAnimationContainer>
-                <TableContainer child={tutorTable} />
-              </FadeInAnimationContainer>
-            </>
-            :
-            `${properPokemonName} does not learn any move taught by a tutor.`
+        {finalMoveDetails?.tutor?.length > 1 ? (
+          <>
+            <span className='mb-4'>
+              {`${properPokemonName} can be taught the following moves in generation 7 by move tutors.`}
+            </span>
+            <FadeInAnimationContainer>
+              <TableContainer child={tutorTable} />
+            </FadeInAnimationContainer>
+          </>
+        ) :
+          `${properPokemonName} does not learn any move taught by a tutor.`
         }
         <SectionTitle text={'Moves learnt by Breeding'} />
-        {
-          finalMoveDetails?.egg?.length > 1
-            ?
-            <>
-              <span className='mb-4'>
-                {`${properPokemonName} learns the following moves in generation 7 by breeding.`}
-              </span>
-              <FadeInAnimationContainer>
-                <TableContainer child={eggTable} />
-              </FadeInAnimationContainer>
-            </>
-            :
-            `${properPokemonName} does not learn any moves by breeding.`
+        {finalMoveDetails?.egg?.length > 1 ? (
+          <>
+            <span className='mb-4'>
+              {`${properPokemonName} learns the following moves in generation 7 by breeding.`}
+            </span>
+            <FadeInAnimationContainer>
+              <TableContainer child={eggTable} />
+            </FadeInAnimationContainer>
+          </>
+        ) :
+          `${properPokemonName} does not learn any moves by breeding.`
         }
       </div>
       <div className='flex flex-col w-full lg:w-475/1000'>
         <SectionTitle text={'Moves learnt by HM/TM'} />
-        {
-          finalMoveDetails?.machine?.length > 1
-            ?
-            <>
-              <span className='mb-4'>
-                {`${properPokemonName} is compatible with these Technical Machines in Generation 7:`}
-              </span>
-              <FadeInAnimationContainer>
-                <TableContainer child={machineTable} />
-              </FadeInAnimationContainer>
-            </>
-            :
-            `${properPokemonName} does not learn any moves by TM or HM.`
+        {finalMoveDetails?.machine?.length > 1 ? (
+          <>
+            <span className='mb-4'>
+              {`${properPokemonName} is compatible with these Technical Machines in Generation 7:`}
+            </span>
+            <FadeInAnimationContainer>
+              <TableContainer child={machineTable} />
+            </FadeInAnimationContainer>
+          </>
+        ) :
+          `${properPokemonName} does not learn any moves by TM or HM.`
         }
       </div>
     </div>

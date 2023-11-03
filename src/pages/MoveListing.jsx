@@ -246,13 +246,11 @@ const MoveListing = () => {
           onChange={handleChange}
         />
       </div>
-      {
-        // Checking if data is present
-        (moveTableRows?.length < 2 && TMData.length === 0)
-          ?
-          <MoveListingSkeleton rowCount={20} />
-          :
-          <TableContainer child={moveTableRows} />
+      {/* // Checking if data is present */}
+      {(moveTableRows?.length < 2 && TMData.length === 0) ?
+        <MoveListingSkeleton rowCount={20} />
+        :
+        <TableContainer child={moveTableRows} />
       }
     </motion.div>
   )

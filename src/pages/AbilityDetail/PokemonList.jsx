@@ -112,15 +112,13 @@ const PokemonList = ({ data }) => {
 
   return (
     <>
-      {
-        pokemonList
-          ?
-          <>
-            <SectionTitle text={`Pokemon with ${formatName(abilityName)}`} />
-            <TableContainer child={rowData} />
-          </>
-          :
-          <TabularSkeleton />
+      {pokemonList ? (
+        <>
+          <SectionTitle text={`Pokemon with ${formatName(abilityName)}`} />
+          <TableContainer child={rowData} />
+        </>
+      ) :
+        <TabularSkeleton />
       }
     </>
   )

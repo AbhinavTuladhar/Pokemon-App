@@ -121,10 +121,8 @@ const AbilityListing = () => {
           onChange={handleChange}
         />
       </div>
-      {
-        // Checking if data is present
-        (tableRows?.length < 2 && abilityInfo?.length === 0)
-          ?
+      {// Checking if data is present
+        (tableRows?.length < 2 && abilityInfo?.length === 0) ?
           <MoveListingSkeleton rowCount={20} />
           :
           <TableContainer child={tableRows} />

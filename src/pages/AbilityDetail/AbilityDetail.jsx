@@ -38,12 +38,10 @@ const AbilityDetail = () => {
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       <div className='flex justify-center text-4xl font-bold text-center'>
-        {
-          abilityInfo.name
-            ?
-            `${formatName(abilityInfo.name)} (ability)`
-            :
-            <Skeleton width='100%' height='2.75rem' containerClassName='flex-1 w-full' />
+        {abilityInfo.name ?
+          `${formatName(abilityInfo.name)} (ability)`
+          :
+          <Skeleton width='100%' height='2.75rem' containerClassName='flex-1 w-full' />
         }
       </div>
       <div className='flex flex-row flex-wrap mt-4 gap-x-10'>
