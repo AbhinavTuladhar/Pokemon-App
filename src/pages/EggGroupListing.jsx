@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import formatName from '../utils/NameFormatting'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import { NavLink } from 'react-router-dom'
+import { extractEggGroupInformation } from '../utils/extractInfo'
 
 const TableRow = ({ children, extraClassName }) => {
   return (
@@ -55,21 +56,12 @@ const EggGroupListing = () => {
     {
       staleTime: Infinity, cacheTime: Infinity,
       select: data => {
-        return data.map(eggGroup => {
-          // Filter out gen 8+ species.
-          const { name, pokemon_species } = eggGroup
-          const filteredSpecies = pokemon_species.filter(species => {
-            const { url } = species
-            const idNumber = parseInt(url.match(/\/(\d+)\/$/)[1])
-            return idNumber <= 807
-          })
-          return {
-            eggGroup: name, pokemonCount: filteredSpecies.length
-          }
-        })
+        return data.map(extractEggGroupInformation).sort((a, b) => a.eggGroup.localeCompare(b.eggGroup))
       }
     }
   )
+
+  console.log(groupPokemonCount)
 
   const headerRow = (
     <TableRow extraClassName='font-bold bg-[#1a1a1a]'>

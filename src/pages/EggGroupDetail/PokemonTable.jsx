@@ -63,7 +63,7 @@ const PokemonTable = ({ data }) => {
   })
   return (
     <motion.div
-      className='table'
+      className='table self-start border-b border-slate-200'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}

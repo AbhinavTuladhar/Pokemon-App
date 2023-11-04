@@ -387,3 +387,15 @@ export const extractLocationAreaInformation = locationAreaData => {
 
   return { subLocationName: properLocationAreaName, encounterDetails: groupedEncounterDetailsByGame }
 }
+
+export const extractEggGroupInformation = data => {
+  const { name, pokemon_species } = data
+  const filteredSpecies = pokemon_species.filter(species => {
+    const { url } = species
+    const idNumber = parseInt(url.match(/\/(\d+)\/$/)[1])
+    return idNumber <= 807
+  })
+  return {
+    eggGroup: name, pokemonCount: filteredSpecies.length
+  }
+}

@@ -6,6 +6,7 @@ import formatName from '../../utils/NameFormatting'
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import PokemonTable from './PokemonTable'
 import MoveListingSkeleton from '../../components/MoveListingSkeleton'
+import GroupList from './GroupList'
 import { motion } from 'framer-motion'
 
 const EggGroupDetail = () => {
@@ -84,11 +85,18 @@ const EggGroupDetail = () => {
         <span> {formatName(eggGroupid)} </span>
         <span className='text-gray-400'> (egg group) </span>
       </h1>
-      {isLoadingPokemonData || isLoadingSpeciesData ? (
-        <MoveListingSkeleton rowCount={20} />
-      ) : (
-        <PokemonTable data={finalData} />
-      )}
+      <div className='flex flex-row flex-wrap gap-10'>
+        <div className='w-screen lg:w-1/3'>
+          <GroupList />
+        </div>
+        <div className='w-screen flex justify-center lg:w-2/5'>
+          {(isLoadingPokemonData || isLoadingSpeciesData) ? (
+            <MoveListingSkeleton rowCount={20} />
+          ) : (
+            <PokemonTable data={finalData} />
+          )}
+        </div>
+      </div>
     </motion.div>
   )
 }
