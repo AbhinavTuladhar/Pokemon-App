@@ -5,9 +5,9 @@ import { useQuery } from 'react-query'
 import formatName from '../../utils/NameFormatting'
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import PokemonTable from './PokemonTable'
-import MoveListingSkeleton from '../../components/MoveListingSkeleton'
 import GroupList from './GroupList'
 import { motion } from 'framer-motion'
+import { FadeInAnimationContainer } from '../../components/AnimatedContainers'
 
 const EggGroupDetail = () => {
   const { id: eggGroupid } = useParams()
@@ -90,11 +90,9 @@ const EggGroupDetail = () => {
           <GroupList />
         </div>
         <div className='w-screen flex justify-center lg:w-2/5'>
-          {(isLoadingPokemonData || isLoadingSpeciesData) ? (
-            <MoveListingSkeleton rowCount={10} />
-          ) : (
-            <PokemonTable data={finalData} />
-          )}
+          <FadeInAnimationContainer className='w-full'>
+            <PokemonTable data={finalData} isLoading={isLoadingPokemonData || isLoadingSpeciesData} />
+          </FadeInAnimationContainer>
         </div>
       </div>
     </motion.div>

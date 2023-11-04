@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom'
 import TypeCard from '../../components/TypeCard'
 import formatName from '../../utils/NameFormatting'
 import { motion } from 'framer-motion'
+import MoveListingSkeleton from '../../components/MoveListingSkeleton'
 
-const PokemonTable = ({ data }) => {
+const PokemonTable = ({ data, isLoading }) => {
   const headerNames = ['#', 'Name', 'Type', 'Other group']
   const tableHeaders = headerNames.map(header => (
     <div className='h-12 bg-[#1a1a1a] table-cell px-4 py-2 border-t-[1px] font-bold border-slate-200 align-middle'>
@@ -49,7 +50,7 @@ const PokemonTable = ({ data }) => {
     ]
 
     const tableCells = cellData.map(cell => (
-      <div className='h-12 table-cell px-4 py-2 border-t-[1px] border-slate-200 align-middle'>
+      <div className='h-12 table-cell px-4 py-2 border-t-[1px] border-slate-200 align-middle w-32'>
         {cell.value}
       </div>
     ))
@@ -63,14 +64,20 @@ const PokemonTable = ({ data }) => {
   })
   return (
     <motion.div
-      className='table self-start border-b border-slate-200'
+      className='table self-start border-b border-slate-200 w-full'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
-      {tableHeaders}
-      {tableRows}
+      {!isLoading ? (
+        <div className='table'>
+          {tableHeaders}
+          {tableRows}
+        </div>
+      ) : (
+        <MoveListingSkeleton rowCount={10} />
+      )}
     </motion.div>
   )
 }
