@@ -2,6 +2,7 @@ import { React } from 'react'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
 import formatName from '../../utils/NameFormatting'
+import { NavLink } from 'react-router-dom'
 
 const generateGenderInfo = genderRate => {
   // The gender_rate is a value showing how many out of 8 pokemon are female.
@@ -19,7 +20,14 @@ const BreedingInfo = ({ data }) => {
   const { egg_groups, gender_rate, hatch_counter } = data
 
   // List the egg groups
-  const eggGroupList = egg_groups?.map(group => formatName(group.name)).join(', ')
+  const eggGroupList = egg_groups?.map((group, index) => (
+    <span key={index}>
+      <NavLink to={`/egg-group/${group.name}`} className='hoverable-link font-normal'>
+        {formatName(group.name)}
+      </NavLink>
+      {index < egg_groups.length - 1 && ', '}
+    </span>
+  ))
 
   // For the gender.
   const [maleRatio, femaleRatio] = generateGenderInfo(gender_rate)

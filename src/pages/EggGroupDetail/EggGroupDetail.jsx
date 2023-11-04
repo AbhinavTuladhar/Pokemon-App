@@ -91,7 +91,7 @@ const EggGroupDetail = () => {
         </div>
         <div className='w-screen flex justify-center lg:w-2/5'>
           {(isLoadingPokemonData || isLoadingSpeciesData) ? (
-            <MoveListingSkeleton rowCount={20} />
+            <MoveListingSkeleton rowCount={10} />
           ) : (
             <PokemonTable data={finalData} />
           )}
