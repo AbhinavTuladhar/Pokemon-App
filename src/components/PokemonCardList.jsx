@@ -20,8 +20,8 @@ const PokemonCardList = ({ title, pokemonUrls }) => {
   )
 
   // We now map the Pokemon data into the respective cards.
-  const pokeCards = pokemonData?.map(pokemon => (
-    <PokeCardV2 pokemonData={pokemon} />
+  const pokeCards = pokemonData?.map((pokemon, index) => (
+    <PokeCardV2 pokemonData={pokemon} key={index} />
   ))
 
   return (

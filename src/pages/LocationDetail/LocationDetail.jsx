@@ -154,11 +154,11 @@ const LocationDetail = () => {
   Since all the above information have already been rendered, we omit them from the table.
   */
   // Generation is at the highest level, so the generation divs come first.
-  const generationDiv = groupedByGenerationSubLocationAndMethod?.map(({ generation, subLocations }) => {
+  const generationDiv = groupedByGenerationSubLocationAndMethod?.map(({ generation, subLocations }, divIndex) => {
     // Next is the sub location div.
-    const subLocationDivNew = subLocations?.map(({ subLocationName, methods }) => {
+    const subLocationDivNew = subLocations?.map(({ subLocationName, methods }, subIndex) => {
       // Finally, the encounter methods.
-      const encounterMethodDiv = methods?.map(({ methodName, encounterDetails }) => {
+      const encounterMethodDiv = methods?.map(({ methodName, encounterDetails }, methodIndex) => {
         // Find the name of the encounter method description
         const encounterDescription = encounterMethodDescriptions.find(method => method.name === methodName).description
 
@@ -199,12 +199,12 @@ const LocationDetail = () => {
         })
         // Now render the sub location name, with the generation as the prefix.
         return (
-          <>
+          <div key={methodIndex}>
             {isLoadingSubLocationData
               ?
               <SimpleSkeletonRow width='20vw' />
               :
-              <div className='my-4 flex flex-col gap-y-1'>
+              <div className='flex flex-col my-4 gap-y-1'>
                 <h1 className='text-2xl font-bold'>
                   {`${formatName(methodName)}`}
                 </h1>
@@ -220,7 +220,7 @@ const LocationDetail = () => {
                 </div>
               </div>
             </div>
-          </>
+          </div>
         )
       })
       return (
@@ -233,14 +233,14 @@ const LocationDetail = () => {
               {`${generation} - ${subLocationName}`}
             </h1>
           }
-          <> {encounterMethodDiv} </>
+          <div key={subIndex}> {encounterMethodDiv} </div>
         </>
       )
     })
     return (
-      <>
+      <div key={divIndex}>
         {subLocationDivNew}
-      </>
+      </div>
     )
   })
 

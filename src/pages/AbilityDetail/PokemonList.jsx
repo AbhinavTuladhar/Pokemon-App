@@ -16,7 +16,7 @@ const PokemonList = ({ data }) => {
   // Extracting information from the API response.
   const transformData = pokemonData => {
     // We now need to find the pokemon name, the icons, and the other abilities of the pokemon.
-    const rawInformation = pokemonData?.map(pokemon => {
+    const rawInformation = pokemonData?.map((pokemon) => {
       const { abilities, name, icon, id, order, nationalNumber } = extractPokemonInformation(pokemon)
       // Now find the other abilities of the Pokemon. THese pokemon should have an icon.
       const otherAbilities = abilities?.filter(ability => ability.ability.name !== abilityName)
@@ -97,14 +97,14 @@ const PokemonList = ({ data }) => {
 
     const tableCells = cellData?.map((cell, cellIndex) => {
       return (
-        <div className={`${cell?.style} table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle ${(index === 0 && cellIndex !== cellData.length - 1) && 'border-r-[1px]'} ${index === 0 && 'bg-gray-900 font-bold'}`}>
+        <div className={`${cell?.style} table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle ${(index === 0 && cellIndex !== cellData.length - 1) && 'border-r-[1px]'} ${index === 0 && 'bg-gray-900 font-bold'}`} key={cellIndex}>
           {cell.value}
         </div>
       )
     })
 
     return (
-      <div className='table-row'>
+      <div className='table-row' key={index}>
         {tableCells}
       </div>
     )

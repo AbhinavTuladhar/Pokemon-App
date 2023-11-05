@@ -28,12 +28,12 @@ const AbilityDescription = ({ descriptions }) => {
   // Filter out undefined generations
   const properGroupedData = descriptions ? Object?.values(groupedData).filter(row => row.generation !== undefined) : []
 
-  const tableRows = properGroupedData?.map(row => {
+  const tableRows = properGroupedData?.map((row, rowIndex) => {
     return (
-      <div className='table-row'>
+      <div className='table-row' key={rowIndex}>
         <div className='table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle text-right'>
           <ul>
-            {row?.versionName?.map(version => {
+            {row?.versionName?.map((version) => {
               return (<li className='list-none' key={version}> {formatName(version)} </li>)
             })}
           </ul>

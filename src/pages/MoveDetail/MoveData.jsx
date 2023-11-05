@@ -47,7 +47,7 @@ const MoveData = ({ moveInfo }) => {
     { header: 'Introduced', value: generationIntroduced }
   ]
 
-  const tableRows = rowData.map(row => {
+  const tableRows = rowData.map((row, rowIndex) => {
     // Skip the priority row if the priority is zero.
     if (row.header === 'Priority' && row.value === 0) {
       return null
@@ -55,7 +55,7 @@ const MoveData = ({ moveInfo }) => {
     // Add a positive sign to priority if positive.
     const rowValue = row.header === 'Priority' && parseInt(row.value) > 0 ? `+${row.value}` : row.value
     return (
-      <div className='table-row h-12'>
+      <div className='table-row h-12' key={rowIndex}>
         <div key={row.header} className="table-cell align-middle text-right border-t-[1px] py-2 pr-8 border-slate-200">
           {row.header}
         </div>

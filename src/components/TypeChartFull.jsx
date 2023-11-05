@@ -67,8 +67,8 @@ const TypeChartFull = () => {
     }
   })
 
-  const finalTypeCards = fullTypeCards.map(typeCard => (
-    <div className='flex justify-center items-center my-[2px]'>
+  const finalTypeCards = fullTypeCards.map((typeCard, index) => (
+    <div className='flex justify-center items-center my-[2px]' key={index}>
       {typeCard}
     </div>
   ))
@@ -76,25 +76,25 @@ const TypeChartFull = () => {
   // Make a dummy object in order to account for the first row.
   const dummy = [{ typeName: '', typeDefenceInfo: [{ typeName: '', multiplier: 1 }] }]
 
-  const tableColumns = [dummy, ...extractedInformation]?.map(type => {
+  const tableColumns = [dummy, ...extractedInformation]?.map((type, index) => {
     const { typeName, typeDefenceInfo: defenceInfo } = type
 
     const tableCells = defenceInfo?.map((defendingType, cellIndex) => {
       const { multiplier } = defendingType
       if (cellIndex === 0) {
         return (
-          <>
+          <div key={cellIndex}>
             <MiniTypeCard typeName={typeName} />
             <TypeMultiplierBox multiplier={multiplier} />
-          </>
+          </div>
         )
       } else {
-        return <TypeMultiplierBox multiplier={multiplier} />
+        return <TypeMultiplierBox multiplier={multiplier} key={cellIndex} />
       }
     })
 
     return (
-      <div className='flex flex-col'>
+      <div className='flex flex-col' key={index}>
         {tableCells}
       </div>
     )

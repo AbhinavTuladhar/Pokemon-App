@@ -32,8 +32,8 @@ const PokeCard = ({ data }) => {
   })
 
   // Now map each type to its corresponding type card.
-  const typeDivs = typeList.map(type => {
-    return <TypeCard typeName={type} />
+  const typeDivs = typeList.map((type, index) => {
+    return <TypeCard typeName={type} key={index} />
   })
 
   // When the user clicks on the Pokemon name, they are brought to the detail page.

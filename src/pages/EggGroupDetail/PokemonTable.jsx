@@ -13,21 +13,21 @@ const PokemonTable = ({ data, isLoading }) => {
     </div>
   ))
 
-  const tableRows = data?.map(entry => {
+  const tableRows = data?.map((entry, rowIndex) => {
     const { nationalNumber, icon, name, types, otherEggGroup } = entry
     const properId = `${'00' + nationalNumber}`.slice(-3)
 
     const cellData = [
       {
         value: (
-          <div className='flex flex-row gap-x-4 items-center'>
+          <div className='flex flex-row items-center gap-x-4'>
             <span className='align-middle'> {properId} </span>
             <img src={icon} alt={name} className='w-[56px]' />
           </div>
         )
       }, {
         value: (
-          <NavLink to={`/pokemon/${name}`} className='hoverable-link font-bold'> {formatName(name)} </NavLink>
+          <NavLink to={`/pokemon/${name}`} className='font-bold hoverable-link'> {formatName(name)} </NavLink>
         )
       }, {
         value: (
@@ -40,7 +40,7 @@ const PokemonTable = ({ data, isLoading }) => {
         value: (
           <span>
             {otherEggGroup && (
-              <NavLink to={`/egg-group/${otherEggGroup}`} className='hoverable-link font-bold'>
+              <NavLink to={`/egg-group/${otherEggGroup}`} className='font-bold hoverable-link'>
                 {formatName(otherEggGroup)}
               </NavLink>
             )}
@@ -49,14 +49,14 @@ const PokemonTable = ({ data, isLoading }) => {
       }
     ]
 
-    const tableCells = cellData.map(cell => (
-      <div className='h-12 table-cell px-4 py-2 border-t-[1px] border-slate-200 align-middle w-32'>
+    const tableCells = cellData.map((cell, cellIndex) => (
+      <div className='h-12 table-cell px-4 py-2 border-t-[1px] border-slate-200 align-middle w-32' key={cellIndex}>
         {cell.value}
       </div>
     ))
 
     return (
-      <div className='table-row'>
+      <div className='table-row' key={rowIndex}>
         {tableCells}
       </div>
     )
@@ -64,7 +64,7 @@ const PokemonTable = ({ data, isLoading }) => {
   })
   return (
     <motion.div
-      className='table self-start border-b border-slate-200 w-full'
+      className='self-start table w-full border-b border-slate-200'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
