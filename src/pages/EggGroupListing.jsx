@@ -1,11 +1,9 @@
 import React from 'react'
-import fetchData from '../utils/fetchData'
-import { useQuery } from 'react-query'
 import { motion } from 'framer-motion'
 import formatName from '../utils/NameFormatting'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import { NavLink } from 'react-router-dom'
-import { extractEggGroupInformation } from '../utils/extractInfo'
+import useEggGroupList from '../hooks/useEggGroupList'
 
 const TableRow = ({ children, extraClassName }) => {
   return (
@@ -32,36 +30,7 @@ const RightCell = ({ children }) => {
 }
 
 const EggGroupListing = () => {
-  const { data: eggGroupData } = useQuery(
-    ['egg-group'],
-    () => fetchData('https://pokeapi.co/api/v2/egg-group'),
-    {
-      staleTime: Infinity, cacheTime: Infinity,
-      select: data => {
-        const { results } = data
-        return results.map(group => {
-          const { name, url } = group
-          return { eggGroup: name, link: url }
-        })
-      }
-    }
-  )
-
-  const urlList = eggGroupData?.map(obj => obj.link)
-
-  // Get the number of pokemon in each egg group
-  const { data: groupPokemonCount, isLoading: isLoadingListData } = useQuery(
-    ['egg-group', eggGroupData],
-    () => Promise.all(urlList.map(fetchData)),
-    {
-      staleTime: Infinity, cacheTime: Infinity,
-      select: data => {
-        return data.map(extractEggGroupInformation).sort((a, b) => a.eggGroup.localeCompare(b.eggGroup))
-      }
-    }
-  )
-
-  console.log(groupPokemonCount)
+  const { groupPokemonCount, isLoading } = useEggGroupList()
 
   const headerRow = (
     <TableRow extraClassName='font-bold bg-[#1a1a1a]'>
@@ -97,7 +66,7 @@ const EggGroupListing = () => {
       <h1 className='text-3xl font-bold mb-5'>
         Egg groups
       </h1>
-      {isLoadingListData ? (
+      {isLoading ? (
         <div className='w-5/12'>
           <MoveListingSkeleton rowCount={10} />
         </div>
