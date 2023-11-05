@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Skeleton from 'react-loading-skeleton'
 import GameBox from './GameBox'
-import { FadeInAnimationContainer } from '../../components/AnimatedContainers'
 import TabularSkeleton from '../../components/TabularSkeleton'
 import fetchData from '../../utils/fetchData'
 import { generationToGame } from '../../utils/generationToGame'
@@ -14,6 +13,7 @@ import formatName from '../../utils/NameFormatting'
 import commonRarity from '../../images/rarity-common.png'
 import uncommonRarity from '../../images/rarity-uncommon.png'
 import rareRarity from '../../images/rarity-rare.png'
+import useEncounterMethods from '../../hooks/useEncounterMethods'
 
 /**
  * For mapping the encounter chance to the corresponding pie chart image
@@ -55,6 +55,8 @@ const TableRow = ({ rowIndex, rowData }) => {
 const LocationDetail = () => {
   const { name: locationName } = useParams()
   const locationUrl = `https://pokeapi.co/api/v2/location/${locationName}`
+
+  const { encounterMethodDescriptions, isLoadingEncounterDescriptions } = useEncounterMethods()
 
   document.title = `${formatName(locationName)} Pokémon Locations | Pokémon Database`
 
@@ -152,6 +154,9 @@ const LocationDetail = () => {
     const subLocationDivNew = subLocations?.map(({ subLocationName, methods }) => {
       // Finally, the encounter methods.
       const encounterMethodDiv = methods?.map(({ methodName, encounterDetails }) => {
+        // Find the name of the encounter method description
+        const encounterDescription = encounterMethodDescriptions.find(method => method.name === methodName).description
+
         const tableRows = [...header, ...encounterDetails].map((encounter, rowIndex) => {
           const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter
           // const trueChance = chance > 100 ? 100 : chance
@@ -194,11 +199,14 @@ const LocationDetail = () => {
               ?
               <SimpleSkeletonRow width='20vw' />
               :
-              <FadeInAnimationContainer>
-                <h1 className='my-4 text-2xl font-bold'>
+              <div className='my-4 flex flex-col gap-y-1'>
+                <h1 className='text-2xl font-bold'>
                   {`${formatName(methodName)}`}
                 </h1>
-              </FadeInAnimationContainer>
+                <span className='text-sm text-gray-400'>
+                  {encounterDescription}
+                </span>
+              </div>
             }
             <div className='flex justify-center'>
               <div className='w-full overflow-auto lg:w-7/12'>
@@ -216,11 +224,9 @@ const LocationDetail = () => {
             ?
             <SimpleSkeletonRow width='60vw' />
             :
-            <FadeInAnimationContainer>
-              <h1 className='mt-4 text-3xl font-bold'>
-                {`${generation} - ${subLocationName}`}
-              </h1>
-            </FadeInAnimationContainer>
+            <h1 className='mt-4 text-3xl font-bold'>
+              {`${generation} - ${subLocationName}`}
+            </h1>
           }
           <> {encounterMethodDiv} </>
         </>
@@ -244,24 +250,23 @@ const LocationDetail = () => {
         {isLoadingSubLocationData ?
           <SimpleSkeletonRow width='50vw' />
           : (
-            <FadeInAnimationContainer>
+            <>
               {formatName(locationName)}
-            </FadeInAnimationContainer>
+            </>
           )}
       </h1>
 
       {/* For rendering skeleton when the content has not been loaded */}
       <>
-        {isLoadingSubLocationData && (
+        {(isLoadingSubLocationData || isLoadingEncounterDescriptions) ? (
           <div className='flex flex-col mt-4 gap-y-5'>
             <SimpleSkeletonRow width='50%' />
             <SimpleSkeletonRow width='30%' />
             <TabularSkeleton />
           </div>
+        ) : (
+          generationDiv?.map(generation => <div className='flex flex-col'> {generation} </div>)
         )}
-      </>
-      <>
-        {generationDiv?.map(generation => <div className='flex flex-col'> {generation} </div>)}
       </>
     </motion.div>
   )
