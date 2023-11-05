@@ -36,8 +36,6 @@ const useEncounterMethods = () => {
     }
   )
 
-  console.log(encounterMethodDescriptions)
-
   return { encounterMethodDescriptions, isLoadingEncounterDescriptions }
 }
 

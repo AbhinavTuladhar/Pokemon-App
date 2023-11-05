@@ -13,6 +13,7 @@ import formatName from '../../utils/NameFormatting'
 import commonRarity from '../../images/rarity-common.png'
 import uncommonRarity from '../../images/rarity-uncommon.png'
 import rareRarity from '../../images/rarity-rare.png'
+import limitedRarity from '../../images/rarity-limited.png'
 import useEncounterMethods from '../../hooks/useEncounterMethods'
 
 /**
@@ -20,7 +21,11 @@ import useEncounterMethods from '../../hooks/useEncounterMethods'
  * @param (chance) the encounter chance.
  * @returns the corresponding image source.
  */
-const getRarityImage = chance => {
+const getRarityImage = (chance, methodName) => {
+  if (methodName === 'only-one') {
+    return limitedRarity
+  }
+
   if (chance >= 50) {
     return commonRarity
   } else if (chance >= 20 && chance < 50) {
@@ -160,7 +165,7 @@ const LocationDetail = () => {
         const tableRows = [...header, ...encounterDetails].map((encounter, rowIndex) => {
           const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter
           // const trueChance = chance > 100 ? 100 : chance
-          const chanceImage = getRarityImage(chance)
+          const chanceImage = getRarityImage(chance, methodName)
 
           // For the identifying div
           const idDiv = (
