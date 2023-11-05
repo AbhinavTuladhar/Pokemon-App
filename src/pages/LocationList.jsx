@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import fetchData from '../utils/fetchData'
 import { extractRegionInformation } from '../utils/extractInfo'
 import formatName from '../utils/NameFormatting'
+import Skeleton from 'react-loading-skeleton'
 
 // This is for sorting on the basis of route number, but doesn't seem to work
 const extractNumericPart = (str) => {
@@ -16,7 +17,7 @@ const LocationList = () => {
   document.title = 'Pokémon Location Guide - all routes, all Pokémon! | Pokémon Database'
 
   const [activeTab, setActiveTab] = useState(1)
-  const tabData = []
+  // const tabData = []
 
   const locationUrls = useMemo(() => {
     const urlList = []
@@ -77,7 +78,7 @@ const LocationList = () => {
   }
 
   // For 
-  locationData.forEach((row, tabIndex) => {
+  const tabData = locationData?.map((row, tabIndex) => {
     const { locations, regionName } = row
     const locationItems = locations.map((location) => {
       const { locationName, localUrl } = location
@@ -94,11 +95,10 @@ const LocationList = () => {
       </div>
     )
 
-    const currentTabData = { id: tabIndex + 1, tabName: regionName, output: tabOutput }
-    tabData.push(currentTabData)
+    return { id: tabIndex + 1, tabName: regionName, output: tabOutput }
   })
 
-  const tabListItems = tabData.map((tab, index) => {
+  const tabListItems = tabData?.map((tab, index) => {
     const { tabName, id } = tab
     return (
       <li
@@ -110,7 +110,7 @@ const LocationList = () => {
     )
   })
 
-  const tabContainer = tabData.map((tab, index) => {
+  const tabContainer = tabData?.map((tab, index) => {
     const { output, id } = tab
     return (
       <div
@@ -132,14 +132,25 @@ const LocationList = () => {
       <h1 className='text-4xl font-bold text-center'>
         Pokémon Location guide
       </h1>
-      <>
-        <ul className='flex flex-row flex-wrap items-center justify-center flex-1 my-4'>
-          {tabListItems}
-        </ul>
-        <>
-          {tabContainer}
-        </>
-      </>
+      <div>
+        {isLoading ? (
+          <div className='flex flex-col gap-y-4 my-4'>
+            <Skeleton containerClassName='flex-1 w-full' className='w-full h-12' />
+            <div className='grid grid-cols-2 gap-y-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center'>
+              {Array(100).fill(0).map((_, index) => (
+                <Skeleton width='50%' height='1.25rem' containerClassName='flex-1 w-full' key={index} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
+            <ul className='flex flex-row flex-wrap items-center justify-center flex-1 my-4'>
+              {tabListItems}
+            </ul>
+            {tabContainer}
+          </>
+        )}
+      </div>
     </motion.div>
   )
 }
