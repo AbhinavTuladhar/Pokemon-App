@@ -29,28 +29,25 @@ const AnimatedRoutes = () => {
     { path: '/pokemon/forms', idRange: [10001, 10157] },
   ]
 
-  const generationRoutes = generationRouteData.map(gen => {
-    return (
-      <Route path={gen.path} element={<PokemonListing idRange={gen.idRange} />} />
-    )
-  })
-
   return (
     <AnimatePresence mode='wait'>
       <Routes location={location} key={location.pathname}>
-        <Route path='' element={<WelcomePage />} />
-        <Route path='/types' element={<TypeListing />} />
-        <Route path='/moves' element={<MoveListing />} />
-        <Route path='/ability' element={<AbilityListing />} />
-        <Route path='/location' element={<LocationList />} />
-        <Route path='/egg-group' element={<EggGroupListing />} />
-        <Route path='/egg-group/:id' element={<EggGroupDetail />} />
-        {generationRoutes}
-        <Route path='/pokemon/:id' element={<PokemonDetail />} />
-        <Route path='/types/:type' element={<TypeDetail />} />
-        <Route path='/moves/:id' element={<MoveDetail />} />
-        <Route path='/ability/:id' element={<AbilityDetail />} />
-        <Route path='/location/:name' element={<LocationDetail />} />
+        <Route path='' element={<WelcomePage />} key='home' />
+        <Route path='/types' element={<TypeListing />} key='types' />
+        <Route path='/moves' element={<MoveListing />} key='moves' />
+        <Route path='/ability' element={<AbilityListing />} key='ability' />
+        <Route path='/location' element={<LocationList />} key='location' />
+        <Route path='/egg-group' element={<EggGroupListing />} key='egg-group' />
+        <Route path='/egg-group/:id' element={<EggGroupDetail />} key='egg-group-id' />
+        <Route path='/pokemon/:id' element={<PokemonDetail />} key='pokemon-id' />
+        <Route path='/types/:type' element={<TypeDetail />} key='type-id' />
+        <Route path='/moves/:id' element={<MoveDetail />} key='move-id' />
+        <Route path='/ability/:id' element={<AbilityDetail />} key='ability-id' />
+        <Route path='/location/:name' element={<LocationDetail />} key='location-id' />
+
+        {generationRouteData.map((gen) => (
+          <Route path={gen.path} element={<PokemonListing idRange={gen.idRange} key={gen.path} />} />
+        ))}
       </Routes>
     </AnimatePresence>
   )

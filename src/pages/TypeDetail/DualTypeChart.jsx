@@ -8,7 +8,7 @@ const DualTypeChart = ({ data }) => {
   const typeList = [
     'normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy',
   ]
-  
+
   // Calculate all the dual-type combinations possible
   const typeRows = typeList.flatMap(type => {
     return typeList
@@ -20,9 +20,9 @@ const DualTypeChart = ({ data }) => {
   // This is for the first row.
   const firstRow = [[], ...typeList].map((type, index) => {
     if (index === 0) {
-      return <div className='h-9 w-20 border border-slate-900 mx-1' />
+      return <div className='w-20 mx-1 border h-9 border-slate-900' key={index} />
     } else {
-      return <MiniTypeCard typeName={type} />
+      return <MiniTypeCard typeName={type} key={index} />
     }
   })
 
@@ -42,17 +42,17 @@ const DualTypeChart = ({ data }) => {
       const multiplierValue = firstType !== '' || firstType !== null ? calculateOffensiveTypeEffectiveness(functionArgs) : 1
 
       if (cellIndex === 0) {
-        return <TypeCard typeName={type} className='h-9' />
+        return <TypeCard typeName={type} className='h-9' key={cellIndex} />
       } else if (firstType === secondType) {
-        return <TypeMultiplierBox multiplier={1} className='bg-gray-700' />
+        return <TypeMultiplierBox multiplier={1} className='bg-gray-700' key={cellIndex} />
       } else {
-        return <TypeMultiplierBox multiplier={multiplierValue} />
+        return <TypeMultiplierBox multiplier={multiplierValue} key={cellIndex} />
       }
     })
 
     return (
-      <div className='flex flex-row gap-x-[1px] items-end'>
-        { cellDivs }
+      <div className='flex flex-row gap-x-[1px] items-end' key={rowIndex}>
+        {cellDivs}
       </div>
     )
   })
@@ -62,10 +62,10 @@ const DualTypeChart = ({ data }) => {
       <div className='overflow-auto'>
         <div className='inline-flex flex-col'>
           <div className='flex flex-row gap-x-[1px]'>
-            { firstRow }
+            {firstRow}
           </div>
           <>
-            { tableRows }
+            {tableRows}
           </>
         </div>
       </div>

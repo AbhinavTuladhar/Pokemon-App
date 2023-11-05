@@ -32,7 +32,7 @@ const PokemonTable = ({ data, isLoading }) => {
       }, {
         value: (
           <div className='flex flex-col gap-y-2'>
-            {types.map(type => <TypeCard typeName={type.type.name} />)}
+            {types.map((type, index) => <TypeCard typeName={type.type.name} key={index} />)}
           </div>
         )
       },

@@ -24,10 +24,10 @@ const BasicIntro = ({ pokemonData }) => {
   const typeDiv = types.map((type, index) => {
     const typeName = type.type.name
     return (
-      <>
+      <span key={index}>
         <TypeCard typeName={typeName} useTextOnly={true} />
         {index !== types.length - 1 && <span> / </span>}
-      </>
+      </span>
     )
   })
 

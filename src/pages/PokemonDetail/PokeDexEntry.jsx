@@ -49,7 +49,7 @@ const PokeDexEntry = ({ data }) => {
 
   const entryRows = finalEntry.map((entry, i) => {
     return (
-      <div className='table-row border-t-[1px] border-gray-200 h-12'>
+      <div className='table-row border-t-[1px] border-gray-200 h-12' key={i}>
         <div className='border-t-[1px] align-middle border-gray-200 table-cell text-right py-2'>
           {entry.versionName}
         </div>

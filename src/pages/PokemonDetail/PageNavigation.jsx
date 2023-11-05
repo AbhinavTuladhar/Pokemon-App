@@ -15,10 +15,10 @@ const PageNavigation = () => {
   return (
     <div className='flex flex-row flex-wrap p-4 space-x-6 rounded-lg bg-cyan-300 justify-evenly'>
       <span className='font-bold text-black'> Contents </span>
-      {linkData.map(row => {
+      {linkData.map((row, index) => {
         const { ref, text } = row
         return (
-          <a href={ref} className='hoverable-link'> {text} </a>
+          <a href={ref} className='hoverable-link' key={index}> {text} </a>
         )
       })}
     </div>

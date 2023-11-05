@@ -95,7 +95,7 @@ const Locations = ({ props }) => {
   )
 
   // some formatting of the data
-  const preFinalTable = finalData?.map(entry => {
+  const preFinalTable = finalData?.map((entry, topIndex) => {
     const listItems = entry.versionName.map((version, index) => {
       return <li key={index}> {version} </li>
     })
@@ -104,9 +104,9 @@ const Locations = ({ props }) => {
   })
 
   // Now render the final data.
-  const finalTable = preFinalTable?.map(row => {
+  const finalTable = preFinalTable?.map((row, rowIndex) => {
     return (
-      <div className={`table-row py-2 border-gray-200 border-t-[1px] px-2 mx-2`}>
+      <div className='table-row py-2 border-gray-200 border-t-[1px] px-2 mx-2' key={rowIndex}>
         <div className='table-cell w-2/12 border-gray-200 border-t-[1px] py-2 mx-4 align-middle text-right'> {row.versionName} </div>
         <div className='table-cell border-gray-200 border-t-[1px] py-2 pl-4 align-middle first-line:mx-4'> {row.locationName} </div>
       </div>
@@ -121,14 +121,14 @@ const Locations = ({ props }) => {
   return (
     <>
       {
-        finalTable.length > 0 &&
-        <>
-          <SectionTitle text={`Where to find ${formatName(name)}`} />
-          <div className='border-gray-200 border-b-[1px] table w-full'>
-            {finalTable}
-          </div>
-        </>
-      }
+        finalTable.length > 0 && (
+          <>
+            <SectionTitle text={`Where to find ${formatName(name)}`} />
+            <div className='border-gray-200 border-b-[1px] table w-full'>
+              {finalTable}
+            </div>
+          </>
+        )}
     </>
   )
 }

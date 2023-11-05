@@ -82,10 +82,10 @@ const PokemonList = ({ data }) => {
           (
             otherAbilities.length > 0
               ?
-              otherAbilities.map(ability =>
-              (<>
+              otherAbilities.map((ability, index) =>
+              (<span key={index}>
                 <NavLink to={`/ability/${ability}`} className='hoverable-link'> {formatName(ability)} </NavLink> <br />
-              </>)
+              </span>)
               )
               :
               '—'

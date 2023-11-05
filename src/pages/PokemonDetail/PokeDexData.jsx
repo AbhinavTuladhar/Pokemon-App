@@ -43,7 +43,7 @@ const PokeDexData = ({ pokemonData }) => {
   )
 
   // Convert the types of the Pokemon into its corresponding component.
-  const typeDiv = typeNames.map(typeName => <TypeCard typeName={typeName} />)
+  const typeDiv = typeNames.map((typeName, index) => <TypeCard typeName={typeName} key={index} />)
 
   // Making an actual list of all the abilities.
   const abilityList = abilities.map((ability, index) => {
@@ -101,9 +101,9 @@ const PokeDexData = ({ pokemonData }) => {
     return { dexNumber: game.dexNumber, game: gameList?.join(' / ') }
   })
 
-  const regionNumberList = finalGameData?.map(number => {
+  const regionNumberList = finalGameData?.map((number, index) => {
     return (
-      <div className='table-row'>
+      <div className='table-row' key={index}>
         <div className='table-cell px-1'>
           {number.dexNumber}
         </div>
@@ -131,10 +131,10 @@ const PokeDexData = ({ pokemonData }) => {
   ]
 
   // Now define the JSX component for all the entries.
-  const tableEntries = tableData.map(row => {
+  const tableEntries = tableData.map((row, rowIndex) => {
     const spacing = row.label === 'Abilities' || row.label === 'Regional no.' ? 'min-h-14' : 'h-12'
     return (
-      <div className={`table-row border-t-[1px] border-gray-200 py-2 ${spacing}`}>
+      <div className={`table-row border-t-[1px] border-gray-200 py-2 ${spacing}`} key={rowIndex}>
         <div className='table-cell align-middle py-2 border-t-[1px] border-gray-200 text-right w-3/12'>
           {row.label}
         </div>

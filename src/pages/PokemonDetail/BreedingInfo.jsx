@@ -22,7 +22,7 @@ const BreedingInfo = ({ data }) => {
   // List the egg groups
   const eggGroupList = egg_groups?.map((group, index) => (
     <span key={index}>
-      <NavLink to={`/egg-group/${group.name}`} className='hoverable-link font-normal'>
+      <NavLink to={`/egg-group/${group.name}`} className='font-normal hoverable-link'>
         {formatName(group.name)}
       </NavLink>
       {index < egg_groups.length - 1 && ', '}
@@ -60,9 +60,9 @@ const BreedingInfo = ({ data }) => {
     { label: 'Egg Cycles', value: eggCycleRow }
   ]
 
-  const tableDiv = tableRows.map(row => {
+  const tableDiv = tableRows.map((row, rowIndex) => {
     return (
-      <div className='table-row h-12 py-2'>
+      <div className='table-row h-12 py-2' key={rowIndex}>
         <div className='table-cell border-t-[1px] border-gray-200 align-middle w-4/12 text-right'> {row.label} </div>
         <div className='table-cell border-t-[1px] border-gray-200 align-middle pl-4 w-8/12 items-center'> {row.value} </div>
       </div>

@@ -176,7 +176,7 @@ const MovesLearned = ({ data }) => {
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
-        <div className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400`}>
+        <div className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400`} key={index}>
           {
             move.levelLearntAt &&
             <div className='pl-4 table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>

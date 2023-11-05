@@ -26,7 +26,7 @@ function processLanuages(arr) {
 
 const LanguageCell = ({ children }) => {
   return (
-    <div className='w-2/5 border-t align-middle border-gray-200 table-cell text-right font-thin'>
+    <div className='table-cell w-2/5 font-thin text-right align-middle border-t border-gray-200'>
       {children}
     </div>
   )
@@ -34,7 +34,7 @@ const LanguageCell = ({ children }) => {
 
 const NameCell = ({ children }) => {
   return (
-    <div className='border-t align-middle border-gray-200 table-cell pl-4'>
+    <div className='table-cell pl-4 align-middle border-t border-gray-200'>
       {children}
     </div>
   )
@@ -58,7 +58,7 @@ const OtherLanguages = ({ data }) => {
 
   const nameRows = languagesList.map((row, index) => {
     return (
-      <div className='table-row border-t border-gray-200 h-12'>
+      <div className='table-row h-12 border-t border-gray-200' key={index}>
         <LanguageCell>
           {row.languageName}
         </LanguageCell>
@@ -71,7 +71,7 @@ const OtherLanguages = ({ data }) => {
 
   const genusRows = generaList.map((row, index) => {
     return (
-      <div className='table-row border-t border-gray-200 h-12 w-screen'>
+      <div className='table-row w-screen h-12 border-t border-gray-200' key={index}>
         <LanguageCell>
           {row.languageName}
         </LanguageCell>
@@ -86,11 +86,11 @@ const OtherLanguages = ({ data }) => {
     <>
       <SectionTitle text='Other languages' />
       <div className='flex flex-row flex-wrap gap-10'>
-        <div className='table border-b border-gray-200 flex-1 min-w-full md:min-w-fit'>
+        <div className='flex-1 table min-w-full border-b border-gray-200 md:min-w-fit'>
           {nameRows}
         </div>
 
-        <div className='table border-b border-gray-200 flex-1 min-w-full md:min-w-fit '>
+        <div className='flex-1 table min-w-full border-b border-gray-200 md:min-w-fit '>
           {genusRows}
         </div>
       </div>

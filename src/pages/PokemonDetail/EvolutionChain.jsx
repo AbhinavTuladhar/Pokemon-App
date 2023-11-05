@@ -16,10 +16,10 @@ const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
   const typeDiv = types.map((type, index) => {
     const typeName = type.type.name
     return (
-      <>
+      <div key={index}>
         <TypeCard typeName={typeName} useTextOnly={true} />
         {index !== types.length - 1 && <span> · </span>}
-      </>
+      </div>
     )
   })
 
@@ -77,7 +77,7 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
     */
     if (currentPokemonData.nextEvoSplit) {
       return (
-        <>
+        <div key={index}>
           {pokemon}
           <div className='flex flex-row justify-between md:flex-col gap-y-10'>
             <div className='flex flex-col items-center justify-center text-center md:flex-row'>
@@ -120,13 +120,13 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
               </div>
             }
           </div>
-        </>
+        </div>
       )
 
       // For regular, linear evolutions.
     } else if (!currentPokemonData.isSplitEvo) {
       return (
-        <div className='flex flex-col items-center justify-center md:flex-row sm:flex-col'>
+        <div className='flex flex-col items-center justify-center md:flex-row sm:flex-col' key={index}>
           {pokemon}
           {
             (index !== individualPokemon.length - 1) && (!currentPokemonData.nextEvoSplit) &&

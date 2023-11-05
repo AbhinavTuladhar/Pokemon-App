@@ -80,17 +80,17 @@ const LocationList = () => {
   // For 
   const tabData = locationData?.map((row, tabIndex) => {
     const { locations, regionName } = row
-    const locationItems = locations.map((location) => {
+    const locationItems = locations.map((location, locIndex) => {
       const { locationName, localUrl } = location
       return (
-        <NavLink to={localUrl} className='hoverable-link min-w-fit'>
+        <NavLink to={localUrl} className='hoverable-link min-w-fit' key={locIndex}>
           {formatName(locationName)}
         </NavLink>
       )
     })
 
     const tabOutput = (
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center' key={tabIndex}>
         {locationItems}
       </div>
     )
@@ -134,7 +134,7 @@ const LocationList = () => {
       </h1>
       <div>
         {isLoading ? (
-          <div className='flex flex-col gap-y-4 my-4'>
+          <div className='flex flex-col my-4 gap-y-4'>
             <Skeleton containerClassName='flex-1 w-full' className='w-full h-12' />
             <div className='grid grid-cols-2 gap-y-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center'>
               {Array(100).fill(0).map((_, index) => (

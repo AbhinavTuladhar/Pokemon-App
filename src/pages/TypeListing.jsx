@@ -27,8 +27,8 @@ const TypeListing = () => {
     ]
   }, [])
 
-  const typeCardList = typeList.map(type => (
-    <motion.div variants={typeVariant}>
+  const typeCardList = typeList.map((type, index) => (
+    <motion.div variants={typeVariant} key={index}>
       <TypeCard typeName={type} />
     </motion.div>
   ))
@@ -43,10 +43,10 @@ const TypeListing = () => {
     { multiplier: 2, text: 'Super-effective (200%)' },
   ]
 
-  const chartKeyInfo = chartKeyData.map(row => {
+  const chartKeyInfo = chartKeyData.map((row, rowIndex) => {
     const { multiplier, text } = row
     return (
-      <div className='flex flex-row items-center gap-x-4'>
+      <div className='flex flex-row items-center gap-x-4' key={rowIndex}>
         <TypeMultiplierBox multiplier={multiplier} />
         <p> {text} </p>
       </div>

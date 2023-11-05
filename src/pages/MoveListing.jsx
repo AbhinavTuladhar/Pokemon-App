@@ -213,17 +213,18 @@ const MoveListing = () => {
         style: 'whitespace-nowrap'
       },
     ];
-    const tableCells = tableCellData.map(cell => {
+    const tableCells = tableCellData.map((cell, cellIndex) => {
       return (
         <div
           className={`${cell.style} ${headerStyle} ${bgColour} border-gray-500 border-t-[1px] table-cell h-12 align-middle p-2`}
+          key={cellIndex}
         >
           {cell.value}
         </div>
       )
     })
     return (
-      <div className='table-row'>
+      <div className='table-row' key={index}>
         {tableCells}
       </div>
     )

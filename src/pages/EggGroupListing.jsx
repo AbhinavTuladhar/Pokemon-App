@@ -15,7 +15,7 @@ const TableRow = ({ children, extraClassName }) => {
 
 const LeftCell = ({ children }) => {
   return (
-    <div className='w-2/5 border-t align-middle border-gray-200 table-cell pl-4'>
+    <div className='table-cell w-2/5 pl-4 align-middle border-t border-gray-200'>
       {children}
     </div>
   )
@@ -23,7 +23,7 @@ const LeftCell = ({ children }) => {
 
 const RightCell = ({ children }) => {
   return (
-    <div className='border-t align-middle border-gray-200 table-cell text-right pr-4'>
+    <div className='table-cell pr-4 text-right align-middle border-t border-gray-200'>
       {children}
     </div>
   )
@@ -43,10 +43,10 @@ const EggGroupListing = () => {
     </TableRow>
   )
 
-  const eggRows = groupPokemonCount?.map(row => (
-    <TableRow>
+  const eggRows = groupPokemonCount?.map((row, index) => (
+    <TableRow key={index}>
       <LeftCell>
-        <NavLink to={`/egg-group/${row.eggGroup}`} className='hoverable-link font-bold'>
+        <NavLink to={`/egg-group/${row.eggGroup}`} className='font-bold hoverable-link'>
           {formatName(row.eggGroup)}
         </NavLink>
       </LeftCell>
@@ -61,9 +61,9 @@ const EggGroupListing = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='mx-4 pb-4 md:mx-10 flex flex-col justify-center items-center'
+      className='flex flex-col items-center justify-center pb-4 mx-4 md:mx-10'
     >
-      <h1 className='text-3xl font-bold mb-5'>
+      <h1 className='mb-5 text-3xl font-bold'>
         Egg groups
       </h1>
       {isLoading ? (

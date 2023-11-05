@@ -60,7 +60,7 @@ const AdjacentLinks = ({ id }) => {
         const leftPart = index === 0 && id !== 1 ? '←' : ''
         const rightPart = index !== 0 || id === 1 ? '→' : ''
         return (
-          <NavLink to={`/pokemon/${name}`} className='hoverable-link'>
+          <NavLink to={`/pokemon/${name}`} className='hoverable-link' key={index}>
             {`${leftPart} ${formattedId} ${formatName(name)} ${rightPart}`}
           </NavLink>
         )

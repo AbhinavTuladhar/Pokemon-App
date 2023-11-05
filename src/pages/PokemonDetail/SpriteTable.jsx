@@ -50,14 +50,14 @@ const SpriteTable = ({ data }) => {
     const tableCells = cellData.map((cell, cellIndex) => {
       const cellStyle = cellIndex === 0 ? 'h-16 bg-gray-900' : 'h-48'
       return (
-        <div className={`${cellStyle} object-center flex border border-slate-400 items-center justify-center align-middle text-center h-16 min-h-32 ${columnWidth}`}>
+        <div className={`${cellStyle} object-center flex border border-slate-400 items-center justify-center align-middle text-center h-16 min-h-32 ${columnWidth}`} key={cellIndex}>
           {cell.value}
         </div>
       )
     })
 
     return (
-      <div className='flex flex-col'>
+      <div className='flex flex-col' key={index}>
         {tableCells}
       </div>
     )

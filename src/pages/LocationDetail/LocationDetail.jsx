@@ -50,8 +50,8 @@ const TableCell = ({ value, isHeader }) => {
 const TableRow = ({ rowIndex, rowData }) => {
   return (
     <div className='table-row'>
-      {rowData.map(({ key, value }) => (
-        <TableCell value={value} key={key} isHeader={rowIndex === 0} />
+      {rowData.map(({ key, value }, index) => (
+        <TableCell value={value} key={key} index={index} isHeader={rowIndex === 0} />
       ))}
     </div>
   )
@@ -182,7 +182,7 @@ const LocationDetail = () => {
             ? gameName
             : (
               <div className='flex flex-row'>
-                {generationToGame[generationInternal].map(game => <GameBox gameName={game} activeFlag={gameName.includes(game)} />)}
+                {generationToGame[generationInternal].map((game, index) => <GameBox gameName={game} activeFlag={gameName.includes(game)} key={index} />)}
               </div>
             )
 
@@ -224,7 +224,7 @@ const LocationDetail = () => {
         )
       })
       return (
-        <>
+        <div key={subIndex}>
           {isLoadingSubLocationData
             ?
             <SimpleSkeletonRow width='60vw' />
@@ -234,7 +234,7 @@ const LocationDetail = () => {
             </h1>
           }
           <div key={subIndex}> {encounterMethodDiv} </div>
-        </>
+        </div>
       )
     })
     return (
@@ -270,7 +270,7 @@ const LocationDetail = () => {
             <TabularSkeleton />
           </div>
         ) : (
-          generationDiv?.map(generation => <div className='flex flex-col'> {generation} </div>)
+          generationDiv?.map((generation, index) => <div className='flex flex-col' key={index}> {generation} </div>)
         )}
       </>
     </motion.div>

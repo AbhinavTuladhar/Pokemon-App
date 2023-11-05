@@ -79,7 +79,7 @@ const InformativeText = () => {
 
 const IssuesText = () => {
   const listItems = [
-    { text: 'Egg groups', style: 'pt-4' },
+    { text: 'Egg groups', style: 'pt-4 line-through' },
     {
       text: (<>
         <NavLink to='/pokemon/wurmple' className='hoverable-link'> Wurmple </NavLink>

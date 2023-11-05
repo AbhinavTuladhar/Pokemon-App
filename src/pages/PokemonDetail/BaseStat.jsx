@@ -108,7 +108,7 @@ const BaseStat = ({ data }) => {
     const stringDecoration = index === statDetail.length - 1 ? 'font-bold' : ''
 
     return (
-      <div className='table-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-0'>
+      <div className='table-row border-t-[1px] border-gray-200 py-2 h-12 max-h-24 pr-0' key={index}>
         <div className='table-cell pr-2 text-right align-middle border-t border-gray-200'>
           {stat.name}
         </div>
