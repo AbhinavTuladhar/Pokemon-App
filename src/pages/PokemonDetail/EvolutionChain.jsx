@@ -81,15 +81,15 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
           {pokemon}
           <div className='flex flex-row justify-between md:flex-col gap-y-10'>
             <div className='flex flex-col items-center justify-center text-center md:flex-row'>
-              <div className='flex flex-col items-center justify-center mx-4 w-28'>
+              <div className='flex flex-col items-center justify-center mx-4 w-full md:w-48'>
                 <BsArrowUpRight size={60} className='hidden md:flex' />
                 <BsArrowDown size={60} className='flex mx-4 md:hidden' />
-                {`(${evolutionExtractedInfo})`}
+                <span> {`(${evolutionExtractedInfo})`} </span>
               </div>
               {nextPokemon}
             </div>
             <div className='flex flex-col items-center justify-center text-center md:flex-row'>
-              <div className='flex flex-col items-center justify-center mx-4 w-28'>
+              <div className='flex flex-col items-center justify-center mx-4 w-full md:w-48'>
                 {
                   finalPokemon
                     ?
@@ -98,14 +98,14 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
                     <BsArrowDownRight size={60} className='hidden md:flex' />
                 }
                 <BsArrowDown size={60} className='flex mx-4 md:hidden' />
-                {`(${evolutionExtractedInfoNext})`}
+                <span> {`(${evolutionExtractedInfoNext})`} </span>
               </div>
               {nextNextPokemon}
             </div>
             {
               finalPokemon &&
               <div className='flex flex-col items-center justify-center text-center md:flex-row'>
-                <div className='flex flex-col items-center justify-center mx-4 w-28'>
+                <div className='flex flex-col items-center justify-center mx-4 w-full md:w-48'>
                   <BsArrowDownRight size={60} className='hidden md:flex' />
                   <BsArrowDown size={60} className='flex mx-4 md:hidden' />
                   {
@@ -132,11 +132,11 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
             (index !== individualPokemon.length - 1) && (!currentPokemonData.nextEvoSplit) &&
             (
               <>
-                <div className='flex-col items-center justify-center hidden text-center md:flex sm:hidden w-28'>
+                <div className='flex-col items-center justify-center hidden text-center md:flex sm:hidden w-full md:w-48'>
                   <BsArrowRight size={60} className='mx-4' />
                   {`(${evolutionExtractedInfo})`}
                 </div>
-                <div className='flex flex-col items-center justify-center text-center md:hidden sm:flex w-28'>
+                <div className='flex flex-col items-center justify-center text-center md:hidden sm:flex w-full md:w-48'>
                   <BsArrowDown size={60} className='my-2' />
                   {`(${evolutionExtractedInfo})`}
                 </div>
@@ -248,17 +248,17 @@ const EvolutionChain = ({ url }) => {
 
   // 267 and 269 are for the Wurmple evolution chain.
   // 123 is for Scyther, which has a split evolution in gen 8.
-  // 212 is for Scizor.
+  // 212 is for Scizor. 215 for Sneasel
   // Meowth has a gen 8+ split evolution, so it needs to be dealt with as well.
-  // Meowth = 52, Persian = 53
+  // Meowth = 52, Persian = 53, Weavile = 461
   // Also filter out gen 8+ forms.
   const finalPokemonData = finalPokemonDataOld
     ?.map(pokemon => {
       let { isSplitEvo: splitEvoFlag, id, nextEvoSplit } = pokemon
-      if (id === 267 || id === 269 || id === 212 || id === 53) {
+      if (id === 267 || id === 269 || id === 212 || id === 53 || id === 461) {
         splitEvoFlag = false
       }
-      if (id === 123 || id === 52) {
+      if (id === 123 || id === 52 || id === 215) {
         nextEvoSplit = false
       }
       return { ...pokemon, isSplitEvo: splitEvoFlag, nextEvoSplit }

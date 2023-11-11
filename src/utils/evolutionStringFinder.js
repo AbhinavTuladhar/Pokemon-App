@@ -23,6 +23,9 @@ const evolutionStringFinder = evolutionDetails => {
         gender = undefined,
         needs_overworld_rain = false,
         relative_physical_stats = undefined,
+        party_type: { name: partyPokemonType = undefined} = {},
+        turn_upside_down = false,
+        party_species: { name: partyPokemon = undefined } = {}
       } = evolutionStep
 
       // For use in various keys
@@ -48,7 +51,16 @@ const evolutionStringFinder = evolutionDetails => {
       }else if (knownMove) {
         return `after ${formatName(knownMove)} learned`
       } else if (locationName) {
-        return `level up in ${formatName(locationName)}`
+        switch(locationName) {
+          case 'mt-coronet':
+            return 'level up in magnetic field area'
+          case 'eterna-forest':
+            return 'level up near a mossy rock'
+          case 'sinnoh-route-217':
+            return 'level up near an icy rock'
+          default:
+            return 'Uncoded'
+        }
       } else if (min_happiness !== undefined) {
         return ('high happiness')
       } else if (needs_overworld_rain) {
@@ -57,6 +69,12 @@ const evolutionStringFinder = evolutionDetails => {
         return `level up with max beauty`
       } else if (relative_physical_stats !== undefined) {
         return `level ${min_level}, ${statMapping[String(relative_physical_stats)]}`
+      } else if (partyPokemonType) {
+        return `level ${min_level}, have ${formatName(partyPokemon)} type Pokémon in party`
+      } else if (turn_upside_down) {
+        return `level ${min_level}, turn device upside down`
+      } else if (partyPokemon) {
+        return `with ${formatName(partyPokemon)} in party`
       }
       return `level ${min_level}`
 
