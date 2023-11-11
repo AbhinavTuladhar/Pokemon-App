@@ -87,7 +87,7 @@ const NavBar = () => {
       <nav>
         <ul className='flex flex-wrap list-none'>
           <DropDownMenu parentText='Pokédex' menuData={linkData.slice(0, 8)} />
-          <DropDownMenu parentText='Game mechanics' menuData={linkData.slice(8, 11)} />
+          <DropDownMenu parentText='Mechanics' menuData={linkData.slice(8, 11)} />
           {otherNavElements}
         </ul>
       </nav>

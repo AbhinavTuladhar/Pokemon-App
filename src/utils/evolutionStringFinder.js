@@ -85,6 +85,9 @@ const evolutionStringFinder = evolutionDetails => {
 
       return `use ${formatName(itemName)}`
 
+    case 'shed':
+      return 'Level 20, empty spot in party, Pokéball in bag'
+
     default:
       return ('Some uncoded method')
   }

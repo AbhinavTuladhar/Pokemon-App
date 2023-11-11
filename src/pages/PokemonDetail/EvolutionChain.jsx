@@ -16,10 +16,10 @@ const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
   const typeDiv = types.map((type, index) => {
     const typeName = type.type.name
     return (
-      <div key={index}>
+      <span key={index}>
         <TypeCard typeName={typeName} useTextOnly={true} />
         {index !== types.length - 1 && <span> · </span>}
-      </div>
+      </span>
     )
   })
 
@@ -28,10 +28,10 @@ const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
 
   return (
     <div
-      className={`flex ${splitEvoFlag ? 'flex-col' : 'flex-row sm:flex-row md:flex-col'} justify-center items-center gap-y-2`}
+      className={`flex ${splitEvoFlag ? 'flex-col' : 'flex-row sm:flex-row md:flex-col'} justify-center items-center gap-y-2 w-fit mx-auto`}
     >
       <img src={homeSprite} alt={name} className='h-32 aspect-square' />
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex flex-col items-center justify-center w-full'>
         {formattedId}
         <NavLink
           to={`/pokemon/${name}`}
@@ -77,7 +77,7 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
     */
     if (currentPokemonData.nextEvoSplit) {
       return (
-        <div className='flex flex-row' key={index}>
+        <div className='flex flex-col md:flex-row' key={index}>
           {pokemon}
           <div className='flex flex-row justify-between md:flex-col gap-y-10'>
             <div className='flex flex-col items-center justify-center text-center md:flex-row'>
@@ -269,7 +269,7 @@ const EvolutionChain = ({ url }) => {
     })
 
   // Define divs for each pokemon in the evolution chain.
-  const individualPokemon = finalPokemonData?.map(pokemon => <PokemonCard pokemonData={pokemon} splitEvoFlag={pokemon.isSplitEvo} />)
+  const individualPokemon = finalPokemonData?.map((pokemon, index) => <PokemonCard pokemonData={pokemon} splitEvoFlag={pokemon.isSplitEvo} key={index} />)
 
   // Eevee is a special case which will be dealt with here.
   const firstPokemonName = (finalPokemonData ?? [])[0]?.name || "";
@@ -322,7 +322,7 @@ const EvolutionChain = ({ url }) => {
       }
       return { ...pokemon, isSplitEvo: splitEvoFlag, nextEvoSplit }
     })
-    const individualWormPokemon = wurmpleEvsData?.map(pokemon => <PokemonCard pokemonData={pokemon} splitEvoFlag={pokemon.isSplitEvo} />)
+    const individualWormPokemon = wurmpleEvsData?.map((pokemon, index) => <PokemonCard pokemonData={pokemon} splitEvoFlag={pokemon.isSplitEvo} key={index} />)
 
     let butterflyData = [
       wurmpleEvsData[1], wurmpleEvsData[2]
@@ -356,17 +356,17 @@ const EvolutionChain = ({ url }) => {
             {finalEvolutionDiv}
           </div>
         ) : (eeveelutionDiv.length > 0 ? (
-          eeveelutionDiv.map(div => {
+          eeveelutionDiv.map((div, index) => {
             return (
-              <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5'>
+              <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5' key={index}>
                 {div}
               </div>
             )
           })
         ) : (
-          wurmpleDiv.map(div => {
+          wurmpleDiv.map((div, index) => {
             return (
-              <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5'>
+              <div className='flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5' key={index}>
                 {div}
               </div>
             )
