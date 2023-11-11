@@ -77,7 +77,7 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
     */
     if (currentPokemonData.nextEvoSplit) {
       return (
-        <div key={index}>
+        <div className='flex flex-row' key={index}>
           {pokemon}
           <div className='flex flex-row justify-between md:flex-col gap-y-10'>
             <div className='flex flex-col items-center justify-center text-center md:flex-row'>
