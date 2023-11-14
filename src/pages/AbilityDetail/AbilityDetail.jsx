@@ -31,7 +31,6 @@ const AbilityDetail = () => {
 
   return (
     <motion.div
-      className='pb-4 mx-4 md:mx-10'
       initial={{ y: '100%', opacity: 0 }}
       animate={{ y: 0, opacity: 1, transitionDuration: '0.8s' }}
       exit={{ y: '100%', opacity: 0, transitionDuration: '0.75s' }}

@@ -46,13 +46,6 @@ const MainPage = ({ idRange }) => {
     }
   }, [pokemonData])
 
-  // Map each Pokemon to its respective card.
-  const pokemonBoxes = filteredPokemonInfo?.map((pokemon, index) => (
-    <FadeInAnimationCard className='w-full py-2 mx-4 my-2 smmd:w-2/12 sm:w-1/3 md:w-1/4' key={index}>
-      <PokeCard key={pokemon.id} data={pokemon} />
-    </FadeInAnimationCard>
-  ))
-
   // For handling the search bar.
   const handleChange = event => {
     const searchString = event.target.value
@@ -73,24 +66,23 @@ const MainPage = ({ idRange }) => {
     >
       <div className='flex items-center justify-center'>
         <input
-          className='text-black rounded-xl mx-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
+          className='text-black rounded-xl mx-4 py-2 px-4 w-full md:w-[20rem]' type='search'
           placeholder='Search for a Pokemon'
           disabled={Boolean(isLoading)}
           onChange={handleChange}
         />
       </div>
-      {isLoading ? (
-        <div className='flex flex-wrap items-center justify-center px-0 py-4 gap-x-2 gap-y-3'>
+      <div className='flex flex-wrap items-center justify-center gap-8 px-0 py-4 mt-2'>
+        {isLoading ? (
           <PokeCardSkeleton cardCount={20} />
-        </div>
-      ) : (
-        <>
-          <div className='flex flex-wrap items-center justify-center px-0 py-4 gap-x-2 gap-y-3'>
-            {pokemonBoxes}
-          </div>
-        </>
-      )
-      }
+        ) : (
+          filteredPokemonInfo?.map((pokemon, index) => (
+            <FadeInAnimationCard key={index}>
+              <PokeCard key={pokemon.id} data={pokemon} />
+            </FadeInAnimationCard>
+          ))
+        )}
+      </div>
     </motion.div>
   )
 }

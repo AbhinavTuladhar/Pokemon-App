@@ -49,11 +49,11 @@ const PokeCard = ({ data }) => {
   const gradientStyle = `bg-gradient-to-tr from-10% to-90% ${startingColour} ${endingColour}`
 
   return (
-    <div className={`${gradientStyle} flex flex-col items-center justify-center w-full duration-200 rounded-xl hover:scale-105 hover:shadow-xl hover:shadow-blue-400 hover:drop-shadow-lg`}>
+    <div className={`${gradientStyle} flex flex-col items-center p-2 justify-center w-48 sm:w-56 duration-200 rounded-xl hover:scale-105 hover:shadow-xl hover:shadow-blue-400 hover:drop-shadow-lg`}>
       <div className='font-bold'>
         #{id}
       </div>
-      <NavLink to={targetLink} className='text-xl font-extrabold'>
+      <NavLink to={targetLink} className='text-xl font-extrabold text-center'>
         {properName}
       </NavLink>
       <div>

@@ -61,7 +61,7 @@ const EggGroupListing = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='flex flex-col items-center justify-center pb-4 mx-4 md:mx-10'
+      className='flex flex-col items-center justify-center pb-4'
     >
       <h1 className='mb-5 text-3xl font-bold'>
         Egg groups

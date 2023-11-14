@@ -75,7 +75,6 @@ const EggGroupDetail = () => {
 
   return (
     <motion.div
-      className='pb-4 mx-4 md:mx-10'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}

@@ -15,8 +15,10 @@ const App = () => {
         <SkeletonTheme baseColor="#313131" highlightColor="#525252">
           <div className='text-white bg-gray-950 min-h-screen max-w-full'>
             <NavBar />
-            <ScrollToTop />
-            <AnimatedRoutes />
+            <section className='mx-4 md:mx-8 pb-4'>
+              <ScrollToTop />
+              <AnimatedRoutes />
+            </section>
           </div>
         </SkeletonTheme>
       </QueryClientProvider>

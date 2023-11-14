@@ -128,7 +128,7 @@ const LocationList = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='pb-4 mx-2 md:mx-10'
+      className='pb-4'
     >
       <h1 className='text-4xl font-bold text-center'>
         Pokémon Location guide

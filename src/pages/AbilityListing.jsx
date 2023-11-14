@@ -111,7 +111,6 @@ const AbilityListing = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='mx-4 md:mx-10'
     >
       <div className='flex items-center justify-center'>
         <input

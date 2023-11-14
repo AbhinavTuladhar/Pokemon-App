@@ -249,7 +249,6 @@ const LocationDetail = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='pb-4 mx-2 md:mx-10'
     >
       <h1 className='text-3xl font-bold text-center'>
         {isLoadingSubLocationData ?

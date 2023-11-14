@@ -55,7 +55,6 @@ const TypeListing = () => {
 
   return (
     <motion.div
-      className='p-4 mx-4'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.5s' }}
       exit={{ opacity: 0, transitionDuration: '0.5s' }}

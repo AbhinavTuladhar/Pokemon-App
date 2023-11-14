@@ -163,7 +163,7 @@ const PokemonDetail = () => {
 
   return (
     <motion.div
-      className='flex flex-col mx-4 md:mx-10'
+      className='flex flex-col'
       exit={{ y: '100%', scale: 0.8, opacity: 0, transitionDuration: '0.75s' }}
     >
       <div className="flex justify-center text-4xl font-bold">
