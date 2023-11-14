@@ -205,7 +205,7 @@ const MoveListing = () => {
       {
         key: 'shortEntry',
         value: (<div className='w-[36rem]'> {shortEntry?.replace('$effect_chance% ', '')} </div>),
-        style: 'pr-8 w-[36rem]'
+        style: 'pr-8 min-w-[36rem]'
       },
       {
         key: 'effectChance',

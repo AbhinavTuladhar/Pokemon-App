@@ -13,9 +13,9 @@ const App = () => {
     <>
       <QueryClientProvider client={queryClient}>
         <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-          <div className='text-white bg-gray-950 min-h-screen max-w-full'>
+          <div className='max-w-full min-h-screen text-white bg-gray-950'>
             <NavBar />
-            <section className='mx-4 md:mx-8 pb-4'>
+            <section className='pb-4 mx-4 md:mx-8'>
               <ScrollToTop />
               <AnimatedRoutes />
             </section>

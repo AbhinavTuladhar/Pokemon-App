@@ -82,7 +82,7 @@ const NavBar = () => {
       <div
         className='flex flex-wrap justify-center p-2 text-5xl font-semibold tracking-tight text-center bg-gradient-to-t from-slate-900 to-slate-800 lg:text-6xl lg:font-bold'
       >
-        <NavLink to='/' className='text-transparent bg-gradient-to-r from-yellow-500 to-indigo-500 bg-clip-text'> Pokémon Database </NavLink>
+        <NavLink to='/' className='text-sky-500'> Pokémon Database </NavLink>
       </div>
       <nav>
         <ul className='flex flex-wrap list-none'>

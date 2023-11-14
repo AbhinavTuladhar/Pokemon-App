@@ -81,17 +81,17 @@ const AbilityListing = () => {
       {
         key: 'Name',
         value: (<NavLink to={abilityLink}> {formatName(name)} </NavLink>),
-        style: index !== 0 ? 'font-bold hoverable-link whitespace-nowrap' : ''
+        cellStyle: index !== 0 ? 'font-bold hoverable-link whitespace-nowrap' : ''
       },
-      { key: 'Pokemon', value: pokemonCount, style: index !== 0 ? 'text-right' : '' },
-      { key: 'Description', value: shortEntry },
+      { key: 'Pokemon', value: pokemonCount, cellStyle: index !== 0 ? 'text-right' : '' },
+      { key: 'Description', value: shortEntry, cellStyle: 'min-w-[32rem]' },
       {
         key: 'Generation',
         value: index === 0 ? generationIntroduced : generationIntroduced?.slice(-1)
       },
     ]
     const tableCells = cellData.map((cell, cellIndex) => (
-      <div className={`${headerStyle} ${bgColour} ${cell?.style} table-cell border-gray-500 border-t h-12 align-middle py-2 px-4`} key={cellIndex}>
+      <div className={`${headerStyle} ${bgColour} ${cell?.cellStyle} table-cell border-gray-500 border-t h-12 align-middle py-2 px-4`} key={cellIndex}>
         {cell.value}
       </div>
     ))

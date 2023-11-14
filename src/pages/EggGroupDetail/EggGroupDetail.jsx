@@ -88,7 +88,7 @@ const EggGroupDetail = () => {
         <FadeInAnimationContainer className='w-full lg:w-1/3'>
           <GroupList />
         </FadeInAnimationContainer>
-        <div className='flex justify-center w-full lg:w-2/5'>
+        <div className='flex justify-center w-full lg:w-5/12'>
           <FadeInAnimationContainer className='w-full'>
             <PokemonTable data={finalData} isLoading={isLoadingPokemonData || isLoadingSpeciesData} />
           </FadeInAnimationContainer>

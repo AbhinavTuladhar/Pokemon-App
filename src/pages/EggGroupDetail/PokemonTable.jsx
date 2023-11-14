@@ -51,7 +51,7 @@ const PokemonTable = ({ data, isLoading }) => {
     ]
 
     const tableCells = cellData.map((cell, cellIndex) => (
-      <div className='table-cell h-12 px-4 py-2 mx-4 align-middle border-t border-slate-200' key={cellIndex}>
+      <div className='min-w-[5rem] table-cell h-12 px-4 py-2 mx-4 align-middle border-t border-slate-200' key={cellIndex}>
         {cell.value}
       </div>
     ))
