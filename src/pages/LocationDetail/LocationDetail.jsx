@@ -15,6 +15,7 @@ import uncommonRarity from '../../images/rarity-uncommon.png'
 import rareRarity from '../../images/rarity-rare.png'
 import limitedRarity from '../../images/rarity-limited.png'
 import useEncounterMethods from '../../hooks/useEncounterMethods'
+import { Tooltip } from 'react-tooltip'
 
 /**
  * For mapping the encounter chance to the corresponding pie chart image
@@ -32,6 +33,20 @@ const getRarityImage = (chance, methodName) => {
     return uncommonRarity
   } else {
     return rareRarity
+  }
+}
+
+const getRarityString = (chance, methodName) => {
+  if (methodName === 'only-one') {
+    return 'limited'
+  }
+
+  if (chance >= 50) {
+    return 'common'
+  } else if (chance >= 20 && chance < 50) {
+    return 'uncommon'
+  } else {
+    return 'rare'
   }
 }
 
@@ -166,6 +181,7 @@ const LocationDetail = () => {
           const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter
           // const trueChance = chance > 100 ? 100 : chance
           const chanceImage = getRarityImage(chance, methodName)
+          const rarityString = getRarityString(chance, methodName)
 
           // For the identifying div
           const idDiv = (
@@ -187,7 +203,7 @@ const LocationDetail = () => {
             )
 
           // For the pie-chart rarity image
-          const rarityImage = <img src={chanceImage} alt={chance} className='w-[30px]' />
+          const rarityImage = <img src={chanceImage} alt={chance} className='w-[30px] hover:cursor-help' id={rarityString} />
 
           const cellData = [
             { key: 'pokemon', value: rowIndex === 0 ? formatName(pokemonName) : idDiv },
@@ -215,7 +231,7 @@ const LocationDetail = () => {
             }
             <div className='flex justify-center'>
               <div className='w-full overflow-auto lg:w-7/12'>
-                <div className='table border-b border-slate-200 mx-auto'>
+                <div className='table mx-auto border-b border-slate-200'>
                   {tableRows}
                 </div>
               </div>
@@ -244,6 +260,13 @@ const LocationDetail = () => {
     )
   })
 
+  const tooltipData = [
+    { id: '#common', text: 'Common' },
+    { id: '#uncommon', text: 'Uncommon' },
+    { id: '#rare', text: 'Rare' },
+    { id: '#limited', text: 'Limited' },
+  ]
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -259,6 +282,14 @@ const LocationDetail = () => {
             </>
           )}
       </h1>
+
+      <>
+        {tooltipData.map((row, index) => (
+          <Tooltip anchorSelect={row.id} place='bottom' key={index}>
+            {row.text}
+          </Tooltip>
+        ))}
+      </>
 
       {/* For rendering skeleton when the content has not been loaded */}
       <>
