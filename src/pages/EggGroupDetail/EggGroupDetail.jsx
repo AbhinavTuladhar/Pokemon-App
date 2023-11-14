@@ -85,10 +85,10 @@ const EggGroupDetail = () => {
         <span className='text-gray-400'> (egg group) </span>
       </h1>
       <div className='flex flex-row flex-wrap gap-10'>
-        <FadeInAnimationContainer className='w-screen lg:w-1/3'>
+        <FadeInAnimationContainer className='w-full lg:w-1/3'>
           <GroupList />
         </FadeInAnimationContainer>
-        <div className='flex justify-center w-screen lg:w-2/5'>
+        <div className='flex justify-center w-full lg:w-2/5'>
           <FadeInAnimationContainer className='w-full'>
             <PokemonTable data={finalData} isLoading={isLoadingPokemonData || isLoadingSpeciesData} />
           </FadeInAnimationContainer>

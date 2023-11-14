@@ -114,7 +114,7 @@ const WelcomePage = () => {
       transition={{ ease: 'easeIn' }}
     >
       <motion.div
-        className='flex flex-col items-center justify-center py-4 mx-2 md:flex-row gap-y-4 md:mx-10'
+        className='flex flex-col items-center justify-center py-4 md:flex-row gap-y-4'
         variants={welcomeVariant} initial="initial" animate="animate"
       >
         <motion.div className='w-5/6 md:w-475/1000' variants={entryVariantLeft}>
@@ -125,7 +125,7 @@ const WelcomePage = () => {
           </motion.div>
           <motion.div className='flex flex-col py-4 space-y-4' variants={entryVariantLeft}>
             <InformativeText />
-            <IssuesText />
+            {/* <IssuesText /> */}
           </motion.div>
         </motion.div>
 

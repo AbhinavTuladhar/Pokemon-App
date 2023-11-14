@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 
 const useEncounterMethods = () => {
   const { data: encounterMethods } = useQuery(
-    ['encounter-method-list'],
+    ['encounter-method-list', 'preliminary'],
     () => fetchData('https://pokeapi.co/api/v2/encounter-method?limit=31'),
     {
       staleTime: Infinity, cacheTime: Infinity,

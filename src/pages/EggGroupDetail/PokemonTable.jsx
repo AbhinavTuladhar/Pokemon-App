@@ -21,9 +21,9 @@ const PokemonTable = ({ data, isLoading }) => {
     const cellData = [
       {
         value: (
-          <div className='flex flex-row items-center gap-x-4'>
+          <div className='flex flex-row items-center gap-x-2'>
             <span className='align-middle'> {properId} </span>
-            <img src={icon} alt={name} className='w-[56px]' />
+            <img src={icon} alt={name} className='w-[64px]' />
           </div>
         )
       }, {
@@ -51,7 +51,7 @@ const PokemonTable = ({ data, isLoading }) => {
     ]
 
     const tableCells = cellData.map((cell, cellIndex) => (
-      <div className='h-12 table-cell px-4 py-2 border-t-[1px] border-slate-200 align-middle w-32' key={cellIndex}>
+      <div className='table-cell h-12 px-4 py-2 mx-4 align-middle border-t border-slate-200' key={cellIndex}>
         {cell.value}
       </div>
     ))
@@ -66,14 +66,16 @@ const PokemonTable = ({ data, isLoading }) => {
 
   const tableData = (
     <>
-      {tableHeaders}
+      <div className='table-row'>
+        {tableHeaders}
+      </div>
       {tableRows}
     </>
   )
 
   return (
     <motion.div
-      className='self-start table w-full border-b border-slate-200'
+      className='self-start'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
