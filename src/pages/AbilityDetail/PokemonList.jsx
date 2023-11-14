@@ -97,7 +97,7 @@ const PokemonList = ({ data }) => {
 
     const tableCells = cellData?.map((cell, cellIndex) => {
       return (
-        <div className={`${cell?.style} table-cell px-4 py-2 h-12 border-t-[1px] border-slate-200 align-middle ${(index === 0 && cellIndex !== cellData.length - 1) && 'border-r-[1px]'} ${index === 0 && 'bg-gray-900 font-bold'}`} key={cellIndex}>
+        <div className={`${cell?.style} table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle ${(index === 0 && cellIndex !== cellData.length - 1) && 'border-r'} ${index === 0 && 'bg-gray-900 font-bold'}`} key={cellIndex}>
           {cell.value}
         </div>
       )

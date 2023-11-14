@@ -176,14 +176,14 @@ const MovesLearned = ({ data }) => {
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
-        <div className={`${stringDecoration} ${rowBg} table-row border-[1px] border-slate-400`} key={index}>
+        <div className={`${stringDecoration} ${rowBg} table-row border border-slate-400`} key={index}>
           {
             move.levelLearntAt &&
-            <div className='pl-4 table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+            <div className='pl-4 table-cell align-middle h-12 border-t border-slate-400 px-2'>
               {move?.levelLearntAt}
             </div>
           }
-          <div className={`${firstColStyle} ${moveNameStyle} whitespace-nowrap table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2 `}>
+          <div className={`${firstColStyle} ${moveNameStyle} whitespace-nowrap table-cell align-middle h-12 border-t border-slate-400 px-2 `}>
             {
               index !== 0
                 ?
@@ -192,14 +192,14 @@ const MovesLearned = ({ data }) => {
                 formatName(move?.moveName)
             }
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+          <div className='table-cell align-middle h-12 border-t border-slate-400 px-2'>
             {
               index === 0 ?
                 'Type' :
                 <TypeCard typeName={move?.moveType} />
             }
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+          <div className='table-cell align-middle h-12 border-t border-slate-400 px-2'>
             {
               moveClassImage === ''
                 ?
@@ -208,13 +208,13 @@ const MovesLearned = ({ data }) => {
                 <img className='w-[30px] h-[20px]' src={moveClassImage} alt={move?.damageClass} />
             }
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+          <div className='table-cell align-middle h-12 border-t border-slate-400 px-2'>
             {move?.PP}
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+          <div className='table-cell align-middle h-12 border-t border-slate-400 px-2'>
             {move?.power}
           </div>
-          <div className='table-cell align-middle h-12 border-t-[1px] border-slate-400 px-2'>
+          <div className='table-cell align-middle h-12 border-t border-slate-400 px-2'>
             {move?.accuracy}
           </div>
         </div>

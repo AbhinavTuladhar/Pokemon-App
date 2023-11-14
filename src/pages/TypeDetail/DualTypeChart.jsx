@@ -51,7 +51,7 @@ const DualTypeChart = ({ data }) => {
     })
 
     return (
-      <div className='flex flex-row gap-x-[1px] items-end' key={rowIndex}>
+      <div className='flex flex-row gap-x items-end' key={rowIndex}>
         {cellDivs}
       </div>
     )
@@ -61,7 +61,7 @@ const DualTypeChart = ({ data }) => {
     <>
       <div className='overflow-auto'>
         <div className='inline-flex flex-col'>
-          <div className='flex flex-row gap-x-[1px]'>
+          <div className='flex flex-row gap-x'>
             {firstRow}
           </div>
           <>

@@ -56,10 +56,10 @@ const MoveData = ({ moveInfo }) => {
     const rowValue = row.header === 'Priority' && parseInt(row.value) > 0 ? `+${row.value}` : row.value
     return (
       <div className='table-row h-12' key={rowIndex}>
-        <div key={row.header} className="table-cell align-middle text-right border-t-[1px] py-2 pr-8 border-slate-200">
+        <div key={row.header} className="table-cell align-middle text-right border-t py-2 pr-8 border-slate-200">
           {row.header}
         </div>
-        <div key={row.value} className="table-cell align-middle border-t-[1px] py-2 border-slate-200">
+        <div key={row.value} className="table-cell align-middle border-t py-2 border-slate-200">
           {rowValue}
         </div>
       </div>

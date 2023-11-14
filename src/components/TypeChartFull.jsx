@@ -107,7 +107,7 @@ const TypeChartFull = () => {
           <div className='flex flex-col'>
             {finalTypeCards}
           </div>
-          <div className='flex flex-row gap-[1px] py-[2px] justify-center'>
+          <div className='flex flex-row gap py-[2px] justify-center'>
             {tableColumns}
           </div>
         </div>

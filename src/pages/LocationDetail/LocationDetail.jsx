@@ -41,7 +41,7 @@ const SimpleSkeletonRow = ({ width }) => {
 
 const TableCell = ({ value, isHeader }) => {
   return (
-    <div className={`${isHeader && 'bg-gray-900 font-bold'} whitespace-nowrap table-cell h-14 border-t-[1px] border-slate-200 align-middle text-center px-4`}>
+    <div className={`${isHeader && 'bg-gray-900 font-bold'} whitespace-nowrap table-cell h-14 border-t border-slate-200 align-middle text-center px-4`}>
       {value}
     </div>
   )
@@ -215,7 +215,7 @@ const LocationDetail = () => {
             }
             <div className='flex justify-center'>
               <div className='w-full overflow-auto lg:w-7/12'>
-                <div className='table border-b-[1px] border-slate-200 mx-auto'>
+                <div className='table border-b border-slate-200 mx-auto'>
                   {tableRows}
                 </div>
               </div>

@@ -91,7 +91,7 @@ const AbilityListing = () => {
       },
     ]
     const tableCells = cellData.map((cell, cellIndex) => (
-      <div className={`${headerStyle} ${bgColour} ${cell?.style} table-cell border-gray-500 border-t-[1px] h-12 align-middle py-2 px-4`} key={cellIndex}>
+      <div className={`${headerStyle} ${bgColour} ${cell?.style} table-cell border-gray-500 border-t h-12 align-middle py-2 px-4`} key={cellIndex}>
         {cell.value}
       </div>
     ))

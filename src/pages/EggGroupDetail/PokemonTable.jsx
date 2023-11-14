@@ -9,7 +9,7 @@ import TableContainer from '../../components/TableContainer'
 const PokemonTable = ({ data, isLoading }) => {
   const headerNames = ['#', 'Name', 'Type', 'Other group']
   const tableHeaders = headerNames.map(header => (
-    <div className='h-12 bg-[#1a1a1a] table-cell px-4 py-2 border-t-[1px] font-bold border-slate-200 align-middle'>
+    <div className='h-12 bg-[#1a1a1a] table-cell px-4 py-2 border-t font-bold border-slate-200 align-middle'>
       {header}
     </div>
   ))

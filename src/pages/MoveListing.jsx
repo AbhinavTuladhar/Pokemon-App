@@ -216,7 +216,7 @@ const MoveListing = () => {
     const tableCells = tableCellData.map((cell, cellIndex) => {
       return (
         <div
-          className={`${cell.style} ${headerStyle} ${bgColour} border-gray-500 border-t-[1px] table-cell h-12 align-middle p-2`}
+          className={`${cell.style} ${headerStyle} ${bgColour} border-gray-500 border-t table-cell h-12 align-middle p-2`}
           key={cellIndex}
         >
           {cell.value}

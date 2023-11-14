@@ -41,7 +41,7 @@ const TypeChart = ({ data }) => {
       <span> {`The effectiveness of each type on ${formatName(name)}: `} </span>
 
       <div className='flex flex-col justify-center md:flex-row mdlg:flex-col sm:flex-row'>
-        <div className='flex flex-row flex-wrap mt-6 gap-x-[1px] justify-center'>
+        <div className='flex flex-row flex-wrap mt-6 gap-x justify-center'>
           {typeDefenseInfo.slice(0, 9).map((row, rowIndex) => (
             <div className='flex flex-col text-center w-9' key={rowIndex}>
               <MiniTypeCard typeName={row.type} />
@@ -50,7 +50,7 @@ const TypeChart = ({ data }) => {
           ))}
         </div>
 
-        <div className='flex flex-row flex-wrap mt-2 md:mt-6 sm:mt-6 gap-x-[1px] justify-center'>
+        <div className='flex flex-row flex-wrap mt-2 md:mt-6 sm:mt-6 gap-x justify-center'>
           {typeDefenseInfo.slice(9).map((row, rowIndex) => (
             <div className='flex flex-col text-center w-9' key={rowIndex}>
               <MiniTypeCard typeName={row.type} />
