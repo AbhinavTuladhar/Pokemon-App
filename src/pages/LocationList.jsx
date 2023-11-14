@@ -8,6 +8,7 @@ import formatName from '../utils/NameFormatting'
 import Skeleton from 'react-loading-skeleton'
 
 // This is for sorting on the basis of route number, but doesn't seem to work
+// eslint-disable-next-line
 const extractNumericPart = (str) => {
   const match = str.match(/\d+/);
   return match ? parseInt(match[0]) : Infinity;

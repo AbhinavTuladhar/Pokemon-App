@@ -4,6 +4,7 @@ import TypeCard from '../../components/TypeCard'
 import formatName from '../../utils/NameFormatting'
 import { motion } from 'framer-motion'
 import MoveListingSkeleton from '../../components/MoveListingSkeleton'
+import TableContainer from '../../components/TableContainer'
 
 const PokemonTable = ({ data, isLoading }) => {
   const headerNames = ['#', 'Name', 'Type', 'Other group']
@@ -62,6 +63,14 @@ const PokemonTable = ({ data, isLoading }) => {
     )
 
   })
+
+  const tableData = (
+    <>
+      {tableHeaders}
+      {tableRows}
+    </>
+  )
+
   return (
     <motion.div
       className='self-start table w-full border-b border-slate-200'
@@ -71,10 +80,7 @@ const PokemonTable = ({ data, isLoading }) => {
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       {!isLoading ? (
-        <div className='table'>
-          {tableHeaders}
-          {tableRows}
-        </div>
+        <TableContainer child={tableData} />
       ) : (
         <MoveListingSkeleton rowCount={10} />
       )}
