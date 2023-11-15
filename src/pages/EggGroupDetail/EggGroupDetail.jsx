@@ -73,6 +73,8 @@ const EggGroupDetail = () => {
     return { ...obj1, ...obj2 }
   }).filter(entry => (entry.id >= 1 && entry.id <= 807) || (entry.id >= 10001 && entry.id <= 10157))
 
+  document.title = `${formatName(eggGroupid)} egg group | Pokémon database`
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

@@ -56,6 +56,8 @@ const EggGroupListing = () => {
     </TableRow>
   ))
 
+  document.title = 'Pokémon egg groups | Pokémon database'
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
