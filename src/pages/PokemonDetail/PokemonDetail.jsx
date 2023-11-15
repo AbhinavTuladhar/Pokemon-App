@@ -88,7 +88,7 @@ const PokemonDetail = () => {
   } = speciesData || {}
 
   // Setting the title
-  document.title = `${formatName(pokemonName)}: stats, moves, evolution and locations | Pokémon Database`
+  document.title = pokemonName ? `${formatName(pokemonName)}: stats, moves, evolution and locations | Pokémon Database` : 'Loading...'
 
   // Define the props to all the child components.
   const BasicInfoProps = {

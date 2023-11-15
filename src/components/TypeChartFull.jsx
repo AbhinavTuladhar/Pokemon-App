@@ -7,6 +7,9 @@ import TypeMultiplierBox from './TypeMultiplierBox'
 import { extractTypeInformation } from '../utils/extractInfo'
 import fetchData from '../utils/fetchData'
 import calculateTypeEffectiveness from '../utils/typeEffectiveness'
+import { Tooltip } from 'react-tooltip'
+import multiplierToString from '../utils/multiplierToString'
+import formatName from '../utils/NameFormatting'
 
 const TypeChartFull = () => {
   const typeList = [
@@ -77,19 +80,25 @@ const TypeChartFull = () => {
   const dummy = [{ typeName: '', typeDefenceInfo: [{ typeName: '', multiplier: 1 }] }]
 
   const tableColumns = [dummy, ...extractedInformation]?.map((type, index) => {
-    const { typeName, typeDefenceInfo: defenceInfo } = type
+    const { typeName: defendingTypeName, typeDefenceInfo: defenceInfo } = type
 
     const tableCells = defenceInfo?.map((defendingType, cellIndex) => {
-      const { multiplier } = defendingType
+      const { typeName: attackingTypeName, multiplier } = defendingType
       if (cellIndex === 0) {
         return (
           <div key={cellIndex}>
-            <MiniTypeCard typeName={typeName} />
-            <TypeMultiplierBox multiplier={multiplier} />
+            <MiniTypeCard typeName={defendingTypeName} />
+            <div id={`${attackingTypeName}-${defendingTypeName}`}>
+              <TypeMultiplierBox multiplier={multiplier} />
+            </div>
           </div>
         )
       } else {
-        return <TypeMultiplierBox multiplier={multiplier} key={cellIndex} />
+        return (
+          <div id={`${attackingTypeName}-${defendingTypeName}`} key={cellIndex}>
+            <TypeMultiplierBox multiplier={multiplier} />
+          </div>
+        )
       }
     })
 
@@ -98,6 +107,20 @@ const TypeChartFull = () => {
         {tableCells}
       </div>
     )
+  })
+
+  const tooltips = extractedInformation?.map((type, index) => {
+    const { typeName: defendingTypeName, typeDefenceInfo: defenceInfo } = type
+
+    return defenceInfo?.map((defendingType) => {
+      const { typeName: attackingTypeName, multiplier } = defendingType
+      const effectString = multiplierToString(multiplier)
+      return (
+        <Tooltip anchorSelect={`#${attackingTypeName}-${defendingTypeName}`} key={index} place='bottom'>
+          {`${formatName(attackingTypeName)} → ${formatName(defendingTypeName)} = ${effectString}`}
+        </Tooltip>
+      )
+    })
   })
 
   return (
@@ -112,6 +135,10 @@ const TypeChartFull = () => {
           </div>
         </div>
       </div>
+
+      <>
+        {tooltips}
+      </>
     </>
   )
 }
