@@ -8,10 +8,14 @@ import formatName from '../../utils/NameFormatting'
 import OneLineSkeleton from '../../components/OneLineSkeleton'
 import MiniTypeCard from '../../components/MiniTypeCard'
 import TypeMultiplierBox from '../../components/TypeMultiplierBox'
+import { Tooltip } from 'react-tooltip'
+import multiplierToString from '../../utils/multiplierToString'
 
 const TypeChart = ({ data }) => {
   const { types, name } = data
   const typeUrls = types.map(type => type.type.url)
+  const typeNames = types.map(type => formatName(type.type.name))
+  const typeNamesString = typeNames.join('/')
 
   const transformData = data => {
     return data.map(type => {
@@ -34,6 +38,18 @@ const TypeChart = ({ data }) => {
     return { type, multiplier }
   })
 
+  const toolTipData = typeDefenseInfo.map((obj, index) => {
+    const { type, multiplier } = obj
+    const effectivenessString = multiplierToString(multiplier)
+    return (
+      <Tooltip anchorSelect={`#${type}`} place='bottom' key={index}>
+        <span className='text-xs'>
+          {`${formatName(type)} → ${typeNamesString} = ${effectivenessString}`}
+        </span>
+      </Tooltip>
+    )
+  })
+
   // Break down the 18 types into two rows, with nine types each.
   return (
     <section>
@@ -45,7 +61,9 @@ const TypeChart = ({ data }) => {
           {typeDefenseInfo.slice(0, 9).map((row, rowIndex) => (
             <div className='flex flex-col text-center w-9' key={rowIndex}>
               <MiniTypeCard typeName={row.type} />
-              <TypeMultiplierBox multiplier={row.multiplier} />
+              <div id={row.type}>
+                <TypeMultiplierBox multiplier={row.multiplier} />
+              </div>
             </div>
           ))}
         </div>
@@ -54,11 +72,18 @@ const TypeChart = ({ data }) => {
           {typeDefenseInfo.slice(9).map((row, rowIndex) => (
             <div className='flex flex-col text-center w-9' key={rowIndex}>
               <MiniTypeCard typeName={row.type} />
-              <TypeMultiplierBox multiplier={row.multiplier} />
+              <div id={row.type}>
+                <TypeMultiplierBox multiplier={row.multiplier} />
+              </div>
             </div>
           ))}
         </div>
       </div>
+
+      <>
+        {toolTipData}
+      </>
+
     </section>
   )
 }
