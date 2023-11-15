@@ -117,7 +117,9 @@ const TypeChartFull = () => {
       const effectString = multiplierToString(multiplier)
       return (
         <Tooltip anchorSelect={`#${attackingTypeName}-${defendingTypeName}`} key={index} place='bottom'>
-          {`${formatName(attackingTypeName)} → ${formatName(defendingTypeName)} = ${effectString}`}
+          <span className='text-xs'>
+            {`${formatName(attackingTypeName)} → ${formatName(defendingTypeName)} = ${effectString}`}
+          </span>
         </Tooltip>
       )
     })
