@@ -40,7 +40,7 @@ const TypeChartFull = () => {
   const { data: extractedInformation, isLoading } = useQueries({
     queries: typeData.map(type => {
       return {
-        queryKey: ['type', type.name],
+        queryKey: ['type', type.url],
         queryFn: () => fetchData(type.url),
         staleTime: Infinity,
         cacheTime: Infinity,

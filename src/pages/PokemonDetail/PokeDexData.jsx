@@ -1,6 +1,6 @@
 import { React, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQueries } from '@tanstack/react-query'
 import SectionTitle from '../../components/SectionTitle'
 import TypeCard from '../../components/TypeCard'
 import TableContainer from '../../components/TableContainer'
@@ -36,10 +36,23 @@ const PokeDexData = ({ pokemonData }) => {
   }, [pokedex_numbers, excludedRegions])
 
   // This is for fetching the names of the games.
-  const { data: gameData = [], isLoading } = useQuery({
-    queryKey: ['game', nationalNumber],
-    queryFn: () => Promise.all(versionURLs?.map(fetchData)),
-    staleTime: Infinity, cacheTime: Infinity
+  const { data: gameData = [], isLoading } = useQueries({
+    queries: versionURLs ?
+      versionURLs.map(version => {
+        return {
+          queryKey: ['version-url', version],
+          queryFn: () => fetchData(version),
+          staleTime: Infinity,
+          cacheTime: Infinity,
+        }
+      })
+      : [],
+    combine: results => {
+      return {
+        data: results.map(result => result.data),
+        isLoading: results.some(result => result.isLoading)
+      }
+    }
   })
 
   // Convert the types of the Pokemon into its corresponding component.
@@ -80,7 +93,7 @@ const PokeDexData = ({ pokemonData }) => {
   This will combine two objects: one object contains the name of the region, while the other contains the name of the games.
   */
   const properGameData = regionNumberValues?.map(obj1 => {
-    const obj2 = gameData?.find(obj2 => obj2.name === obj1.region)
+    const obj2 = gameData?.find(obj2 => obj2?.name === obj1?.region)
     return {
       dexNumber: obj1.number,
       gameNames: obj2?.version_groups.map(version => version.name)

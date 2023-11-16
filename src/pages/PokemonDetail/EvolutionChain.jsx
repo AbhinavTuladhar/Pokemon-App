@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
 import { BsArrowRight, BsArrowDown, BsArrowUpRight, BsArrowDownRight } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
@@ -209,24 +209,34 @@ const EvolutionChain = ({ url }) => {
     return `https://pokeapi.co/api/v2/pokemon/${pokemon.id}/`
   })
 
-  // Then perform a get request on all this data, then get the home sprite, and name of the pokemon.
-  const { data: allPokemonData, isLoading: isLoadingPokemonData } = useQuery({
-    queryKey: pokemonUrls,
-    queryFn: () => Promise.all(pokemonUrls.map(fetchData)),
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    select: pokemonDataList => {
-      return pokemonDataList.map(pokemon => {
-        const extractedInformation = extractPokemonInformation(pokemon)
-        const { name, homeSprite, id, types } = extractedInformation
-        return { name, homeSprite, id, types }
+  // Then perform a get request on all this data, then get the home sprite, and name of the pokemon. 
+  const { data: allPokemonData, isLoading: isLoadingPokemonData } = useQueries({
+    queries: pokemonUrls ?
+      pokemonUrls.map(pokemonUrl => {
+        return {
+          queryKey: ['evolution-chain', pokemonUrl],
+          queryFn: () => fetchData(pokemonUrl),
+          staleTime: Infinity,
+          cacheTime: Infinity,
+          select: pokemon => {
+            const extractedInformation = extractPokemonInformation(pokemon)
+            const { name, homeSprite, id, types } = extractedInformation
+            return { name, homeSprite, id, types }
+          }
+        }
       })
+      : [],
+    combine: results => {
+      return {
+        data: results.map(result => result.data),
+        isLoading: results.some(result => result.isLoading)
+      }
     }
   })
 
   // Now perform a join operation on allPokemonData and evolutionChainData on the basis of the pokemon id.
   const preFinalPokemonData = allPokemonData?.map(pokemon => {
-    const species = evolutionChainData?.find(species => species.id === pokemon.id)
+    const species = evolutionChainData?.find(species => species?.id === pokemon?.id)
     return { ...pokemon, ...species }
   })
 
