@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import Skeleton from 'react-loading-skeleton'
 import TypeCard from './TypeCard'
 import MiniTypeCard from './MiniTypeCard'
@@ -43,11 +43,13 @@ const TypeChartFull = () => {
         return { typeName, typeDefenceInfo }
       })
   }
-  const { data: extractedInformation = [], isLoading } = useQuery(
-    ['typeChart', typeList],
-    () => Promise.all(typeUrls.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
-  )
+  const { data: extractedInformation = [], isLoading } = useQuery({
+    queryKey: ['typeChart', typeList],
+    queryFn: () => Promise.all(typeUrls.map(fetchData)),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformData
+  })
 
   if (isLoading) {
     return <Skeleton width='90%' height='20rem' containerClassName='flex-1 w-full flex justify-end' />

@@ -1,6 +1,6 @@
 import { React, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import SectionTitle from '../../components/SectionTitle'
 import TypeCard from '../../components/TypeCard'
 import TableContainer from '../../components/TableContainer'
@@ -36,11 +36,11 @@ const PokeDexData = ({ pokemonData }) => {
   }, [pokedex_numbers, excludedRegions])
 
   // This is for fetching the names of the games.
-  const { data: gameData = [], isLoading } = useQuery(
-    [nationalNumber],
-    () => Promise.all(versionURLs?.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: gameData = [], isLoading } = useQuery({
+    queryKey: ['game', nationalNumber],
+    queryFn: () => Promise.all(versionURLs?.map(fetchData)),
+    staleTime: Infinity, cacheTime: Infinity
+  })
 
   // Convert the types of the Pokemon into its corresponding component.
   const typeDiv = typeNames.map((typeName, index) => <TypeCard typeName={typeName} key={index} />)

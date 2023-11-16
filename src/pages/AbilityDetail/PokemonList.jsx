@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
@@ -40,11 +40,13 @@ const PokemonList = ({ data }) => {
   }
 
   // We now need to query the Pokemon URLs in order to find their icons, and other abilities
-  const { data: readyInformation = [] } = useQuery(
-    ['abilityData', pokemonList],
-    () => Promise.all(urlList?.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity, retry: 3, select: transformData },
-  )
+  const { data: readyInformation = [] } = useQuery({
+    queryKey: ['abilityData', pokemonList],
+    queryFn: () => Promise.all(urlList?.map(fetchData)),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformData
+  })
 
   const headers = [{
     id: '#',

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import TypeCard from '../../components/TypeCard'
@@ -122,29 +122,41 @@ const MovesLearned = ({ data }) => {
     return data.map(move => extractMoveInformation(move))
   }
 
-  const { data: levelMoveDetails, isLoading: isLoadingLevel } = useQuery(
-    ['levelDetails', moveUrls.level],
-    () => fetchData(moveUrls.level),
-    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
-  )
+  const { data: levelMoveDetails, isLoading: isLoadingLevel } = useQuery({
+    queryKey: ['levelDetails', moveUrls.level],
+    queryFn: () => fetchData(moveUrls.level),
+    enabled: true,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformMoveData
+  })
 
-  const { data: tutorMoveDetails, isLoading: isLoadingTutor } = useQuery(
-    ['tutorDetails', moveUrls.tutor],
-    () => fetchData(moveUrls.tutor),
-    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
-  )
+  const { data: tutorMoveDetails, isLoading: isLoadingTutor } = useQuery({
+    queryKey: ['tutorDetails', moveUrls.tutor],
+    queryFn: () => fetchData(moveUrls.tutor),
+    enabled: true,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformMoveData
+  })
 
-  const { data: machineMoveDetails, isLoading: isLoadingMachine } = useQuery(
-    ['machineDetails', moveUrls.machine],
-    () => fetchData(moveUrls.machine),
-    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
-  )
+  const { data: machineMoveDetails, isLoading: isLoadingMachine } = useQuery({
+    queryKey: ['machineDetails', moveUrls.machine],
+    queryFn: () => fetchData(moveUrls.machine),
+    enabled: true,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformMoveData
+  })
 
-  const { data: eggMoveDetails, isLoading: isLoadingEgg } = useQuery(
-    ['eggDetails', moveUrls.egg],
-    () => fetchData(moveUrls.egg),
-    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
-  )
+  const { data: eggMoveDetails, isLoading: isLoadingEgg } = useQuery({
+    queryKey: ['eggDetails', moveUrls.egg],
+    queryFn: () => fetchData(moveUrls.egg),
+    enabled: true,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformMoveData
+  })
 
   if (isLoadingLevel || isLoadingTutor || isLoadingMachine || isLoadingEgg) {
     return

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
@@ -28,11 +28,11 @@ const AbilityListing = () => {
     return response.data
   }
 
-  const { data: abilityData } = useQuery(
-    ['moveData', urlList],
-    () => Promise.all(urlList.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: abilityData } = useQuery({
+    queryKey: ['moveData', urlList],
+    queryFn: () => Promise.all(urlList.map(fetchData)),
+    staleTime: Infinity, cacheTime: Infinity
+  })
 
   // Extract the information and sort in alphabetical order.
   useEffect(() => {

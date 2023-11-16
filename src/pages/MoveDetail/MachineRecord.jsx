@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import TableContainer from '../../components/TableContainer'
 import SectionTitle from '../../components/SectionTitle'
 import fetchData from '../../utils/fetchData'
@@ -45,11 +45,13 @@ const MachineRecord = ({ machineList }) => {
   }
 
   // This is for querying the list of urls.
-  const { data: machineInfo } = useQuery(
-    ['moveData', machineList],
-    () => Promise.all(urlList?.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
-  )
+  const { data: machineInfo } = useQuery({
+    queryKey: ['moveData', machineList],
+    queryFn: () => Promise.all(urlList?.map(fetchData)),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformData
+  })
 
   // Now for the table rows.
   const tableRows = machineInfo?.map((machine, rowIndex) => {

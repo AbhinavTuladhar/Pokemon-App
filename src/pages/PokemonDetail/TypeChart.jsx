@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import SectionTitle from '../../components/SectionTitle'
 import fetchData from '../../utils/fetchData'
 import { extractTypeInformation } from '../../utils/extractInfo'
@@ -24,11 +24,13 @@ const TypeChart = ({ data }) => {
     })
   }
 
-  const { data: typeData, isLoading } = useQuery(
-    ['typeData', types],
-    () => Promise.all(typeUrls.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
-  )
+  const { data: typeData, isLoading } = useQuery({
+    queryKey: ['typeData', types],
+    queryFn: () => Promise.all(typeUrls.map(fetchData)),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformData
+  })
 
   if (isLoading) return <OneLineSkeleton />
 

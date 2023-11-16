@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import fetchData from '../utils/fetchData'
@@ -51,11 +51,13 @@ const LocationList = () => {
     })
   }
 
-  const { data: locationData = [], isLoading } = useQuery(
-    ['locationData', locationUrls],
-    () => Promise.all(locationUrls.map(fetchData)),
-    { cacheTime: Infinity, staleTime: Infinity, select: transformData }
-  )
+  const { data: locationData = [], isLoading } = useQuery({
+    queryKey: ['locationData', locationUrls],
+    queryFn: () => Promise.all(locationUrls.map(fetchData)),
+    cacheTime: Infinity,
+    staleTime: Infinity,
+    select: transformData
+  })
 
   useEffect(() => {
     // Setting the selected tab using session storage.

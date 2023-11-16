@@ -1,5 +1,5 @@
 import { React, useMemo, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import axios from 'axios'
@@ -33,11 +33,12 @@ const MainPage = ({ idRange }) => {
   }, [idRange])
 
   // Perform a GET request on all the 'calculated' URLs.
-  const { data: pokemonData, isLoading } = useQuery(
-    ['pokemonData', idRange],
-    () => Promise.all(urlList.map(fetchPokemonData)),
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: pokemonData, isLoading } = useQuery({
+    queryKey: ['pokemonData', idRange],
+    queryFn: () => Promise.all(urlList.map(fetchPokemonData)),
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 
   useEffect(() => {
     if (pokemonData?.length > 0) {

@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useMemo } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
@@ -56,11 +56,12 @@ const MoveListing = () => {
   }
 
   // Perform a GET request on all the 'calculated' URLs.
-  const { data: moveData } = useQuery(
-    ['moveData', urlList],
-    () => Promise.all(urlList.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: moveData } = useQuery({
+    queryKey: ['moveData', urlList],
+    queryFn: () => Promise.all(urlList.map(fetchData)),
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 
   useEffect(() => {
     if (!moveData)
@@ -91,15 +92,16 @@ const MoveListing = () => {
   }, [moveList])
 
   // Now query the urls.
-  const { data: TMResponse } = useQuery(
-    ['TMList', TMURLs],
-    () => {
+  const { data: TMResponse } = useQuery({
+    queryKey: ['TMList', TMURLs],
+    queryFn: () => {
       const availableURLs = TMURLs?.filter(machine => machine.url !== undefined)
       const TMURLList = availableURLs?.map(machine => machine.url)
       return Promise.all(TMURLList.map(fetchData))
     },
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 
   // Now make an array of objects - the object has two keys - 
   // name: name of the machine, machine: Machine number, like HM01, TM23

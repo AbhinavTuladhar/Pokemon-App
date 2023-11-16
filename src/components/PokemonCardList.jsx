@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import SectionTitle from './SectionTitle'
 import MoveListingSkeleton from './MoveListingSkeleton'
 import PokeCardV2 from './PokeCardV2'
@@ -13,11 +13,13 @@ const PokemonCardList = ({ title, pokemonUrls }) => {
       .sort((first, second) => first.nationalNumber >= second.nationalNumber ? 1 : -1)
   }
 
-  const { data: pokemonData = [], isLoading } = useQuery(
-    [title, pokemonUrls],
-    () => Promise.all(pokemonUrls.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
-  )
+  const { data: pokemonData = [], isLoading } = useQuery({
+    queryKey: [title, pokemonUrls],
+    queryFn: () => Promise.all(pokemonUrls.map(fetchData)),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformData
+  })
 
   // We now map the Pokemon data into the respective cards.
   const pokeCards = pokemonData?.map((pokemon, index) => (
