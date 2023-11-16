@@ -6,6 +6,7 @@ import typeMapping from '../utils/typeMapping';
 import { extractPokemonInformation } from '../utils/extractInfo';
 
 const darkenColour = colour => {
+  if (!colour) return
   // First check if the colour is the custom colour, ie grey-Yellow.
   const colourName = colour.slice(0, -3)
   const colourShade = parseInt(colour.slice(-3))
@@ -16,23 +17,25 @@ const darkenColour = colour => {
 }
 
 const PokeCard = ({ data }) => {
+  if (!data) return
+
   const {
     id,
     name,
     types,
     front_default: defaultSprite
-  } = extractPokemonInformation(data)
+  } = extractPokemonInformation(data) || {}
 
   // For capitalising the first letter.
   const properName = formatName(name)
 
   // Get a list of all the types of the Pokemon.
-  let typeList = types.map(type => {
+  let typeList = types?.map(type => {
     return type.type.name
   })
 
   // Now map each type to its corresponding type card.
-  const typeDivs = typeList.map((type, index) => {
+  const typeDivs = typeList?.map((type, index) => {
     return <TypeCard typeName={type} key={index} />
   })
 

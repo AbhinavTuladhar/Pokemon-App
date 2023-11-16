@@ -1,12 +1,12 @@
 import { React, useMemo, useEffect, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQueries } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import axios from 'axios'
 import 'react-loading-skeleton/dist/skeleton.css'
 import PokeCard from '../components/PokeCard'
 import PokeCardSkeleton from '../components/PokeCardSkeleton'
 import { FadeInAnimationCard } from '../components/AnimatedContainers'
+import fetchData from '../utils/fetchData'
 
 const MainPage = ({ idRange }) => {
   const [pokemonInfo, setPokemonInfo] = useState([])
@@ -18,11 +18,6 @@ const MainPage = ({ idRange }) => {
   // Check for the 'other forms' page.
   const generationNumber = isNaN(generationNumberRaw) ? '' : generationNumberRaw
 
-  const fetchPokemonData = async (url) => {
-    const response = await axios.get(url)
-    return response.data
-  }
-
   // This fetches the URLs of all the pokemon of that generation.
   const urlList = useMemo(() => {
     let urls = []
@@ -32,13 +27,22 @@ const MainPage = ({ idRange }) => {
     return urls
   }, [idRange])
 
-  // Perform a GET request on all the 'calculated' URLs.
-
-  const { data: pokemonData, isLoading } = useQuery({
-    queryKey: ['pokemonData', idRange],
-    queryFn: () => Promise.all(urlList.map(fetchPokemonData)),
-    staleTime: Infinity,
-    cacheTime: Infinity
+  const { data: pokemonData, isLoading, isFullyLoaded } = useQueries({
+    queries: urlList.map(url => {
+      return {
+        queryKey: ['pokemon-url', url],
+        queryFn: () => fetchData(url),
+        cacheTime: Infinity,
+        staleTime: Infinity,
+      }
+    }),
+    combine: results => {
+      return {
+        data: results?.map(result => result?.data),
+        isLoading: results.some(result => result.isLoading),
+        isFullyLoaded: results.every(result => result.data !== undefined)
+      }
+    }
   })
 
   useEffect(() => {
@@ -80,7 +84,7 @@ const MainPage = ({ idRange }) => {
         ) : (
           filteredPokemonInfo?.map((pokemon, index) => (
             <FadeInAnimationCard key={index}>
-              <PokeCard key={pokemon.id} data={pokemon} />
+              <PokeCard data={pokemon} />
             </FadeInAnimationCard>
           ))
         )}

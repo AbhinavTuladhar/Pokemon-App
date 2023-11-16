@@ -17,8 +17,7 @@ const extractNumericPart = (str) => {
 const LocationList = () => {
   document.title = 'Pokémon Location Guide - all routes, all Pokémon! | Pokémon Database'
 
-  const [activeTab, setActiveTab] = useState(1)
-  // const tabData = []
+  const [activeTab, setActiveTab] = useState(sessionStorage.getItem('storedTab') || '1')
 
   const locationUrls = useMemo(() => {
     const urlList = []
