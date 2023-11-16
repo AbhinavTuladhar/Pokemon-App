@@ -1,5 +1,5 @@
 import { React, useMemo, useEffect, useState } from 'react'
-import { useQueries, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import axios from 'axios'
@@ -7,7 +7,6 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import PokeCard from '../components/PokeCard'
 import PokeCardSkeleton from '../components/PokeCardSkeleton'
 import { FadeInAnimationCard } from '../components/AnimatedContainers'
-import fetchData from '../utils/fetchData'
 
 const MainPage = ({ idRange }) => {
   const [pokemonInfo, setPokemonInfo] = useState([])

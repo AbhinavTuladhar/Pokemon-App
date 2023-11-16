@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQueries } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import fetchData from '../utils/fetchData'
@@ -29,34 +29,40 @@ const LocationList = () => {
   }, [])
 
   const transformData = data => {
-    const regionExtracted = data.map(extractRegionInformation)
+    const regionExtracted = extractRegionInformation(data)
 
     // Reformat the objects in the arrays
-    return regionExtracted.map(region => {
-      const { locations, regionName } = region
+    const { locations, regionName } = regionExtracted
 
-      const locationsNew = locations.map(location => {
-        const { name: locationName, url: actualUrl } = location
-        const localUrl = `/location/${locationName}`
-        const filteredRoute = locationName.match(/(route-.+)/)
-        const properLocationName = filteredRoute !== null ? filteredRoute[1] : locationName
-        return { locationName: properLocationName, actualUrl, localUrl }
-      })
-        .sort((prev, curr) => {
-          // return prev.locationName >= curr.locationName ? 1 : -1
-          // using localeCompare to take into consideration the route numbers.
-          return prev.locationName.localeCompare(curr.locationName, undefined, { numeric: true, sensitivity: 'base' })
-        })
-      return { regionName, locations: locationsNew }
-    })
+    const locationsNew = locations.map(location => {
+      const { name: locationName, url: actualUrl } = location
+      const localUrl = `/location/${locationName}`
+      const filteredRoute = locationName.match(/(route-.+)/)
+      const properLocationName = filteredRoute !== null ? filteredRoute[1] : locationName
+      return { locationName: properLocationName, actualUrl, localUrl }
+    }).sort((prev, curr) => (
+      prev.locationName.localeCompare(curr.locationName, undefined, { numeric: true, sensitivity: 'base' })
+    ))
+
+    return { regionName, locations: locationsNew }
   }
 
-  const { data: locationData = [], isLoading } = useQuery({
-    queryKey: ['locationData', locationUrls],
-    queryFn: () => Promise.all(locationUrls.map(fetchData)),
-    cacheTime: Infinity,
-    staleTime: Infinity,
-    select: transformData
+  const { data: locationData = [], isLoading } = useQueries({
+    queries: locationUrls.map(location => {
+      return {
+        queryKey: ['location', location],
+        queryFn: () => fetchData(location),
+        cacheTime: Infinity,
+        staleTime: Infinity,
+        select: transformData
+      }
+    }),
+    combine: results => {
+      return {
+        data: results.map(result => result.data),
+        isLoading: results.some(result => result.isLoading)
+      }
+    }
   })
 
   useEffect(() => {

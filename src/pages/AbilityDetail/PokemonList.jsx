@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQueries } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
@@ -13,40 +13,46 @@ const PokemonList = ({ data }) => {
   const { pokemonList, name: abilityName } = data
   const urlList = pokemonList?.map(pokemon => pokemon.pokemon.url)
 
-  // Extracting information from the API response.
-  const transformData = pokemonData => {
-    // We now need to find the pokemon name, the icons, and the other abilities of the pokemon.
-    const rawInformation = pokemonData?.map((pokemon) => {
-      const { abilities, name, icon, id, order, nationalNumber } = extractPokemonInformation(pokemon)
-      // Now find the other abilities of the Pokemon. THese pokemon should have an icon.
-      const otherAbilities = abilities?.filter(ability => ability.ability.name !== abilityName)
-        ?.map(ability => ability.ability.name)
-      return {
-        id,
-        name,
-        otherAbilities,
-        icon,
-        order,
-        nationalNumber
-      }
-    })
-
-    // Now sort by nationalNumber to take into account the mega evolutions and other forms.
-    return (
-      rawInformation
-        ?.filter(entry => (entry.id >= 1 && entry.id <= 807) || (entry.id >= 10001 && entry.id <= 10157))
-        ?.sort((prev, curr) => prev.nationalNumber >= curr.nationalNumber ? 1 : -1)
-    )
-  }
-
   // We now need to query the Pokemon URLs in order to find their icons, and other abilities
-  const { data: readyInformation = [] } = useQuery({
-    queryKey: ['abilityData', pokemonList],
-    queryFn: () => Promise.all(urlList?.map(fetchData)),
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    select: transformData
+  const { data: readyInformation = [], isLoading } = useQueries({
+    queries: urlList
+      ? urlList.map(url => {
+        return {
+          queryKey: ['pokemon-url', url],
+          queryFn: () => fetchData(url),
+          staleTime: Infinity,
+          cacheTime: Infinity,
+          select: data => {
+            // We now need to find the pokemon name, the icons, and the other abilities of the pokemon.
+            const { abilities, name, icon, id, order, nationalNumber } = extractPokemonInformation(data)
+            // Now find the other abilities of the Pokemon. THese pokemon should have an icon.
+            const otherAbilities = abilities?.filter(ability => ability.ability.name !== abilityName)
+              ?.map(ability => ability.ability.name)
+            return {
+              id,
+              name,
+              otherAbilities,
+              icon,
+              order,
+              nationalNumber
+            }
+          }
+        }
+      })
+      : [],
+    combine: results => {
+      return {
+        data: results.map(result => result.data)
+          ?.filter(entry => (entry?.id >= 1 && entry?.id <= 807) || (entry?.id >= 10001 && entry?.id <= 10157))
+          ?.sort((prev, curr) => prev?.nationalNumber >= curr?.nationalNumber ? 1 : -1),
+        isLoading: results.some(result => result.isLoading),
+      }
+    },
   })
+
+  if (isLoading) {
+    return <TabularSkeleton />
+  }
 
   const headers = [{
     id: '#',
@@ -114,14 +120,14 @@ const PokemonList = ({ data }) => {
 
   return (
     <>
-      {pokemonList ? (
+      {!isLoading ? (
         <>
           <SectionTitle text={`Pokemon with ${formatName(abilityName)}`} />
           <TableContainer child={rowData} />
         </>
-      ) :
+      ) : (
         <TabularSkeleton />
-      }
+      )}
     </>
   )
 }
