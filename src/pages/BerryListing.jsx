@@ -3,37 +3,26 @@ import { useQuery, useQueries } from '@tanstack/react-query'
 import fetchData from '../utils/fetchData'
 
 const BerryListing = () => {
-  const { data: berryList } = useQuery(
-    'berry-list',
-    () => fetchData('https://pokeapi.co/api/v2/berry?limit=100'),
-    {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      select: data => data.results
-    }
-  )
+  const { data: berryList } = useQuery({
+    queryKey: 'berry-list',
+    queryFn: () => fetchData('https://pokeapi.co/api/v2/berry?limit=100'),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: data => data.results
+  })
 
-  const berryUrls = berryList?.map(berry => berry.url)
+  const results = useQueries({
+    queries: berryList
+      ? berryList.map((berry) => {
+        return {
+          queryKey: ['berry', berry.name],
+          queryFn: () => fetchData(berry.url)
+        }
+      })
+      : []
+  })
 
-  // const results = useQueries(berryList?.map(berry => {
-  //   return {
-  //     queryKey: ['bery', berry?.url],
-  //     queryFn: () => fetchData(berry?.url)
-  //   }
-  // }))
-
-  // console.log(results)
-
-  // const { data: berryInfo } = useQuery(
-  //   ['berry-list', berryUrls || []],
-  //   () => Promise.all(berryUrls.map(fetchData)),
-  //   {
-  //     staleTime: Infinity,
-  //     cacheTime: Infinity,
-  //   }
-  // )
-
-  // console.log(berryInfo)
+  console.log(results)
 
   return (
     <div>BerryListing</div>
