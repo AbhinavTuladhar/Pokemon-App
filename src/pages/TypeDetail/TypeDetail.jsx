@@ -155,7 +155,6 @@ const TypeDetail = () => {
 
   return (
     <motion.div
-      className='mx-4 md:mx-10'
       exit={{ x: '100%', opacity: 0, transitionDuration: '0.5s' }}
     >
       <motion.div vairants={simpleFadeInVariant} initial='initial' animate='animate'>

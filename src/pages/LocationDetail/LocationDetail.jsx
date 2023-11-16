@@ -101,7 +101,7 @@ const LocationDetail = () => {
   // Inform the user if there is no encounter information.
   if (subLocationData?.length === 0) {
     return (
-      <div className='mx-2 md:mx-10'>
+      <div>
         <h1 className='text-3xl font-bold text-center'>
           {formatName(locationName)}
         </h1>

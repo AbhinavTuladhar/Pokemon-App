@@ -71,7 +71,7 @@ const TypeChartFull = () => {
   })
 
   const finalTypeCards = fullTypeCards.map((typeCard, index) => (
-    <div className='flex justify-center items-center my-[2px]' key={index}>
+    <div className='flex justify-center items-center my-[2px]' key={`card-${index}`}>
       {typeCard}
     </div>
   ))
@@ -86,7 +86,7 @@ const TypeChartFull = () => {
       const { typeName: attackingTypeName, multiplier } = defendingType
       if (cellIndex === 0) {
         return (
-          <div key={cellIndex}>
+          <div key={`cell-${cellIndex}`}>
             <MiniTypeCard typeName={defendingTypeName} />
             <div id={`${attackingTypeName}-${defendingTypeName}`}>
               <TypeMultiplierBox multiplier={multiplier} />
@@ -95,7 +95,7 @@ const TypeChartFull = () => {
         )
       } else {
         return (
-          <div id={`${attackingTypeName}-${defendingTypeName}`} key={cellIndex}>
+          <div id={`${attackingTypeName}-${defendingTypeName}`} key={`multiplier-${cellIndex}`}>
             <TypeMultiplierBox multiplier={multiplier} />
           </div>
         )
@@ -103,7 +103,7 @@ const TypeChartFull = () => {
     })
 
     return (
-      <div className='flex flex-col' key={index}>
+      <div className='flex flex-col' key={`table-cell-${index}`}>
         {tableCells}
       </div>
     )
@@ -112,11 +112,11 @@ const TypeChartFull = () => {
   const tooltips = extractedInformation?.map((type, index) => {
     const { typeName: defendingTypeName, typeDefenceInfo: defenceInfo } = type
 
-    return defenceInfo?.map((defendingType) => {
+    return defenceInfo?.map((defendingType, innerIndex) => {
       const { typeName: attackingTypeName, multiplier } = defendingType
       const effectString = multiplierToString(multiplier)
       return (
-        <Tooltip anchorSelect={`#${attackingTypeName}-${defendingTypeName}`} key={index} place='bottom'>
+        <Tooltip anchorSelect={`#${attackingTypeName}-${defendingTypeName}`} key={`tooltip-${innerIndex}`} place='bottom'>
           <span className='text-xs'>
             {`${formatName(attackingTypeName)} → ${formatName(defendingTypeName)} = ${effectString}`}
           </span>
