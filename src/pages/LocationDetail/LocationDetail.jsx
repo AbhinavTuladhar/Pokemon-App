@@ -175,9 +175,9 @@ const LocationDetail = () => {
       // Finally, the encounter methods.
       const encounterMethodDiv = methods?.map(({ methodName, encounterDetails }, methodIndex) => {
         // Find the name of the encounter method description
-        const encounterDescription = encounterMethodDescriptions.find(method => method.name === methodName).description
+        const encounterDescription = encounterMethodDescriptions?.find(method => method.name === methodName).description
 
-        const tableRows = [...header, ...encounterDetails].map((encounter, rowIndex) => {
+        const tableRows = [...header, ...encounterDetails]?.map((encounter, rowIndex) => {
           const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter
           // const trueChance = chance > 100 ? 100 : chance
           const chanceImage = getRarityImage(chance, methodName)
