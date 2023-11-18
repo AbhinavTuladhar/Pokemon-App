@@ -257,17 +257,17 @@ const EvolutionChain = ({ url }) => {
 
   // 267 and 269 are for the Wurmple evolution chain.
   // 123 is for Scyther, which has a split evolution in gen 8.
-  // 212 is for Scizor. 215 for Sneasel
+  // 212 is for Scizor. 215 for Sneasel, 194 for Wooper
   // Meowth has a gen 8+ split evolution, so it needs to be dealt with as well.
   // Meowth = 52, Persian = 53, Weavile = 461
   // Also filter out gen 8+ forms.
   const finalPokemonData = finalPokemonDataOld
     ?.map(pokemon => {
       let { isSplitEvo: splitEvoFlag, id, nextEvoSplit } = pokemon
-      if (id === 267 || id === 269 || id === 212 || id === 53 || id === 461) {
+      if (id === 267 || id === 269 || id === 212 || id === 53 || id === 461 || id === 195) {
         splitEvoFlag = false
       }
-      if (id === 123 || id === 52 || id === 215) {
+      if (id === 123 || id === 52 || id === 215 || id === 194) {
         nextEvoSplit = false
       }
       return { ...pokemon, isSplitEvo: splitEvoFlag, nextEvoSplit }
