@@ -1,9 +1,8 @@
 import { React, useState, useEffect, useMemo } from 'react'
-import { useQuery } from 'react-query'
+import { useQueries } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
-import axios from 'axios'
 import TableContainer from '../components/TableContainer'
 import TypeCard from '../components/TypeCard'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
@@ -13,6 +12,7 @@ import movePhysical from '../images/move-physical.png'
 import moveSpecial from '../images/move-special.png'
 import moveStatus from '../images/move-status.png'
 import '../index.css'
+import fetchData from '../utils/fetchData'
 
 // For damage class image.
 const returnMoveImage = damageClass => {
@@ -30,8 +30,8 @@ const MoveListing = () => {
   const [moveList, setMoveList] = useState([])
   const [moveListReady, setMoveListReady] = useState([])
   const [filteredMoves, setFilteredMoves] = useState([])
-  const [TMURLs, setTMURLs] = useState([])
-  const [TMData, setTMData] = useState([])
+  // const [TMURLs, setTMURLs] = useState([])
+  // const [TMData, setTMData] = useState([])
 
   // For changing the page title.
   const location = useLocation()
@@ -49,89 +49,107 @@ const MoveListing = () => {
     return urls
   }, [])
 
-  // For fetching data from a url.
-  const fetchData = async (url) => {
-    const response = await axios.get(url)
-    return response.data
-  }
-
-  // Perform a GET request on all the 'calculated' URLs.
-  const { data: moveData } = useQuery(
-    ['moveData', urlList],
-    () => Promise.all(urlList.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: moveData, isFullyLoadedMoveData } = useQueries({
+    queries: urlList.map(url => {
+      return {
+        queryKey: ['move-url', url],
+        queryFn: () => fetchData(url),
+        staleTime: Infinity,
+        cacheTime: Infinity,
+        select: data => {
+          const { id, moveName, moveType, damageClass, power, accuracy, PP, shortEntry, effect_chance: effectChance, machines } = extractMoveInformation(data)
+          return { id, moveName, moveType, damageClass, power, accuracy, PP, shortEntry, effectChance, machines }
+        }
+      }
+    }),
+    combine: results => {
+      return {
+        data: results?.map(result => result?.data).sort((prev, curr) => prev?.moveName > curr?.moveName ? 1 : -1),
+        isLoading: results.some(result => result.isLoading),
+        isFullyLoadedMoveData: results.every(result => result.data !== undefined)
+      }
+    }
+  })
 
   useEffect(() => {
-    if (!moveData)
+    if (!isFullyLoadedMoveData)
       return
-    const extracted = moveData.map(move => extractMoveInformation(move))
-    setMoveList(() => {
-      const extractedNew = extracted.map(move => {
-        const { id, moveName, moveType, damageClass, power, accuracy, PP, shortEntry, effect_chance: effectChance, machines } = move
-        return { id, moveName, moveType, damageClass, power, accuracy, PP, shortEntry, effectChance, machines }
-      })
-      // sorting alphabetically
-      return extractedNew.sort((prev, curr) => prev.moveName > curr.moveName ? 1 : -1)
-    })
-  }, [moveData])
+    setMoveList(moveData)
+    setMoveListReady(moveData)
+    setFilteredMoves(moveData)
+  }, [moveData, isFullyLoadedMoveData])
+
+  console.log(moveList.filter(move => move.machines.length > 0))
 
   // Find the tm.
-  useEffect(() => {
-    if (!moveList)
-      return
-    const tmURLs = moveList?.map(move => {
-      const ORASEntry = move?.machines.find(obj => obj.version_group.name === 'omega-ruby-alpha-sapphire')
-      return {
-        moveName: move.moveName,
-        url: ORASEntry?.machine?.url
-      }
-    })
-    setTMURLs(tmURLs)
-  }, [moveList])
+  // useEffect(() => {
+  //   if (!moveList)
+  //     return
 
-  // Now query the urls.
-  const { data: TMResponse } = useQuery(
-    ['TMList', TMURLs],
-    () => {
-      const availableURLs = TMURLs?.filter(machine => machine.url !== undefined)
-      const TMURLList = availableURLs?.map(machine => machine.url)
-      return Promise.all(TMURLList.map(fetchData))
-    },
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+  //   const tmURLs = moveList?.map(move => {
+  //     const SMEntry = move?.machines.find(obj => obj.version_group.name === 'ultra-sun-ultra-moon')
+  //     return {
+  //       moveName: move.moveName,
+  //       url: SMEntry?.machine?.url
+  //     }
+  //   })
+  //   setTMURLs(tmURLs)
+  // }, [moveList])
 
-  // Now make an array of objects - the object has two keys - 
-  // name: name of the machine, machine: Machine number, like HM01, TM23
-  useEffect(() => {
-    if (!TMResponse) {
-      return;
-    }
+  // const availableURLs = TMURLs?.filter(machine => machine.url !== undefined)
+  // const TMURLList = availableURLs?.map(machine => machine.url)
 
-    const formattedData = TMResponse.map(move => {
-      // Reformat the TM number.
-      const TMNumber = move.item.name
-      const formattedTM = TMNumber.slice(0, 2).toUpperCase() + TMNumber.slice(2)
-      return {
-        name: move.move.name,
-        machine: formattedTM
-      }
-    });
+  // const { data: TMResponse, isFullyLoaded: isFullyLoadedTMResponse } = useQueries({
+  //   queries: TMURLList.map(url => {
+  //     return {
+  //       queryKey: ['tm-url', url],
+  //       queryFn: () => fetchData(url),
+  //       staleTime: Infinity,
+  //       cacheTime: Infinity,
+  //       // enabled: !!isFullyLoadedMoveData
+  //     }
+  //   }),
+  //   combine: results => {
+  //     return {
+  //       data: results?.map(result => result?.data),
+  //       isLoading: results.some(result => result.isLoading),
+  //       isFullyLoadedMoveData: results.every(result => result.data !== undefined)
+  //     }
+  //   }
+  // })
 
-    setTMData(formattedData);
-  }, [TMResponse]);
+  // // Now make an array of objects - the object has two keys - 
+  // // name: name of the machine, machine: Machine number, like HM01, TM23
+  // useEffect(() => {
+  //   if (!TMResponse) {
+  //     return;
+  //   }
 
-  // Now join TMdata and MOveList on the basis of the move name and set the result to moveListReady.
-  useEffect(() => {
-    if (!moveList && !TMData)
-      return
-    const joinedData = moveList?.map(obj1 => {
-      const obj2 = TMData?.find(obj => obj1.moveName === obj.name)
-      return { ...obj1, ...obj2 }
-    })
-    setMoveListReady(joinedData)
-    setFilteredMoves(joinedData)
-  }, [TMData, moveList])
+  //   const formattedData = TMResponse?.map(move => {
+  //     // Reformat the TM number.
+  //     const TMNumber = move?.item?.name
+  //     const formattedTM = TMNumber?.slice(0, 2).toUpperCase() + TMNumber?.slice(2)
+  //     return {
+  //       name: move?.move?.name,
+  //       machine: formattedTM
+  //     }
+  //   });
+
+  //   setTMData(formattedData);
+  // }, [TMResponse]);
+
+  // // Now join TMdata and MOveList on the basis of the move name and set the result to moveListReady.
+  // useEffect(() => {
+  //   if (!moveList && !TMData) {
+  //     return
+  //   }
+  //   const joinedData = moveList?.map(obj1 => {
+  //     const obj2 = TMData?.find(obj => obj1.moveName === obj.name)
+  //     return { ...obj1, ...obj2 }
+  //   })
+  //   setMoveListReady(joinedData)
+  //   setFilteredMoves(joinedData)
+  // }, [TMData, moveList])
 
   const headers = [{
     moveName: 'Name',
@@ -159,13 +177,13 @@ const MoveListing = () => {
     // Provide a border on all sides and bold the text for the header.
     const headerStyle = index === 0 ? 'font-bold' : ''
     // Separate background colours for the header and odd-even rows.
-    let bgColour
+    let bgColourStyle
     if (index !== 0 && index % 2 === 0) {
-      bgColour = 'bg-gray-900'
+      bgColourStyle = 'bg-gray-900'
     } else if (index === 0) {
-      bgColour = 'bg-[#1a1a1a]'
+      bgColourStyle = 'bg-[#1a1a1a]'
     } else {
-      bgColour = ''
+      bgColourStyle = ''
     }
     // An image for the move type.
     const moveClassImage = returnMoveImage(damageClass)
@@ -176,7 +194,7 @@ const MoveListing = () => {
         value: (
           <NavLink to={link}> {formatName(moveName)} </NavLink>
         ),
-        style: index !== 0 ? 'font-bold hoverable-link' : ''
+        cellStyle: index !== 0 ? 'font-bold hoverable-link' : ''
       },
       {
         key: 'moveType',
@@ -198,25 +216,25 @@ const MoveListing = () => {
         key: 'PP',
         value: PP
       },
-      {
-        key: 'machine',
-        value: machine
-      },
+      // {
+      //   key: 'machine',
+      //   value: machine
+      // },
       {
         key: 'shortEntry',
         value: (<div className='w-[36rem]'> {shortEntry?.replace('$effect_chance% ', '')} </div>),
-        style: 'pr-8 min-w-[36rem]'
+        cellStyle: 'pr-8 min-w-[36rem]'
       },
       {
         key: 'effectChance',
         value: effectChance,
-        style: 'whitespace-nowrap'
+        cellStyle: 'whitespace-nowrap'
       },
     ];
     const tableCells = tableCellData.map((cell, cellIndex) => {
       return (
         <div
-          className={`${cell.style} ${headerStyle} ${bgColour} border-gray-500 border-t table-cell h-12 align-middle p-2`}
+          className={`${cell.cellStyle} ${headerStyle} ${bgColourStyle} border-gray-500 border-t table-cell h-12 align-middle p-2`}
           key={cellIndex}
         >
           {cell.value}
@@ -224,7 +242,7 @@ const MoveListing = () => {
       )
     })
     return (
-      <div className='table-row' key={index}>
+      <div className={`table-row`} key={index}>
         {tableCells}
       </div>
     )
@@ -242,12 +260,12 @@ const MoveListing = () => {
         <input
           className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
           placeholder='Search for a move'
-          disabled={moveTableRows?.length < 2 && TMData.length === 0 ? true : false}
+          disabled={!isFullyLoadedMoveData}
           onChange={handleChange}
         />
       </div>
       {/* // Checking if data is present */}
-      {(moveTableRows?.length < 2 && TMData.length === 0) ?
+      {(!isFullyLoadedMoveData) ?
         <MoveListingSkeleton rowCount={20} />
         :
         <TableContainer child={moveTableRows} />

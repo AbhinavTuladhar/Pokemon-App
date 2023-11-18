@@ -100,6 +100,8 @@ export const extractMoveInformation = move => {
 }
 
 export const extractPokemonInformation = data => {
+  if (!data) return 
+  
   const {
     abilities,
     base_experience,

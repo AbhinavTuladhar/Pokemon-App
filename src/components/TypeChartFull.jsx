@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQueries } from '@tanstack/react-query'
 import Skeleton from 'react-loading-skeleton'
 import TypeCard from './TypeCard'
 import MiniTypeCard from './MiniTypeCard'
@@ -12,11 +12,14 @@ import multiplierToString from '../utils/multiplierToString'
 import formatName from '../utils/NameFormatting'
 
 const TypeChartFull = () => {
-  const typeList = [
+  const typeListing = [
     'normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground',
     'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'
   ]
-  const typeUrls = typeList.map(type => `https://pokeapi.co/api/v2/type/${type}`)
+  const typeData = typeListing.map(type => ({
+    name: type,
+    url: `https://pokeapi.co/api/v2/type/${type}`
+  }))
 
   /*
   Step 1: Extract type information
@@ -24,30 +27,33 @@ const TypeChartFull = () => {
   type name
   Step 3: Properly format the type chart object.
   */
-  const transformData = data => {
-    return data
-      .map(type => extractTypeInformation(type))
-      .map(type => {
-        const { name: typeName } = type
-        const typeChart = calculateTypeEffectiveness([type])
-        return {
-          typeName,
-          typeChart
-        }
-      })
-      .map(typeData => {
-        const { typeName, typeChart } = typeData
-        const typeDefenceInfo = Object.entries(typeChart).map(([typeName, multiplier]) => ({
-          typeName, multiplier
-        }))
-        return { typeName, typeDefenceInfo }
-      })
+  const transformData = type => {
+    const extractedInfo = extractTypeInformation(type)
+    const { name: typeName } = extractedInfo
+    const typeChart = calculateTypeEffectiveness([extractedInfo])
+    const typeDefenceInfo = Object.entries(typeChart).map(([typeName, multiplier]) => ({
+      typeName, multiplier
+    }))
+    return { typeName, typeDefenceInfo }
   }
-  const { data: extractedInformation = [], isLoading } = useQuery(
-    ['typeChart', typeList],
-    () => Promise.all(typeUrls.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
-  )
+
+  const { data: extractedInformation, isLoading } = useQueries({
+    queries: typeData.map(type => {
+      return {
+        queryKey: ['type', type.url],
+        queryFn: () => fetchData(type.url),
+        staleTime: Infinity,
+        cacheTime: Infinity,
+        select: (data) => transformData(data)
+      }
+    }),
+    combine: results => {
+      return {
+        data: results.map(result => result.data),
+        isLoading: results.some(result => result.isLoading)
+      }
+    }
+  })
 
   if (isLoading) {
     return <Skeleton width='90%' height='20rem' containerClassName='flex-1 w-full flex justify-end' />
@@ -62,7 +68,7 @@ const TypeChartFull = () => {
   )
 
   // An empty array at the beginning for a div containing info about the axes.
-  const fullTypeCards = [[], ...typeList].map((type, index) => {
+  const fullTypeCards = [[], ...typeListing].map((type, index) => {
     if (index === 0) {
       return cornerDiv
     } else {

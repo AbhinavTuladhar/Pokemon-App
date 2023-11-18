@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import Skeleton from 'react-loading-skeleton'
 import AbilityEffect from './AbilityEffect'
@@ -18,11 +18,13 @@ const AbilityDetail = () => {
     return extrctAbilityInformation(data)
   }
 
-  const { data: abilityInfo = [] } = useQuery(
-    ['abilityDetail', id],
-    () => fetchData(`https://pokeapi.co/api/v2/ability/${id}/`),
-    { select: transformData, staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: abilityInfo = [] } = useQuery({
+    queryKey: ['abilityDetail', id],
+    queryFn: () => fetchData(`https://pokeapi.co/api/v2/ability/${id}/`),
+    select: transformData,
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 
   // Data to be sent to pokemon listing
   const { pokemon: pokemonList, name } = abilityInfo

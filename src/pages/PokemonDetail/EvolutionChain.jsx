@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
 import { BsArrowRight, BsArrowDown, BsArrowUpRight, BsArrowDownRight } from 'react-icons/bs'
 import Skeleton from 'react-loading-skeleton'
@@ -160,11 +160,12 @@ function nonNullValues(obj) {
 }
 
 const EvolutionChain = ({ url }) => {
-  const { data: evolutionData, isLoading } = useQuery(
-    [url],
-    () => fetchData(url),
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: evolutionData, isLoading } = useQuery({
+    queryKey: ['evolution-chain', url],
+    queryFn: () => fetchData(url),
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 
   // Use a recursive function to fetch the data of all the pokemon within the evolution chain.
   const getAllData = () => {
@@ -208,26 +209,34 @@ const EvolutionChain = ({ url }) => {
     return `https://pokeapi.co/api/v2/pokemon/${pokemon.id}/`
   })
 
-  // Then perform a get request on all this data, then get the home sprite, and name of the pokemon.
-  const { data: allPokemonData, isLoading: isLoadingPokemonData } = useQuery(
-    pokemonUrls,
-    () => Promise.all(pokemonUrls.map(fetchData)),
-    {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      select: pokemonDataList => {
-        return pokemonDataList.map(pokemon => {
-          const extractedInformation = extractPokemonInformation(pokemon)
-          const { name, homeSprite, id, types } = extractedInformation
-          return { name, homeSprite, id, types }
-        })
+  // Then perform a get request on all this data, then get the home sprite, and name of the pokemon. 
+  const { data: allPokemonData, isLoading: isLoadingPokemonData } = useQueries({
+    queries: pokemonUrls ?
+      pokemonUrls.map(pokemonUrl => {
+        return {
+          queryKey: ['evolution-chain', pokemonUrl],
+          queryFn: () => fetchData(pokemonUrl),
+          staleTime: Infinity,
+          cacheTime: Infinity,
+          select: pokemon => {
+            const extractedInformation = extractPokemonInformation(pokemon)
+            const { name, homeSprite, id, types } = extractedInformation
+            return { name, homeSprite, id, types }
+          }
+        }
+      })
+      : [],
+    combine: results => {
+      return {
+        data: results.map(result => result.data),
+        isLoading: results.some(result => result.isLoading)
       }
     }
-  )
+  })
 
   // Now perform a join operation on allPokemonData and evolutionChainData on the basis of the pokemon id.
   const preFinalPokemonData = allPokemonData?.map(pokemon => {
-    const species = evolutionChainData?.find(species => species.id === pokemon.id)
+    const species = evolutionChainData?.find(species => species?.id === pokemon?.id)
     return { ...pokemon, ...species }
   })
 

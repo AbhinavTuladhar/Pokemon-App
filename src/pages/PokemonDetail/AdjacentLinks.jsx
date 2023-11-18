@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
 import OneLineSkeleton from '../../components/OneLineSkeleton'
 import fetchData from '../../utils/fetchData'
@@ -35,11 +35,13 @@ const AdjacentLinks = ({ id }) => {
       .filter(pokemon => pokemon.id <= 807) // For the last Pokemon, #807.
   }
 
-  const { data: adjacentData = {}, isLoading } = useQuery(
-    ['adjacentData', offsetValue],
-    () => fetchData(url),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
-  )
+  const { data: adjacentData = {}, isLoading } = useQuery({
+    queryKey: ['adjacentData', offsetValue],
+    queryFn: () => fetchData(url),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformData
+  })
 
   // Skip rendering for pokemon forms.
   if (id >= 10_000) {

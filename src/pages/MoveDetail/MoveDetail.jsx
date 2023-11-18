@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import PokemonCardList from '../../components/PokemonCardList'
 import MoveData from './MoveData'
@@ -21,11 +21,13 @@ const MoveDetail = () => {
     return extractedInformation
   }
 
-  const { data: moveInfo = [] } = useQuery(
-    ['moveData', id],
-    () => fetchData(url),
-    { select: transformData, staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: moveInfo = [] } = useQuery({
+    queryKey: ['moveData', id],
+    queryFn: () => fetchData(url),
+    select: transformData,
+    staleTime: Infinity,
+    cacheTime: Infinity
+  })
 
   // Set the document title
   const { moveName } = moveInfo

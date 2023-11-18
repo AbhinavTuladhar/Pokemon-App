@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion'
 import BasicIntro from './BasicIntro';
 import AdjacentLinks from './AdjacentLinks';
@@ -31,11 +31,13 @@ const PokemonDetail = () => {
     return extractPokemonInformation(data)
   }
 
-  const { data: pokemonData, isLoading: isLoadingPokemonData } = useQuery(
-    ['pokemonData', id],
-    () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/`),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformPokemonData }
-  )
+  const { data: pokemonData, isLoading: isLoadingPokemonData } = useQuery({
+    queryKey: ['pokemonData', id],
+    queryFn: () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/`),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformPokemonData
+  })
 
   // Destructure the pokemoNData object and assign them to several variables.
   const {
@@ -65,11 +67,13 @@ const PokemonDetail = () => {
     return extractSpeciesInformation(data)
   }
 
-  const { data: speciesData, isLoading: isLoadingSpeciesData } = useQuery(
-    ['speciesData', speciesLink],
-    () => fetchData(speciesLink),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformSpeciesData }
-  )
+  const { data: speciesData, isLoading: isLoadingSpeciesData } = useQuery({
+    queryKey: ['speciesData', speciesLink],
+    queryFn: () => fetchData(speciesLink),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformSpeciesData
+  })
 
   const {
     base_happiness,

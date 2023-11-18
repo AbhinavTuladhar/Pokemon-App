@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai'
 import { motion } from 'framer-motion'
 import TypeCard from '../../components/TypeCard'
@@ -35,11 +35,13 @@ const TypeDetail = () => {
     const managedInformation = extractTypeInformation(data)
     return (managedInformation)
   }
-  const { data: extractedInformation = [], isLoading } = useQuery(
-    ['typeDetail', type],
-    () => fetchData(typeURL),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
-  )
+  const { data: extractedInformation = [], isLoading } = useQuery({
+    queryKey: ['typeDetail', type],
+    queryFn: () => fetchData(typeURL),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformData
+  })
 
   const { pokemonList, moveList } = extractedInformation ?? {}
 

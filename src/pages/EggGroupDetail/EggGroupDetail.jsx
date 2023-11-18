@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import fetchData from '../../utils/fetchData'
-import { useQuery } from 'react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import formatName from '../../utils/NameFormatting'
 import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import PokemonTable from './PokemonTable'
@@ -12,17 +12,16 @@ import { FadeInAnimationContainer } from '../../components/AnimatedContainers'
 const EggGroupDetail = () => {
   const { id: eggGroupid } = useParams()
 
-  const { data: eggGroupData } = useQuery(
-    ['egg-group', eggGroupid],
-    () => fetchData(`https://pokeapi.co/api/v2/egg-group/${eggGroupid}`),
-    {
-      staleTime: Infinity, cacheTime: Infinity,
-      select: fetchedData => {
-        const { name: eggGroupName, pokemon_species: pokemonSpecies } = fetchedData
-        return { eggGroupName, pokemonSpecies }
-      }
+  const { data: eggGroupData } = useQuery({
+    queryKey: ['egg-group', eggGroupid],
+    queryFn: () => fetchData(`https://pokeapi.co/api/v2/egg-group/${eggGroupid}`),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: fetchedData => {
+      const { name: eggGroupName, pokemon_species: pokemonSpecies } = fetchedData
+      return { eggGroupName, pokemonSpecies }
     }
-  )
+  })
 
   // Geting the species urls
   // const speciesUrls = eggGroupData?.map(obj => obj.pokemonSpecies.url)
@@ -32,40 +31,58 @@ const EggGroupDetail = () => {
   const pokemonUrls = speciesUrls?.map(url => url.replace('pokemon-species', 'pokemon'))
 
   // We perform GET requests on all the Pokemon and species urls. Filtering out gen 8+ stuff
-  const { data: pokemonData, isLoading: isLoadingPokemonData } = useQuery(
-    ['egg-group', eggGroupid, pokemonUrls],
-    () => Promise.all(pokemonUrls.map(fetchData)),
-    {
-      staleTime: Infinity, cacheTime: Infinity,
-      select: data => {
-        const pokemonInformation = data.map(extractPokemonInformation)
-        return pokemonInformation.map(pokemon => {
-          const { id, nationalNumber, icon, name, types } = pokemon
-          return { id, nationalNumber, icon, name, types }
-        })
+  const { data: pokemonData, isLoading: isLoadingPokemonData } = useQueries({
+    queries: pokemonUrls ?
+      pokemonUrls.map(url => {
+        return {
+          queryKey: ['pokemon-url', url],
+          queryFn: () => fetchData(url),
+          staleTime: Infinity,
+          cacheTime: Infinity,
+          select: data => {
+            const pokemonInformation = extractPokemonInformation(data)
+            const { id, nationalNumber, icon, name, types } = pokemonInformation
+            return { id, nationalNumber, icon, name, types }
+          }
+        }
+      })
+      : [],
+    combine: results => {
+      return {
+        data: results.map(result => result.data),
+        isLoading: results.some(result => result.isLoading)
       }
     }
-  )
+  })
 
-  const { data: speciesData, isLoading: isLoadingSpeciesData } = useQuery(
-    ['egg-group', eggGroupid, speciesUrls],
-    () => Promise.all(speciesUrls.map(fetchData)),
-    {
-      staleTime: Infinity, cacheTime: Infinity,
-      select: data => {
-        const speciesInformation = data.map(extractSpeciesInformation)
-        return speciesInformation.map(species => {
-          const { id, egg_groups } = species
-          // Find the other egg group
-          // For eg if the current page is of the monster egg group
-          // and this Pokemon has the 'Water1' egg group, it should get the 'Water1' egg group
-          // If there is only one egg group it should return undefined
-          const otherEggGroup = egg_groups.map(group => group.name).filter(group => group !== eggGroupid)[0]
-          return { id, otherEggGroup }
-        })
+  const { data: speciesData, isLoading: isLoadingSpeciesData } = useQueries({
+    queries: speciesUrls ?
+      speciesUrls.map(url => {
+        return {
+          queryKey: ['species-url', url],
+          queryFn: () => fetchData(url),
+          staleTime: Infinity,
+          cacheTime: Infinity,
+          select: data => {
+            const speciesInformation = extractSpeciesInformation(data)
+            const { id, egg_groups } = speciesInformation
+            // Find the other egg group
+            // For eg if the current page is of the monster egg group
+            // and this Pokemon has the 'Water1' egg group, it should get the 'Water1' egg group
+            // If there is only one egg group it should return undefined
+            const otherEggGroup = egg_groups.map(group => group.name).filter(group => group !== eggGroupid)[0]
+            return { id, otherEggGroup }
+          }
+        }
+      })
+      : [],
+    combine: results => {
+      return {
+        data: results.map(result => result.data),
+        isLoading: results.some(result => result.isLoading)
       }
     }
-  )
+  })
 
   // We now need to join the species and pokemon objects on the basis of their ids.
   const finalData = pokemonData?.map(obj1 => {

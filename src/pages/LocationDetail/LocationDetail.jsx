@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Skeleton from 'react-loading-skeleton'
@@ -80,11 +80,13 @@ const LocationDetail = () => {
 
   document.title = `${formatName(locationName)} Pokémon Locations | Pokémon Database`
 
-  const { data: locationData = [] } = useQuery(
-    ['largerLocation', locationName],
-    () => fetchData(locationUrl),
-    { staleTime: Infinity, cacheTime: Infinity, select: extractLocationInformation }
-  )
+  const { data: locationData = [] } = useQuery({
+    queryKey: ['largerLocation', locationName],
+    queryFn: () => fetchData(locationUrl),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: extractLocationInformation
+  })
 
   const subLocationUrls = locationData?.subLocations?.map(subLocation => subLocation.url)
 
@@ -92,11 +94,13 @@ const LocationDetail = () => {
   const transformSubLocationData = data => {
     return data.map(extractLocationAreaInformation)
   }
-  const { data: subLocationData, isLoading: isLoadingSubLocationData } = useQuery(
-    ['subLocationData', locationData],
-    () => Promise.all(subLocationUrls.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformSubLocationData }
-  )
+  const { data: subLocationData, isLoading: isLoadingSubLocationData } = useQuery({
+    queryKey: ['subLocationData', locationData],
+    queryFn: () => Promise.all(subLocationUrls.map(fetchData)),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformSubLocationData
+  })
 
   // Inform the user if there is no encounter information.
   if (subLocationData?.length === 0) {

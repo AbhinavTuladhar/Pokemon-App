@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { useQuery } from 'react-query'
+import { useQueries } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
@@ -28,11 +28,22 @@ const AbilityListing = () => {
     return response.data
   }
 
-  const { data: abilityData } = useQuery(
-    ['moveData', urlList],
-    () => Promise.all(urlList.map(fetchData)),
-    { staleTime: Infinity, cacheTime: Infinity }
-  )
+  const { data: abilityData, isFullyLoaded } = useQueries({
+    queries: urlList.map(url => {
+      return {
+        queryKey: ['ability', url],
+        queryFn: () => fetchData(url),
+        staleTime: Infinity, cacheTime: Infinity
+      }
+    }),
+    combine: results => {
+      return {
+        data: results?.map(result => result?.data),
+        isLoading: results.some(result => result.isLoading),
+        isFullyLoaded: results.every(result => result.data !== undefined)
+      }
+    }
+  })
 
   // Extract the information and sort in alphabetical order.
   useEffect(() => {
@@ -62,8 +73,8 @@ const AbilityListing = () => {
     generationIntroduced: 'Gen.',
   }]
 
-  const tableRows = [...headers, ...filteredAbilityInfo].map((row, index) => {
-    const { name, pokemonCount, shortEntry, generationIntroduced } = row
+  const tableRows = [...headers, ...filteredAbilityInfo]?.map((row, index) => {
+    const { name, pokemonCount, shortEntry, generationIntroduced } = row || {}
     const headerStyle = index === 0 ? 'font-bold' : ''
     const abilityLink = `/ability/${name}`
 
@@ -116,12 +127,12 @@ const AbilityListing = () => {
         <input
           className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
           placeholder='Search for an ability...'
-          disabled={tableRows?.length < 2 && abilityInfo?.length === 0 ? true : false}
+          disabled={!isFullyLoaded}
           onChange={handleChange}
         />
       </div>
       {// Checking if data is present
-        (tableRows?.length < 2 && abilityInfo?.length === 0) ?
+        (!isFullyLoaded) ?
           <MoveListingSkeleton rowCount={20} />
           :
           <TableContainer child={tableRows} />

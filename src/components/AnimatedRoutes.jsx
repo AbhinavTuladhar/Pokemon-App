@@ -15,6 +15,7 @@ import LocationList from '../pages/LocationList'
 import LocationDetail from '../pages/LocationDetail/LocationDetail'
 import EggGroupListing from '../pages/EggGroupListing'
 import EggGroupDetail from '../pages/EggGroupDetail/EggGroupDetail'
+import BerryListing from '../pages/BerryListing'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -38,6 +39,7 @@ const AnimatedRoutes = () => {
         <Route path='/ability' element={<AbilityListing />} key='ability' />
         <Route path='/location' element={<LocationList />} key='location' />
         <Route path='/egg-group' element={<EggGroupListing />} key='egg-group' />
+        <Route path='/berry' element={<BerryListing />} key='berry-list' />
         <Route path='/egg-group/:id' element={<EggGroupDetail />} key='egg-group-id' />
         <Route path='/pokemon/:id' element={<PokemonDetail />} key='pokemon-id' />
         <Route path='/types/:type' element={<TypeDetail />} key='type-id' />

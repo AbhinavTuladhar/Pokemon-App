@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import SectionTitle from '../../components/SectionTitle'
 import fetchData from '../../utils/fetchData'
 import formatName from '../../utils/NameFormatting'
@@ -88,11 +88,13 @@ const Locations = ({ props }) => {
     return groupedByLocation
   }
 
-  const { data: finalData = [], isLoading } = useQuery(
-    ['locations', id, name],
-    () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`),
-    { staleTime: Infinity, cacheTime: Infinity, select: transformData }
-  )
+  const { data: finalData = [], isLoading } = useQuery({
+    queryKey: ['locations', id, name],
+    queryFn: () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: transformData
+  })
 
   // some formatting of the data
   const preFinalTable = finalData?.map((entry, topIndex) => {

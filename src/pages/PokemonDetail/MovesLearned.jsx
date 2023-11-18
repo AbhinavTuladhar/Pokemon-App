@@ -1,17 +1,14 @@
 import React from 'react'
-import { useQuery } from 'react-query'
-import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import TypeCard from '../../components/TypeCard'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
 import formatName from '../../utils/NameFormatting'
-import { extractMoveInformation } from '../../utils/extractInfo'
 import { FadeInAnimationContainer } from '../../components/AnimatedContainers'
 import movePhysical from '../../images/move-physical.png'
 import moveSpecial from '../../images/move-special.png'
 import moveStatus from '../../images/move-status.png'
-import '../../index.css'
+import useMoveDetail from '../../hooks/useMoveDetail'
 
 // This is for the headers
 const firstRow = {
@@ -112,39 +109,10 @@ const MovesLearned = ({ data }) => {
     tutor: tutorMoves?.map(move => move.moveURL),
   }
 
-  // Now query the moveURLs to obtain their details
-  const fetchData = async (urls) => {
-    const responses = await Promise.all(urls.map(url => axios.get(url)));
-    return responses.map(response => response.data);
-  }
-
-  const transformMoveData = data => {
-    return data.map(move => extractMoveInformation(move))
-  }
-
-  const { data: levelMoveDetails, isLoading: isLoadingLevel } = useQuery(
-    ['levelDetails', moveUrls.level],
-    () => fetchData(moveUrls.level),
-    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
-  )
-
-  const { data: tutorMoveDetails, isLoading: isLoadingTutor } = useQuery(
-    ['tutorDetails', moveUrls.tutor],
-    () => fetchData(moveUrls.tutor),
-    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
-  )
-
-  const { data: machineMoveDetails, isLoading: isLoadingMachine } = useQuery(
-    ['machineDetails', moveUrls.machine],
-    () => fetchData(moveUrls.machine),
-    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
-  )
-
-  const { data: eggMoveDetails, isLoading: isLoadingEgg } = useQuery(
-    ['eggDetails', moveUrls.egg],
-    () => fetchData(moveUrls.egg),
-    { enabled: true, staleTime: Infinity, cacheTime: Infinity, select: transformMoveData }
-  )
+  const { data: levelMoveDetails, isLoading: isLoadingLevel } = useMoveDetail(moveUrls.level)
+  const { data: tutorMoveDetails, isLoading: isLoadingTutor } = useMoveDetail(moveUrls.tutor)
+  const { data: machineMoveDetails, isLoading: isLoadingMachine } = useMoveDetail(moveUrls.machine)
+  const { data: eggMoveDetails, isLoading: isLoadingEgg } = useMoveDetail(moveUrls.egg)
 
   if (isLoadingLevel || isLoadingTutor || isLoadingMachine || isLoadingEgg) {
     return
