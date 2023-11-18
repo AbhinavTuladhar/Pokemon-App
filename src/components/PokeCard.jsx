@@ -7,6 +7,7 @@ import { extractPokemonInformation } from '../utils/extractInfo';
 
 const darkenColour = colour => {
   if (!colour) return
+
   // First check if the colour is the custom colour, ie grey-Yellow.
   const colourName = colour.slice(0, -3)
   const colourShade = parseInt(colour.slice(-3))
@@ -17,8 +18,6 @@ const darkenColour = colour => {
 }
 
 const PokeCard = ({ data }) => {
-  if (!data) return
-
   const {
     id,
     name,
@@ -43,7 +42,7 @@ const PokeCard = ({ data }) => {
   const targetLink = `/pokemon/${name}`
 
   // Apply a background gardient to the card depending on the types.
-  const [firstType, secondType] = typeList
+  const [firstType, secondType] = typeList || []
   const [firstColour, secondColour] = [typeMapping[firstType], typeMapping[secondType]]
   const startingColour = `from-${firstColour}`
 

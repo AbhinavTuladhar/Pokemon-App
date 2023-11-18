@@ -79,7 +79,7 @@ const MainPage = ({ idRange }) => {
         />
       </div>
       <div className='flex flex-wrap items-center justify-center gap-8 px-0 py-4 mt-2'>
-        {isLoading ? (
+        {!isFullyLoaded ? (
           <PokeCardSkeleton cardCount={20} />
         ) : (
           filteredPokemonInfo?.map((pokemon, index) => (
