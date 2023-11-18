@@ -30,8 +30,8 @@ const MoveListing = () => {
   const [moveList, setMoveList] = useState([])
   const [moveListReady, setMoveListReady] = useState([])
   const [filteredMoves, setFilteredMoves] = useState([])
-  const [TMURLs, setTMURLs] = useState([])
-  const [TMData, setTMData] = useState([])
+  // const [TMURLs, setTMURLs] = useState([])
+  // const [TMData, setTMData] = useState([])
 
   // For changing the page title.
   const location = useLocation()
@@ -43,7 +43,7 @@ const MoveListing = () => {
   const urlList = useMemo(() => {
     let urls = []
     // default is 621 up to gen 6, 728 for gen 7.
-    for (let i = 1; i <= 51; i++) {
+    for (let i = 1; i <= 728; i++) {
       urls.push(`https://pokeapi.co/api/v2/move/${i}/`)
     }
     return urls
@@ -75,77 +75,81 @@ const MoveListing = () => {
     if (!isFullyLoadedMoveData)
       return
     setMoveList(moveData)
+    setMoveListReady(moveData)
+    setFilteredMoves(moveData)
   }, [moveData, isFullyLoadedMoveData])
 
+  console.log(moveList.filter(move => move.machines.length > 0))
+
   // Find the tm.
-  useEffect(() => {
-    if (!moveList)
-      return
+  // useEffect(() => {
+  //   if (!moveList)
+  //     return
 
-    const tmURLs = moveList?.map(move => {
-      const ORASEntry = move?.machines.find(obj => obj.version_group.name === 'omega-ruby-alpha-sapphire')
-      return {
-        moveName: move.moveName,
-        url: ORASEntry?.machine?.url
-      }
-    })
-    setTMURLs(tmURLs)
-  }, [moveList, isFullyLoadedMoveData])
+  //   const tmURLs = moveList?.map(move => {
+  //     const SMEntry = move?.machines.find(obj => obj.version_group.name === 'ultra-sun-ultra-moon')
+  //     return {
+  //       moveName: move.moveName,
+  //       url: SMEntry?.machine?.url
+  //     }
+  //   })
+  //   setTMURLs(tmURLs)
+  // }, [moveList])
 
-  const availableURLs = TMURLs?.filter(machine => machine.url !== undefined)
-  const TMURLList = availableURLs?.map(machine => machine.url)
+  // const availableURLs = TMURLs?.filter(machine => machine.url !== undefined)
+  // const TMURLList = availableURLs?.map(machine => machine.url)
 
-  const { data: TMResponse, isFullyLoaded: isFullyLoadedTMResponse } = useQueries({
-    queries: TMURLList.map(url => {
-      return {
-        queryKey: ['tm-url', url],
-        queryFn: () => fetchData(url),
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        enabled: isFullyLoadedMoveData
-      }
-    }),
-    combine: results => {
-      return {
-        data: results?.map(result => result?.data),
-        isLoading: results.some(result => result.isLoading),
-        isFullyLoadedMoveData: results.every(result => result.data !== undefined)
-      }
-    }
-  })
+  // const { data: TMResponse, isFullyLoaded: isFullyLoadedTMResponse } = useQueries({
+  //   queries: TMURLList.map(url => {
+  //     return {
+  //       queryKey: ['tm-url', url],
+  //       queryFn: () => fetchData(url),
+  //       staleTime: Infinity,
+  //       cacheTime: Infinity,
+  //       // enabled: !!isFullyLoadedMoveData
+  //     }
+  //   }),
+  //   combine: results => {
+  //     return {
+  //       data: results?.map(result => result?.data),
+  //       isLoading: results.some(result => result.isLoading),
+  //       isFullyLoadedMoveData: results.every(result => result.data !== undefined)
+  //     }
+  //   }
+  // })
 
-  // Now make an array of objects - the object has two keys - 
-  // name: name of the machine, machine: Machine number, like HM01, TM23
-  useEffect(() => {
-    if (!TMResponse) {
-      return;
-    }
+  // // Now make an array of objects - the object has two keys - 
+  // // name: name of the machine, machine: Machine number, like HM01, TM23
+  // useEffect(() => {
+  //   if (!TMResponse) {
+  //     return;
+  //   }
 
-    const formattedData = TMResponse?.map(move => {
-      // Reformat the TM number.
-      const TMNumber = move?.item?.name
-      const formattedTM = TMNumber?.slice(0, 2).toUpperCase() + TMNumber?.slice(2)
-      return {
-        name: move?.move?.name,
-        machine: formattedTM
-      }
-    });
+  //   const formattedData = TMResponse?.map(move => {
+  //     // Reformat the TM number.
+  //     const TMNumber = move?.item?.name
+  //     const formattedTM = TMNumber?.slice(0, 2).toUpperCase() + TMNumber?.slice(2)
+  //     return {
+  //       name: move?.move?.name,
+  //       machine: formattedTM
+  //     }
+  //   });
 
-    setTMData(formattedData);
-  }, [TMResponse, isFullyLoadedTMResponse]);
+  //   setTMData(formattedData);
+  // }, [TMResponse]);
 
-  // Now join TMdata and MOveList on the basis of the move name and set the result to moveListReady.
-  useEffect(() => {
-    if (!moveList && !TMData) {
-      return
-    }
-    const joinedData = moveList?.map(obj1 => {
-      const obj2 = TMData?.find(obj => obj1.moveName === obj.name)
-      return { ...obj1, ...obj2 }
-    })
-    setMoveListReady(joinedData)
-    setFilteredMoves(joinedData)
-  }, [TMData, moveList])
+  // // Now join TMdata and MOveList on the basis of the move name and set the result to moveListReady.
+  // useEffect(() => {
+  //   if (!moveList && !TMData) {
+  //     return
+  //   }
+  //   const joinedData = moveList?.map(obj1 => {
+  //     const obj2 = TMData?.find(obj => obj1.moveName === obj.name)
+  //     return { ...obj1, ...obj2 }
+  //   })
+  //   setMoveListReady(joinedData)
+  //   setFilteredMoves(joinedData)
+  // }, [TMData, moveList])
 
   const headers = [{
     moveName: 'Name',
@@ -190,7 +194,7 @@ const MoveListing = () => {
         value: (
           <NavLink to={link}> {formatName(moveName)} </NavLink>
         ),
-        style: index !== 0 ? 'font-bold hoverable-link' : ''
+        cellStyle: index !== 0 ? 'font-bold hoverable-link' : ''
       },
       {
         key: 'moveType',
@@ -212,25 +216,25 @@ const MoveListing = () => {
         key: 'PP',
         value: PP
       },
-      {
-        key: 'machine',
-        value: machine
-      },
+      // {
+      //   key: 'machine',
+      //   value: machine
+      // },
       {
         key: 'shortEntry',
         value: (<div className='w-[36rem]'> {shortEntry?.replace('$effect_chance% ', '')} </div>),
-        style: 'pr-8 min-w-[36rem]'
+        cellStyle: 'pr-8 min-w-[36rem]'
       },
       {
         key: 'effectChance',
         value: effectChance,
-        style: 'whitespace-nowrap'
+        cellStyle: 'whitespace-nowrap'
       },
     ];
     const tableCells = tableCellData.map((cell, cellIndex) => {
       return (
         <div
-          className={`${cell.style} ${headerStyle} ${bgColourStyle} border-gray-500 border-t table-cell h-12 align-middle p-2`}
+          className={`${cell.cellStyle} ${headerStyle} ${bgColourStyle} border-gray-500 border-t table-cell h-12 align-middle p-2`}
           key={cellIndex}
         >
           {cell.value}
@@ -238,7 +242,7 @@ const MoveListing = () => {
       )
     })
     return (
-      <div className='table-row' key={index}>
+      <div className={`table-row`} key={index}>
         {tableCells}
       </div>
     )
@@ -256,12 +260,12 @@ const MoveListing = () => {
         <input
           className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
           placeholder='Search for a move'
-          disabled={!isFullyLoadedMoveData && !isFullyLoadedTMResponse}
+          disabled={!isFullyLoadedMoveData}
           onChange={handleChange}
         />
       </div>
       {/* // Checking if data is present */}
-      {(moveTableRows?.length < 2 || TMData.length === 0) ?
+      {(!isFullyLoadedMoveData) ?
         <MoveListingSkeleton rowCount={20} />
         :
         <TableContainer child={moveTableRows} />
