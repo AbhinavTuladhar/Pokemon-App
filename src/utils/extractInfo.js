@@ -15,16 +15,16 @@ const numberMapper = {
 // This is for extracting the information of the moves
 export const extractMoveInformation = move => {
   if (!move) return
-  const { 
+  const {
     accuracy,
-    damage_class: { name: damageClass},
+    damage_class: { name: damageClass },
     effect_chance,
     effect_entries,
     flavor_text_entries,
     generation: { name: generation },
     learned_by_pokemon,
-    meta : { 
-      ailment : { name: ailmentName },
+    meta: {
+      ailment: { name: ailmentName },
       ailment_chance: ailmentChance,
       crit_rate: critRate,
       drain,
@@ -38,8 +38,8 @@ export const extractMoveInformation = move => {
     power,
     pp: PP,
     priority,
-    target: { name: targetType},
-    type: { name: moveType}
+    target: { name: targetType },
+    type: { name: moveType }
   } = move
 
   // Find all the English etnries.
@@ -52,7 +52,7 @@ export const extractMoveInformation = move => {
     }))
 
   // Find the English effect entry.
-  const englishEffect = effect_entries.find(entry => 
+  const englishEffect = effect_entries.find(entry =>
     entry.language.name === 'en'
   )
 
@@ -68,7 +68,7 @@ export const extractMoveInformation = move => {
   const realPower = power === null ? '-' : power
   const realEffectChance = effect_chance === null ? '-' : effect_chance
 
-  const [ generationString, generationNumber ] = generation.split('-')
+  const [generationString, generationNumber] = generation.split('-')
   const newGenerationString = generationString.charAt(0).toUpperCase() + generationString.slice(1)
   const generationIntroduced = `${newGenerationString} ${numberMapper[generationNumber]}`
 
@@ -100,8 +100,8 @@ export const extractMoveInformation = move => {
 }
 
 export const extractPokemonInformation = data => {
-  if (!data) return 
-  
+  if (!data) return
+
   const {
     abilities,
     base_experience,
@@ -113,20 +113,20 @@ export const extractPokemonInformation = data => {
     name,
     order,
     species: { url: speciesLink },
-    sprites: { 
-      other: { 
+    sprites: {
+      other: {
         'official-artwork': { front_default, front_shiny },
         'home': { front_default: homeSprite }
       },
-      versions: { 
-        'generation-i': { yellow: { front_default: firstGenDefaultSprite }},
-        'generation-ii': { crystal: { front_default: secondGenDefaultSprite, front_shiny: secondGenShinySprite }},
-        'generation-iii': { emerald: { front_default: thirdGenDefaultSprite, front_shiny: thirdGenShinySprite }},
-        'generation-iv': { platinum: { front_default: fourthGenDefaultSprite, front_shiny: fourthGenShinySprite }},
-        'generation-v': { 'black-white': { front_default: fifthGenDefaultSprite, front_shiny: fifthGenShinySprite }},
-        'generation-vi': { 'omegaruby-alphasapphire': { front_default: sixthGenDefaultSprite, front_shiny: sixthGenShinySprite }},
+      versions: {
+        'generation-i': { yellow: { front_default: firstGenDefaultSprite } },
+        'generation-ii': { crystal: { front_default: secondGenDefaultSprite, front_shiny: secondGenShinySprite } },
+        'generation-iii': { emerald: { front_default: thirdGenDefaultSprite, front_shiny: thirdGenShinySprite } },
+        'generation-iv': { platinum: { front_default: fourthGenDefaultSprite, front_shiny: fourthGenShinySprite } },
+        'generation-v': { 'black-white': { front_default: fifthGenDefaultSprite, front_shiny: fifthGenShinySprite } },
+        'generation-vi': { 'omegaruby-alphasapphire': { front_default: sixthGenDefaultSprite, front_shiny: sixthGenShinySprite } },
         'generation-vii': { 'ultra-sun-ultra-moon': { front_default: gameSprite, front_shiny: sevenGenthShinySprite } },
-        'generation-viii': { icons: { front_default: icon }}
+        'generation-viii': { icons: { front_default: icon } }
       }
     },
     stats,
@@ -171,23 +171,23 @@ export const extractPokemonInformation = data => {
 }
 
 export const extractSpeciesInformation = data => {
-  const  { 
-    base_happiness, 
-    capture_rate, 
+  const {
+    base_happiness,
+    capture_rate,
     egg_groups,
     evolution_chain: { url: evolutionChainUrl },
-    flavor_text_entries, 
+    flavor_text_entries,
     gender_rate,
-    genera, 
+    genera,
     generation: { name: generationIntroduced },
-    growth_rate : {name: growthRateType},
+    growth_rate: { name: growthRateType },
     hatch_counter,
     id,
     names,
     pokedex_numbers,
     varieties
   } = data
-  
+
   // Find only the English genus name of the 'mon.
   const englishGenus = genera.find(entry => entry.language.name === 'en')
   return {
@@ -263,11 +263,11 @@ export const extrctAbilityInformation = data => {
       versionName: entry.version_group.name,
       generation: generationMapping[entry.version_group.name]
     }))
-  
+
   // The number of Pokemon that have the ability.
   const pokemonCount = pokemon.length
 
-  const [ generationString, generationNumber ] = generationIntroducedRaw.split('-')
+  const [generationString, generationNumber] = generationIntroducedRaw.split('-')
   const newGenerationString = generationString.charAt(0).toUpperCase() + generationString.slice(1)
   const generationIntroduced = `${newGenerationString} ${numberMapper[generationNumber]}`
 
@@ -308,7 +308,7 @@ const extractDetailedEncounterInformation = encounterData => {
 // To be used in extractLocationAreaInformation, not to be exported!
 // This is for dealing with the version_details object.
 const extractEncounterInformation = encounterData => {
-  const { 
+  const {
     pokemon: { name: pokemonName, url: pokemonUrl },
     version_details
   } = encounterData
@@ -318,7 +318,7 @@ const extractEncounterInformation = encounterData => {
   const iconSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/${idNumber}.png`
 
   const toReturn = version_details.map(row => {
-    const { 
+    const {
       version: { name: gameName },
       encounter_details
     } = row
@@ -327,13 +327,13 @@ const extractEncounterInformation = encounterData => {
     const generationInternal = generationMappingV3Internal[gameName]
 
     const extractedEncounterInformation = encounter_details.map(extractDetailedEncounterInformation)
-    
+
     return { iconSprite, pokemonName, gameName, generation, generationInternal, extractedEncounterInformation }
   })
-  
+
   // A flatmap to attach the pokemon name and game nome to each object in the array
   const expandedDetails = toReturn.flatMap(({ iconSprite, pokemonName, gameName, generation, generationInternal, extractedEncounterInformation }) => {
-    return extractedEncounterInformation.map(({...rest}) => ({iconSprite, pokemonName, gameName, generation, generationInternal, ...rest}))
+    return extractedEncounterInformation.map(({ ...rest }) => ({ iconSprite, pokemonName, gameName, generation, generationInternal, ...rest }))
   })
 
   // Now reduce the array of object to reduce them into more compact entries.
@@ -349,7 +349,7 @@ const extractEncounterInformation = encounterData => {
       existingObject.max_level = Math.max(existingObject.max_level, obj.max_level)
       existingObject.chance += obj.chance
     } else {
-      acc.push({...obj})
+      acc.push({ ...obj })
     }
     return acc
   }, [])
@@ -358,7 +358,7 @@ const extractEncounterInformation = encounterData => {
   return reducedEncounterInformation.map(pokemonEncounter => {
     const { min_level, max_level } = pokemonEncounter
     const levelRange = min_level === max_level ? min_level : `${min_level}-${max_level}`
-    return {...pokemonEncounter, levelRange}
+    return { ...pokemonEncounter, levelRange }
   })
 }
 
@@ -380,7 +380,7 @@ export const extractLocationAreaInformation = locationAreaData => {
       obj.pokemonName === pokemonName
     ))
     if (!foundEncounter) {
-      acc.push({...encounter, gameName: [gameName]})
+      acc.push({ ...encounter, gameName: [gameName] })
     } else {
       foundEncounter.gameName.push(gameName)
     }
@@ -399,5 +399,65 @@ export const extractEggGroupInformation = data => {
   })
   return {
     eggGroup: name, pokemonCount: filteredSpecies.length
+  }
+}
+
+export const extractBerryInformation = data => {
+  const {
+    firmness: { name: firmness },
+    flavors,
+    growth_time: growthTime,
+    id,
+    item: { name: itemName, url },
+    max_harvest: maxHarvest,
+    name,
+    size,
+    smoothness,
+    soil_dryness: soilDryness
+  } = data
+
+  return {
+    firmness,
+    flavors,
+    growthTime,
+    id,
+    itemName,
+    url,
+    maxHarvest,
+    name,
+    size,
+    smoothness,
+    soilDryness
+  }
+}
+
+export const extractItemInformation = item => {
+  const {
+    category: { name: category },
+    cost,
+    effect_entries,
+    game_indices,
+    id,
+    name,
+    sprites: { default: sprite }
+  } = item
+
+  const shortEntryTemp = effect_entries.find(entry => entry.language.name === 'en').short_effect
+  // Strip away the 'Held: ' prefix in the short entry
+  const shortEntry = shortEntryTemp.replace('Held: ', '')
+  const firstGen = game_indices[0].generation.name
+
+  const [generationString, generationNumber] = firstGen.split('-')
+  const newGenerationString = generationString.charAt(0).toUpperCase() + generationString.slice(1)
+  const generationIntroduced = `${newGenerationString} ${numberMapper[generationNumber]}`
+
+  return {
+    category,
+    cost,
+    shortEntry,
+    generationIntroduced,
+    id,
+    name,
+    sprite
   }
 }

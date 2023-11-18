@@ -71,12 +71,11 @@ const NavBar = () => {
     { path: '/pokemon/forms', name: 'Forms' },
     { path: '/moves', name: 'Moves' },
     { path: '/ability', name: 'Abilities' },
+    { path: '/berry', name: 'Berries' },
     { path: '/egg-group', name: 'Egg groups' },
     { path: '/types', name: 'Types' },
-    { path: '/location', name: 'Locations' }
+    { path: '/location', name: 'Locations' },
   ];
-
-  const otherNavElements = <ListItem items={linkData.slice(11)} subMenuFlag={false} />
 
   return (
     <section className='mb-4'>
@@ -88,8 +87,8 @@ const NavBar = () => {
       <nav>
         <ul className='flex flex-wrap list-none'>
           <DropDownMenu parentText='Pokédex' menuData={linkData.slice(0, 8)} />
-          <DropDownMenu parentText='Mechanics' menuData={linkData.slice(8, 11)} />
-          {otherNavElements}
+          <DropDownMenu parentText='Lists' menuData={linkData.slice(8, 12)} />
+          <ListItem items={linkData.slice(12)} subMenuFlag={false} />
         </ul>
       </nav>
     </section>
