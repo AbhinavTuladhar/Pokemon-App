@@ -7,6 +7,7 @@ import SectionTitle from '../components/SectionTitle'
 import formatName from '../utils/NameFormatting'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import { motion } from 'framer-motion'
+import { Tooltip } from 'react-tooltip'
 
 const TableRow = ({ children, extraClassName }) => {
   return (
@@ -18,7 +19,7 @@ const TableRow = ({ children, extraClassName }) => {
 
 const TableCell = ({ children, extraClassName }) => {
   return (
-    <div className={`table-cell px-2 py-0.5 align-middle border border-gray-200 ${extraClassName}`}>
+    <div className={`table-cell px-1.5 py-0.5 align-middle border border-gray-200 ${extraClassName} whitespace-pre`}>
       {children}
     </div>
   )
@@ -78,19 +79,32 @@ const BerryListing = () => {
     }
   })
 
+
   // Now combining the two corresponding objects in the berry and itme arrays
   const berryInformation = berryData?.map(berry => {
     const foundItem = itemData?.find(item => item?.name === berry?.itemName)
     return { ...foundItem, ...berry, }
   })
 
-  const tableHeaderNames = ['Generation', 'No.', 'Sprite', 'Name', 'Effect(s)']
+  const tableHeaderNames = [
+    { header: 'Gen', id: 'generation' },
+    { header: 'No.', id: 'id' },
+    { header: 'Sprite', id: 'sprite' },
+    { header: 'Name', id: 'name' },
+    { header: 'Effect(s)', id: 'entry' },
+    { header: 'Growth time', id: 'growthTime' },
+    { header: 'Firmness', id: 'firmness' },
+    { header: 'Size (cm)', id: 'size' },
+    { header: 'Max berries', id: 'maxHarvest' },
+  ]
   const tableHeader = (
     <TableRow extraClassName='font-bold bg-[#1a1a1a]'>
       {tableHeaderNames.map((header, headerIndex) => {
         return (
           <TableCell key={headerIndex}>
-            {header}
+            <div id={header.id} className={`${headerIndex >= 5 && 'hover:cursor-help'}`}>
+              {header.header}
+            </div>
           </TableCell>
         )
       })}
@@ -98,9 +112,9 @@ const BerryListing = () => {
   )
 
   const dataRows = berryInformation?.map((berry, berryIndex) => {
-    const { generationIntroduced, id, sprite, name, shortEntry } = berry
+    const { generationIntroduced, id, sprite, name, shortEntry, firmness, size, maxHarvest, growthTime } = berry
     const cellData = [
-      { key: 'generation', value: generationIntroduced, },
+      { key: 'generation', value: generationIntroduced.slice(generationIntroduced.length - 1), },
       { key: 'id', value: id, },
       {
         key: 'sprite', value: (
@@ -111,6 +125,10 @@ const BerryListing = () => {
       },
       { key: 'name', value: formatName(name), },
       { key: 'entry', value: shortEntry, },
+      { key: 'growthTime', value: growthTime, },
+      { key: 'firmness', value: formatName(firmness), },
+      { key: 'size', value: size / 10, },
+      { key: 'maxHarvest', value: maxHarvest, },
     ]
 
     return (
@@ -131,6 +149,13 @@ const BerryListing = () => {
     </>
   )
 
+  const tooltipData = [
+    { id: 'growthTime', text: 'Time it takes the tree to grow one stage, in hours.' },
+    { id: 'firmness', text: 'The firmness of this berry, used in making Pokéblocks or Poffins.' },
+    { id: 'size', text: 'The size of this Berry, in centimetres.' },
+    { id: 'maxHarvest', text: 'The maximum number of these berries that can grow on one tree.' },
+  ]
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -144,6 +169,13 @@ const BerryListing = () => {
       ) : (
         <TableContainer child={tableData} />
       )}
+      <>
+        {tooltipData.map((tip, index) => (
+          <Tooltip anchorSelect={`#${tip.id}`} place='bottom' key={index} style={{ backgroundColor: 'black', padding: '0.5rem' }} >
+            <span className='text-xs'> {tip.text} </span>
+          </Tooltip>
+        ))}
+      </>
     </motion.div>
   )
 }
