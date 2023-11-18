@@ -139,10 +139,10 @@ const BerryListing = () => {
       className='text-center'
     >
       <SectionTitle text='Berries' />
-      {isFullyLoadedItemData ? (
-        <TableContainer child={tableData} />
-      ) : (
+      {(dataRows?.length === 0 || !isFullyLoadedBerryData || !isFullyLoadedItemData) ? (
         <MoveListingSkeleton rowCount={20} />
+      ) : (
+        <TableContainer child={tableData} />
       )}
     </motion.div>
   )

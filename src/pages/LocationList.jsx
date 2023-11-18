@@ -21,7 +21,7 @@ const LocationList = () => {
 
   const locationUrls = useMemo(() => {
     const urlList = []
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= 6; i++) {
       urlList.push(`https://pokeapi.co/api/v2/region/${i}`)
     }
     return urlList
