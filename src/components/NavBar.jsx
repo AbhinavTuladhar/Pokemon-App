@@ -73,6 +73,7 @@ const NavBar = () => {
     { path: '/ability', name: 'Abilities' },
     { path: '/berry', name: 'Berries' },
     { path: '/egg-group', name: 'Egg groups' },
+    { path: '/natures', name: 'Natures' },
     { path: '/types', name: 'Types' },
     { path: '/location', name: 'Locations' },
   ];
@@ -87,8 +88,8 @@ const NavBar = () => {
       <nav>
         <ul className='flex flex-wrap list-none'>
           <DropDownMenu parentText='Pokédex' menuData={linkData.slice(0, 8)} />
-          <DropDownMenu parentText='Lists' menuData={linkData.slice(8, 12)} />
-          <ListItem items={linkData.slice(12)} subMenuFlag={false} />
+          <DropDownMenu parentText='Lists' menuData={linkData.slice(8, 13)} />
+          <ListItem items={linkData.slice(13)} subMenuFlag={false} />
         </ul>
       </nav>
     </section>

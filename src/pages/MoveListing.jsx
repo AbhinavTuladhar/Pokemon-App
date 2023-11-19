@@ -27,7 +27,7 @@ const returnMoveImage = damageClass => {
 }
 
 const MoveListing = () => {
-  const [moveList, setMoveList] = useState([])
+  // const [moveList, setMoveList] = useState([])
   const [moveListReady, setMoveListReady] = useState([])
   const [filteredMoves, setFilteredMoves] = useState([])
   // const [TMURLs, setTMURLs] = useState([])
@@ -74,12 +74,10 @@ const MoveListing = () => {
   useEffect(() => {
     if (!isFullyLoadedMoveData)
       return
-    setMoveList(moveData)
+    // setMoveList(moveData)
     setMoveListReady(moveData)
     setFilteredMoves(moveData)
   }, [moveData, isFullyLoadedMoveData])
-
-  console.log(moveList.filter(move => move.machines.length > 0))
 
   // Find the tm.
   // useEffect(() => {
