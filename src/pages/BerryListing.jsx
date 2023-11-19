@@ -19,7 +19,7 @@ const TableRow = ({ children, extraClassName }) => {
 
 const TableCell = ({ children, extraClassName }) => {
   return (
-    <div className={`table-cell px-1.5 py-0.5 align-middle border border-gray-200 ${extraClassName} whitespace-pre`}>
+    <div className={`table-cell p-1 align-middle border border-gray-200 ${extraClassName} whitespace-nowrap lg:whitespace-normal lg:max-w-lg leading-6`}>
       {children}
     </div>
   )
@@ -114,7 +114,7 @@ const BerryListing = () => {
   const dataRows = berryInformation?.map((berry, berryIndex) => {
     const { generationIntroduced, id, sprite, name, shortEntry, firmness, size, maxHarvest, growthTime } = berry
     const cellData = [
-      { key: 'generation', value: generationIntroduced.slice(generationIntroduced.length - 1), },
+      { key: 'generation', value: generationIntroduced?.slice(generationIntroduced.length - 1), },
       { key: 'id', value: id, },
       {
         key: 'sprite', value: (
