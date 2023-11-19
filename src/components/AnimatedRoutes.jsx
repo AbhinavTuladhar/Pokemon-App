@@ -47,8 +47,8 @@ const AnimatedRoutes = () => {
         <Route path='/ability/:id' element={<AbilityDetail />} key='ability-id' />
         <Route path='/location/:name' element={<LocationDetail />} key='location-id' />
 
-        {generationRouteData.map((gen) => (
-          <Route path={gen.path} element={<PokemonListing idRange={gen.idRange} key={gen.path} />} />
+        {generationRouteData.map((gen, index) => (
+          <Route path={gen.path} key={index} element={<PokemonListing idRange={gen.idRange} key={gen.path} />} />
         ))}
       </Routes>
     </AnimatePresence>
