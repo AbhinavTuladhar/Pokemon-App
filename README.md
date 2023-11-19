@@ -8,9 +8,10 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 - TailwindCSS
 - React Router
 - Framer Motion
-- React Query
+- (Tanstack) React Query
 - Axios
 - React Loading Skeleton
+- React Tooltip
 
 ## Features:
 
@@ -77,3 +78,9 @@ A React app that uses the [PokemonAPI](https://pokeapi.co/) to display various i
 ![Responsive_2](./Screenshots/Responsive_2.jpg)
 
 ![Responsive_3](./Screenshots/Responsive_3.jpg)
+
+### 13. Different lists - berries, natures and egg groups
+
+![List_1](./Screenshots/List_1.jpg)
+
+![List_2](./Screenshots/List_2.jpg)
