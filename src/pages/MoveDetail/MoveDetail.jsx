@@ -11,6 +11,7 @@ import { extractMoveInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
 import fetchData from '../../utils/fetchData'
 import MoveTarget from './MoveTarget'
+import OtherLanguages from './OtherLanguages'
 
 
 const MoveDetail = () => {
@@ -31,7 +32,7 @@ const MoveDetail = () => {
   })
 
   // Set the document title
-  const { moveName } = moveInfo
+  const { moveName, names } = moveInfo
   document.title = `${formatName(moveName)} | Pokémon Moves | Pokémon Database`
 
   return (
@@ -58,10 +59,10 @@ const MoveDetail = () => {
         </div>
       </div>
 
-
-      <div className='flex flex-row flex-wrap gap-x-10 lg:gap-x-16 mt-2 md:mt-8'>
+      <div className='flex flex-row flex-wrap gap-x-10 lg:gap-x-16 md:mt-2'>
         <div className='grow-0 w-full md:w-auto md:grow md:basis-0'>
           <MoveTarget targetType={moveInfo.targetType} />
+          <OtherLanguages names={names} />
         </div>
         <div className='grow-0 w-full md:w-auto md:grow-[3] md:basis-0 basis-full'>
           <GameDescription descriptions={moveInfo.descriptions} />
