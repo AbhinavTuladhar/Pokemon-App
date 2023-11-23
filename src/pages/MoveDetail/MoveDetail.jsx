@@ -10,6 +10,7 @@ import GameDescription from './GameDescription'
 import { extractMoveInformation } from '../../utils/extractInfo'
 import formatName from '../../utils/NameFormatting'
 import fetchData from '../../utils/fetchData'
+import MoveTarget from './MoveTarget'
 
 
 const MoveDetail = () => {
@@ -53,15 +54,22 @@ const MoveDetail = () => {
         </div>
         <div className='flex flex-col w-full lg:w-8/12 sm:w-7/12 md:w-7/12'>
           <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
+        </div>
+      </div>
+
+      <div className='flex flex-row flex-wrap gap-x-12 mt-2 md:mt-8'>
+        <MoveTarget targetType={moveInfo.targetType} />
+        <div className='w-full md:flex-1'>
           <GameDescription descriptions={moveInfo.descriptions} />
         </div>
       </div>
-      <div className='flex flex-col justify-between'>
+
+      {/* <div className='flex flex-col justify-between'>
         {
           moveInfo?.pokemonUrls?.length > 0 &&
           <PokemonCardList title={`Pokemon that can learn ${formatName(moveInfo.moveName)}`} pokemonUrls={moveInfo.pokemonUrls} />
         }
-      </div>
+      </div> */}
     </motion.div>
   )
 }
