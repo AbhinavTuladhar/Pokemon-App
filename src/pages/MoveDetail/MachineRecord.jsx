@@ -63,15 +63,15 @@ const MachineRecord = ({ machineList }) => {
 
   const tableRows = machineInfo?.map((machine, rowIndex) => {
     return (
-      <div className='table-row' key={rowIndex}>
-        <div className='table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle text-right'>
+      <div className='table-row h-12' key={rowIndex}>
+        <div className='table-cell w-3/5 align-middle text-right border-t py-2 border-slate-200'>
           <ul>
             {machine.versionName?.map((version, index) => {
               return (<li className='list-none' key={index}> {formatName(version)} </li>)
             })}
           </ul>
         </div>
-        <div className='table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle'>
+        <div className='table-cell w-2/5 pl-4 pr-2 py-2 h-12 border-t border-slate-200 align-middle'>
           {machine?.machine}
         </div>
       </div>

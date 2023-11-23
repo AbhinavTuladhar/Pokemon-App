@@ -44,32 +44,35 @@ const MoveDetail = () => {
       <div className='flex justify-center text-4xl font-bold text-center'>
         {formatName(moveInfo.moveName)} (move)
       </div>
-      <div className='flex flex-row flex-wrap justify-between mt-4'>
-        <div className='flex flex-col w-full lg:w-3/12 sm:w-4/12 md:w-4/12'>
+
+      <div className='flex flex-row flex-wrap gap-x-4 lg:gap-x-8 mt-4'>
+        <div className='flex flex-col grow-0 w-full md:w-auto md:grow-[2] md:basis-0'>
           <MoveData moveInfo={moveInfo} />
           {
             moveInfo?.machines?.length > 0 &&
             <MachineRecord machineList={moveInfo.machines} />
           }
         </div>
-        <div className='flex flex-col w-full lg:w-8/12 sm:w-7/12 md:w-7/12'>
+        <div className='grow-0 w-full md:w-auto md:grow-[6] md:basis-0 basis-full'>
           <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
         </div>
       </div>
 
-      <div className='flex flex-row flex-wrap gap-x-12 mt-2 md:mt-8'>
-        <MoveTarget targetType={moveInfo.targetType} />
-        <div className='w-full md:flex-1'>
+
+      <div className='flex flex-row flex-wrap gap-x-10 lg:gap-x-16 mt-2 md:mt-8'>
+        <div className='grow-0 w-full md:w-auto md:grow md:basis-0'>
+          <MoveTarget targetType={moveInfo.targetType} />
+        </div>
+        <div className='grow-0 w-full md:w-auto md:grow-[3] md:basis-0 basis-full'>
           <GameDescription descriptions={moveInfo.descriptions} />
         </div>
       </div>
 
-      {/* <div className='flex flex-col justify-between'>
-        {
-          moveInfo?.pokemonUrls?.length > 0 &&
+      <div className='flex flex-col justify-between'>
+        {moveInfo?.pokemonUrls?.length > 0 && (
           <PokemonCardList title={`Pokemon that can learn ${formatName(moveInfo.moveName)}`} pokemonUrls={moveInfo.pokemonUrls} />
-        }
-      </div> */}
+        )}
+      </div>
     </motion.div>
   )
 }
