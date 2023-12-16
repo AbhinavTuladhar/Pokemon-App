@@ -4,8 +4,16 @@
 
 @layer components {
   .hoverable-link {
-    @apply text-blue-500 hover:text-red-500 hover:underline duration-300
+    @apply text-blue-500 hover:text-red-500 hover:underline duration-300;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
