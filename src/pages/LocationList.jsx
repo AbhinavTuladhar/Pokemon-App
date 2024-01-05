@@ -79,26 +79,29 @@ const LocationList = () => {
     sessionStorage.setItem('storedTab', activeTab.toString())
   }, [activeTab])
 
-  if (isLoading) return
-
   const handleClick = id => {
     setActiveTab(id)
   }
 
-  // For 
+  if (isLoading) return
+
+  /**
+   * Processing and rendering start
+   */
+
   const tabData = locationData?.map((row, tabIndex) => {
     const { locations, regionName } = row
     const locationItems = locations.map((location, locIndex) => {
       const { locationName, localUrl } = location
       return (
-        <NavLink to={localUrl} className='hoverable-link min-w-fit' key={locIndex}>
+        <NavLink to={localUrl} className='hoverable-link' key={locIndex}>
           {formatName(locationName)}
         </NavLink>
       )
     })
 
     const tabOutput = (
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center' key={tabIndex}>
+      <div className='grid grid-cols-flexible gap-x-1' key={tabIndex}>
         {locationItems}
       </div>
     )
