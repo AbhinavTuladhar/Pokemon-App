@@ -15,6 +15,7 @@ module.exports = {
         "pokemon-detail-grid":
           "repeat(auto-fill, minmax(min(350px, 90%), 1fr))",
         "pokemon-move-grid": "repeat(auto-fit, minmax(min(520px, 90%), 1fr))",
+        "2-flexible": "repeat(auto-fit, minmax(min(420px, 90%), 1fr))",
       },
     },
   },

@@ -85,7 +85,7 @@ const OtherLanguages = ({ data }) => {
   return (
     <>
       <SectionTitle text='Other languages' />
-      <div className='flex flex-row flex-wrap gap-10'>
+      <div className='grid grid-cols-2-flexible gap-x-10 gap-y-16'>
         <div className='flex-1 table min-w-full border-b border-gray-200 md:min-w-fit'>
           {nameRows}
         </div>
