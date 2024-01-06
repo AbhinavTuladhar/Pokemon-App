@@ -12,6 +12,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         flexible: "repeat(auto-fill, minmax(170px, 1fr))",
+        "pokemon-detail-grid": "repeat(auto-fill, minmax(350px, 1fr))",
       },
     },
   },

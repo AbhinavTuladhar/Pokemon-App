@@ -188,32 +188,33 @@ const PokemonDetail = () => {
         <BasicIntro pokemonData={BasicInfoProps} />
       </FadeInAnimationContainer>
 
-      <div className='flex flex-row flex-wrap gap-x-10'>
-
-        <div className='flex-grow w-full py-4 mdlg:w-1/4 md:w-1/3' id='info'>
+      <div className='grid grid-cols-pokemon-detail-grid gap-x-8 gap-y-6'>
+        <FadeInAnimationContainer>
+          <ImageTile imageSources={imageSourceNew} />
+        </FadeInAnimationContainer>
+        <FadeInAnimationContainer>
+          <PokeDexData pokemonData={PokeDexDataProps} />
+        </FadeInAnimationContainer>
+        <div className='flex flex-col gap-y-6 w-full col-span-2 mdlg:col-span-1'>
           <FadeInAnimationContainer>
-            <ImageTile imageSources={imageSourceNew} />
+            <TrainingInfo data={TrainingInfoProps} />
+          </FadeInAnimationContainer>
+          <FadeInAnimationContainer>
+            <BreedingInfo data={BreedingInfoProps} />
           </FadeInAnimationContainer>
         </div>
+      </div>
 
-        <div className='flex-grow w-full py-4 mdlg:w-1/4 md:w-1/3'>
-          <FadeInAnimationContainer>
-            <PokeDexData pokemonData={PokeDexDataProps} />
-          </FadeInAnimationContainer>
-        </div>
+      <div className='grid grid-cols-pokemon-detail-grid gap-x-8 gap-y-6'>
+        <FadeInAnimationContainer className='col-span-2'>
+          <BaseStat data={BaseStatProps} />
+        </FadeInAnimationContainer>
+        <FadeInAnimationContainer className='col-span-2 mdlg:col-span-1'>
+          <TypeChart data={TypeChartProps} />
+        </FadeInAnimationContainer>
+      </div>
 
-        <div className='flex flex-col flex-grow w-full py-4 mdlg:w-1/4 md:w-1/3 gap-y-5'>
-          <div className='flex flex-col w-full'>
-            <FadeInAnimationContainer>
-              <TrainingInfo data={TrainingInfoProps} />
-            </FadeInAnimationContainer>
-          </div>
-          <div className='flex flex-col w-full'>
-            <FadeInAnimationContainer>
-              <BreedingInfo data={BreedingInfoProps} />
-            </FadeInAnimationContainer>
-          </div>
-        </div>
+      {/* <div className='flex flex-row flex-wrap gap-x-10'>
 
         <section className='flex flex-row flex-wrap justify-between flex-grow gap-x-9' id='base-stats'>
           <div className='flex flex-col flex-grow w-full mdlg:w-[51%] sm:w-full'>
@@ -227,7 +228,7 @@ const PokemonDetail = () => {
             </FadeInAnimationContainer>
           </div>
         </section>
-      </div>
+      </div> */}
 
       <section id='evolution-chain'>
         <FadeInAnimationContainer>
