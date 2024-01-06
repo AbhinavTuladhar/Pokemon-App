@@ -196,8 +196,8 @@ const MovesLearned = ({ data }) => {
   const eggTable = returnMoveTable(finalMoveDetails?.egg)
 
   return (
-    <div className='flex flex-row flex-wrap justify-between w-full'>
-      <div className='flex flex-col w-full lg:w-475/1000'>
+    <div className='grid grid-cols-pokemon-move-grid gap-x-8 gap-y-6'>
+      <div className='flex flex-col'>
         <SectionTitle text={'Moves learnt by level up'} />
         {finalMoveDetails?.level?.length > 1 ? (
           <>
@@ -239,7 +239,7 @@ const MovesLearned = ({ data }) => {
           `${properPokemonName} does not learn any moves by breeding.`
         }
       </div>
-      <div className='flex flex-col w-full lg:w-475/1000'>
+      <div className='flex flex-col'>
         <SectionTitle text={'Moves learnt by HM/TM'} />
         {finalMoveDetails?.machine?.length > 1 ? (
           <>

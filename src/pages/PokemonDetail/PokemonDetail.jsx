@@ -189,10 +189,10 @@ const PokemonDetail = () => {
       </FadeInAnimationContainer>
 
       <div className='grid grid-cols-pokemon-detail-grid gap-x-8 gap-y-6'>
-        <FadeInAnimationContainer>
+        <FadeInAnimationContainer className='col-span-2 md:col-span-1'>
           <ImageTile imageSources={imageSourceNew} />
         </FadeInAnimationContainer>
-        <FadeInAnimationContainer>
+        <FadeInAnimationContainer className='col-span-2 md:col-span-1'>
           <PokeDexData pokemonData={PokeDexDataProps} />
         </FadeInAnimationContainer>
         <div className='flex flex-col gap-y-6 w-full col-span-2 mdlg:col-span-1'>
@@ -213,22 +213,6 @@ const PokemonDetail = () => {
           <TypeChart data={TypeChartProps} />
         </FadeInAnimationContainer>
       </div>
-
-      {/* <div className='flex flex-row flex-wrap gap-x-10'>
-
-        <section className='flex flex-row flex-wrap justify-between flex-grow gap-x-9' id='base-stats'>
-          <div className='flex flex-col flex-grow w-full mdlg:w-[51%] sm:w-full'>
-            <FadeInAnimationContainer>
-              <BaseStat data={BaseStatProps} />
-            </FadeInAnimationContainer>
-          </div>
-          <div className='flex flex-col flex-grow w-full mdlg:w-[16.5%] sm:w-full'>
-            <FadeInAnimationContainer>
-              <TypeChart data={TypeChartProps} />
-            </FadeInAnimationContainer>
-          </div>
-        </section>
-      </div> */}
 
       <section id='evolution-chain'>
         <FadeInAnimationContainer>
