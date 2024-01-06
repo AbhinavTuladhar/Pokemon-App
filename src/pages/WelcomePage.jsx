@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 
 const welcomeVariant = {
   initial: { y: "10rem", opacity: 0 },
@@ -77,33 +77,33 @@ const InformativeText = () => {
   )
 }
 
-const IssuesText = () => {
-  const listItems = [
-    { text: 'Egg groups', style: 'pt-4 line-through' },
-    {
-      text: (<>
-        <NavLink to='/pokemon/wurmple' className='hoverable-link'> Wurmple </NavLink>
-        's evolution chain doesn't work.
-      </>),
-      style: 'line-through'
-    },
-    { text: 'Location-wise encounters for each game', style: 'line-through' },
-    { text: "No sprite collection for each Pokémon.", style: 'line-through' },
-    { text: "Dual-type chart (not sure if it's even possible)", style: 'line-through' },
-  ]
-  return (
-    <motion.div className='gap-y-5' variants={entryVariantLeft}>
-      <motion.span className='text-2xl font-bold' variants={entryVariantLeft}>
-        Known issues / Todos
-      </motion.span>
-      <motion.ul className='space-y-3 list-disc list-inside strik' variants={entryVariantLeft}>
-        {listItems.map((item, index) => (
-          <motion.li variants={entryVariantLeft} className={item?.style} key={index}> {item.text} </motion.li>
-        ))}
-      </motion.ul>
-    </motion.div>
-  )
-}
+// const IssuesText = () => {
+//   const listItems = [
+//     { text: 'Egg groups', style: 'pt-4 line-through' },
+//     {
+//       text: (<>
+//         <NavLink to='/pokemon/wurmple' className='hoverable-link'> Wurmple </NavLink>
+//         's evolution chain doesn't work.
+//       </>),
+//       style: 'line-through'
+//     },
+//     { text: 'Location-wise encounters for each game', style: 'line-through' },
+//     { text: "No sprite collection for each Pokémon.", style: 'line-through' },
+//     { text: "Dual-type chart (not sure if it's even possible)", style: 'line-through' },
+//   ]
+//   return (
+//     <motion.div className='gap-y-5' variants={entryVariantLeft}>
+//       <motion.span className='text-2xl font-bold' variants={entryVariantLeft}>
+//         Known issues / Todos
+//       </motion.span>
+//       <motion.ul className='space-y-3 list-disc list-inside strik' variants={entryVariantLeft}>
+//         {listItems.map((item, index) => (
+//           <motion.li variants={entryVariantLeft} className={item?.style} key={index}> {item.text} </motion.li>
+//         ))}
+//       </motion.ul>
+//     </motion.div>
+//   )
+// }
 
 const WelcomePage = () => {
   document.title = 'Pokémon Database clone'

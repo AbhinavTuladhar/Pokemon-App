@@ -82,7 +82,7 @@ const TypeChart = ({ data }) => {
       <SectionTitle text='Type Defenses' />
       <span> {`The effectiveness of each type on ${formatName(name)}: `} </span>
 
-      <div className='flex flex-col justify-center md:flex-row mdlg:flex-col sm:flex-row overflow-x-scroll'>
+      <div className='flex flex-col justify-center md:flex-row mdlg:flex-col sm:flex-row overflow-x-auto'>
         <TypeDefenceRow typeDefenceInfo={typeDefenseInfo.slice(0, 9)} extraClassName={firstClassName} />
         <TypeDefenceRow typeDefenceInfo={typeDefenseInfo.slice(9)} extraClassName={secondClassName} />
       </div>
