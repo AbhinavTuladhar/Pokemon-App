@@ -115,8 +115,8 @@ const BaseStat = ({ data }) => {
         <div className='table-cell px-1 text-right align-middle border-t border-gray-200'>
           <span className={`${stringDecoration} text-left`}> {stat.value} </span>
         </div>
-        <div className='table-cell w-full h-full px-0 mx-0 align-middle border-t border-gray-200'>
-          <div className='h-3 my-0 ml-2 rounded' style={{ width: stat.width, minWidth: '0.25em', maxWidth: '100%', backgroundColor: stat.colour }}> &nbsp;
+        <div className='table-cell min-w-[9.375rem] w-full h-full px-0 mx-0 align-middle border-t border-gray-200'>
+          <div className='h-3 my-0 ml-2 rounded' style={{ width: stat.width, minWidth: '1rem', maxWidth: '100%', backgroundColor: stat.colour }}> &nbsp;
           </div>
         </div>
         <div className='table-cell px-1 pl-3 text-right align-middle border-t border-gray-200'>
