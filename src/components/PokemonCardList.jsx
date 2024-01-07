@@ -38,7 +38,7 @@ const PokemonCardList = ({ title, pokemonUrls }) => {
         <>
           <SectionTitle text='Loading Pokemon data...' />
           <div className='grid grid-cols-card-list gap-4'>
-            {Array(20).fill(0).map((_, index) => (
+            {Array(pokemonUrls.length).fill(0).map((_, index) => (
               <PokeCardV2Skeleton key={index} />
             ))}
           </div>
