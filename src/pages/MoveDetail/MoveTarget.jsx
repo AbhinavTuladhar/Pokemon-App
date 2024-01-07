@@ -1,5 +1,6 @@
 import React from 'react'
 import SectionTitle from '../../components/SectionTitle'
+import Skeleton from 'react-loading-skeleton'
 import { buildMoveTargetData } from '../../utils/buildMoveTargetData'
 
 const PokemonTargetBox = ({ text, flag, targeted }) => {
@@ -30,22 +31,28 @@ const MoveTarget = ({ targetType }) => {
   const { allyInformation, description, foeInformation } = targetInformation
 
   return (
-    <div>
+    <>
       <SectionTitle text='Move Targets' />
-      <div className='flex flex-col items-center gap-y-2 mx-6'>
-        <div className='flex flex-row gap-x-2'>
-          {foeInformation.map((box, index) => (
-            <PokemonTargetBox flag={box.flag} text={box.text} targeted={box.targeted} key={index} />
-          ))}
-        </div>
-        <div className='flex flex-row gap-x-2'>
-          {allyInformation.map((box, index) => (
-            <PokemonTargetBox flag={box.flag} text={box.text} targeted={box.targeted} key={index} />
-          ))}
-        </div>
-      </div>
-      <p className='text-center w-full mt-4 italic'> {description}</p>
-    </div>
+      {targetType ? (
+        <>
+          <div className='flex flex-col items-center gap-y-2 mx-6'>
+            <div className='flex flex-row gap-x-2'>
+              {foeInformation.map((box, index) => (
+                <PokemonTargetBox flag={box.flag} text={box.text} targeted={box.targeted} key={index} />
+              ))}
+            </div>
+            <div className='flex flex-row gap-x-2'>
+              {allyInformation.map((box, index) => (
+                <PokemonTargetBox flag={box.flag} text={box.text} targeted={box.targeted} key={index} />
+              ))}
+            </div>
+          </div>
+          <p className='text-center w-full mt-4 italic'> {description}</p>
+        </>
+      ) : (
+        <Skeleton className='h-40' containerClassName='flex flex-1' />
+      )}
+    </>
   )
 }
 

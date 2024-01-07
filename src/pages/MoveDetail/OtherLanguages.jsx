@@ -17,13 +17,13 @@ const customOrder = {
 }
 
 // For expanding the language name and then re-ordering the objects in the array in a very specific order as mentioned above.
-function processLanuages(arr) {
+const processLanuages = (arr) => {
   const validLanguages = Object.keys(languageNameMapping)
-  const filteredLanguages = arr.filter(obj => validLanguages.includes(obj.languageName))
-  const properLanguages = filteredLanguages.map(obj => {
+  const filteredLanguages = arr?.filter(obj => validLanguages?.includes(obj.languageName))
+  const properLanguages = filteredLanguages?.map(obj => {
     return { ...obj, languageName: languageNameMapping[obj.languageName] }
   })
-  return properLanguages.sort((a, b) => customOrder[a.languageName] - customOrder[b.languageName])
+  return properLanguages?.sort((a, b) => customOrder[a.languageName] - customOrder[b.languageName])
 }
 
 const LanguageCell = ({ children }) => {
@@ -43,10 +43,6 @@ const NameCell = ({ children }) => {
 }
 
 const OtherLanguages = ({ names }) => {
-  if (!names) {
-    return <TabularSkeleton />
-  }
-
   let languagesList = names?.map(obj => {
     const { language: { name: languageName }, name: moveName } = obj
     return { languageName, moveName }
@@ -70,7 +66,11 @@ const OtherLanguages = ({ names }) => {
   return (
     <>
       <SectionTitle text='Other Languages' />
-      <TableContainer child={nameRows} />
+      {names?.length ? (
+        <TableContainer child={nameRows} />
+      ) : (
+        <TabularSkeleton />
+      )}
     </>
   )
 }

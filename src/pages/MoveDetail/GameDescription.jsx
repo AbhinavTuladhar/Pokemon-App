@@ -1,5 +1,6 @@
 import React from "react";
 import TableContainer from "../../components/TableContainer";
+import TabularSkeleton from "../../components/TabularSkeleton";
 import SectionTitle from "../../components/SectionTitle";
 import formatName from "../../utils/NameFormatting";
 
@@ -50,7 +51,11 @@ const GameDescription = ({ descriptions }) => {
   return (
     <>
       <SectionTitle text={'Game Descriptions'} />
-      <TableContainer child={tableRows} />
+      {descriptions?.length > 0 ? (
+        <TableContainer child={tableRows} />
+      ) : (
+        <TabularSkeleton />
+      )}
     </>
   )
 }

@@ -37,7 +37,7 @@ const PokemonCardList = ({ title, pokemonUrls }) => {
       {isLoading ? (
         <>
           <SectionTitle text='Loading Pokemon data...' />
-          <div className='grid grid-cols-card-list gap-4'>
+          <div className='grid grid-cols-card-list gap-x-3 gap-y-6'>
             {Array(pokemonUrls.length).fill(0).map((_, index) => (
               <PokeCardV2Skeleton key={index} />
             ))}
@@ -46,7 +46,7 @@ const PokemonCardList = ({ title, pokemonUrls }) => {
       ) : (
         <>
           <SectionTitle text={title} />
-          <div className='grid grid-cols-card-list gap-4'>
+          <div className='grid grid-cols-card-list gap-x-3 gap-y-6'>
             {pokeCards}
           </div>
         </>

@@ -57,10 +57,6 @@ const MachineRecord = ({ machineList }) => {
     }
   })
 
-  if (isLoading) {
-    return <TabularSkeleton />
-  }
-
   const tableRows = machineInfo?.map((machine, rowIndex) => {
     return (
       <div className='table-row h-12' key={rowIndex}>
@@ -82,7 +78,11 @@ const MachineRecord = ({ machineList }) => {
     <>
       <SectionTitle text={'Machine/Record'} />
       <div className='w-full'>
-        <TableContainer child={tableRows} />
+        {isLoading ? (
+          <TabularSkeleton />
+        ) : (
+          <TableContainer child={tableRows} />
+        )}
       </div>
     </>
   )

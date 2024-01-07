@@ -12,7 +12,7 @@ import formatName from '../../utils/NameFormatting'
 import fetchData from '../../utils/fetchData'
 import MoveTarget from './MoveTarget'
 import OtherLanguages from './OtherLanguages'
-
+import Skeleton from 'react-loading-skeleton'
 
 const MoveDetail = () => {
   const { id } = useParams()
@@ -37,13 +37,16 @@ const MoveDetail = () => {
 
   return (
     <motion.div
-      initial={{ y: '100%', opacity: 0 }}
-      animate={{ y: 0, opacity: 1, transitionDuration: '0.8s' }}
-      exit={{ y: '100%', opacity: 0, transitionDuration: '0.75s' }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      initial={{ x: '-5rem', opacity: 0 }}
+      animate={{ x: 0, opacity: 1, transitionDuration: '0.8s', transitionTimingFunction: 'ease-out' }}
+      exit={{ x: '100%', opacity: 0, transitionDuration: '0.8s', transitionTimingFunction: 'ease-in' }}
     >
       <div className='flex justify-center text-4xl font-bold text-center'>
-        {formatName(moveInfo.moveName)} (move)
+        {moveInfo.moveName ? (
+          `${formatName(moveInfo.moveName)} (move)`
+        ) : (
+          <Skeleton width='100%' height='2.75rem' containerClassName='flex-1 w-full' />
+        )}
       </div>
 
       <div className='flex flex-row flex-wrap gap-x-4 lg:gap-x-8 mt-4'>

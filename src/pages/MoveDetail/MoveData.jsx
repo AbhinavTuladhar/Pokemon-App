@@ -1,6 +1,7 @@
 import React from 'react'
 import TypeCard from '../../components/TypeCard'
 import TableContainer from '../../components/TableContainer'
+import TabularSkeleton from '../../components/TabularSkeleton'
 import SectionTitle from '../../components/SectionTitle'
 import formatName from '../../utils/NameFormatting'
 import movePhysical from '../../images/move-physical.png'
@@ -29,6 +30,8 @@ const MoveData = ({ moveInfo }) => {
     generationIntroduced,
     priority
   } = moveInfo
+
+  const propsFlag = Object.keys(moveInfo).length > 0
 
   const rowData = [
     { header: 'Type', value: <TypeCard typeName={moveType} /> },
@@ -70,7 +73,11 @@ const MoveData = ({ moveInfo }) => {
     <>
       <SectionTitle text={'Move data'} />
       <div className='w-full'>
-        <TableContainer child={tableRows} />
+        {propsFlag ? (
+          <TableContainer child={tableRows} />
+        ) : (
+          <TabularSkeleton />
+        )}
       </div>
     </>
   )
