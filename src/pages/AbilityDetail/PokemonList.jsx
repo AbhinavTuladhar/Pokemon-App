@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQueries } from '@tanstack/react-query'
 import { NavLink } from 'react-router-dom'
+import Skeleton from 'react-loading-skeleton'
 import SectionTitle from '../../components/SectionTitle'
 import TableContainer from '../../components/TableContainer'
 import TabularSkeleton from '../../components/TabularSkeleton'
@@ -49,10 +50,6 @@ const PokemonList = ({ data }) => {
       }
     },
   })
-
-  if (isLoading) {
-    return <TabularSkeleton />
-  }
 
   const headers = [{
     id: '#',
@@ -120,13 +117,16 @@ const PokemonList = ({ data }) => {
 
   return (
     <>
-      {!isLoading ? (
+      {(isLoading || !abilityName) ? (
+        <div className='flex flex-col gap-y-2 mt-5'>
+          <Skeleton width='90%' height='3rem' containerClassName='flex-1 w-full' />
+          <TabularSkeleton />
+        </div>
+      ) : (
         <>
           <SectionTitle text={`Pokemon with ${formatName(abilityName)}`} />
           <TableContainer child={rowData} />
         </>
-      ) : (
-        <TabularSkeleton />
       )}
     </>
   )
