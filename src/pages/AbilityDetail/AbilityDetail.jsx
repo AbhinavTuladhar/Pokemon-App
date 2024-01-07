@@ -35,7 +35,7 @@ const AbilityDetail = () => {
     <motion.div
       initial={{ x: '-10rem', opacity: 0 }}
       animate={{ x: 0, opacity: 1, transitionDuration: '0.8s', transitionTimingFunction: 'ease-out' }}
-      exit={{ opacity: 0, transitionDuration: '0.75s', transitionTimingFunction: 'ease-in' }}
+      exit={{ x: '100%', opacity: 0, transitionDuration: '0.8s', transitionTimingFunction: 'ease-in' }}
     >
       <div className='flex justify-center text-4xl font-bold text-center'>
         {abilityInfo.name ?

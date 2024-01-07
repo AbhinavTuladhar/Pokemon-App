@@ -17,15 +17,14 @@ const TypeCard = ({ typeName, useTextOnly, className }) => {
         </NavLink>
       </span>
     )
-  } else {
-    return (
-      <div className={`${backgroundColour} ${className} flex flex-col flex-wrap items-center justify-center w-20 px-2 py-1 mx-1 my-0 text-sm duration-200 rounded-md hover:brightness-110`}>
-        <NavLink to={targetLink}>
-          {typeName?.toUpperCase()}
-        </NavLink>
-      </div>
-    )
   }
+  return (
+    <div className={`${backgroundColour} ${className} flex flex-col flex-wrap items-center justify-center w-20 px-2 py-1 mx-1 my-0 text-sm duration-200 rounded-md hover:brightness-110`}>
+      <NavLink to={targetLink}>
+        {typeName?.toUpperCase()}
+      </NavLink>
+    </div>
+  )
 }
 
 export default TypeCard;
