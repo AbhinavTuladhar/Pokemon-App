@@ -42,7 +42,7 @@ const PokemonCardList = ({ title, pokemonUrls }) => {
       ) : (
         <>
           <SectionTitle text={title} />
-          <div className='flex flex-row flex-wrap'>
+          <div className='grid grid-cols-card-list gap-4'>
             {pokeCards}
           </div>
         </>

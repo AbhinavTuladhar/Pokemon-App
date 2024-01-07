@@ -23,7 +23,7 @@ const PokeCardV2 = ({ pokemonData }) => {
   })
 
   return (
-    <FadeInAnimationCard className='flex w-full py-4 sm:w-5/12 md:w-1/3 mdlg:w-1/5 lg:w-1/4'>
+    <FadeInAnimationCard className='flex w-full py-4'>
       <img src={gameSprite} className='w=[70px] h-[45px]' alt={name} />
       <div className='flex flex-col'>
         <div>
