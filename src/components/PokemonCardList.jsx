@@ -1,8 +1,8 @@
 import React from 'react'
 import { useQueries } from '@tanstack/react-query'
 import SectionTitle from './SectionTitle'
-import MoveListingSkeleton from './MoveListingSkeleton'
 import PokeCardV2 from './PokeCardV2'
+import PokeCardV2Skeleton from './PokeCardV2Skeleton'
 import fetchData from '../utils/fetchData'
 import { extractPokemonInformation } from '../utils/extractInfo'
 
@@ -37,7 +37,11 @@ const PokemonCardList = ({ title, pokemonUrls }) => {
       {isLoading ? (
         <>
           <SectionTitle text='Loading Pokemon data...' />
-          <MoveListingSkeleton rowCount={10} />
+          <div className='grid grid-cols-card-list gap-4'>
+            {Array(20).fill(0).map((_, index) => (
+              <PokeCardV2Skeleton key={index} />
+            ))}
+          </div>
         </>
       ) : (
         <>
