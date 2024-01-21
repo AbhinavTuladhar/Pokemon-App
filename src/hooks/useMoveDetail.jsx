@@ -4,21 +4,21 @@ import { useQueries } from '@tanstack/react-query'
 
 const useMoveDetail = (urls) => {
   const { data, isLoading } = useQueries({
-    queries: urls.map(url => {
+    queries: urls.map((url) => {
       return {
         queryKey: ['move-url', url],
         queryFn: () => fetchData(url),
         staleTime: Infinity,
         cacheTime: Infinity,
-        select: extractMoveInformation
+        select: extractMoveInformation,
       }
     }),
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading)
+        data: results.map((result) => result.data),
+        isLoading: results.some((result) => result.isLoading),
       }
-    }
+    },
   })
 
   return { data, isLoading }
