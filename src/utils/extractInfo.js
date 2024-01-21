@@ -60,7 +60,11 @@ export const extractMoveInformation = (move) => {
   const shortEntry = englishEffect.short_effect
 
   // Find the URLs of all the Pokemon that can learn the move.
-  const pokemonUrls = learned_by_pokemon?.map((pokemon) => pokemon.url)
+  const pokemonUrls = learned_by_pokemon?.map((pokemon) => {
+    const { name, url } = pokemon
+    const replacedUrl = url.replace(/\/pokemon\/\d+\//, `/pokemon/${name}/`)
+    return replacedUrl
+  })
 
   // Dealing with keys which might have null values.
   const realAccuracy = accuracy === null ? '-' : accuracy
