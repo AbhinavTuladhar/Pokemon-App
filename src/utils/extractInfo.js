@@ -270,7 +270,7 @@ export const extractTypeInformation = (data) => {
   }
 }
 
-export const extrctAbilityInformation = (data) => {
+export const extractAbilityInformation = (data) => {
   if (!data) return
   const {
     effect_entries,
@@ -280,8 +280,6 @@ export const extrctAbilityInformation = (data) => {
     name,
     pokemon,
   } = data
-
-  console.log(pokemon)
 
   // Find the English long and short entries.
   const englishDescEntries = effect_entries.find((entry) => entry.language.name === 'en')

@@ -6,7 +6,7 @@ import Skeleton from 'react-loading-skeleton'
 import AbilityEffect from './AbilityEffect'
 import AbilityDescription from './AbilityDescription'
 import PokemonList from './PokemonList'
-import { extrctAbilityInformation } from '../../utils/extractInfo'
+import { extractAbilityInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData'
 import formatName from '../../utils/NameFormatting'
 
@@ -17,7 +17,7 @@ const AbilityDetail = () => {
 
   // This is for manipulating the api response.
   const transformData = (data) => {
-    return extrctAbilityInformation(data)
+    return extractAbilityInformation(data)
   }
 
   const { data: abilityInfo = [] } = useQuery({

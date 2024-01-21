@@ -1,42 +1,48 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { useQueries } from '@tanstack/react-query'
+import React, { useState, useEffect } from 'react'
+import { useQuery, useQueries } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { NavLink } from 'react-router-dom'
-import axios from 'axios'
+import fetchData from '../utils/fetchData'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
 import TableContainer from '../components/TableContainer'
 import formatName from '../utils/NameFormatting'
-import { extrctAbilityInformation } from '../utils/extractInfo'
+import { extractAbilityInformation } from '../utils/extractInfo'
 import '../index.css'
 
 const AbilityListing = () => {
   const [abilityInfo, setAbilityInfo] = useState([])
   const [filteredAbilityInfo, setFilteredAbilityInfo] = useState([])
 
-  const urlList = useMemo(() => {
-    let urls = []
-    // default is 191 (acc to chatgpt)
-    for (let i = 1; i <= 191; i++) {
-      urls.push(`https://pokeapi.co/api/v2/ability/${i}/`)
-    }
-    return urls
-  }, [])
+  const resourceUrl = `https://pokeapi.co/api/v2/ability?limit=233`
+  // const resourceUrl = `https://pokeapi.co/api/v2/ability?limit=10`
 
-  // For querying the URLs.
-  const fetchData = async (url) => {
-    const response = await axios.get(url)
-    return response.data
-  }
+  // Query the ability resource list endpoint
+  const { data: abilityUrls, isLoading: isLoadingList } = useQuery({
+    queryKey: ['ability-listing', resourceUrl],
+    queryFn: () => fetchData(resourceUrl),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    select: (data) => {
+      const abilityList = data.results
+      return abilityList.map((ability) => {
+        const { name, url } = ability
+        const replacedUrl = url.replace(/\/ability\/\d+\//, `/ability/${name}/`)
+        return replacedUrl
+      })
+    },
+  })
 
   const { data: abilityData, isFullyLoaded } = useQueries({
-    queries: urlList.map((url) => {
-      return {
-        queryKey: ['ability', url],
-        queryFn: () => fetchData(url),
-        staleTime: Infinity,
-        cacheTime: Infinity,
-      }
-    }),
+    queries: abilityUrls
+      ? abilityUrls.map((url) => {
+          return {
+            queryKey: ['ability-url', url],
+            queryFn: () => fetchData(url),
+            staleTime: Infinity,
+            cacheTime: Infinity,
+          }
+        })
+      : [],
     combine: (results) => {
       return {
         data: results?.map((result) => result?.data),
@@ -52,7 +58,7 @@ const AbilityListing = () => {
       return
     }
     const extracted = abilityData
-      ?.map((ability) => extrctAbilityInformation(ability))
+      ?.map((ability) => extractAbilityInformation(ability))
       ?.sort((a, b) => (a?.name > b?.name ? 1 : -1))
     setAbilityInfo(extracted)
     setFilteredAbilityInfo(extracted)
@@ -134,13 +140,13 @@ const AbilityListing = () => {
           className="text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]"
           type="search"
           placeholder="Search for an ability..."
-          disabled={!isFullyLoaded}
+          disabled={!isFullyLoaded || isLoadingList}
           onChange={handleChange}
         />
       </div>
       {
         // Checking if data is present
-        !isFullyLoaded ? <MoveListingSkeleton rowCount={20} /> : <TableContainer child={tableRows} />
+        !isFullyLoaded || isLoadingList ? <MoveListingSkeleton rowCount={20} /> : <TableContainer child={tableRows} />
       }
     </motion.div>
   )
