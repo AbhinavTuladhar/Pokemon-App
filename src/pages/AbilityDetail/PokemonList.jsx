@@ -12,12 +12,11 @@ import '../../index.css'
 
 const PokemonList = ({ data }) => {
   const { pokemonList, name: abilityName } = data
-  const urlList = pokemonList?.map((pokemon) => pokemon.pokemon.url)
 
   // We now need to query the Pokemon URLs in order to find their icons, and other abilities
   const { data: readyInformation = [], isLoading } = useQueries({
-    queries: urlList
-      ? urlList.map((url) => {
+    queries: pokemonList
+      ? pokemonList.map((url) => {
           return {
             queryKey: ['pokemon-url', url],
             queryFn: () => fetchData(url),

@@ -281,6 +281,8 @@ export const extrctAbilityInformation = (data) => {
     pokemon,
   } = data
 
+  console.log(pokemon)
+
   // Find the English long and short entries.
   const englishDescEntries = effect_entries.find((entry) => entry.language.name === 'en')
   const { short_effect: shortEntry, effect: longEntry } = englishDescEntries
@@ -297,6 +299,15 @@ export const extrctAbilityInformation = (data) => {
   // The number of Pokemon that have the ability.
   const pokemonCount = pokemon.length
 
+  // Making the proper urls
+  const pokemonUrls = pokemon.map((pokemon) => {
+    const {
+      pokemon: { name, url },
+    } = pokemon
+    const replacedUrl = url.replace(/\/pokemon\/\d+\//, `/pokemon/${name}/`)
+    return replacedUrl
+  })
+
   const [generationString, generationNumber] = generationIntroducedRaw.split('-')
   const newGenerationString = generationString.charAt(0).toUpperCase() + generationString.slice(1)
   const generationIntroduced = `${newGenerationString} ${numberMapper[generationNumber]}`
@@ -309,7 +320,7 @@ export const extrctAbilityInformation = (data) => {
     id,
     name,
     pokemonCount,
-    pokemon,
+    pokemon: pokemonUrls,
   }
 }
 

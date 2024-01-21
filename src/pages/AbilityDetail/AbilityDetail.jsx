@@ -13,14 +13,16 @@ import formatName from '../../utils/NameFormatting'
 const AbilityDetail = () => {
   const { id } = useParams()
 
+  const url = `https://pokeapi.co/api/v2/ability/${id}/`
+
   // This is for manipulating the api response.
   const transformData = (data) => {
     return extrctAbilityInformation(data)
   }
 
   const { data: abilityInfo = [] } = useQuery({
-    queryKey: ['abilityDetail', id],
-    queryFn: () => fetchData(`https://pokeapi.co/api/v2/ability/${id}/`),
+    queryKey: ['ability-url', url],
+    queryFn: () => fetchData(url),
     select: transformData,
     staleTime: Infinity,
     cacheTime: Infinity,
