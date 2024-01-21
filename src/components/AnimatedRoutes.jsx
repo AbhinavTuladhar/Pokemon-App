@@ -21,14 +21,46 @@ import NatureListing from '../pages/NatureListing'
 const AnimatedRoutes = () => {
   const location = useLocation()
   const generationRouteData = [
-    { path: '/pokemon/generation-1', idRange: [1, 151] },
-    { path: '/pokemon/generation-2', idRange: [152, 251] },
-    { path: '/pokemon/generation-3', idRange: [252, 386] },
-    { path: '/pokemon/generation-4', idRange: [387, 493] },
-    { path: '/pokemon/generation-5', idRange: [494, 649] },
-    { path: '/pokemon/generation-6', idRange: [650, 721] },
-    { path: '/pokemon/generation-7', idRange: [722, 807] },
-    { path: '/pokemon/forms', idRange: [10001, 10157] },
+    {
+      path: '/pokemon/generation-1',
+      offset: 0,
+      limit: 151,
+    },
+    {
+      path: '/pokemon/generation-2',
+      offset: 151,
+      limit: 100,
+    },
+    {
+      path: '/pokemon/generation-3',
+      offset: 251,
+      limit: 135,
+    },
+    {
+      path: '/pokemon/generation-4',
+      offset: 386,
+      limit: 107,
+    },
+    {
+      path: '/pokemon/generation-5',
+      offset: 493,
+      limit: 156,
+    },
+    {
+      path: '/pokemon/generation-6',
+      offset: 649,
+      limit: 72,
+    },
+    {
+      path: '/pokemon/generation-7',
+      offset: 721,
+      limit: 86,
+    },
+    {
+      path: '/pokemon/forms',
+      offset: 1025,
+      limit: 157,
+    },
   ]
 
   return (
@@ -74,7 +106,13 @@ const AnimatedRoutes = () => {
           <Route
             path={gen.path}
             key={index}
-            element={<PokemonListing idRange={gen.idRange} key={gen.path} />}
+            element={
+              <PokemonListing
+                offset={gen.offset}
+                limit={gen.limit}
+                key={gen.path}
+              />
+            }
           />
         ))}
       </Routes>

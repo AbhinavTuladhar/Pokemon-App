@@ -1,5 +1,5 @@
-import { React, useMemo, useEffect, useState } from 'react'
-import { useQueries } from '@tanstack/react-query'
+import { React, useEffect, useState } from 'react'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -8,9 +8,9 @@ import PokeCardSkeleton from '../components/PokeCardSkeleton'
 import { FadeInAnimationCard } from '../components/AnimatedContainers'
 import fetchData from '../utils/fetchData'
 
-const MainPage = ({ idRange }) => {
+const MainPage = ({ offset, limit }) => {
   const [pokemonInfo, setPokemonInfo] = useState([])
-  const [filteredPokemonInfo, setFilteredPokemonInfo] = useState([]);
+  const [filteredPokemonInfo, setFilteredPokemonInfo] = useState([])
 
   // This is for setting the title of the page.
   const currentLocation = useLocation()
@@ -18,49 +18,71 @@ const MainPage = ({ idRange }) => {
   // Check for the 'other forms' page.
   const generationNumber = isNaN(generationNumberRaw) ? '' : generationNumberRaw
 
-  // This fetches the URLs of all the pokemon of that generation.
-  const urlList = useMemo(() => {
-    let urls = []
-    for (let i = idRange[0]; i <= idRange[1]; i++) {
-      urls.push(`https://pokeapi.co/api/v2/pokemon/${i}/`)
-    }
-    return urls
-  }, [idRange])
+  // Construct the url which etches the pokemon urls of that generation
+  const listUrl = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 
-  const { data: pokemonData, isLoading, isFullyLoaded } = useQueries({
-    queries: urlList.map(url => {
+  // Get the pokemon urls using the resource list
+  // Moreover, for caching purposes, we replace the number in the url with the actual pokemon name.
+  const { data: pokemonUrls } = useQuery({
+    queryKey: ['pokemon-list-url', listUrl],
+    queryFn: () => fetchData(listUrl),
+    cacheTime: Infinity,
+    staleTime: Infinity,
+    select: (data) => {
+      const pokemonList = data.results
+      return pokemonList.map((pokemon) => {
+        const { name, url } = pokemon
+        const replacedUrl = url.replace(/\/pokemon\/\d+\//, `/pokemon/${name}/`)
+        return replacedUrl
+      })
+    },
+  })
+
+  const {
+    data: pokemonData,
+    isLoading,
+    isFullyLoaded,
+  } = useQueries({
+    queries: pokemonUrls
+      ? pokemonUrls.map((url) => {
+          return {
+            queryKey: ['pokemon-url', url],
+            queryFn: () => fetchData(url),
+            cacheTime: Infinity,
+            staleTime: Infinity,
+          }
+        })
+      : [],
+    combine: (results) => {
       return {
-        queryKey: ['pokemon-url', url],
-        queryFn: () => fetchData(url),
-        cacheTime: Infinity,
-        staleTime: Infinity,
+        data: results?.map((result) => result?.data),
+        isLoading: results.some((result) => result.isLoading),
+        isFullyLoaded: results.every((result) => result.data !== undefined),
       }
-    }),
-    combine: results => {
-      return {
-        data: results?.map(result => result?.data),
-        isLoading: results.some(result => result.isLoading),
-        isFullyLoaded: results.every(result => result.data !== undefined)
-      }
-    }
+    },
   })
 
   useEffect(() => {
     if (pokemonData?.length > 0) {
       setPokemonInfo(pokemonData)
-      setFilteredPokemonInfo(pokemonData);
+      setFilteredPokemonInfo(pokemonData)
     }
   }, [pokemonData])
 
   // For handling the search bar.
-  const handleChange = event => {
+  const handleChange = (event) => {
     const searchString = event.target.value
-    const filteredData = pokemonInfo?.filter(pokemon => pokemon.name.includes(searchString.toLowerCase()))
-    setFilteredPokemonInfo(filteredData);
+    const filteredData = pokemonInfo?.filter((pokemon) =>
+      pokemon.name.includes(searchString.toLowerCase())
+    )
+    setFilteredPokemonInfo(filteredData)
   }
 
   const titleSuffix = 'List | Pokémon database'
-  const titlePrefix = generationNumber !== '' ? `Generation ${generationNumber} Pokémon` : 'Pokémon forms'
+  const titlePrefix =
+    generationNumber !== ''
+      ? `Generation ${generationNumber} Pokémon`
+      : 'Pokémon forms'
   document.title = `${titlePrefix} ${titleSuffix}`
 
   return (
@@ -70,15 +92,16 @@ const MainPage = ({ idRange }) => {
       exit={{ x: '100%', opacity: 0, transitionDuration: '0.5s' }}
       transition={{ ease: 'easeIn' }}
     >
-      <div className='flex items-center justify-center'>
+      <div className="flex items-center justify-center">
         <input
-          className='text-black rounded-xl mx-4 py-2 px-4 w-full md:w-[20rem]' type='search'
-          placeholder='Search for a Pokemon'
+          className="text-black rounded-xl mx-4 py-2 px-4 w-full md:w-[20rem]"
+          type="search"
+          placeholder="Search for a Pokemon"
           disabled={Boolean(isLoading)}
           onChange={handleChange}
         />
       </div>
-      <div className='flex flex-wrap items-center justify-center gap-8 px-0 py-4 mt-2'>
+      <div className="flex flex-wrap items-center justify-center gap-8 px-0 py-4 mt-2">
         {!isFullyLoaded ? (
           <PokeCardSkeleton cardCount={20} />
         ) : (
@@ -93,4 +116,4 @@ const MainPage = ({ idRange }) => {
   )
 }
 
-export default MainPage;
+export default MainPage

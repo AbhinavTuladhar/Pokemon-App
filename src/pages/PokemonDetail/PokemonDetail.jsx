@@ -1,45 +1,49 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import BasicIntro from './BasicIntro';
-import AdjacentLinks from './AdjacentLinks';
-import PageNavigation from './PageNavigation';
-import PokeDexEntry from './PokeDexEntry';
+import BasicIntro from './BasicIntro'
+import AdjacentLinks from './AdjacentLinks'
+import PageNavigation from './PageNavigation'
+import PokeDexEntry from './PokeDexEntry'
 import ImageTile from './ImageTile'
 import PokeDexData from './PokeDexData'
 import TrainingInfo from './TrainingInfo'
 import BaseStat from './BaseStat'
-import SpriteTable from './SpriteTable';
+import SpriteTable from './SpriteTable'
 import Locations from './Locations'
 import BreedingInfo from './BreedingInfo'
 import MovesLearned from './MovesLearned'
-import TypeChart from './TypeChart';
-import EvolutionChain from './EvolutionChain';
-import PokemonVarieties from './PokemonVarieties';
-import OtherLanguages from './OtherLanguages';
-import { FadeInAnimationContainer } from '../../components/AnimatedContainers';
-import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
-import fetchData from '../../utils/fetchData';
-import formatName from '../../utils/NameFormatting';
-
+import TypeChart from './TypeChart'
+import EvolutionChain from './EvolutionChain'
+import PokemonVarieties from './PokemonVarieties'
+import OtherLanguages from './OtherLanguages'
+import { FadeInAnimationContainer } from '../../components/AnimatedContainers'
+import {
+  extractPokemonInformation,
+  extractSpeciesInformation,
+} from '../../utils/extractInfo'
+import fetchData from '../../utils/fetchData'
+import formatName from '../../utils/NameFormatting'
 
 const PokemonDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams()
 
-  const transformPokemonData = data => {
+  const transformPokemonData = (data) => {
     return extractPokemonInformation(data)
   }
 
+  const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${id}/`
+
   const { data: pokemonData, isLoading: isLoadingPokemonData } = useQuery({
-    queryKey: ['pokemonData', id],
-    queryFn: () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/`),
+    queryKey: ['pokemon-url', pokemonUrl],
+    queryFn: () => fetchData(pokemonUrl),
     staleTime: Infinity,
     cacheTime: Infinity,
-    select: transformPokemonData
+    select: transformPokemonData,
   })
 
-  // Destructure the pokemoNData object and assign them to several variables.
+  // Destructure the pokemonData object and assign them to several variables.
   const {
     abilities,
     base_experience,
@@ -55,7 +59,7 @@ const PokemonDetail = () => {
     icon,
     stats,
     types,
-    weight
+    weight,
   } = pokemonData || {}
 
   // Setting the image source.
@@ -63,7 +67,7 @@ const PokemonDetail = () => {
   const idInfo = { id: pokemonId, name: pokemonName }
 
   // Get the species data
-  const transformSpeciesData = data => {
+  const transformSpeciesData = (data) => {
     return extractSpeciesInformation(data)
   }
 
@@ -72,7 +76,7 @@ const PokemonDetail = () => {
     queryFn: () => fetchData(speciesLink),
     staleTime: Infinity,
     cacheTime: Infinity,
-    select: transformSpeciesData
+    select: transformSpeciesData,
   })
 
   const {
@@ -92,7 +96,11 @@ const PokemonDetail = () => {
   } = speciesData || {}
 
   // Setting the title
-  document.title = pokemonName ? `${formatName(pokemonName)}: stats, moves, evolution and locations | Pokémon Database` : 'Loading...'
+  document.title = pokemonName
+    ? `${formatName(
+        pokemonName
+      )}: stats, moves, evolution and locations | Pokémon Database`
+    : 'Loading...'
 
   // Define the props to all the child components.
   const BasicInfoProps = {
@@ -100,7 +108,7 @@ const PokemonDetail = () => {
     name: pokemonName,
     types,
     genus,
-    pokedex_numbers
+    pokedex_numbers,
   }
 
   const PokeDexDataProps = {
@@ -108,7 +116,7 @@ const PokemonDetail = () => {
     abilities,
     height,
     nationalNumber,
-    weight
+    weight,
   }
 
   const TrainingInfoProps = {
@@ -116,29 +124,29 @@ const PokemonDetail = () => {
     base_happiness,
     base_experience,
     growth_rate,
-    stats
+    stats,
   }
 
   const BreedingInfoProps = {
     egg_groups,
     gender_rate,
-    hatch_counter
+    hatch_counter,
   }
 
   const BaseStatProps = {
-    stats
+    stats,
   }
 
   const TypeChartProps = {
     types,
-    name: pokemonName
+    name: pokemonName,
   }
 
   const PokeDexEntryProps = flavor_text_entries
 
   const SpriteTableProps = {
     pokemonName,
-    spriteCollection
+    spriteCollection,
   }
 
   const MovesLearnedProps = {
@@ -148,17 +156,17 @@ const PokemonDetail = () => {
 
   const LocationsProps = {
     id: pokemonId,
-    name: pokemonName
+    name: pokemonName,
   }
 
   const PokemonVarietiesProps = {
     pokemonName,
-    varieties
+    varieties,
   }
 
   const OtherLanguagesProps = {
     names,
-    genera
+    genera,
   }
 
   if (isLoadingPokemonData || isLoadingSpeciesData) {
@@ -167,7 +175,7 @@ const PokemonDetail = () => {
 
   return (
     <motion.div
-      className='flex flex-col'
+      className="flex flex-col"
       exit={{ y: '100%', scale: 0.8, opacity: 0, transitionDuration: '0.75s' }}
     >
       <div className="flex justify-center text-4xl font-bold">
@@ -176,7 +184,7 @@ const PokemonDetail = () => {
         </FadeInAnimationContainer>
       </div>
 
-      <FadeInAnimationContainer className='my-4'>
+      <FadeInAnimationContainer className="my-4">
         <AdjacentLinks id={pokemonId} />
       </FadeInAnimationContainer>
 
@@ -188,14 +196,14 @@ const PokemonDetail = () => {
         <BasicIntro pokemonData={BasicInfoProps} />
       </FadeInAnimationContainer>
 
-      <div className='grid grid-cols-pokemon-detail-grid gap-x-8 gap-y-6'>
-        <FadeInAnimationContainer className='col-span-2 md:col-span-1'>
+      <div className="grid grid-cols-pokemon-detail-grid gap-x-8 gap-y-6">
+        <FadeInAnimationContainer className="col-span-2 md:col-span-1">
           <ImageTile imageSources={imageSourceNew} />
         </FadeInAnimationContainer>
-        <FadeInAnimationContainer className='col-span-2 md:col-span-1'>
+        <FadeInAnimationContainer className="col-span-2 md:col-span-1">
           <PokeDexData pokemonData={PokeDexDataProps} />
         </FadeInAnimationContainer>
-        <div className='flex flex-col gap-y-6 w-full col-span-2 mdlg:col-span-1'>
+        <div className="flex flex-col gap-y-6 w-full col-span-2 mdlg:col-span-1">
           <FadeInAnimationContainer>
             <TrainingInfo data={TrainingInfoProps} />
           </FadeInAnimationContainer>
@@ -205,63 +213,62 @@ const PokemonDetail = () => {
         </div>
       </div>
 
-      <div className='grid grid-cols-pokemon-detail-grid gap-x-8 gap-y-6'>
-        <FadeInAnimationContainer className='col-span-2'>
+      <div className="grid grid-cols-pokemon-detail-grid gap-x-8 gap-y-6">
+        <FadeInAnimationContainer className="col-span-2">
           <BaseStat data={BaseStatProps} />
         </FadeInAnimationContainer>
-        <FadeInAnimationContainer className='col-span-2 mdlg:col-span-1'>
+        <FadeInAnimationContainer className="col-span-2 mdlg:col-span-1">
           <TypeChart data={TypeChartProps} />
         </FadeInAnimationContainer>
       </div>
 
-      <section id='evolution-chain'>
+      <section id="evolution-chain">
         <FadeInAnimationContainer>
           <EvolutionChain url={evolutionChainUrl} />
         </FadeInAnimationContainer>
       </section>
 
-      <section id='pokedex-entries'>
+      <section id="pokedex-entries">
         <FadeInAnimationContainer>
           <PokeDexEntry data={PokeDexEntryProps} />
         </FadeInAnimationContainer>
       </section>
 
-      <section className='py-4 gap-y-5' id='moves-learned'>
+      <section className="py-4 gap-y-5" id="moves-learned">
         <FadeInAnimationContainer>
           <MovesLearned data={MovesLearnedProps} />
         </FadeInAnimationContainer>
       </section>
 
-      <section id='sprite-table'>
+      <section id="sprite-table">
         <FadeInAnimationContainer>
           <SpriteTable data={SpriteTableProps} />
         </FadeInAnimationContainer>
       </section>
 
-      <section id='locations'>
+      <section id="locations">
         <FadeInAnimationContainer>
           <Locations props={LocationsProps} />
         </FadeInAnimationContainer>
       </section>
 
-      <section id='languages'>
+      <section id="languages">
         <FadeInAnimationContainer>
           <OtherLanguages data={OtherLanguagesProps} />
         </FadeInAnimationContainer>
       </section>
 
-      <section id='varieties'>
+      <section id="varieties">
         <FadeInAnimationContainer>
           <PokemonVarieties data={PokemonVarietiesProps} />
         </FadeInAnimationContainer>
       </section>
 
-      <FadeInAnimationContainer className='my-4'>
+      <FadeInAnimationContainer className="my-4">
         <AdjacentLinks id={pokemonId} />
       </FadeInAnimationContainer>
-
     </motion.div>
   )
-};
+}
 
-export default PokemonDetail;
+export default PokemonDetail
