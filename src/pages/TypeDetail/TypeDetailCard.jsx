@@ -5,13 +5,15 @@ import OneLineSkeleton from '../../components/OneLineSkeleton'
 const TypeDetailCard = ({ moveList, pokemonList, typeName }) => {
   const moveCount = moveList?.length
 
+  const pokemonCount = pokemonList?.length
+
   // Now include only the Pokemon + their forms up to generation 7 only.
-  const pokemonCount = pokemonList
-    ?.map((url) => {
-      const idNumber = url.match(/\/(\d+)\/$/)[1]
-      return parseInt(idNumber)
-    })
-    ?.filter((id) => id <= 10157)?.length
+  // const pokemonCount = pokemonList
+  //   ?.map((url) => {
+  //     const idNumber = url.match(/\/(\d+)\/$/)[1]
+  //     return parseInt(idNumber)
+  //   })
+  //   ?.filter((id) => id <= 10157)?.length
 
   return (
     <section className="flex flex-row flex-wrap justify-center mt-6 mb-3 gap-x-20 gap-y-10">

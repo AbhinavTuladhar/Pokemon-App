@@ -236,6 +236,20 @@ export const extractTypeInformation = (data) => {
     no_damage_to: noDamageTo,
   } = damageRelations
 
+  // Use the actual pokemon name in the url instead of their id.
+  // Also filter out gen 7+ forms.
+  const pokemonUrls = pokemonList
+    .map((pokemon) => pokemon.pokemon)
+    .filter((pokemon) => {
+      const idNumber = pokemon.url.match(/\/(\d+)\/$/)[1]
+      return (idNumber >= 1 && idNumber <= 807) || (idNumber >= 10_000 && idNumber <= 10157)
+    })
+    .map((pokemon) => {
+      const { name, url } = pokemon
+      const replacedUrl = url.replace(/\/pokemon\/\d+\//, `/pokemon/${name}/`)
+      return replacedUrl
+    })
+
   const extractName = (arr) => arr.map((type) => type.name)
 
   return {
@@ -246,7 +260,8 @@ export const extractTypeInformation = (data) => {
     noDamageFrom: extractName(noDamageFrom),
     noDamageTo: extractName(noDamageTo),
     moveList: moveList,
-    pokemonList: pokemonList.map((pokemon) => pokemon.pokemon.url),
+    // pokemonList: pokemonList.map((pokemon) => pokemon.pokemon.url),
+    pokemonList: pokemonUrls,
     name,
   }
 }
