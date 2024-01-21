@@ -17,78 +17,80 @@ const EggGroupDetail = () => {
     queryFn: () => fetchData(`https://pokeapi.co/api/v2/egg-group/${eggGroupid}`),
     staleTime: Infinity,
     cacheTime: Infinity,
-    select: fetchedData => {
+    select: (fetchedData) => {
       const { name: eggGroupName, pokemon_species: pokemonSpecies } = fetchedData
       return { eggGroupName, pokemonSpecies }
-    }
+    },
   })
 
   // Geting the species urls
   // const speciesUrls = eggGroupData?.map(obj => obj.pokemonSpecies.url)
-  const speciesUrls = eggGroupData?.pokemonSpecies.map(species => species.url)
+  const speciesUrls = eggGroupData?.pokemonSpecies.map((species) => species.url)
 
   // Getting the pokemon Urls
-  const pokemonUrls = speciesUrls?.map(url => url.replace('pokemon-species', 'pokemon'))
+  const pokemonUrls = speciesUrls?.map((url) => url.replace('pokemon-species', 'pokemon'))
 
   // We perform GET requests on all the Pokemon and species urls. Filtering out gen 8+ stuff
   const { data: pokemonData, isLoading: isLoadingPokemonData } = useQueries({
-    queries: pokemonUrls ?
-      pokemonUrls.map(url => {
-        return {
-          queryKey: ['pokemon-url', url],
-          queryFn: () => fetchData(url),
-          staleTime: Infinity,
-          cacheTime: Infinity,
-          select: data => {
-            const pokemonInformation = extractPokemonInformation(data)
-            const { id, nationalNumber, icon, name, types } = pokemonInformation
-            return { id, nationalNumber, icon, name, types }
+    queries: pokemonUrls
+      ? pokemonUrls.map((url) => {
+          return {
+            queryKey: ['pokemon-url', url],
+            queryFn: () => fetchData(url),
+            staleTime: Infinity,
+            cacheTime: Infinity,
+            select: (data) => {
+              const pokemonInformation = extractPokemonInformation(data)
+              const { id, nationalNumber, icon, name, types } = pokemonInformation
+              return { id, nationalNumber, icon, name, types }
+            },
           }
-        }
-      })
+        })
       : [],
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading)
+        data: results.map((result) => result.data),
+        isLoading: results.some((result) => result.isLoading),
       }
-    }
+    },
   })
 
   const { data: speciesData, isLoading: isLoadingSpeciesData } = useQueries({
-    queries: speciesUrls ?
-      speciesUrls.map(url => {
-        return {
-          queryKey: ['species-url', url],
-          queryFn: () => fetchData(url),
-          staleTime: Infinity,
-          cacheTime: Infinity,
-          select: data => {
-            const speciesInformation = extractSpeciesInformation(data)
-            const { id, egg_groups } = speciesInformation
-            // Find the other egg group
-            // For eg if the current page is of the monster egg group
-            // and this Pokemon has the 'Water1' egg group, it should get the 'Water1' egg group
-            // If there is only one egg group it should return undefined
-            const otherEggGroup = egg_groups.map(group => group.name).filter(group => group !== eggGroupid)[0]
-            return { id, otherEggGroup }
+    queries: speciesUrls
+      ? speciesUrls.map((url) => {
+          return {
+            queryKey: ['species-url', url],
+            queryFn: () => fetchData(url),
+            staleTime: Infinity,
+            cacheTime: Infinity,
+            select: (data) => {
+              const speciesInformation = extractSpeciesInformation(data)
+              const { id, egg_groups } = speciesInformation
+              // Find the other egg group
+              // For eg if the current page is of the monster egg group
+              // and this Pokemon has the 'Water1' egg group, it should get the 'Water1' egg group
+              // If there is only one egg group it should return undefined
+              const otherEggGroup = egg_groups.map((group) => group.name).filter((group) => group !== eggGroupid)[0]
+              return { id, otherEggGroup }
+            },
           }
-        }
-      })
+        })
       : [],
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading)
+        data: results.map((result) => result.data),
+        isLoading: results.some((result) => result.isLoading),
       }
-    }
+    },
   })
 
   // We now need to join the species and pokemon objects on the basis of their ids.
-  const finalData = pokemonData?.map(obj1 => {
-    const obj2 = speciesData?.find(obj2 => obj1?.id === obj2?.id)
-    return { ...obj1, ...obj2 }
-  }).filter(entry => (entry.id >= 1 && entry.id <= 807) || (entry.id >= 10001 && entry.id <= 10157))
+  const finalData = pokemonData
+    ?.map((obj1) => {
+      const obj2 = speciesData?.find((obj2) => obj1?.id === obj2?.id)
+      return { ...obj1, ...obj2 }
+    })
+    .filter((entry) => (entry.id >= 1 && entry.id <= 807) || (entry.id >= 10001 && entry.id <= 10157))
 
   document.title = `${formatName(eggGroupid)} egg group | Pokémon database`
 
@@ -99,16 +101,16 @@ const EggGroupDetail = () => {
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
-      <h1 className='my-5 text-3xl font-bold text-center'>
+      <h1 className="my-5 text-3xl font-bold text-center">
         <span> {formatName(eggGroupid)} </span>
-        <span className='text-gray-400'> (egg group) </span>
+        <span className="text-gray-400"> (egg group) </span>
       </h1>
-      <div className='flex flex-row flex-wrap gap-10'>
-        <FadeInAnimationContainer className='w-full lg:w-1/3'>
+      <div className="flex flex-row flex-wrap gap-10">
+        <FadeInAnimationContainer className="w-full lg:w-1/3">
           <GroupList />
         </FadeInAnimationContainer>
-        <div className='flex justify-center w-full lg:w-5/12'>
-          <FadeInAnimationContainer className='w-full'>
+        <div className="flex justify-center w-full lg:w-5/12">
+          <FadeInAnimationContainer className="w-full">
             <PokemonTable data={finalData} isLoading={isLoadingPokemonData || isLoadingSpeciesData} />
           </FadeInAnimationContainer>
         </div>

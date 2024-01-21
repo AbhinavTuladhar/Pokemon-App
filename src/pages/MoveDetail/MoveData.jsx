@@ -9,27 +9,15 @@ import moveSpecial from '../../images/move-special.png'
 import moveStatus from '../../images/move-status.png'
 
 // For damage class image.
-const returnMoveImage = damageClass => {
-  if (damageClass === 'physical')
-    return movePhysical
-  else if (damageClass === 'special')
-    return moveSpecial
-  else if (damageClass === 'status')
-    return moveStatus
-  else
-    return ''
+const returnMoveImage = (damageClass) => {
+  if (damageClass === 'physical') return movePhysical
+  else if (damageClass === 'special') return moveSpecial
+  else if (damageClass === 'status') return moveStatus
+  else return ''
 }
 
 const MoveData = ({ moveInfo }) => {
-  const {
-    moveType,
-    damageClass,
-    power,
-    accuracy,
-    PP,
-    generationIntroduced,
-    priority
-  } = moveInfo
+  const { moveType, damageClass, power, accuracy, PP, generationIntroduced, priority } = moveInfo
 
   const propsFlag = Object.keys(moveInfo).length > 0
 
@@ -37,17 +25,18 @@ const MoveData = ({ moveInfo }) => {
     { header: 'Type', value: <TypeCard typeName={moveType} /> },
     {
       header: 'Category',
-      value:
-        (<div className='flex flex-row items-center gap-x-4'>
-          <img src={returnMoveImage(damageClass)} className='h-[20px] w-[30px]' alt={damageClass} />
+      value: (
+        <div className="flex flex-row items-center gap-x-4">
+          <img src={returnMoveImage(damageClass)} className="h-[20px] w-[30px]" alt={damageClass} />
           <> {formatName(damageClass)} </>
-        </div>)
+        </div>
+      ),
     },
-    { header: 'Power', value: power, },
-    { header: 'Accuracy', value: accuracy, },
+    { header: 'Power', value: power },
+    { header: 'Accuracy', value: accuracy },
     { header: 'Priority', value: priority },
-    { header: 'PP', value: <> {`${PP} (max. ${Math.floor(PP * 1.6)})`} </>, },
-    { header: 'Introduced', value: generationIntroduced }
+    { header: 'PP', value: <> {`${PP} (max. ${Math.floor(PP * 1.6)})`} </> },
+    { header: 'Introduced', value: generationIntroduced },
   ]
 
   const tableRows = rowData.map((row, rowIndex) => {
@@ -58,7 +47,7 @@ const MoveData = ({ moveInfo }) => {
     // Add a positive sign to priority if positive.
     const rowValue = row.header === 'Priority' && parseInt(row.value) > 0 ? `+${row.value}` : row.value
     return (
-      <div className='table-row h-12' key={rowIndex}>
+      <div className="table-row h-12" key={rowIndex}>
         <div key={row.header} className="table-cell align-middle text-right border-t py-2 pr-8 border-slate-200">
           {row.header}
         </div>
@@ -72,13 +61,7 @@ const MoveData = ({ moveInfo }) => {
   return (
     <>
       <SectionTitle text={'Move data'} />
-      <div className='w-full'>
-        {propsFlag ? (
-          <TableContainer child={tableRows} />
-        ) : (
-          <TabularSkeleton />
-        )}
-      </div>
+      <div className="w-full">{propsFlag ? <TableContainer child={tableRows} /> : <TabularSkeleton />}</div>
     </>
   )
 }

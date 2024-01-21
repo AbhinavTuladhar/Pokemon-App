@@ -8,8 +8,8 @@ import TableContainer from '../../components/TableContainer'
 
 const PokemonTable = ({ data, isLoading }) => {
   const headerNames = ['#', 'Name', 'Type', 'Other group']
-  const tableHeaders = headerNames.map(header => (
-    <div className='h-12 bg-[#1a1a1a] table-cell px-4 py-2 border-t font-bold border-slate-200 align-middle'>
+  const tableHeaders = headerNames.map((header) => (
+    <div className="h-12 bg-[#1a1a1a] table-cell px-4 py-2 border-t font-bold border-slate-200 align-middle">
       {header}
     </div>
   ))
@@ -21,71 +21,74 @@ const PokemonTable = ({ data, isLoading }) => {
     const cellData = [
       {
         value: (
-          <div className='flex flex-row items-center gap-x-2'>
-            <span className='align-middle'> {properId} </span>
-            <img src={icon} alt={name} className='w-[64px]' />
+          <div className="flex flex-row items-center gap-x-2">
+            <span className="align-middle"> {properId} </span>
+            <img src={icon} alt={name} className="w-[64px]" />
           </div>
-        )
-      }, {
+        ),
+      },
+      {
         value: (
-          <NavLink to={`/pokemon/${name}`} className='font-bold hoverable-link'> {formatName(name)} </NavLink>
-        )
-      }, {
+          <NavLink to={`/pokemon/${name}`} className="font-bold hoverable-link">
+            {' '}
+            {formatName(name)}{' '}
+          </NavLink>
+        ),
+      },
+      {
         value: (
-          <div className='flex flex-col gap-y-2'>
-            {types.map((type, index) => <TypeCard typeName={type.type.name} key={index} />)}
+          <div className="flex flex-col gap-y-2">
+            {types.map((type, index) => (
+              <TypeCard typeName={type.type.name} key={index} />
+            ))}
           </div>
-        )
+        ),
       },
       {
         value: (
           <span>
             {otherEggGroup && (
-              <NavLink to={`/egg-group/${otherEggGroup}`} className='font-bold hoverable-link'>
+              <NavLink to={`/egg-group/${otherEggGroup}`} className="font-bold hoverable-link">
                 {formatName(otherEggGroup)}
               </NavLink>
             )}
           </span>
-        )
-      }
+        ),
+      },
     ]
 
     const tableCells = cellData.map((cell, cellIndex) => (
-      <div className='min-w-[5rem] table-cell h-12 px-4 py-2 mx-4 align-middle border-t border-slate-200' key={cellIndex}>
+      <div
+        className="min-w-[5rem] table-cell h-12 px-4 py-2 mx-4 align-middle border-t border-slate-200"
+        key={cellIndex}
+      >
         {cell.value}
       </div>
     ))
 
     return (
-      <div className='table-row' key={rowIndex}>
+      <div className="table-row" key={rowIndex}>
         {tableCells}
       </div>
     )
-
   })
 
   const tableData = (
     <>
-      <div className='table-row'>
-        {tableHeaders}
-      </div>
+      <div className="table-row">{tableHeaders}</div>
       {tableRows}
     </>
   )
 
   return (
     <motion.div
-      className='self-start'
+      className="self-start"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
-      {!isLoading ? (
-        <TableContainer child={tableData} />
-      ) : (
-        <MoveListingSkeleton rowCount={10} />
-      )}
+      {!isLoading ? <TableContainer child={tableData} /> : <MoveListingSkeleton rowCount={10} />}
     </motion.div>
   )
 }

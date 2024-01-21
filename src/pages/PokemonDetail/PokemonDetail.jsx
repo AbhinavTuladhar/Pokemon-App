@@ -19,10 +19,7 @@ import EvolutionChain from './EvolutionChain'
 import PokemonVarieties from './PokemonVarieties'
 import OtherLanguages from './OtherLanguages'
 import { FadeInAnimationContainer } from '../../components/AnimatedContainers'
-import {
-  extractPokemonInformation,
-  extractSpeciesInformation,
-} from '../../utils/extractInfo'
+import { extractPokemonInformation, extractSpeciesInformation } from '../../utils/extractInfo'
 import fetchData from '../../utils/fetchData'
 import formatName from '../../utils/NameFormatting'
 
@@ -97,9 +94,7 @@ const PokemonDetail = () => {
 
   // Setting the title
   document.title = pokemonName
-    ? `${formatName(
-        pokemonName
-      )}: stats, moves, evolution and locations | Pokémon Database`
+    ? `${formatName(pokemonName)}: stats, moves, evolution and locations | Pokémon Database`
     : 'Loading...'
 
   // Define the props to all the child components.
@@ -174,14 +169,9 @@ const PokemonDetail = () => {
   }
 
   return (
-    <motion.div
-      className="flex flex-col"
-      exit={{ y: '100%', scale: 0.8, opacity: 0, transitionDuration: '0.75s' }}
-    >
+    <motion.div className="flex flex-col" exit={{ y: '100%', scale: 0.8, opacity: 0, transitionDuration: '0.75s' }}>
       <div className="flex justify-center text-4xl font-bold">
-        <FadeInAnimationContainer>
-          {formatName(idInfo.name)}
-        </FadeInAnimationContainer>
+        <FadeInAnimationContainer>{formatName(idInfo.name)}</FadeInAnimationContainer>
       </div>
 
       <FadeInAnimationContainer className="my-4">

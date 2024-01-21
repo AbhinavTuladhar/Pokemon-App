@@ -13,12 +13,28 @@ import formatName from '../utils/NameFormatting'
 
 const TypeChartFull = () => {
   const typeListing = [
-    'normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground',
-    'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'
+    'normal',
+    'fire',
+    'water',
+    'electric',
+    'grass',
+    'ice',
+    'fighting',
+    'poison',
+    'ground',
+    'flying',
+    'psychic',
+    'bug',
+    'rock',
+    'ghost',
+    'dragon',
+    'dark',
+    'steel',
+    'fairy',
   ]
-  const typeData = typeListing.map(type => ({
+  const typeData = typeListing.map((type) => ({
     name: type,
-    url: `https://pokeapi.co/api/v2/type/${type}`
+    url: `https://pokeapi.co/api/v2/type/${type}`,
   }))
 
   /*
@@ -27,41 +43,42 @@ const TypeChartFull = () => {
   type name
   Step 3: Properly format the type chart object.
   */
-  const transformData = type => {
+  const transformData = (type) => {
     const extractedInfo = extractTypeInformation(type)
     const { name: typeName } = extractedInfo
     const typeChart = calculateTypeEffectiveness([extractedInfo])
     const typeDefenceInfo = Object.entries(typeChart).map(([typeName, multiplier]) => ({
-      typeName, multiplier
+      typeName,
+      multiplier,
     }))
     return { typeName, typeDefenceInfo }
   }
 
   const { data: extractedInformation, isLoading } = useQueries({
-    queries: typeData.map(type => {
+    queries: typeData.map((type) => {
       return {
         queryKey: ['type', type.url],
         queryFn: () => fetchData(type.url),
         staleTime: Infinity,
         cacheTime: Infinity,
-        select: (data) => transformData(data)
+        select: (data) => transformData(data),
       }
     }),
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading)
+        data: results.map((result) => result.data),
+        isLoading: results.some((result) => result.isLoading),
       }
-    }
+    },
   })
 
   if (isLoading) {
-    return <Skeleton width='90%' height='20rem' containerClassName='flex-1 w-full flex justify-end' />
+    return <Skeleton width="90%" height="20rem" containerClassName="flex-1 w-full flex justify-end" />
   }
 
   // To show the defending and attacking types.
   const cornerDiv = (
-    <div className='flex flex-col items-center justify-center w-20 text-xs border rounded-md h-9 border-slate-700'>
+    <div className="flex flex-col items-center justify-center w-20 text-xs border rounded-md h-9 border-slate-700">
       <span> DEFENCE → </span>
       <span> ATTACK ↴ </span>
     </div>
@@ -72,12 +89,12 @@ const TypeChartFull = () => {
     if (index === 0) {
       return cornerDiv
     } else {
-      return <TypeCard typeName={type} className='h-9' />
+      return <TypeCard typeName={type} className="h-9" />
     }
   })
 
   const finalTypeCards = fullTypeCards.map((typeCard, index) => (
-    <div className='flex justify-center items-center my-[2px]' key={`card-${index}`}>
+    <div className="flex justify-center items-center my-[2px]" key={`card-${index}`}>
       {typeCard}
     </div>
   ))
@@ -109,7 +126,7 @@ const TypeChartFull = () => {
     })
 
     return (
-      <div className='flex flex-col' key={`table-cell-${index}`}>
+      <div className="flex flex-col" key={`table-cell-${index}`}>
         {tableCells}
       </div>
     )
@@ -122,8 +139,12 @@ const TypeChartFull = () => {
       const { typeName: attackingTypeName, multiplier } = defendingType
       const effectString = multiplierToString(multiplier)
       return (
-        <Tooltip anchorSelect={`#${attackingTypeName}-${defendingTypeName}`} key={`tooltip-${innerIndex}`} place='bottom'>
-          <span className='text-xs'>
+        <Tooltip
+          anchorSelect={`#${attackingTypeName}-${defendingTypeName}`}
+          key={`tooltip-${innerIndex}`}
+          place="bottom"
+        >
+          <span className="text-xs">
             {`${formatName(attackingTypeName)} → ${formatName(defendingTypeName)} = ${effectString}`}
           </span>
         </Tooltip>
@@ -133,20 +154,14 @@ const TypeChartFull = () => {
 
   return (
     <>
-      <div className='overflow-auto'>
-        <div className='inline-flex'>
-          <div className='flex flex-col'>
-            {finalTypeCards}
-          </div>
-          <div className='flex flex-row gap py-[2px] justify-center'>
-            {tableColumns}
-          </div>
+      <div className="overflow-auto">
+        <div className="inline-flex">
+          <div className="flex flex-col">{finalTypeCards}</div>
+          <div className="flex flex-row gap py-[2px] justify-center">{tableColumns}</div>
         </div>
       </div>
 
-      <>
-        {tooltips}
-      </>
+      <>{tooltips}</>
     </>
   )
 }

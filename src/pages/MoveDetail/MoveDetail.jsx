@@ -55,26 +55,17 @@ const MoveDetail = () => {
         {moveInfo.moveName ? (
           `${formatName(moveInfo.moveName)} (move)`
         ) : (
-          <Skeleton
-            width="100%"
-            height="2.75rem"
-            containerClassName="flex-1 w-full"
-          />
+          <Skeleton width="100%" height="2.75rem" containerClassName="flex-1 w-full" />
         )}
       </div>
 
       <div className="flex flex-row flex-wrap gap-x-4 lg:gap-x-8 mt-4">
         <div className="flex flex-col grow-0 w-full md:w-auto md:grow-[2] md:basis-0">
           <MoveData moveInfo={moveInfo} />
-          {moveInfo?.machines?.length > 0 && (
-            <MachineRecord machineList={moveInfo.machines} />
-          )}
+          {moveInfo?.machines?.length > 0 && <MachineRecord machineList={moveInfo.machines} />}
         </div>
         <div className="grow-0 w-full md:w-auto md:grow-[6] md:basis-0 basis-full">
-          <MoveEffect
-            entry={moveInfo.longEntry}
-            chance={moveInfo.effect_chance}
-          />
+          <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
         </div>
       </div>
 

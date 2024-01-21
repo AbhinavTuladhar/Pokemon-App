@@ -14,7 +14,7 @@ import multiplierToString from '../../utils/multiplierToString'
 const TypeDefenceRow = ({ typeDefenceInfo, extraClassName }) => (
   <div className={`flex flex-row justify-center overflow-x-auto overflow-y-hidden mx-auto sm:mx-0 ${extraClassName}`}>
     {typeDefenceInfo.map((row, rowIndex) => (
-      <div className='flex flex-col text-center w-9' key={rowIndex}>
+      <div className="flex flex-col text-center w-9" key={rowIndex}>
         <MiniTypeCard typeName={row.type} />
         <div id={row.type}>
           <TypeMultiplierBox multiplier={row.multiplier} />
@@ -26,31 +26,31 @@ const TypeDefenceRow = ({ typeDefenceInfo, extraClassName }) => (
 
 const TypeChart = ({ data }) => {
   const { types, name } = data
-  const typeUrls = types.map(type => type.type.url)
-  const typeNames = types.map(type => formatName(type.type.name))
+  const typeUrls = types.map((type) => type.type.url)
+  const typeNames = types.map((type) => formatName(type.type.name))
   const typeNamesString = typeNames.join('/')
 
-  const transformData = data => {
+  const transformData = (data) => {
     const { doubleDamageFrom, halfDamageFrom, noDamageFrom } = extractTypeInformation(data)
     return { doubleDamageFrom, halfDamageFrom, noDamageFrom }
   }
 
   const { data: typeData, isLoading } = useQueries({
-    queries: typeUrls.map(url => {
+    queries: typeUrls.map((url) => {
       return {
         queryKey: ['type', url],
         queryFn: () => fetchData(url),
         staleTime: Infinity,
         cacheTime: Infinity,
-        select: (data) => transformData(data)
+        select: (data) => transformData(data),
       }
     }),
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading)
+        data: results.map((result) => result.data),
+        isLoading: results.some((result) => result.isLoading),
       }
-    }
+    },
   })
 
   if (isLoading) return <OneLineSkeleton />
@@ -65,10 +65,8 @@ const TypeChart = ({ data }) => {
     const { type, multiplier } = obj
     const effectivenessString = multiplierToString(multiplier)
     return (
-      <Tooltip anchorSelect={`#${type}`} place='bottom' key={index}>
-        <span className='text-xs'>
-          {`${formatName(type)} → ${typeNamesString} = ${effectivenessString}`}
-        </span>
+      <Tooltip anchorSelect={`#${type}`} place="bottom" key={index}>
+        <span className="text-xs">{`${formatName(type)} → ${typeNamesString} = ${effectivenessString}`}</span>
       </Tooltip>
     )
   })
@@ -79,18 +77,15 @@ const TypeChart = ({ data }) => {
   // Break down the 18 types into two rows, with nine types each.
   return (
     <section>
-      <SectionTitle text='Type Defenses' />
+      <SectionTitle text="Type Defenses" />
       <span> {`The effectiveness of each type on ${formatName(name)}: `} </span>
 
-      <div className='flex flex-col justify-center md:flex-row mdlg:flex-col sm:flex-row overflow-x-auto'>
+      <div className="flex flex-col justify-center md:flex-row mdlg:flex-col sm:flex-row overflow-x-auto">
         <TypeDefenceRow typeDefenceInfo={typeDefenseInfo.slice(0, 9)} extraClassName={firstClassName} />
         <TypeDefenceRow typeDefenceInfo={typeDefenseInfo.slice(9)} extraClassName={secondClassName} />
       </div>
 
-      <>
-        {toolTipData}
-      </>
-
+      <>{toolTipData}</>
     </section>
   )
 }

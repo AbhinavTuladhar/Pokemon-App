@@ -29,20 +29,21 @@ const AbilityListing = () => {
   }
 
   const { data: abilityData, isFullyLoaded } = useQueries({
-    queries: urlList.map(url => {
+    queries: urlList.map((url) => {
       return {
         queryKey: ['ability', url],
         queryFn: () => fetchData(url),
-        staleTime: Infinity, cacheTime: Infinity
+        staleTime: Infinity,
+        cacheTime: Infinity,
       }
     }),
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results?.map(result => result?.data),
-        isLoading: results.some(result => result.isLoading),
-        isFullyLoaded: results.every(result => result.data !== undefined)
+        data: results?.map((result) => result?.data),
+        isLoading: results.some((result) => result.isLoading),
+        isFullyLoaded: results.every((result) => result.data !== undefined),
       }
-    }
+    },
   })
 
   // Extract the information and sort in alphabetical order.
@@ -51,27 +52,29 @@ const AbilityListing = () => {
       return
     }
     const extracted = abilityData
-      ?.map(ability => extrctAbilityInformation(ability))
-      ?.sort((a, b) => a?.name > b?.name ? 1 : -1)
+      ?.map((ability) => extrctAbilityInformation(ability))
+      ?.sort((a, b) => (a?.name > b?.name ? 1 : -1))
     setAbilityInfo(extracted)
     setFilteredAbilityInfo(extracted)
   }, [abilityData])
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     // There are dashes in the JSON data.
     // Replace any spaces in the query with a dash.
     const searchQuery = event.target.value.toLowerCase().replace(' ', '-')
-    const filteredData = abilityInfo?.filter(ability => ability.name.includes(searchQuery))
+    const filteredData = abilityInfo?.filter((ability) => ability.name.includes(searchQuery))
     setFilteredAbilityInfo(filteredData)
   }
 
   // Headers that are used in the table.
-  const headers = [{
-    name: 'Name',
-    pokemonCount: 'Pokemon',
-    shortEntry: 'Description',
-    generationIntroduced: 'Gen.',
-  }]
+  const headers = [
+    {
+      name: 'Name',
+      pokemonCount: 'Pokemon',
+      shortEntry: 'Description',
+      generationIntroduced: 'Gen.',
+    },
+  ]
 
   const tableRows = [...headers, ...filteredAbilityInfo]?.map((row, index) => {
     const { name, pokemonCount, shortEntry, generationIntroduced } = row || {}
@@ -91,24 +94,27 @@ const AbilityListing = () => {
     const cellData = [
       {
         key: 'Name',
-        value: (<NavLink to={abilityLink}> {formatName(name)} </NavLink>),
-        cellStyle: index !== 0 ? 'font-bold hoverable-link whitespace-nowrap' : ''
+        value: <NavLink to={abilityLink}> {formatName(name)} </NavLink>,
+        cellStyle: index !== 0 ? 'font-bold hoverable-link whitespace-nowrap' : '',
       },
       { key: 'Pokemon', value: pokemonCount, cellStyle: index !== 0 ? 'text-right' : '' },
       { key: 'Description', value: shortEntry, cellStyle: 'min-w-[32rem]' },
       {
         key: 'Generation',
-        value: index === 0 ? generationIntroduced : generationIntroduced?.slice(-1)
+        value: index === 0 ? generationIntroduced : generationIntroduced?.slice(-1),
       },
     ]
     const tableCells = cellData.map((cell, cellIndex) => (
-      <div className={`${headerStyle} ${bgColour} ${cell?.cellStyle} table-cell border-gray-500 border-t h-12 align-middle py-2 px-4`} key={cellIndex}>
+      <div
+        className={`${headerStyle} ${bgColour} ${cell?.cellStyle} table-cell border-gray-500 border-t h-12 align-middle py-2 px-4`}
+        key={cellIndex}
+      >
         {cell.value}
       </div>
     ))
 
     return (
-      <div className='table-row' key={index}>
+      <div className="table-row" key={index}>
         {tableCells}
       </div>
     )
@@ -123,19 +129,18 @@ const AbilityListing = () => {
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
     >
-      <div className='flex items-center justify-center'>
+      <div className="flex items-center justify-center">
         <input
-          className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
-          placeholder='Search for an ability...'
+          className="text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]"
+          type="search"
+          placeholder="Search for an ability..."
           disabled={!isFullyLoaded}
           onChange={handleChange}
         />
       </div>
-      {// Checking if data is present
-        (!isFullyLoaded) ?
-          <MoveListingSkeleton rowCount={20} />
-          :
-          <TableContainer child={tableRows} />
+      {
+        // Checking if data is present
+        !isFullyLoaded ? <MoveListingSkeleton rowCount={20} /> : <TableContainer child={tableRows} />
       }
     </motion.div>
   )

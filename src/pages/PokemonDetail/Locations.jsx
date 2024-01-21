@@ -10,30 +10,30 @@ function formatFields(data) {
   // Omit the region if it occurs.
   const wordListNew = wordList.includes('route') ? wordList.slice(1) : wordList
   // Capitalise the first letter of each word.
-  const formattedWords = wordListNew.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  const formattedWords = wordListNew.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
   // Now join them with spaces.
   return formattedWords.join(' ')
 }
 
 // For extracting the information from the complex object.
 function extractInformation(data) {
-  const information = data?.flatMap(encounter => {
+  const information = data?.flatMap((encounter) => {
     const {
       location_area: { name: locationName },
-      version_details: encounterList
+      version_details: encounterList,
     } = encounter
-    const encounterData = encounterList?.map(version => {
+    const encounterData = encounterList?.map((version) => {
       const {
         version: { name: versionName },
       } = version
       return {
         locationName: formatFields(locationName).trim(),
         versionName: formatFields(versionName),
-      };
-    });
-    return encounterData;
-  });
-  return information;
+      }
+    })
+    return encounterData
+  })
+  return information
 }
 
 /*
@@ -44,16 +44,16 @@ Platinum - route 202
 Becomes
 Platinum - route 201, route 202
 */
-const groupByGame = data => {
+const groupByGame = (data) => {
   const info = data?.reduce((acc, current) => {
     const { versionName } = current
-    const index = acc.findIndex(item => item.versionName === versionName)
+    const index = acc.findIndex((item) => item.versionName === versionName)
     if (index !== -1) {
       acc[index].locationName += `, ${current.locationName}`
     } else {
       acc.push({
         versionName: current.versionName,
-        locationName: current.locationName
+        locationName: current.locationName,
       })
     }
     return acc
@@ -61,16 +61,16 @@ const groupByGame = data => {
   return info
 }
 
-const groupByLocation = data => {
+const groupByLocation = (data) => {
   const info = data?.reduce((acc, current) => {
     const { locationName } = current
-    const index = acc.findIndex(item => item.locationName === locationName)
+    const index = acc.findIndex((item) => item.locationName === locationName)
     if (index !== -1) {
       acc[index].versionName.push(current.versionName)
     } else {
       acc.push({
         versionName: [current.versionName],
-        locationName: current.locationName
+        locationName: current.locationName,
       })
     }
     return acc
@@ -81,7 +81,7 @@ const groupByLocation = data => {
 const Locations = ({ props }) => {
   const { id, name } = props
 
-  const transformData = locationData => {
+  const transformData = (locationData) => {
     const information = extractInformation(locationData)
     const groupedByGame = groupByGame(information)
     const groupedByLocation = groupByLocation(groupedByGame)
@@ -93,7 +93,7 @@ const Locations = ({ props }) => {
     queryFn: () => fetchData(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`),
     staleTime: Infinity,
     cacheTime: Infinity,
-    select: transformData
+    select: transformData,
   })
 
   // some formatting of the data
@@ -101,16 +101,22 @@ const Locations = ({ props }) => {
     const listItems = entry.versionName.map((version, index) => {
       return <li key={index}> {version} </li>
     })
-    const gameList = (<ul className='list-none list-inside'> {listItems} </ul>)
+    const gameList = <ul className="list-none list-inside"> {listItems} </ul>
     return { versionName: gameList, locationName: entry.locationName }
   })
 
   // Now render the final data.
   const finalTable = preFinalTable?.map((row, rowIndex) => {
     return (
-      <div className='table-row py-2 border-gray-200 border-t px-2 mx-2' key={rowIndex}>
-        <div className='table-cell w-2/12 border-gray-200 border-t py-2 mx-4 align-middle text-right'> {row.versionName} </div>
-        <div className='table-cell border-gray-200 border-t py-2 pl-4 align-middle first-line:mx-4'> {row.locationName} </div>
+      <div className="table-row py-2 border-gray-200 border-t px-2 mx-2" key={rowIndex}>
+        <div className="table-cell w-2/12 border-gray-200 border-t py-2 mx-4 align-middle text-right">
+          {' '}
+          {row.versionName}{' '}
+        </div>
+        <div className="table-cell border-gray-200 border-t py-2 pl-4 align-middle first-line:mx-4">
+          {' '}
+          {row.locationName}{' '}
+        </div>
       </div>
     )
   })
@@ -122,15 +128,12 @@ const Locations = ({ props }) => {
   // If there is no encounter data, then nothing is rendered.
   return (
     <>
-      {
-        finalTable.length > 0 && (
-          <>
-            <SectionTitle text={`Where to find ${formatName(name)}`} />
-            <div className='border-gray-200 border-b table w-full'>
-              {finalTable}
-            </div>
-          </>
-        )}
+      {finalTable.length > 0 && (
+        <>
+          <SectionTitle text={`Where to find ${formatName(name)}`} />
+          <div className="border-gray-200 border-b table w-full">{finalTable}</div>
+        </>
+      )}
     </>
   )
 }

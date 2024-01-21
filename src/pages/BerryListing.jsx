@@ -10,16 +10,14 @@ import { motion } from 'framer-motion'
 import { Tooltip } from 'react-tooltip'
 
 const TableRow = ({ children, extraClassName }) => {
-  return (
-    <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>
-      {children}
-    </div>
-  )
+  return <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
 }
 
 const TableCell = ({ children, extraClassName }) => {
   return (
-    <div className={`table-cell p-1 align-middle border border-gray-200 ${extraClassName} whitespace-nowrap lg:whitespace-normal lg:max-w-lg leading-6`}>
+    <div
+      className={`table-cell p-1 align-middle border border-gray-200 ${extraClassName} whitespace-nowrap lg:whitespace-normal lg:max-w-lg leading-6`}
+    >
       {children}
     </div>
   )
@@ -31,59 +29,58 @@ const BerryListing = () => {
     queryFn: () => fetchData('https://pokeapi.co/api/v2/berry?limit=64'),
     staleTime: Infinity,
     cacheTime: Infinity,
-    select: data => data.results
+    select: (data) => data.results,
   })
 
   const { data: berryData, isFullyLoaded: isFullyLoadedBerryData } = useQueries({
     queries: berryList
       ? berryList.map((berry) => {
-        return {
-          queryKey: ['berry', berry.url],
-          queryFn: () => fetchData(berry.url),
-          staleTime: Infinity,
-          cacheTime: Infinity,
-          select: extractBerryInformation
-        }
-      })
+          return {
+            queryKey: ['berry', berry.url],
+            queryFn: () => fetchData(berry.url),
+            staleTime: Infinity,
+            cacheTime: Infinity,
+            select: extractBerryInformation,
+          }
+        })
       : [],
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results?.map(result => result?.data),
-        isLoading: results.some(result => result.isLoading),
-        isFullyLoaded: results.every(result => result.data !== undefined)
+        data: results?.map((result) => result?.data),
+        isLoading: results.some((result) => result.isLoading),
+        isFullyLoaded: results.every((result) => result.data !== undefined),
       }
-    }
+    },
   })
 
-  const berryUrls = berryData?.map(berry => berry?.url)
+  const berryUrls = berryData?.map((berry) => berry?.url)
 
   const { data: itemData, isFullyLoaded: isFullyLoadedItemData } = useQueries({
     queries: berryUrls
       ? berryUrls.map((url) => {
-        return {
-          queryKey: ['berry-item', url],
-          queryFn: () => fetchData(url),
-          staleTime: Infinity,
-          cacheTime: Infinity,
-          select: extractItemInformation,
-          enabled: !!isFullyLoadedBerryData
-        }
-      })
+          return {
+            queryKey: ['berry-item', url],
+            queryFn: () => fetchData(url),
+            staleTime: Infinity,
+            cacheTime: Infinity,
+            select: extractItemInformation,
+            enabled: !!isFullyLoadedBerryData,
+          }
+        })
       : [],
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results?.map(result => result?.data),
-        isLoading: results.some(result => result.isLoading),
-        isFullyLoaded: results.every(result => result.data !== undefined)
+        data: results?.map((result) => result?.data),
+        isLoading: results.some((result) => result.isLoading),
+        isFullyLoaded: results.every((result) => result.data !== undefined),
       }
-    }
+    },
   })
 
-
   // Now combining the two corresponding objects in the berry and itme arrays
-  const berryInformation = berryData?.map(berry => {
-    const foundItem = itemData?.find(item => item?.name === berry?.itemName)
-    return { ...foundItem, ...berry, }
+  const berryInformation = berryData?.map((berry) => {
+    const foundItem = itemData?.find((item) => item?.name === berry?.itemName)
+    return { ...foundItem, ...berry }
   })
 
   const tableHeaderNames = [
@@ -98,7 +95,7 @@ const BerryListing = () => {
     { header: 'Max berries', id: 'maxHarvest' },
   ]
   const tableHeader = (
-    <TableRow extraClassName='font-bold bg-[#1a1a1a]'>
+    <TableRow extraClassName="font-bold bg-[#1a1a1a]">
       {tableHeaderNames.map((header, headerIndex) => {
         return (
           <TableCell key={headerIndex}>
@@ -114,27 +111,28 @@ const BerryListing = () => {
   const dataRows = berryInformation?.map((berry, berryIndex) => {
     const { generationIntroduced, id, sprite, name, shortEntry, firmness, size, maxHarvest, growthTime } = berry
     const cellData = [
-      { key: 'generation', value: generationIntroduced?.slice(generationIntroduced.length - 1), },
-      { key: 'id', value: id, },
+      { key: 'generation', value: generationIntroduced?.slice(generationIntroduced.length - 1) },
+      { key: 'id', value: id },
       {
-        key: 'sprite', value: (
-          <div className='flex justify-center'>
-            <img src={sprite} alt='name' className='h-12' />
+        key: 'sprite',
+        value: (
+          <div className="flex justify-center">
+            <img src={sprite} alt="name" className="h-12" />
           </div>
-        )
+        ),
       },
-      { key: 'name', value: formatName(name), },
-      { key: 'entry', value: shortEntry, },
-      { key: 'growthTime', value: growthTime, },
-      { key: 'firmness', value: formatName(firmness), },
-      { key: 'size', value: size / 10, },
-      { key: 'maxHarvest', value: maxHarvest, },
+      { key: 'name', value: formatName(name) },
+      { key: 'entry', value: shortEntry },
+      { key: 'growthTime', value: growthTime },
+      { key: 'firmness', value: formatName(firmness) },
+      { key: 'size', value: size / 10 },
+      { key: 'maxHarvest', value: maxHarvest },
     ]
 
     return (
       <TableRow key={berryIndex}>
         {cellData.map((cell, cellIndex) => (
-          <TableCell key={cellIndex} extraClassName='text-left'>
+          <TableCell key={cellIndex} extraClassName="text-left">
             {cell.value}
           </TableCell>
         ))}
@@ -161,18 +159,23 @@ const BerryListing = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='text-center'
+      className="text-center"
     >
-      <SectionTitle text='Berries' />
-      {(dataRows?.length === 0 || !isFullyLoadedBerryData || !isFullyLoadedItemData) ? (
+      <SectionTitle text="Berries" />
+      {dataRows?.length === 0 || !isFullyLoadedBerryData || !isFullyLoadedItemData ? (
         <MoveListingSkeleton rowCount={20} />
       ) : (
         <TableContainer child={tableData} />
       )}
       <>
         {tooltipData.map((tip, index) => (
-          <Tooltip anchorSelect={`#${tip.id}`} place='bottom' key={index} style={{ backgroundColor: 'black', padding: '0.5rem' }} >
-            <span className='text-xs'> {tip.text} </span>
+          <Tooltip
+            anchorSelect={`#${tip.id}`}
+            place="bottom"
+            key={index}
+            style={{ backgroundColor: 'black', padding: '0.5rem' }}
+          >
+            <span className="text-xs"> {tip.text} </span>
           </Tooltip>
         ))}
       </>

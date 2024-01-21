@@ -30,22 +30,15 @@ const firstRowLevelUp = {
 const separateMoves = ({ data, learnMethod }) => {
   const movesLearnt = data.map((move) => {
     const { version_group_details } = move // this is an array
-    const filteredMoves = version_group_details.filter(
-      (version) => version.move_learn_method.name === learnMethod
-    )
-    const replacedUrl = move.move.url.replace(
-      /\/move\/\d+\//,
-      `/move/${move.move.name}/`
-    )
+    const filteredMoves = version_group_details.filter((version) => version.move_learn_method.name === learnMethod)
+    const replacedUrl = move.move.url.replace(/\/move\/\d+\//, `/move/${move.move.name}/`)
     return {
       name: move.move.name,
       moveURL: replacedUrl,
       version_group_details: filteredMoves,
     }
   })
-  const finalFilteredMoves = movesLearnt.filter(
-    (move) => move.version_group_details.length > 0
-  )
+  const finalFilteredMoves = movesLearnt.filter((move) => move.version_group_details.length > 0)
   return finalFilteredMoves
 }
 
@@ -64,9 +57,7 @@ const MovesLearned = ({ data }) => {
   // Consider that the latest gen is 7.
   const SMData = moves?.flatMap((move) => {
     const { version_group_details } = move
-    const SMInfo = version_group_details.filter(
-      (version) => version.version_group.name === 'ultra-sun-ultra-moon'
-    )
+    const SMInfo = version_group_details.filter((version) => version.version_group.name === 'ultra-sun-ultra-moon')
     return {
       ...move,
       version_group_details: SMInfo,
@@ -74,9 +65,7 @@ const MovesLearned = ({ data }) => {
   })
 
   // Filter out the details in the version group details array is empty
-  const finalSMData = SMData.filter(
-    (move) => move.version_group_details.length > 0
-  )
+  const finalSMData = SMData.filter((move) => move.version_group_details.length > 0)
   const moveData = finalSMData
 
   // This is for separating out the moves learnt by level up, TM/HM and by breeding.
@@ -91,12 +80,8 @@ const MovesLearned = ({ data }) => {
   // Now sort the moves by some conditions.
   // sort level up moves by the level learnt.
   const sortedLevelMoves = levelUpMoves.sort((curr, next) => {
-    const levelLearntCurrent =
-      curr.version_group_details[curr.version_group_details.length - 1]
-        .level_learned_at
-    const levelLearntNext =
-      next.version_group_details[next.version_group_details.length - 1]
-        .level_learned_at
+    const levelLearntCurrent = curr.version_group_details[curr.version_group_details.length - 1].level_learned_at
+    const levelLearntNext = next.version_group_details[next.version_group_details.length - 1].level_learned_at
     if (levelLearntCurrent < levelLearntNext) return -1
     else if (levelLearntCurrent > levelLearntNext) return 1
     else return curr.name < next.name ? -1 : 1
@@ -106,9 +91,7 @@ const MovesLearned = ({ data }) => {
   const levelLearntData = levelUpMoves?.map((move) => {
     return {
       name: move.name,
-      levelLearntAt:
-        move.version_group_details[move.version_group_details.length - 1]
-          .level_learned_at,
+      levelLearntAt: move.version_group_details[move.version_group_details.length - 1].level_learned_at,
     }
   })
 
@@ -119,17 +102,10 @@ const MovesLearned = ({ data }) => {
     tutor: tutorMoves?.map((move) => move.moveURL),
   }
 
-  const { data: levelMoveDetails, isLoading: isLoadingLevel } = useMoveDetail(
-    moveUrls.level
-  )
-  const { data: tutorMoveDetails, isLoading: isLoadingTutor } = useMoveDetail(
-    moveUrls.tutor
-  )
-  const { data: machineMoveDetails, isLoading: isLoadingMachine } =
-    useMoveDetail(moveUrls.machine)
-  const { data: eggMoveDetails, isLoading: isLoadingEgg } = useMoveDetail(
-    moveUrls.egg
-  )
+  const { data: levelMoveDetails, isLoading: isLoadingLevel } = useMoveDetail(moveUrls.level)
+  const { data: tutorMoveDetails, isLoading: isLoadingTutor } = useMoveDetail(moveUrls.tutor)
+  const { data: machineMoveDetails, isLoading: isLoadingMachine } = useMoveDetail(moveUrls.machine)
+  const { data: eggMoveDetails, isLoading: isLoadingEgg } = useMoveDetail(moveUrls.egg)
 
   if (isLoadingLevel || isLoadingTutor || isLoadingMachine || isLoadingEgg) {
     return
@@ -157,15 +133,11 @@ const MovesLearned = ({ data }) => {
       // Check if it is the first column.
       const firstColStyle = move?.levelLearntAt ? '' : 'pl-4'
       // Different colour for the move name column
-      const moveNameStyle =
-        index === 0 ? '' : 'font-bold hoverable-link hover:cursor-pointer'
+      const moveNameStyle = index === 0 ? '' : 'font-bold hoverable-link hover:cursor-pointer'
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
-        <div
-          className={`${stringDecoration} ${rowBg} table-row border border-slate-400`}
-          key={index}
-        >
+        <div className={`${stringDecoration} ${rowBg} table-row border border-slate-400`} key={index}>
           {move.levelLearntAt && (
             <div className="pl-4 table-cell align-middle h-12 border-t border-slate-400 px-2">
               {move?.levelLearntAt}
@@ -175,10 +147,7 @@ const MovesLearned = ({ data }) => {
             className={`${firstColStyle} ${moveNameStyle} whitespace-nowrap table-cell align-middle h-12 border-t border-slate-400 px-2 `}
           >
             {index !== 0 ? (
-              <NavLink to={`/moves/${move?.moveName}`}>
-                {' '}
-                {formatName(move?.moveName)}{' '}
-              </NavLink>
+              <NavLink to={`/moves/${move?.moveName}`}> {formatName(move?.moveName)} </NavLink>
             ) : (
               formatName(move?.moveName)
             )}
@@ -190,22 +159,12 @@ const MovesLearned = ({ data }) => {
             {moveClassImage === '' ? (
               move.damageClass
             ) : (
-              <img
-                className="w-[30px] h-[20px]"
-                src={moveClassImage}
-                alt={move?.damageClass}
-              />
+              <img className="w-[30px] h-[20px]" src={moveClassImage} alt={move?.damageClass} />
             )}
           </div>
-          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">
-            {move?.PP}
-          </div>
-          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">
-            {move?.power}
-          </div>
-          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">
-            {move?.accuracy}
-          </div>
+          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">{move?.PP}</div>
+          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">{move?.power}</div>
+          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">{move?.accuracy}</div>
         </div>
       )
     })

@@ -7,10 +7,10 @@ const MiniTypeCard = ({ typeName }) => {
   const backgroundColourType = `bg-${typeMapping[typeName]}`
 
   return (
-    <div className={`${backgroundColourType} h-9 w-9 flex items-center justify-center text-xs px-1 rounded tracking-tight hover:brightness-125 duration-300`}>
-      <NavLink to={`/types/${typeName}`}>
-        {typeName.slice(0, 3).toUpperCase()}
-      </NavLink>
+    <div
+      className={`${backgroundColourType} h-9 w-9 flex items-center justify-center text-xs px-1 rounded tracking-tight hover:brightness-125 duration-300`}
+    >
+      <NavLink to={`/types/${typeName}`}>{typeName.slice(0, 3).toUpperCase()}</NavLink>
     </div>
   )
 }

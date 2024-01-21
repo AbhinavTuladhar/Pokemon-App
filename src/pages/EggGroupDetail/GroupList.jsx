@@ -9,18 +9,18 @@ const GroupList = () => {
   const { groupPokemonCount, isLoading } = useEggGroupList()
 
   return (
-    <section className='bg-[#19272d] px-4 flex flex-col pb-4 self-start rounded'>
+    <section className="bg-[#19272d] px-4 flex flex-col pb-4 self-start rounded">
       {isLoading ? (
         <MoveListingSkeleton rowCount={20} />
       ) : (
         <>
-          <SectionTitle text='Egg Groups' />
-          <ul className='list-disc list-inside'>
+          <SectionTitle text="Egg Groups" />
+          <ul className="list-disc list-inside">
             {groupPokemonCount?.map((group, index) => {
               const { eggGroup, pokemonCount } = group
               return (
                 <li key={index}>
-                  <NavLink to={`/egg-group/${eggGroup}`} className='hoverable-link font-normal'>
+                  <NavLink to={`/egg-group/${eggGroup}`} className="hoverable-link font-normal">
                     {formatName(eggGroup)}
                   </NavLink>
                   <span> {`(${pokemonCount})`}</span>

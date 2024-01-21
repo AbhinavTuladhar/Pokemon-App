@@ -1,12 +1,12 @@
-import { React } from "react"
+import { React } from 'react'
 // import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import "./index.css"
-import { SkeletonTheme } from "react-loading-skeleton"
-import NavBar from "./components/NavBar"
-import AnimatedRoutes from "./components/AnimatedRoutes"
-import ScrollToTop from "./components/ScrollToTop"
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import './index.css'
+import { SkeletonTheme } from 'react-loading-skeleton'
+import NavBar from './components/NavBar'
+import AnimatedRoutes from './components/AnimatedRoutes'
+import ScrollToTop from './components/ScrollToTop'
 
 const App = () => {
   const queryClient = new QueryClient()

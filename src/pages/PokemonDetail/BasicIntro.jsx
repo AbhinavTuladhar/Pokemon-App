@@ -12,8 +12,7 @@ const BasicIntro = ({ pokemonData }) => {
 
   // For grammatical purposes.
   const firstType = types[0].type.name
-  const article = firstType.startsWith('e') || firstType.startsWith('i')
-    ? 'an' : 'a'
+  const article = firstType.startsWith('e') || firstType.startsWith('i') ? 'an' : 'a'
 
   // Use the national number instead of the ID numbers to take into account the forms.
   // const generationIntroduced = generationMappingV2(pokedex_numbers?.slice(0, 1).entry_number)
@@ -31,18 +30,17 @@ const BasicIntro = ({ pokemonData }) => {
     )
   })
 
-
   return (
-    <div className='flex flex-row flex-wrap mt-8 mb-2'>
+    <div className="flex flex-row flex-wrap mt-8 mb-2">
       {genus ? (
         <span>
           {`${properName} is ${article}`} &nbsp;
           {typeDiv} &nbsp;
           {`type Pokemon introduced in Generation ${generationIntroduced}. It is also known as the '${genus}'.`}
         </span>
-      ) :
+      ) : (
         <OneLineSkeleton />
-      }
+      )}
     </div>
   )
 }

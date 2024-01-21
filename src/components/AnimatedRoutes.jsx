@@ -71,48 +71,22 @@ const AnimatedRoutes = () => {
         <Route path="/moves" element={<MoveListing />} key="moves" />
         <Route path="/ability" element={<AbilityListing />} key="ability" />
         <Route path="/location" element={<LocationList />} key="location" />
-        <Route
-          path="/egg-group"
-          element={<EggGroupListing />}
-          key="egg-group"
-        />
+        <Route path="/egg-group" element={<EggGroupListing />} key="egg-group" />
         <Route path="/berry" element={<BerryListing />} key="berry-list" />
         <Route path="/natures" element={<NatureListing />} key="nature-list" />
 
-        <Route
-          path="/egg-group/:id"
-          element={<EggGroupDetail />}
-          key="egg-group-id"
-        />
-        <Route
-          path="/pokemon/:id"
-          element={<PokemonDetail />}
-          key="pokemon-id"
-        />
+        <Route path="/egg-group/:id" element={<EggGroupDetail />} key="egg-group-id" />
+        <Route path="/pokemon/:id" element={<PokemonDetail />} key="pokemon-id" />
         <Route path="/types/:type" element={<TypeDetail />} key="type-id" />
         <Route path="/moves/:id" element={<MoveDetail />} key="move-id" />
-        <Route
-          path="/ability/:id"
-          element={<AbilityDetail />}
-          key="ability-id"
-        />
-        <Route
-          path="/location/:name"
-          element={<LocationDetail />}
-          key="location-id"
-        />
+        <Route path="/ability/:id" element={<AbilityDetail />} key="ability-id" />
+        <Route path="/location/:name" element={<LocationDetail />} key="location-id" />
 
         {generationRouteData.map((gen, index) => (
           <Route
             path={gen.path}
             key={index}
-            element={
-              <PokemonListing
-                offset={gen.offset}
-                limit={gen.limit}
-                key={gen.path}
-              />
-            }
+            element={<PokemonListing offset={gen.offset} limit={gen.limit} key={gen.path} />}
           />
         ))}
       </Routes>

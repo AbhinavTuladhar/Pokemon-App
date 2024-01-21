@@ -10,9 +10,9 @@ import Skeleton from 'react-loading-skeleton'
 // This is for sorting on the basis of route number, but doesn't seem to work
 // eslint-disable-next-line
 const extractNumericPart = (str) => {
-  const match = str.match(/\d+/);
-  return match ? parseInt(match[0]) : Infinity;
-};
+  const match = str.match(/\d+/)
+  return match ? parseInt(match[0]) : Infinity
+}
 
 const LocationList = () => {
   document.title = 'Pokémon Location Guide - all routes, all Pokémon! | Pokémon Database'
@@ -27,41 +27,43 @@ const LocationList = () => {
     return urlList
   }, [])
 
-  const transformData = data => {
+  const transformData = (data) => {
     const regionExtracted = extractRegionInformation(data)
 
     // Reformat the objects in the arrays
     const { locations, regionName } = regionExtracted
 
-    const locationsNew = locations.map(location => {
-      const { name: locationName, url: actualUrl } = location
-      const localUrl = `/location/${locationName}`
-      const filteredRoute = locationName.match(/(route-.+)/)
-      const properLocationName = filteredRoute !== null ? filteredRoute[1] : locationName
-      return { locationName: properLocationName, actualUrl, localUrl }
-    }).sort((prev, curr) => (
-      prev.locationName.localeCompare(curr.locationName, undefined, { numeric: true, sensitivity: 'base' })
-    ))
+    const locationsNew = locations
+      .map((location) => {
+        const { name: locationName, url: actualUrl } = location
+        const localUrl = `/location/${locationName}`
+        const filteredRoute = locationName.match(/(route-.+)/)
+        const properLocationName = filteredRoute !== null ? filteredRoute[1] : locationName
+        return { locationName: properLocationName, actualUrl, localUrl }
+      })
+      .sort((prev, curr) =>
+        prev.locationName.localeCompare(curr.locationName, undefined, { numeric: true, sensitivity: 'base' }),
+      )
 
     return { regionName, locations: locationsNew }
   }
 
   const { data: locationData = [], isLoading } = useQueries({
-    queries: locationUrls.map(location => {
+    queries: locationUrls.map((location) => {
       return {
         queryKey: ['location', location],
         queryFn: () => fetchData(location),
         cacheTime: Infinity,
         staleTime: Infinity,
-        select: transformData
+        select: transformData,
       }
     }),
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading)
+        data: results.map((result) => result.data),
+        isLoading: results.some((result) => result.isLoading),
       }
-    }
+    },
   })
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const LocationList = () => {
     sessionStorage.setItem('storedTab', activeTab.toString())
   }, [activeTab])
 
-  const handleClick = id => {
+  const handleClick = (id) => {
     setActiveTab(id)
   }
 
@@ -94,14 +96,14 @@ const LocationList = () => {
     const locationItems = locations.map((location, locIndex) => {
       const { locationName, localUrl } = location
       return (
-        <NavLink to={localUrl} className='hoverable-link' key={locIndex}>
+        <NavLink to={localUrl} className="hoverable-link" key={locIndex}>
           {formatName(locationName)}
         </NavLink>
       )
     })
 
     const tabOutput = (
-      <div className='grid grid-cols-flexible gap-x-1' key={tabIndex}>
+      <div className="grid grid-cols-flexible gap-x-1" key={tabIndex}>
         {locationItems}
       </div>
     )
@@ -114,20 +116,21 @@ const LocationList = () => {
     return (
       <li
         key={index}
-        className={`w-20 py-3 border-b-2 flex flex-1 justify-center ${activeTab === id ? 'text-blue-500 border-blue-500' : 'border-transparent hover:text-white hover:border-white'
-          } hover:cursor-pointer hover:brightness-110 bg-gray-900 duration-300`}
+        className={`w-20 py-3 border-b-2 flex flex-1 justify-center ${
+          activeTab === id ? 'text-blue-500 border-blue-500' : 'border-transparent hover:text-white hover:border-white'
+        } hover:cursor-pointer hover:brightness-110 bg-gray-900 duration-300`}
         onClick={() => handleClick(id)}
-      > {formatName(tabName)} </li>
+      >
+        {' '}
+        {formatName(tabName)}{' '}
+      </li>
     )
   })
 
   const tabContainer = tabData?.map((tab, index) => {
     const { output, id } = tab
     return (
-      <div
-        key={index}
-        className={`${activeTab === id ? '' : 'hidden'}`}
-      >
+      <div key={index} className={`${activeTab === id ? '' : 'hidden'}`}>
         {output}
       </div>
     )
@@ -138,26 +141,24 @@ const LocationList = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
-      className='pb-4'
+      className="pb-4"
     >
-      <h1 className='text-4xl font-bold text-center'>
-        Pokémon Location guide
-      </h1>
+      <h1 className="text-4xl font-bold text-center">Pokémon Location guide</h1>
       <div>
         {isLoading ? (
-          <div className='flex flex-col my-4 gap-y-4'>
-            <Skeleton containerClassName='flex-1 w-full' className='w-full h-12' />
-            <div className='grid grid-cols-2 gap-y-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center'>
-              {Array(100).fill(0).map((_, index) => (
-                <Skeleton width='50%' height='1.25rem' containerClassName='flex-1 w-full' key={index} />
-              ))}
+          <div className="flex flex-col my-4 gap-y-4">
+            <Skeleton containerClassName="flex-1 w-full" className="w-full h-12" />
+            <div className="grid grid-cols-2 gap-y-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center">
+              {Array(100)
+                .fill(0)
+                .map((_, index) => (
+                  <Skeleton width="50%" height="1.25rem" containerClassName="flex-1 w-full" key={index} />
+                ))}
             </div>
           </div>
         ) : (
           <>
-            <ul className='flex flex-row flex-wrap items-center justify-center flex-1 my-4'>
-              {tabListItems}
-            </ul>
+            <ul className="flex flex-row flex-wrap items-center justify-center flex-1 my-4">{tabListItems}</ul>
             {tabContainer}
           </>
         )}

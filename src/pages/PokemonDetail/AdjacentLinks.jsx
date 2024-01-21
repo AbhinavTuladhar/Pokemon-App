@@ -9,7 +9,7 @@ const AdjacentLinks = ({ id }) => {
   const offsetValue = id !== 1 ? id - 2 : 0
   const url = `https://pokeapi.co/api/v2/pokemon?limit=3&offset=${offsetValue}`
 
-  const transformData = data => {
+  const transformData = (data) => {
     const { results } = data
     // Get the Pokemon to the left and right of the current Pokemon.
     const [previousPokemon, ...rest] = results
@@ -29,10 +29,10 @@ const AdjacentLinks = ({ id }) => {
         return {
           id: idNumber,
           formattedId,
-          name
+          name,
         }
       })
-      .filter(pokemon => pokemon.id <= 807) // For the last Pokemon, #807.
+      .filter((pokemon) => pokemon.id <= 807) // For the last Pokemon, #807.
   }
 
   const { data: adjacentData = {}, isLoading } = useQuery({
@@ -40,7 +40,7 @@ const AdjacentLinks = ({ id }) => {
     queryFn: () => fetchData(url),
     staleTime: Infinity,
     cacheTime: Infinity,
-    select: transformData
+    select: transformData,
   })
 
   // Skip rendering for pokemon forms.
@@ -62,7 +62,7 @@ const AdjacentLinks = ({ id }) => {
         const leftPart = index === 0 && id !== 1 ? '←' : ''
         const rightPart = index !== 0 || id === 1 ? '→' : ''
         return (
-          <NavLink to={`/pokemon/${name}`} className='hoverable-link' key={index}>
+          <NavLink to={`/pokemon/${name}`} className="hoverable-link" key={index}>
             {`${leftPart} ${formattedId} ${formatName(name)} ${rightPart}`}
           </NavLink>
         )

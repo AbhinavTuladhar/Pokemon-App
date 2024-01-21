@@ -6,5 +6,5 @@ export const generationToGame = {
   'Generation 4 Sinnoh': ['diamond', 'pearl', 'platinum'],
   'Generation 4 remake': ['heartgold', 'soulsilver'],
   'Generation 5': ['black', 'white', 'black-2', 'white-2'],
-  'Generation 6': ['x', 'y']
+  'Generation 6': ['x', 'y'],
 }

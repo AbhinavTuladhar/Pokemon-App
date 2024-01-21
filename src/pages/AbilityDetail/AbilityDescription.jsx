@@ -11,7 +11,9 @@ const AbilityDescription = ({ descriptions }) => {
     const description = rawDescription?.replace(/\n/g, ' ')
     if (!acc[generation]) {
       acc[generation] = {
-        description, generation, versionName: [versionName]
+        description,
+        generation,
+        versionName: [versionName],
       }
       // Games in the same generation may have different descriptions. So another key is allocated here
       // } else if (acc[generation].description !== description) {
@@ -26,21 +28,26 @@ const AbilityDescription = ({ descriptions }) => {
   }, {})
 
   // Filter out undefined generations
-  const properGroupedData = descriptions ? Object?.values(groupedData).filter(row => row.generation !== undefined) : []
+  const properGroupedData = descriptions
+    ? Object?.values(groupedData).filter((row) => row.generation !== undefined)
+    : []
 
   const tableRows = properGroupedData?.map((row, rowIndex) => {
     return (
-      <div className='table-row' key={rowIndex}>
-        <div className='table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle text-right'>
+      <div className="table-row" key={rowIndex}>
+        <div className="table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle text-right">
           <ul>
             {row?.versionName?.map((version) => {
-              return (<li className='list-none' key={version}> {formatName(version)} </li>)
+              return (
+                <li className="list-none" key={version}>
+                  {' '}
+                  {formatName(version)}{' '}
+                </li>
+              )
             })}
           </ul>
         </div>
-        <div className='table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle'>
-          {row?.description}
-        </div>
+        <div className="table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle">{row?.description}</div>
       </div>
     )
   })
@@ -48,11 +55,7 @@ const AbilityDescription = ({ descriptions }) => {
   return (
     <>
       <SectionTitle text={'Game Descriptions'} />
-      {descriptions ? (
-        <TableContainer child={tableRows} />
-      ) : (
-        <TabularSkeleton />
-      )}
+      {descriptions ? <TableContainer child={tableRows} /> : <TabularSkeleton />}
     </>
   )
 }

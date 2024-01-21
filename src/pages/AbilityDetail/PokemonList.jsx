@@ -12,50 +12,54 @@ import '../../index.css'
 
 const PokemonList = ({ data }) => {
   const { pokemonList, name: abilityName } = data
-  const urlList = pokemonList?.map(pokemon => pokemon.pokemon.url)
+  const urlList = pokemonList?.map((pokemon) => pokemon.pokemon.url)
 
   // We now need to query the Pokemon URLs in order to find their icons, and other abilities
   const { data: readyInformation = [], isLoading } = useQueries({
     queries: urlList
-      ? urlList.map(url => {
-        return {
-          queryKey: ['pokemon-url', url],
-          queryFn: () => fetchData(url),
-          staleTime: Infinity,
-          cacheTime: Infinity,
-          select: data => {
-            // We now need to find the pokemon name, the icons, and the other abilities of the pokemon.
-            const { abilities, name, icon, id, order, nationalNumber } = extractPokemonInformation(data)
-            // Now find the other abilities of the Pokemon. THese pokemon should have an icon.
-            const otherAbilities = abilities?.filter(ability => ability.ability.name !== abilityName)
-              ?.map(ability => ability.ability.name)
-            return {
-              id,
-              name,
-              otherAbilities,
-              icon,
-              order,
-              nationalNumber
-            }
+      ? urlList.map((url) => {
+          return {
+            queryKey: ['pokemon-url', url],
+            queryFn: () => fetchData(url),
+            staleTime: Infinity,
+            cacheTime: Infinity,
+            select: (data) => {
+              // We now need to find the pokemon name, the icons, and the other abilities of the pokemon.
+              const { abilities, name, icon, id, order, nationalNumber } = extractPokemonInformation(data)
+              // Now find the other abilities of the Pokemon. THese pokemon should have an icon.
+              const otherAbilities = abilities
+                ?.filter((ability) => ability.ability.name !== abilityName)
+                ?.map((ability) => ability.ability.name)
+              return {
+                id,
+                name,
+                otherAbilities,
+                icon,
+                order,
+                nationalNumber,
+              }
+            },
           }
-        }
-      })
+        })
       : [],
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results.map(result => result.data)
-          ?.filter(entry => (entry?.id >= 1 && entry?.id <= 807) || (entry?.id >= 10001 && entry?.id <= 10157))
-          ?.sort((prev, curr) => prev?.nationalNumber >= curr?.nationalNumber ? 1 : -1),
-        isLoading: results.some(result => result.isLoading),
+        data: results
+          .map((result) => result.data)
+          ?.filter((entry) => (entry?.id >= 1 && entry?.id <= 807) || (entry?.id >= 10001 && entry?.id <= 10157))
+          ?.sort((prev, curr) => (prev?.nationalNumber >= curr?.nationalNumber ? 1 : -1)),
+        isLoading: results.some((result) => result.isLoading),
       }
     },
   })
 
-  const headers = [{
-    id: '#',
-    name: 'Name',
-    otherAbilities: 'Other abilities'
-  }]
+  const headers = [
+    {
+      id: '#',
+      name: 'Name',
+      otherAbilities: 'Other abilities',
+    },
+  ]
 
   const rowData = [...headers, ...readyInformation]?.map((pokemon, index) => {
     const { id, icon, name, otherAbilities, nationalNumber } = pokemon
@@ -65,12 +69,12 @@ const PokemonList = ({ data }) => {
       {
         key: 'id',
         value: (
-          <div className='flex items-center'>
+          <div className="flex items-center">
             <span> {index !== 0 ? properId : id} </span>
-            {index > 0 && <img src={icon} alt={name} className='w-[56px]' />}
+            {index > 0 && <img src={icon} alt={name} className="w-[56px]" />}
           </div>
         ),
-        style: 'w-32'
+        style: 'w-32',
       },
       {
         key: 'pokemonName',
@@ -78,38 +82,40 @@ const PokemonList = ({ data }) => {
           <NavLink to={`/pokemon/${name}`} className={index > 0 && 'font-bold hoverable-link'}>
             {formatName(name)}
           </NavLink>
-        )
+        ),
       },
       {
         key: 'ability',
-        value: index !== 0
-          ?
-          (
-            otherAbilities.length > 0
-              ?
-              otherAbilities.map((ability, index) =>
-              (<span key={index}>
-                <NavLink to={`/ability/${ability}`} className='hoverable-link'> {formatName(ability)} </NavLink> <br />
-              </span>)
-              )
-              :
-              '—'
-          )
-          :
-          otherAbilities
-      }
+        value:
+          index !== 0
+            ? otherAbilities.length > 0
+              ? otherAbilities.map((ability, index) => (
+                  <span key={index}>
+                    <NavLink to={`/ability/${ability}`} className="hoverable-link">
+                      {' '}
+                      {formatName(ability)}{' '}
+                    </NavLink>{' '}
+                    <br />
+                  </span>
+                ))
+              : '—'
+            : otherAbilities,
+      },
     ]
 
     const tableCells = cellData?.map((cell, cellIndex) => {
       return (
-        <div className={`${cell?.style} min-w-[10rem] table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle ${(index === 0 && cellIndex !== cellData.length - 1) && 'border-r'} ${index === 0 && 'bg-gray-900 font-bold'}`} key={cellIndex}>
+        <div
+          className={`${cell?.style} min-w-[10rem] table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle ${index === 0 && cellIndex !== cellData.length - 1 && 'border-r'} ${index === 0 && 'bg-gray-900 font-bold'}`}
+          key={cellIndex}
+        >
           {cell.value}
         </div>
       )
     })
 
     return (
-      <div className='table-row' key={index}>
+      <div className="table-row" key={index}>
         {tableCells}
       </div>
     )
@@ -117,9 +123,9 @@ const PokemonList = ({ data }) => {
 
   return (
     <>
-      {(isLoading || !abilityName) ? (
-        <div className='flex flex-col gap-y-2 mt-5'>
-          <Skeleton width='90%' height='3rem' containerClassName='flex-1 w-full' />
+      {isLoading || !abilityName ? (
+        <div className="flex flex-col gap-y-2 mt-5">
+          <Skeleton width="90%" height="3rem" containerClassName="flex-1 w-full" />
           <TabularSkeleton />
         </div>
       ) : (

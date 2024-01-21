@@ -9,8 +9,7 @@ const PokeCardV2 = ({ pokemonData }) => {
   const { name, id, gameSprite, types, nationalNumber } = pokemonData
   const properId = `${'00' + nationalNumber}`.slice(-3)
 
-  if (gameSprite === null || id >= 10157)
-    return
+  if (gameSprite === null || id >= 10157) return
 
   const typeDiv = types.map((type, index) => {
     const typeName = type.type.name
@@ -23,15 +22,18 @@ const PokeCardV2 = ({ pokemonData }) => {
   })
 
   return (
-    <FadeInAnimationCard className='flex w-full py-4'>
-      <img src={gameSprite} className='w=[70px] h-[45px]' alt={name} />
-      <div className='flex flex-col'>
+    <FadeInAnimationCard className="flex w-full py-4">
+      <img src={gameSprite} className="w=[70px] h-[45px]" alt={name} />
+      <div className="flex flex-col">
         <div>
-          <NavLink to={`/pokemon/${name}`} className='font-bold hoverable-link'>
+          <NavLink to={`/pokemon/${name}`} className="font-bold hoverable-link">
             {formatName(name)}
           </NavLink>
         </div>
-        <div className='flex'> {`#${properId}`} / &nbsp;{typeDiv} </div>
+        <div className="flex">
+          {' '}
+          {`#${properId}`} / &nbsp;{typeDiv}{' '}
+        </div>
       </div>
     </FadeInAnimationCard>
   )

@@ -15,7 +15,7 @@ const AbilityEffect = ({ entry }) => {
           </div>
         ))
       ) : (
-        <Skeleton width='100%' height='8rem' containerClassName='flex-1 w-full' />
+        <Skeleton width="100%" height="8rem" containerClassName="flex-1 w-full" />
       )}
     </>
   )

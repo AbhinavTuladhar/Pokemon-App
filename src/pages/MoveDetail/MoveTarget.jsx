@@ -15,11 +15,13 @@ const PokemonTargetBox = ({ text, flag, targeted }) => {
   if (targeted) {
     targetedStyle = 'border-green-700 border-4 text-white'
   } else {
-    targetedStyle = "text-black"
+    targetedStyle = 'text-black'
   }
 
   return (
-    <div className={`flex flex-row justify-center items-center h-14 w-24 rounded-l-2xl rounded-r-2xl ${backgroundStyle} ${targetedStyle}`}>
+    <div
+      className={`flex flex-row justify-center items-center h-14 w-24 rounded-l-2xl rounded-r-2xl ${backgroundStyle} ${targetedStyle}`}
+    >
       {text}
     </div>
   )
@@ -32,25 +34,25 @@ const MoveTarget = ({ targetType }) => {
 
   return (
     <>
-      <SectionTitle text='Move Targets' />
+      <SectionTitle text="Move Targets" />
       {targetType ? (
         <>
-          <div className='flex flex-col items-center gap-y-2 mx-6'>
-            <div className='flex flex-row gap-x-2'>
+          <div className="flex flex-col items-center gap-y-2 mx-6">
+            <div className="flex flex-row gap-x-2">
               {foeInformation.map((box, index) => (
                 <PokemonTargetBox flag={box.flag} text={box.text} targeted={box.targeted} key={index} />
               ))}
             </div>
-            <div className='flex flex-row gap-x-2'>
+            <div className="flex flex-row gap-x-2">
               {allyInformation.map((box, index) => (
                 <PokemonTargetBox flag={box.flag} text={box.text} targeted={box.targeted} key={index} />
               ))}
             </div>
           </div>
-          <p className='text-center w-full mt-4 italic'> {description}</p>
+          <p className="text-center w-full mt-4 italic"> {description}</p>
         </>
       ) : (
-        <Skeleton className='h-40' containerClassName='flex flex-1' />
+        <Skeleton className="h-40" containerClassName="flex flex-1" />
       )}
     </>
   )

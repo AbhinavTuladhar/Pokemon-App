@@ -1,8 +1,8 @@
-import React from "react";
-import TableContainer from "../../components/TableContainer";
-import TabularSkeleton from "../../components/TabularSkeleton";
-import SectionTitle from "../../components/SectionTitle";
-import formatName from "../../utils/NameFormatting";
+import React from 'react'
+import TableContainer from '../../components/TableContainer'
+import TabularSkeleton from '../../components/TabularSkeleton'
+import SectionTitle from '../../components/SectionTitle'
+import formatName from '../../utils/NameFormatting'
 
 const GameDescription = ({ descriptions }) => {
   // The objective is to group by generation, but display the game names.
@@ -15,13 +15,17 @@ const GameDescription = ({ descriptions }) => {
     const description = rawDescription?.replace(/\n/g, ' ')
     if (!acc[generation]) {
       acc[generation] = {
-        description, generation, version: [version]
+        description,
+        generation,
+        version: [version],
       }
       // Games in the same generation may have different descriptions. So another key is allocated here
     } else if (acc[generation].description !== description) {
       const newGeneration = `${generation}_new`
       acc[newGeneration] = {
-        description, generation: newGeneration, version: [version]
+        description,
+        generation: newGeneration,
+        version: [version],
       }
     } else {
       acc[generation].version.push(version)
@@ -29,21 +33,26 @@ const GameDescription = ({ descriptions }) => {
     return acc
   }, {})
   // Filter out undefined generations
-  const properGroupedData = descriptions ? Object?.values(groupedData).filter(row => row.generation !== undefined) : []
+  const properGroupedData = descriptions
+    ? Object?.values(groupedData).filter((row) => row.generation !== undefined)
+    : []
 
   const tableRows = properGroupedData?.map((row, rowIndex) => {
     return (
-      <div className='table-row' key={rowIndex}>
-        <div className='table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle text-right'>
+      <div className="table-row" key={rowIndex}>
+        <div className="table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle text-right">
           <ul>
             {row?.version?.map((version, index) => {
-              return (<li className='list-none' key={index}> {formatName(version)} </li>)
+              return (
+                <li className="list-none" key={index}>
+                  {' '}
+                  {formatName(version)}{' '}
+                </li>
+              )
             })}
           </ul>
         </div>
-        <div className='table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle'>
-          {row?.description}
-        </div>
+        <div className="table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle">{row?.description}</div>
       </div>
     )
   })
@@ -51,11 +60,7 @@ const GameDescription = ({ descriptions }) => {
   return (
     <>
       <SectionTitle text={'Game Descriptions'} />
-      {descriptions?.length > 0 ? (
-        <TableContainer child={tableRows} />
-      ) : (
-        <TabularSkeleton />
-      )}
+      {descriptions?.length > 0 ? <TableContainer child={tableRows} /> : <TabularSkeleton />}
     </>
   )
 }

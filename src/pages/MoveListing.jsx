@@ -15,15 +15,11 @@ import '../index.css'
 import fetchData from '../utils/fetchData'
 
 // For damage class image.
-const returnMoveImage = damageClass => {
-  if (damageClass === 'physical')
-    return movePhysical
-  else if (damageClass === 'special')
-    return moveSpecial
-  else if (damageClass === 'status')
-    return moveStatus
-  else
-    return ''
+const returnMoveImage = (damageClass) => {
+  if (damageClass === 'physical') return movePhysical
+  else if (damageClass === 'special') return moveSpecial
+  else if (damageClass === 'status') return moveStatus
+  else return ''
 }
 
 const MoveListing = () => {
@@ -50,30 +46,40 @@ const MoveListing = () => {
   }, [])
 
   const { data: moveData, isFullyLoadedMoveData } = useQueries({
-    queries: urlList.map(url => {
+    queries: urlList.map((url) => {
       return {
         queryKey: ['move-url', url],
         queryFn: () => fetchData(url),
         staleTime: Infinity,
         cacheTime: Infinity,
-        select: data => {
-          const { id, moveName, moveType, damageClass, power, accuracy, PP, shortEntry, effect_chance: effectChance, machines } = extractMoveInformation(data)
+        select: (data) => {
+          const {
+            id,
+            moveName,
+            moveType,
+            damageClass,
+            power,
+            accuracy,
+            PP,
+            shortEntry,
+            effect_chance: effectChance,
+            machines,
+          } = extractMoveInformation(data)
           return { id, moveName, moveType, damageClass, power, accuracy, PP, shortEntry, effectChance, machines }
-        }
+        },
       }
     }),
-    combine: results => {
+    combine: (results) => {
       return {
-        data: results?.map(result => result?.data).sort((prev, curr) => prev?.moveName > curr?.moveName ? 1 : -1),
-        isLoading: results.some(result => result.isLoading),
-        isFullyLoadedMoveData: results.every(result => result.data !== undefined)
+        data: results?.map((result) => result?.data).sort((prev, curr) => (prev?.moveName > curr?.moveName ? 1 : -1)),
+        isLoading: results.some((result) => result.isLoading),
+        isFullyLoadedMoveData: results.every((result) => result.data !== undefined),
       }
-    }
+    },
   })
 
   useEffect(() => {
-    if (!isFullyLoadedMoveData)
-      return
+    if (!isFullyLoadedMoveData) return
     // setMoveList(moveData)
     setMoveListReady(moveData)
     setFilteredMoves(moveData)
@@ -116,7 +122,7 @@ const MoveListing = () => {
   //   }
   // })
 
-  // // Now make an array of objects - the object has two keys - 
+  // // Now make an array of objects - the object has two keys -
   // // name: name of the machine, machine: Machine number, like HM01, TM23
   // useEffect(() => {
   //   if (!TMResponse) {
@@ -149,23 +155,25 @@ const MoveListing = () => {
   //   setFilteredMoves(joinedData)
   // }, [TMData, moveList])
 
-  const headers = [{
-    moveName: 'Name',
-    moveType: 'Type',
-    damageClass: 'Cat.',
-    power: 'Power',
-    accuracy: 'Acc.',
-    PP: 'PP',
-    machine: 'TM',
-    shortEntry: 'Effect',
-    effectChance: 'Prob. (%)'
-  }]
+  const headers = [
+    {
+      moveName: 'Name',
+      moveType: 'Type',
+      damageClass: 'Cat.',
+      power: 'Power',
+      accuracy: 'Acc.',
+      PP: 'PP',
+      machine: 'TM',
+      shortEntry: 'Effect',
+      effectChance: 'Prob. (%)',
+    },
+  ]
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     // There are dashes in the JSON data.
     // Replace any spaces in the query with a dash.
     const searchQuery = event.target.value.toLowerCase().replace(' ', '-')
-    const filteredData = moveListReady?.filter(move => move.moveName.includes(searchQuery))
+    const filteredData = moveListReady?.filter((move) => move.moveName.includes(searchQuery))
     setFilteredMoves(filteredData)
   }
 
@@ -189,30 +197,28 @@ const MoveListing = () => {
     const tableCellData = [
       {
         key: 'moveName',
-        value: (
-          <NavLink to={link}> {formatName(moveName)} </NavLink>
-        ),
-        cellStyle: index !== 0 ? 'font-bold hoverable-link' : ''
+        value: <NavLink to={link}> {formatName(moveName)} </NavLink>,
+        cellStyle: index !== 0 ? 'font-bold hoverable-link' : '',
       },
       {
         key: 'moveType',
-        value: index === 0 ? moveType : <TypeCard typeName={moveType} />
+        value: index === 0 ? moveType : <TypeCard typeName={moveType} />,
       },
       {
         key: 'damageClass',
-        value: index === 0 ? damageClass : <img src={moveClassImage} className='h-[20px] w-[30px]' alt={damageClass} />
+        value: index === 0 ? damageClass : <img src={moveClassImage} className="h-[20px] w-[30px]" alt={damageClass} />,
       },
       {
         key: 'power',
-        value: power
+        value: power,
       },
       {
         key: 'accuracy',
-        value: accuracy
+        value: accuracy,
       },
       {
         key: 'PP',
-        value: PP
+        value: PP,
       },
       // {
       //   key: 'machine',
@@ -220,15 +226,15 @@ const MoveListing = () => {
       // },
       {
         key: 'shortEntry',
-        value: (<div className='w-[36rem]'> {shortEntry?.replace('$effect_chance% ', '')} </div>),
-        cellStyle: 'pr-8 min-w-[36rem]'
+        value: <div className="w-[36rem]"> {shortEntry?.replace('$effect_chance% ', '')} </div>,
+        cellStyle: 'pr-8 min-w-[36rem]',
       },
       {
         key: 'effectChance',
         value: effectChance,
-        cellStyle: 'whitespace-nowrap'
+        cellStyle: 'whitespace-nowrap',
       },
-    ];
+    ]
     const tableCells = tableCellData.map((cell, cellIndex) => {
       return (
         <div
@@ -254,20 +260,17 @@ const MoveListing = () => {
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
     >
-      <div className='flex items-center justify-center'>
+      <div className="flex items-center justify-center">
         <input
-          className='text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]' type='search'
-          placeholder='Search for a move'
+          className="text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]"
+          type="search"
+          placeholder="Search for a move"
           disabled={!isFullyLoadedMoveData}
           onChange={handleChange}
         />
       </div>
       {/* // Checking if data is present */}
-      {(!isFullyLoadedMoveData) ?
-        <MoveListingSkeleton rowCount={20} />
-        :
-        <TableContainer child={moveTableRows} />
-      }
+      {!isFullyLoadedMoveData ? <MoveListingSkeleton rowCount={20} /> : <TableContainer child={moveTableRows} />}
     </motion.div>
   )
 }

@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton'
 import SectionTitle from '../../components/SectionTitle'
 
 const MoveEffect = ({ entry, chance }) => {
-  const updatedEntry = entry?.replace('$effect_chance', chance);
+  const updatedEntry = entry?.replace('$effect_chance', chance)
   const paragraphs = updatedEntry?.split('\n')
   return (
     <>
@@ -17,7 +17,7 @@ const MoveEffect = ({ entry, chance }) => {
           </div>
         ))
       ) : (
-        <Skeleton width='100%' height='8rem' containerClassName='flex-1 w-full' />
+        <Skeleton width="100%" height="8rem" containerClassName="flex-1 w-full" />
       )}
     </>
   )

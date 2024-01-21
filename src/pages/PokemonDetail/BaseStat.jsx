@@ -17,12 +17,12 @@ const useStatDetail = (stats) => {
   // Now define a dictionary for mapping the unformatted stat name to its proper name.
   const statMapping = useMemo(() => {
     return {
-      "hp": "HP",
-      "attack": "Attack",
-      "defense": "Defense",
-      "special-attack": "Sp. Atk",
-      "special-defense": "Sp. Def",
-      "speed": "Speed"
+      hp: 'HP',
+      attack: 'Attack',
+      defense: 'Defense',
+      'special-attack': 'Sp. Atk',
+      'special-defense': 'Sp. Def',
+      speed: 'Speed',
     }
   }, [])
 
@@ -31,7 +31,7 @@ const useStatDetail = (stats) => {
 
   useEffect(() => {
     // Finding the maximum and minimum values of each stat.
-    const statValues = stats.map(stat => {
+    const statValues = stats.map((stat) => {
       let colour
       const statValue = stat.base_stat
       const statName = stat.stat.name
@@ -41,18 +41,12 @@ const useStatDetail = (stats) => {
       const widthValue = `${(statValue / maxStatValue) * 100}%`
 
       // Now provide a colour to the bar graph depending on the value of the base stat.
-      if (statValue >= 0 && statValue < 30)
-        colour = '#f34444'
-      else if (statValue >= 30 && statValue < 60)
-        colour = '#ff7f0f'
-      else if (statValue >= 60 && statValue < 90)
-        colour = '#ffdd57'
-      else if (statValue >= 90 && statValue < 120)
-        colour = '#a0e515'
-      else if (statValue >= 120 && statValue < 150)
-        colour = '#23cd5e'
-      else if (statValue >= 150)
-        colour = '#00c2b8'
+      if (statValue >= 0 && statValue < 30) colour = '#f34444'
+      else if (statValue >= 30 && statValue < 60) colour = '#ff7f0f'
+      else if (statValue >= 60 && statValue < 90) colour = '#ffdd57'
+      else if (statValue >= 90 && statValue < 120) colour = '#a0e515'
+      else if (statValue >= 120 && statValue < 150) colour = '#23cd5e'
+      else if (statValue >= 150) colour = '#00c2b8'
       else {
         colour = 'transparent'
       }
@@ -69,8 +63,8 @@ const useStatDetail = (stats) => {
     These objects are joined using the stat name as the common key-value pair.
     */
     setStatDetail(() => {
-      const details = statValues.map(obj1 => {
-        const obj2 = minMaxValues.find(obj => obj.name === obj1.name)
+      const details = statValues.map((obj1) => {
+        const obj2 = minMaxValues.find((obj) => obj.name === obj1.name)
         return { ...obj1, ...obj2 }
       })
 
@@ -89,7 +83,7 @@ const useStatDetail = (stats) => {
         width: '100%',
         colour: 'transparent',
         min: 'Min',
-        max: 'Max'
+        max: 'Max',
       })
       return details
     })
@@ -108,23 +102,22 @@ const BaseStat = ({ data }) => {
     const stringDecoration = index === statDetail.length - 1 ? 'font-bold' : ''
 
     return (
-      <div className='table-row border-t border-gray-200 py-2 h-12 max-h-24 pr-0' key={index}>
-        <div className='table-cell pr-2 text-right align-middle border-t border-gray-200'>
-          {stat.name}
-        </div>
-        <div className='table-cell px-1 text-right align-middle border-t border-gray-200'>
+      <div className="table-row border-t border-gray-200 py-2 h-12 max-h-24 pr-0" key={index}>
+        <div className="table-cell pr-2 text-right align-middle border-t border-gray-200">{stat.name}</div>
+        <div className="table-cell px-1 text-right align-middle border-t border-gray-200">
           <span className={`${stringDecoration} text-left`}> {stat.value} </span>
         </div>
-        <div className='table-cell min-w-[9.375rem] w-full h-full px-0 mx-0 align-middle border-t border-gray-200'>
-          <div className='h-3 my-0 ml-2 rounded' style={{ width: stat.width, minWidth: '1rem', maxWidth: '100%', backgroundColor: stat.colour }}> &nbsp;
+        <div className="table-cell min-w-[9.375rem] w-full h-full px-0 mx-0 align-middle border-t border-gray-200">
+          <div
+            className="h-3 my-0 ml-2 rounded"
+            style={{ width: stat.width, minWidth: '1rem', maxWidth: '100%', backgroundColor: stat.colour }}
+          >
+            {' '}
+            &nbsp;
           </div>
         </div>
-        <div className='table-cell px-1 pl-3 text-right align-middle border-t border-gray-200'>
-          {stat.min}
-        </div>
-        <div className='table-cell px-1 text-right align-middle border-t border-gray-200'>
-          {stat.max}
-        </div>
+        <div className="table-cell px-1 pl-3 text-right align-middle border-t border-gray-200">{stat.min}</div>
+        <div className="table-cell px-1 text-right align-middle border-t border-gray-200">{stat.max}</div>
       </div>
     )
   })
@@ -134,11 +127,12 @@ const BaseStat = ({ data }) => {
       <SectionTitle text={'Base Stats'} />
       <TableContainer child={rowValues} />
       {/* This is just some informative text. */}
-      <div className='mt-4 font-extralight'>
-        The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a beneficial nature, 252 EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs, 0 IVs.
+      <div className="mt-4 font-extralight">
+        The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a beneficial nature, 252
+        EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs, 0 IVs.
       </div>
     </>
   )
 }
 
-export default BaseStat;
+export default BaseStat
