@@ -23,7 +23,7 @@ const MainPage = ({ offset, limit }) => {
 
   // Get the pokemon urls using the resource list
   // Moreover, for caching purposes, we replace the number in the url with the actual pokemon name.
-  const { data: pokemonUrls } = useQuery({
+  const { data: pokemonUrls, isLoading: isLoadingList } = useQuery({
     queryKey: ['pokemon-list-url', listUrl],
     queryFn: () => fetchData(listUrl),
     cacheTime: Infinity,
@@ -97,12 +97,12 @@ const MainPage = ({ offset, limit }) => {
           className="text-black rounded-xl mx-4 py-2 px-4 w-full md:w-[20rem]"
           type="search"
           placeholder="Search for a Pokemon"
-          disabled={Boolean(isLoading)}
+          disabled={Boolean(isLoading) || Boolean(isLoadingList)}
           onChange={handleChange}
         />
       </div>
       <div className="flex flex-wrap items-center justify-center gap-8 px-0 py-4 mt-2">
-        {!isFullyLoaded ? (
+        {!isFullyLoaded || isLoadingList ? (
           <PokeCardSkeleton cardCount={20} />
         ) : (
           filteredPokemonInfo?.map((pokemon, index) => (
