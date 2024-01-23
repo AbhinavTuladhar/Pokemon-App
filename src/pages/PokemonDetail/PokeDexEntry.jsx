@@ -50,8 +50,12 @@ const PokeDexEntry = ({ data }) => {
   const entryRows = finalEntry.map((entry, i) => {
     return (
       <div className="table-row border-t border-gray-200 h-12" key={i}>
-        <div className="border-t align-middle border-gray-200 table-cell text-right py-2">{entry.versionName}</div>
-        <div className="border-t align-middle border-gray-200 table-cell pl-4 py-2">{entry.description}</div>
+        <div className="border-t align-middle border-gray-200 table-cell w-3/12 xl:w-1/5 text-right py-2">
+          {entry.versionName}
+        </div>
+        <div className="border-t align-middle border-gray-200 table-cell w-9/12 xl:w-4/5 pl-4 py-2">
+          {entry.description}
+        </div>
       </div>
     )
   })
