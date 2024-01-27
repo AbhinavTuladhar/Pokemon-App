@@ -154,6 +154,8 @@ const BerryListing = () => {
     { id: 'maxHarvest', text: 'The maximum number of these berries that can grow on one tree.' },
   ]
 
+  document.title = 'Berry list | Pokémon database'
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

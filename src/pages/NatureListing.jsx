@@ -98,6 +98,8 @@ const NatureListing = () => {
     </>
   )
 
+  document.title = 'Pokémon natures list | Pokémon database'
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
