@@ -25,7 +25,7 @@ const MoveDetail = () => {
 
   const { data: moveInfo = [] } = useQuery({
     queryKey: ['move-url', url],
-    queryFn: () => fetchData(url),
+    queryFn: ({ signal }) => fetchData(url, signal),
     select: transformData,
     staleTime: Infinity,
     cacheTime: Infinity,

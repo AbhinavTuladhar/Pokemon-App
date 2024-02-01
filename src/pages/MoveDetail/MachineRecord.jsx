@@ -15,7 +15,7 @@ const MachineRecord = ({ machineList }) => {
       ? urlList.map((url) => {
           return {
             queryKey: ['machine-url', url],
-            queryFn: () => fetchData(url),
+            queryFn: ({ signal }) => fetchData(url, signal),
             staleTime: Infinity,
             cacheTime: Infinity,
             select: (machine) => {

@@ -148,7 +148,7 @@ function nonNullValues(obj) {
 const EvolutionChain = ({ url }) => {
   const { data: evolutionData, isLoading } = useQuery({
     queryKey: ['evolution-chain', url],
-    queryFn: () => fetchData(url),
+    queryFn: ({ signal }) => fetchData(url, signal),
     staleTime: Infinity,
     cacheTime: Infinity,
   })

@@ -60,7 +60,7 @@ const BerryListing = () => {
       ? berryUrls.map((url) => {
           return {
             queryKey: ['berry-item', url],
-            queryFn: () => fetchData(url),
+            queryFn: ({ signal }) => fetchData(url, signal),
             staleTime: Infinity,
             cacheTime: Infinity,
             select: extractItemInformation,

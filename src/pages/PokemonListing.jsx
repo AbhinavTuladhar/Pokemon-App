@@ -25,7 +25,7 @@ const MainPage = ({ offset, limit }) => {
   // Moreover, for caching purposes, we replace the number in the url with the actual pokemon name.
   const { data: pokemonUrls, isLoading: isLoadingList } = useQuery({
     queryKey: ['pokemon-list-url', listUrl],
-    queryFn: () => fetchData(listUrl),
+    queryFn: ({ signal }) => fetchData(listUrl, signal),
     cacheTime: Infinity,
     staleTime: Infinity,
     select: (data) => {
@@ -47,7 +47,7 @@ const MainPage = ({ offset, limit }) => {
       ? pokemonUrls.map((url) => {
           return {
             queryKey: ['pokemon-url', url],
-            queryFn: () => fetchData(url),
+            queryFn: ({ signal }) => fetchData(url, signal),
             cacheTime: Infinity,
             staleTime: Infinity,
           }

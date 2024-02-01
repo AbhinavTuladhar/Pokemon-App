@@ -54,7 +54,7 @@ const MoveListing = () => {
       ? moveUrlList.map((url) => {
           return {
             queryKey: ['move-url', url],
-            queryFn: () => fetchData(url),
+            queryFn: ({ signal }) => fetchData(url, signal),
             staleTime: Infinity,
             cacheTime: Infinity,
             select: (data) => {

@@ -37,7 +37,7 @@ const AdjacentLinks = ({ id }) => {
 
   const { data: adjacentData = {}, isLoading } = useQuery({
     queryKey: ['adjacentData', offsetValue],
-    queryFn: () => fetchData(url),
+    queryFn: ({ signal }) => fetchData(url, signal),
     staleTime: Infinity,
     cacheTime: Infinity,
     select: transformData,

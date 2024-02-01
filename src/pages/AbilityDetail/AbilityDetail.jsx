@@ -22,7 +22,7 @@ const AbilityDetail = () => {
 
   const { data: abilityInfo = [] } = useQuery({
     queryKey: ['ability-url', url],
-    queryFn: () => fetchData(url),
+    queryFn: ({ signal }) => fetchData(url, signal),
     select: transformData,
     staleTime: Infinity,
     cacheTime: Infinity,

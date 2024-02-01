@@ -36,7 +36,7 @@ const EggGroupDetail = () => {
       ? pokemonUrls.map((url) => {
           return {
             queryKey: ['pokemon-url', url],
-            queryFn: () => fetchData(url),
+            queryFn: ({ signal }) => fetchData(url, signal),
             staleTime: Infinity,
             cacheTime: Infinity,
             select: (data) => {
@@ -60,7 +60,7 @@ const EggGroupDetail = () => {
       ? speciesUrls.map((url) => {
           return {
             queryKey: ['species-url', url],
-            queryFn: () => fetchData(url),
+            queryFn: ({ signal }) => fetchData(url, signal),
             staleTime: Infinity,
             cacheTime: Infinity,
             select: (data) => {

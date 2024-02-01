@@ -19,7 +19,7 @@ const PokemonList = ({ data }) => {
       ? pokemonList.map((url) => {
           return {
             queryKey: ['pokemon-url', url],
-            queryFn: () => fetchData(url),
+            queryFn: ({ signal }) => fetchData(url, signal),
             staleTime: Infinity,
             cacheTime: Infinity,
             select: (data) => {

@@ -39,7 +39,7 @@ const TypeChart = ({ data }) => {
     queries: typeUrls.map((url) => {
       return {
         queryKey: ['type', url],
-        queryFn: () => fetchData(url),
+        queryFn: ({ signal }) => fetchData(url, signal),
         staleTime: Infinity,
         cacheTime: Infinity,
         select: (data) => transformData(data),
