@@ -186,8 +186,8 @@ const LocationDetail = () => {
       const encounterMethodDiv = methods?.map(({ methodName, encounterDetails }, methodIndex) => {
         // Find the name of the encounter method description
         const encounterDescription = encounterMethodDescriptions?.find(
-          (method) => method.name === methodName,
-        ).description
+          (method) => method?.name === methodName,
+        )?.description
 
         const tableRows = [...header, ...encounterDetails]?.map((encounter, rowIndex) => {
           const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter

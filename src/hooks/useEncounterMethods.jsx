@@ -1,5 +1,5 @@
 import fetchData from '..//utils/fetchData'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueries } from '@tanstack/react-query'
 
 const useEncounterMethods = () => {
   const { data: encounterMethods } = useQuery({
@@ -15,24 +15,53 @@ const useEncounterMethods = () => {
 
   const urlList = encounterMethods?.map((obj) => obj.url)
 
-  const { data: encounterMethodDescriptions, isLoading: isLoadingEncounterDescriptions } = useQuery({
-    queryKey: ['encounter-method-list', urlList],
-    queryFn: () => Promise.all(urlList.map(fetchData)),
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    select: (data) => {
-      return data.map((method) => {
-        const { name, names, id } = method
-        // Find the English description
-        const englishDescription = names.find((obj) => obj.language.name === 'en')
-        return {
-          id,
-          name,
-          description: englishDescription.name,
-        }
-      })
+  const { data: encounterMethodDescriptions, isLoading: isLoadingEncounterDescriptions } = useQueries({
+    queries: urlList
+      ? urlList.map((url) => {
+          return {
+            queryKey: ['encounter-method', url],
+            queryFn: ({ signal }) => fetchData(url, signal),
+            cacheTime: Infinity,
+            staleTime: Infinity,
+            select: (data) => {
+              const { name, names, id } = data
+              // Find the English description
+              const englishDescription = names.find((obj) => obj.language.name === 'en')
+              return {
+                id,
+                name,
+                description: englishDescription.name,
+              }
+            },
+          }
+        })
+      : [],
+    combine: (results) => {
+      return {
+        data: results?.map((result) => result?.data),
+        isLoading: results.some((result) => result.isLoading),
+      }
     },
   })
+
+  // const { data: encounterMethodDescriptions, isLoading: isLoadingEncounterDescriptions } = useQuery({
+  //   queryKey: ['encounter-method-list', urlList],
+  //   queryFn: () => Promise.all(urlList.map(fetchData)),
+  //   staleTime: Infinity,
+  //   cacheTime: Infinity,
+  //   select: (data) => {
+  //     return data.map((method) => {
+  //       const { name, names, id } = method
+  //       // Find the English description
+  //       const englishDescription = names.find((obj) => obj.language.name === 'en')
+  //       return {
+  //         id,
+  //         name,
+  //         description: englishDescription.name,
+  //       }
+  //     })
+  //   },
+  // })
 
   return { encounterMethodDescriptions, isLoadingEncounterDescriptions }
 }
