@@ -30,11 +30,11 @@ const EggGroupListing = () => {
   const eggRows = groupPokemonCount?.map((row, index) => (
     <TableRow key={index}>
       <LeftCell>
-        <NavLink to={`/egg-group/${row.eggGroup}`} className="font-bold hoverable-link">
-          {formatName(row.eggGroup)}
+        <NavLink to={`/egg-group/${row?.eggGroup}`} className="font-bold hoverable-link">
+          {formatName(row?.eggGroup)}
         </NavLink>
       </LeftCell>
-      <RightCell>{row.pokemonCount}</RightCell>
+      <RightCell>{row?.pokemonCount}</RightCell>
     </TableRow>
   ))
 

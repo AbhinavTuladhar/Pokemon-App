@@ -1,11 +1,11 @@
-import fetchData from '..//utils/fetchData'
-import { useQuery } from '@tanstack/react-query'
+import fetchData from '../utils/fetchData'
+import { useQuery, useQueries } from '@tanstack/react-query'
 import { extractEggGroupInformation } from '../utils/extractInfo'
 
 const useEggGroupList = () => {
   const { data: eggGroupData } = useQuery({
     queryKey: ['egg-group'],
-    queryFn: () => fetchData('https://pokeapi.co/api/v2/egg-group'),
+    queryFn: ({ signal }) => fetchData('https://pokeapi.co/api/v2/egg-group', signal),
     staleTime: Infinity,
     cacheTime: Infinity,
     select: (data) => {
@@ -19,14 +19,23 @@ const useEggGroupList = () => {
 
   const urlList = eggGroupData?.map((obj) => obj.link)
 
-  // Get the number of pokemon in each egg group
-  const { data: groupPokemonCount, isLoading: isLoadingListData } = useQuery({
-    queryKey: ['egg-group', eggGroupData],
-    queryFn: () => Promise.all(urlList.map(fetchData)),
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    select: (data) => {
-      return data.map(extractEggGroupInformation).sort((a, b) => a.eggGroup.localeCompare(b.eggGroup))
+  const { data: groupPokemonCount, isLoading: isLoadingListData } = useQueries({
+    queries: urlList
+      ? urlList.map((url) => {
+          return {
+            queryKey: ['egg-group', url],
+            queryFn: ({ signal }) => fetchData(url, signal),
+            cacheTime: Infinity,
+            staleTime: Infinity,
+            select: extractEggGroupInformation,
+          }
+        })
+      : [],
+    combine: (results) => {
+      return {
+        data: results?.map((result) => result?.data).sort((a, b) => a?.eggGroup.localeCompare(b?.eggGroup)),
+        isLoading: results.some((result) => result.isLoading),
+      }
     },
   })
 
