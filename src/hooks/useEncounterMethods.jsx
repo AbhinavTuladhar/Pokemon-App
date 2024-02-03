@@ -43,26 +43,6 @@ const useEncounterMethods = () => {
       }
     },
   })
-
-  // const { data: encounterMethodDescriptions, isLoading: isLoadingEncounterDescriptions } = useQuery({
-  //   queryKey: ['encounter-method-list', urlList],
-  //   queryFn: () => Promise.all(urlList.map(fetchData)),
-  //   staleTime: Infinity,
-  //   cacheTime: Infinity,
-  //   select: (data) => {
-  //     return data.map((method) => {
-  //       const { name, names, id } = method
-  //       // Find the English description
-  //       const englishDescription = names.find((obj) => obj.language.name === 'en')
-  //       return {
-  //         id,
-  //         name,
-  //         description: englishDescription.name,
-  //       }
-  //     })
-  //   },
-  // })
-
   return { encounterMethodDescriptions, isLoadingEncounterDescriptions }
 }
 
