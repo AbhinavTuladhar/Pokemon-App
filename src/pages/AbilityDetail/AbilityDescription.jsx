@@ -47,7 +47,9 @@ const AbilityDescription = ({ descriptions }) => {
             })}
           </ul>
         </div>
-        <div className="table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle">{row?.description}</div>
+        <div className="table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle">
+          {row?.description}
+        </div>
       </div>
     )
   })

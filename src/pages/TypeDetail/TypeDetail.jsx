@@ -69,7 +69,10 @@ const TypeDetail = () => {
   ))
 
   const titleDiv = (
-    <motion.h1 className="flex flex-row justify-center text-4xl font-semibold" variants={simpleFadeInVariant}>
+    <motion.h1
+      className="flex flex-row justify-center text-4xl font-semibold"
+      variants={simpleFadeInVariant}
+    >
       {formattedType}&nbsp;
       <span className="brightness-75"> (type) </span>
     </motion.h1>
@@ -82,15 +85,25 @@ const TypeDetail = () => {
       </motion.div>
       {doubleDamageToList?.length > 0 && (
         <>
-          <motion.div className="flex flex-row items-center gap-2 py-2 my-2" variants={simpleFadeInVariant}>
-            <AiFillCheckCircle className="text-green-400" /> {formattedType} moves are super-effective against
+          <motion.div
+            className="flex flex-row items-center gap-2 py-2 my-2"
+            variants={simpleFadeInVariant}
+          >
+            <AiFillCheckCircle className="text-green-400" /> {formattedType} moves are
+            super-effective against
           </motion.div>
-          <motion.div className="flex flex-row flex-wrap gap-2 ml-4">{doubleDamageToList}</motion.div>
+          <motion.div className="flex flex-row flex-wrap gap-2 ml-4">
+            {doubleDamageToList}
+          </motion.div>
         </>
       )}
 
-      <motion.div className="flex flex-row items-center gap-2 py-2 my-2" variants={simpleFadeInVariant}>
-        <AiFillCloseCircle className="text-red-400" /> {formattedType} moves are not very effective against
+      <motion.div
+        className="flex flex-row items-center gap-2 py-2 my-2"
+        variants={simpleFadeInVariant}
+      >
+        <AiFillCloseCircle className="text-red-400" /> {formattedType} moves are not very effective
+        against
       </motion.div>
       <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
         {halfDamageToList}
@@ -98,7 +111,10 @@ const TypeDetail = () => {
 
       {noDamageToList?.length > 0 && (
         <>
-          <motion.div className="flex flex-row items-center gap-2 py-2 my-2" variants={simpleFadeInVariant}>
+          <motion.div
+            className="flex flex-row items-center gap-2 py-2 my-2"
+            variants={simpleFadeInVariant}
+          >
             <AiFillCloseCircle className="text-red-400" /> {formattedType} moves have no effect on
           </motion.div>
           <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
@@ -116,9 +132,12 @@ const TypeDetail = () => {
       </motion.div>
       {doubleDamageFromList?.length > 0 && (
         <>
-          <motion.div className="flex flex-row items-center gap-2 py-2 my-2" variants={simpleFadeInVariant}>
-            <AiFillCheckCircle className="text-green-400" /> These types are super-effective against {formattedType}{' '}
-            Pokemon.
+          <motion.div
+            className="flex flex-row items-center gap-2 py-2 my-2"
+            variants={simpleFadeInVariant}
+          >
+            <AiFillCheckCircle className="text-green-400" /> These types are super-effective against{' '}
+            {formattedType} Pokemon.
           </motion.div>
           <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
             {doubleDamageFromList}
@@ -128,9 +147,12 @@ const TypeDetail = () => {
 
       {halfDamageFromList?.length > 0 && (
         <>
-          <motion.div className="flex flex-row items-center gap-2 py-2 my-2" variants={simpleFadeInVariant}>
-            <AiFillCloseCircle className="text-red-400" /> These types are not very effective against {formattedType}{' '}
-            Pokemon.
+          <motion.div
+            className="flex flex-row items-center gap-2 py-2 my-2"
+            variants={simpleFadeInVariant}
+          >
+            <AiFillCloseCircle className="text-red-400" /> These types are not very effective
+            against {formattedType} Pokemon.
           </motion.div>
           <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
             {halfDamageFromList}
@@ -140,8 +162,12 @@ const TypeDetail = () => {
 
       {noDamageFromList?.length > 0 && (
         <>
-          <motion.div className="flex flex-row items-center gap-2 py-2 my-2" variants={simpleFadeInVariant}>
-            <AiFillCloseCircle className="text-red-400" /> These types have no effect on {formattedType} Pokemon.
+          <motion.div
+            className="flex flex-row items-center gap-2 py-2 my-2"
+            variants={simpleFadeInVariant}
+          >
+            <AiFillCloseCircle className="text-red-400" /> These types have no effect on{' '}
+            {formattedType} Pokemon.
           </motion.div>
           <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
             {noDamageFromList}
@@ -174,7 +200,10 @@ const TypeDetail = () => {
           </motion.div>
         </motion.div>
 
-        <motion.div className="flex flex-row flex-wrap justify-between mt-4" variants={simpleFadeInNoDelayVariant}>
+        <motion.div
+          className="flex flex-row flex-wrap justify-between mt-4"
+          variants={simpleFadeInNoDelayVariant}
+        >
           <motion.div variants={simpleFadeInNoDelayVariant} className="w-full mdlg:w-1/3">
             <motion.div variants={simpleFadeInNoDelayVariant} className="mb-10">
               {offensiveDiv}
@@ -195,7 +224,12 @@ const TypeDetail = () => {
         </motion.div>
 
         <motion.div variants={simpleFadeInVariant}>
-          {<PokemonCardList title={`${formatName(type)} Pokemon`} pokemonUrls={extractedInformation.pokemonList} />}
+          {
+            <PokemonCardList
+              title={`${formatName(type)} Pokemon`}
+              pokemonUrls={extractedInformation.pokemonList}
+            />
+          }
         </motion.div>
       </motion.div>
     </motion.div>

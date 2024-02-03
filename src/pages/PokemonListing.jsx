@@ -72,12 +72,15 @@ const MainPage = ({ offset, limit }) => {
   // For handling the search bar.
   const handleChange = (event) => {
     const searchString = event.target.value
-    const filteredData = pokemonInfo?.filter((pokemon) => pokemon.name.includes(searchString.toLowerCase()))
+    const filteredData = pokemonInfo?.filter((pokemon) =>
+      pokemon.name.includes(searchString.toLowerCase()),
+    )
     setFilteredPokemonInfo(filteredData)
   }
 
   const titleSuffix = 'List | Pokémon database'
-  const titlePrefix = generationNumber !== '' ? `Generation ${generationNumber} Pokémon` : 'Pokémon forms'
+  const titlePrefix =
+    generationNumber !== '' ? `Generation ${generationNumber} Pokémon` : 'Pokémon forms'
   document.title = `${titlePrefix} ${titleSuffix}`
 
   return (

@@ -73,7 +73,9 @@ const TypeChartFull = () => {
   })
 
   if (isLoading) {
-    return <Skeleton width="90%" height="46rem" containerClassName="flex-1 w-full flex justify-end" />
+    return (
+      <Skeleton width="90%" height="46rem" containerClassName="flex-1 w-full flex justify-end" />
+    )
   }
 
   // To show the defending and attacking types.

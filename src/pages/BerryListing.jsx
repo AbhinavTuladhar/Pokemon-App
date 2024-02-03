@@ -10,7 +10,9 @@ import { motion } from 'framer-motion'
 import { Tooltip } from 'react-tooltip'
 
 const TableRow = ({ children, extraClassName }) => {
-  return <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
+  return (
+    <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
+  )
 }
 
 const TableCell = ({ children, extraClassName }) => {
@@ -109,7 +111,17 @@ const BerryListing = () => {
   )
 
   const dataRows = berryInformation?.map((berry, berryIndex) => {
-    const { generationIntroduced, id, sprite, name, shortEntry, firmness, size, maxHarvest, growthTime } = berry
+    const {
+      generationIntroduced,
+      id,
+      sprite,
+      name,
+      shortEntry,
+      firmness,
+      size,
+      maxHarvest,
+      growthTime,
+    } = berry
     const cellData = [
       { key: 'generation', value: generationIntroduced?.slice(generationIntroduced.length - 1) },
       { key: 'id', value: id },

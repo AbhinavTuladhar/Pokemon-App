@@ -61,4 +61,9 @@ const FadeInAnimatedTableRowContainer = ({ children, className, useOnce }) => {
   )
 }
 
-export { FadeInAnimationContainer, FadeInAnimationCard, AnimatedTableRowContainer, FadeInAnimatedTableRowContainer }
+export {
+  FadeInAnimationContainer,
+  FadeInAnimationCard,
+  AnimatedTableRowContainer,
+  FadeInAnimatedTableRowContainer,
+}

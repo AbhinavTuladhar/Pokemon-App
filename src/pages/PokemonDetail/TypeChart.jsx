@@ -12,7 +12,9 @@ import { Tooltip } from 'react-tooltip'
 import multiplierToString from '../../utils/multiplierToString'
 
 const TypeDefenceRow = ({ typeDefenceInfo, extraClassName }) => (
-  <div className={`flex flex-row justify-center overflow-x-auto overflow-y-hidden mx-auto sm:mx-0 ${extraClassName}`}>
+  <div
+    className={`flex flex-row justify-center overflow-x-auto overflow-y-hidden mx-auto sm:mx-0 ${extraClassName}`}
+  >
     {typeDefenceInfo.map((row, rowIndex) => (
       <div className="flex flex-col text-center w-9" key={rowIndex}>
         <MiniTypeCard typeName={row.type} />
@@ -81,8 +83,14 @@ const TypeChart = ({ data }) => {
       <span> {`The effectiveness of each type on ${formatName(name)}: `} </span>
 
       <div className="flex flex-col justify-center md:flex-row mdlg:flex-col sm:flex-row overflow-x-auto">
-        <TypeDefenceRow typeDefenceInfo={typeDefenseInfo.slice(0, 9)} extraClassName={firstClassName} />
-        <TypeDefenceRow typeDefenceInfo={typeDefenseInfo.slice(9)} extraClassName={secondClassName} />
+        <TypeDefenceRow
+          typeDefenceInfo={typeDefenseInfo.slice(0, 9)}
+          extraClassName={firstClassName}
+        />
+        <TypeDefenceRow
+          typeDefenceInfo={typeDefenseInfo.slice(9)}
+          extraClassName={secondClassName}
+        />
       </div>
 
       <>{toolTipData}</>

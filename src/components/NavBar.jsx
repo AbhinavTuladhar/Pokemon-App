@@ -3,7 +3,11 @@ import { NavLink } from 'react-router-dom'
 
 const ListItem = ({ items, closeMenu, subMenuFlag }) => {
   return items.map((data, index) => (
-    <li className={`float-left min-h-full flex-1 w-full ${subMenuFlag && 'w-full'}`} onClick={closeMenu} key={index}>
+    <li
+      className={`float-left min-h-full flex-1 w-full ${subMenuFlag && 'w-full'}`}
+      onClick={closeMenu}
+      key={index}
+    >
       <NavLink to={data.path}>
         <span
           className={`hover:brightness-125 duration-300 text-white block text-center px-2 w-full bg-gray-800 ${subMenuFlag ? 'py-3 bg-black' : 'py-4'}`}
@@ -34,7 +38,12 @@ const DropDownMenu = ({ menuData, parentText }) => {
   const navElements = <ListItem items={menuData} closeMenu={closeMenu} subMenuFlag={true} />
 
   return (
-    <li className="flex-1 float-left" onMouseOver={openMenu} onMouseOut={closeMenu} onClick={toggleMenu}>
+    <li
+      className="flex-1 float-left"
+      onMouseOver={openMenu}
+      onMouseOut={closeMenu}
+      onClick={toggleMenu}
+    >
       <div className="relative group">
         <button className="block w-full px-2 py-4 text-center text-white duration-300 bg-gray-800 whitespace-nowrap hover:brightness-125">
           <span> {parentText} </span>

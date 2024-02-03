@@ -63,7 +63,9 @@ const DualTypeChart = ({ data }) => {
       }
       const combinedTypeString = arr.map((type) => formatName(type)).join('/')
       const multiplierValue =
-        firstType !== '' || firstType !== null ? calculateOffensiveTypeEffectiveness(functionArgs) : 1
+        firstType !== '' || firstType !== null
+          ? calculateOffensiveTypeEffectiveness(functionArgs)
+          : 1
       const multiplierString = multiplierToString(multiplierValue)
 
       toolTips.push(

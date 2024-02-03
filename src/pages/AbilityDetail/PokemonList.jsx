@@ -24,7 +24,8 @@ const PokemonList = ({ data }) => {
             cacheTime: Infinity,
             select: (data) => {
               // We now need to find the pokemon name, the icons, and the other abilities of the pokemon.
-              const { abilities, name, icon, id, order, nationalNumber } = extractPokemonInformation(data)
+              const { abilities, name, icon, id, order, nationalNumber } =
+                extractPokemonInformation(data)
               // Now find the other abilities of the Pokemon. THese pokemon should have an icon.
               const otherAbilities = abilities
                 ?.filter((ability) => ability.ability.name !== abilityName)
@@ -45,7 +46,10 @@ const PokemonList = ({ data }) => {
       return {
         data: results
           .map((result) => result.data)
-          ?.filter((entry) => (entry?.id >= 1 && entry?.id <= 807) || (entry?.id >= 10001 && entry?.id <= 10157))
+          ?.filter(
+            (entry) =>
+              (entry?.id >= 1 && entry?.id <= 807) || (entry?.id >= 10001 && entry?.id <= 10157),
+          )
           ?.sort((prev, curr) => (prev?.nationalNumber >= curr?.nationalNumber ? 1 : -1)),
         isLoading: results.some((result) => result.isLoading),
       }

@@ -104,7 +104,9 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
                 <div className="flex flex-col items-center justify-center mx-4 w-full md:w-48">
                   <BsArrowDownRight size={60} className="hidden md:flex" />
                   <BsArrowDown size={60} className="flex mx-4 md:hidden" />
-                  {evolutionExtractedInfoFinal ? `(${evolutionExtractedInfoFinal})` : `(${evolutionExtractedInfoNext})`}
+                  {evolutionExtractedInfoFinal
+                    ? `(${evolutionExtractedInfoFinal})`
+                    : `(${evolutionExtractedInfoNext})`}
                 </div>
                 {finalPokemon}
               </div>
@@ -116,7 +118,10 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
       // For regular, linear evolutions.
     } else if (!currentPokemonData.isSplitEvo) {
       return (
-        <div className="flex flex-col items-center justify-center md:flex-row sm:flex-col" key={index}>
+        <div
+          className="flex flex-col items-center justify-center md:flex-row sm:flex-col"
+          key={index}
+        >
           {pokemon}
           {index !== individualPokemon.length - 1 && !currentPokemonData.nextEvoSplit && (
             <>
@@ -276,19 +281,42 @@ const EvolutionChain = ({ url }) => {
 
   if (firstPokemonName === 'eevee') {
     // For the first three eveelutions
-    let stoneEvolutionsData = [finalPokemonData[0], finalPokemonData[1], finalPokemonData[2], finalPokemonData[3]]
-    let stoneEvolutionsDivs = [individualPokemon[0], individualPokemon[1], individualPokemon[2], individualPokemon[3]]
-    eeveelutionDiv.push(<EvolutionDiv finalPokemonData={stoneEvolutionsData} individualPokemon={stoneEvolutionsDivs} />)
+    let stoneEvolutionsData = [
+      finalPokemonData[0],
+      finalPokemonData[1],
+      finalPokemonData[2],
+      finalPokemonData[3],
+    ]
+    let stoneEvolutionsDivs = [
+      individualPokemon[0],
+      individualPokemon[1],
+      individualPokemon[2],
+      individualPokemon[3],
+    ]
+    eeveelutionDiv.push(
+      <EvolutionDiv
+        finalPokemonData={stoneEvolutionsData}
+        individualPokemon={stoneEvolutionsDivs}
+      />,
+    )
 
     // For the friendship ones
     let friendEvolutionsData = [finalPokemonData[0], finalPokemonData[4], finalPokemonData[5]]
     let friendEvolutionsDivs = [individualPokemon[0], individualPokemon[4], individualPokemon[5]]
     eeveelutionDiv.push(
-      <EvolutionDiv finalPokemonData={friendEvolutionsData} individualPokemon={friendEvolutionsDivs} />,
+      <EvolutionDiv
+        finalPokemonData={friendEvolutionsData}
+        individualPokemon={friendEvolutionsDivs}
+      />,
     )
 
     // For the location ones
-    let locationEvolutionsData = [finalPokemonData[0], finalPokemonData[6], finalPokemonData[7], finalPokemonData[8]]
+    let locationEvolutionsData = [
+      finalPokemonData[0],
+      finalPokemonData[6],
+      finalPokemonData[7],
+      finalPokemonData[8],
+    ]
     let locationEvolutionsDivs = [
       individualPokemon[0],
       individualPokemon[6],
@@ -296,7 +324,10 @@ const EvolutionChain = ({ url }) => {
       individualPokemon[8],
     ]
     eeveelutionDiv.push(
-      <EvolutionDiv finalPokemonData={locationEvolutionsData} individualPokemon={locationEvolutionsDivs} />,
+      <EvolutionDiv
+        finalPokemonData={locationEvolutionsData}
+        individualPokemon={locationEvolutionsDivs}
+      />,
     )
   } else if (firstPokemonName === 'wurmple') {
     let wormData = [finalPokemonData[0], finalPokemonData[1], finalPokemonData[3]]
@@ -317,14 +348,18 @@ const EvolutionChain = ({ url }) => {
 
     let butterflyData = [wurmpleEvsData[1], wurmpleEvsData[2]]
     let butterflyDivs = [individualWormPokemon[1], individualWormPokemon[2]]
-    wurmpleDiv.push(<EvolutionDiv finalPokemonData={butterflyData} individualPokemon={butterflyDivs} />)
+    wurmpleDiv.push(
+      <EvolutionDiv finalPokemonData={butterflyData} individualPokemon={butterflyDivs} />,
+    )
 
     // For dustox
     let mothData = [wurmpleEvsData[3], wurmpleEvsData[4]]
     let mothDivs = [individualWormPokemon[3], individualWormPokemon[4]]
     wurmpleDiv.push(<EvolutionDiv finalPokemonData={mothData} individualPokemon={mothDivs} />)
   } else {
-    finalEvolutionDiv = <EvolutionDiv finalPokemonData={finalPokemonData} individualPokemon={individualPokemon} />
+    finalEvolutionDiv = (
+      <EvolutionDiv finalPokemonData={finalPokemonData} individualPokemon={individualPokemon} />
+    )
   }
 
   return (
@@ -333,7 +368,9 @@ const EvolutionChain = ({ url }) => {
       {isLoading || isLoadingPokemonData ? (
         <Skeleton width="100%" height="12rem" containerClassName="flex-1 w-full" />
       ) : finalEvolutionDiv ? (
-        <div className="flex flex-col justify-center md:flex-row sm:flex-col gap-x-5">{finalEvolutionDiv}</div>
+        <div className="flex flex-col justify-center md:flex-row sm:flex-col gap-x-5">
+          {finalEvolutionDiv}
+        </div>
       ) : eeveelutionDiv.length > 0 ? (
         eeveelutionDiv.map((div, index) => {
           return (

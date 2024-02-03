@@ -79,10 +79,16 @@ const TypeListing = () => {
       transition={{ ease: 'easeIn' }}
     >
       <motion.section variants={typeVariant} initial="initial" animate="animate">
-        <motion.h1 className="flex justify-center mb-8 text-5xl font-bold text-center" variants={typeVariant}>
+        <motion.h1
+          className="flex justify-center mb-8 text-5xl font-bold text-center"
+          variants={typeVariant}
+        >
           Pokémon types & type chart
         </motion.h1>
-        <motion.h1 className="flex justify-center mb-10 text-4xl font-bold text-center" variants={typeVariant}>
+        <motion.h1
+          className="flex justify-center mb-10 text-4xl font-bold text-center"
+          variants={typeVariant}
+        >
           Type quick-list
         </motion.h1>
         <motion.div
@@ -98,11 +104,15 @@ const TypeListing = () => {
           Type Chart
         </motion.h1>
 
-        <motion.section className="flex flex-row flex-wrap justify-between" variants={fadeInVariant}>
+        <motion.section
+          className="flex flex-row flex-wrap justify-between"
+          variants={fadeInVariant}
+        >
           <div className="w-full mdlg:w-1/3">
             <p>
-              The full type chart here displays the strengths and weaknesses of each type. Look down the left hand side
-              for the attacking type, then move across to see how effective it is against each Pokémon type.
+              The full type chart here displays the strengths and weaknesses of each type. Look down
+              the left hand side for the attacking type, then move across to see how effective it is
+              against each Pokémon type.
             </p>
             <div>
               <h1 className="my-4 text-2xl font-bold">Chart Key</h1>

@@ -70,7 +70,9 @@ const EggGroupDetail = () => {
               // For eg if the current page is of the monster egg group
               // and this Pokemon has the 'Water1' egg group, it should get the 'Water1' egg group
               // If there is only one egg group it should return undefined
-              const otherEggGroup = egg_groups.map((group) => group.name).filter((group) => group !== eggGroupid)[0]
+              const otherEggGroup = egg_groups
+                .map((group) => group.name)
+                .filter((group) => group !== eggGroupid)[0]
               return { id, otherEggGroup }
             },
           }
@@ -90,7 +92,9 @@ const EggGroupDetail = () => {
       const obj2 = speciesData?.find((obj2) => obj1?.id === obj2?.id)
       return { ...obj1, ...obj2 }
     })
-    .filter((entry) => (entry.id >= 1 && entry.id <= 807) || (entry.id >= 10001 && entry.id <= 10157))
+    .filter(
+      (entry) => (entry.id >= 1 && entry.id <= 807) || (entry.id >= 10001 && entry.id <= 10157),
+    )
 
   document.title = `${formatName(eggGroupid)} egg group | Pokémon database`
 
@@ -111,7 +115,10 @@ const EggGroupDetail = () => {
         </FadeInAnimationContainer>
         <div className="flex justify-center w-full lg:w-5/12">
           <FadeInAnimationContainer className="w-full">
-            <PokemonTable data={finalData} isLoading={isLoadingPokemonData || isLoadingSpeciesData} />
+            <PokemonTable
+              data={finalData}
+              isLoading={isLoadingPokemonData || isLoadingSpeciesData}
+            />
           </FadeInAnimationContainer>
         </div>
       </div>

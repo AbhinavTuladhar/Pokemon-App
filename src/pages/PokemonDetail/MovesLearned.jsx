@@ -30,7 +30,9 @@ const firstRowLevelUp = {
 const separateMoves = ({ data, learnMethod }) => {
   const movesLearnt = data.map((move) => {
     const { version_group_details } = move // this is an array
-    const filteredMoves = version_group_details.filter((version) => version.move_learn_method.name === learnMethod)
+    const filteredMoves = version_group_details.filter(
+      (version) => version.move_learn_method.name === learnMethod,
+    )
     const replacedUrl = move.move.url.replace(/\/move\/\d+\//, `/move/${move.move.name}/`)
     return {
       name: move.move.name,
@@ -57,7 +59,9 @@ const MovesLearned = ({ data }) => {
   // Consider that the latest gen is 7.
   const SMData = moves?.flatMap((move) => {
     const { version_group_details } = move
-    const SMInfo = version_group_details.filter((version) => version.version_group.name === 'ultra-sun-ultra-moon')
+    const SMInfo = version_group_details.filter(
+      (version) => version.version_group.name === 'ultra-sun-ultra-moon',
+    )
     return {
       ...move,
       version_group_details: SMInfo,
@@ -80,8 +84,10 @@ const MovesLearned = ({ data }) => {
   // Now sort the moves by some conditions.
   // sort level up moves by the level learnt.
   const sortedLevelMoves = levelUpMoves.sort((curr, next) => {
-    const levelLearntCurrent = curr.version_group_details[curr.version_group_details.length - 1].level_learned_at
-    const levelLearntNext = next.version_group_details[next.version_group_details.length - 1].level_learned_at
+    const levelLearntCurrent =
+      curr.version_group_details[curr.version_group_details.length - 1].level_learned_at
+    const levelLearntNext =
+      next.version_group_details[next.version_group_details.length - 1].level_learned_at
     if (levelLearntCurrent < levelLearntNext) return -1
     else if (levelLearntCurrent > levelLearntNext) return 1
     else return curr.name < next.name ? -1 : 1
@@ -91,7 +97,8 @@ const MovesLearned = ({ data }) => {
   const levelLearntData = levelUpMoves?.map((move) => {
     return {
       name: move.name,
-      levelLearntAt: move.version_group_details[move.version_group_details.length - 1].level_learned_at,
+      levelLearntAt:
+        move.version_group_details[move.version_group_details.length - 1].level_learned_at,
     }
   })
 
@@ -137,7 +144,10 @@ const MovesLearned = ({ data }) => {
       // For zebra pattern
       const rowBg = index !== 0 && index % 2 === 0 ? 'bg-gray-900' : ''
       return (
-        <div className={`${stringDecoration} ${rowBg} table-row border border-slate-400`} key={index}>
+        <div
+          className={`${stringDecoration} ${rowBg} table-row border border-slate-400`}
+          key={index}
+        >
           {move.levelLearntAt && (
             <div className="pl-4 table-cell align-middle h-12 border-t border-slate-400 px-2">
               {move?.levelLearntAt}
@@ -162,9 +172,15 @@ const MovesLearned = ({ data }) => {
               <img className="w-[30px] h-[20px]" src={moveClassImage} alt={move?.damageClass} />
             )}
           </div>
-          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">{move?.PP}</div>
-          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">{move?.power}</div>
-          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">{move?.accuracy}</div>
+          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">
+            {move?.PP}
+          </div>
+          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">
+            {move?.power}
+          </div>
+          <div className="table-cell align-middle h-12 border-t border-slate-400 px-2">
+            {move?.accuracy}
+          </div>
         </div>
       )
     })

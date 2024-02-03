@@ -45,10 +45,14 @@ const MoveData = ({ moveInfo }) => {
       return null
     }
     // Add a positive sign to priority if positive.
-    const rowValue = row.header === 'Priority' && parseInt(row.value) > 0 ? `+${row.value}` : row.value
+    const rowValue =
+      row.header === 'Priority' && parseInt(row.value) > 0 ? `+${row.value}` : row.value
     return (
       <div className="table-row h-12" key={rowIndex}>
-        <div key={row.header} className="table-cell align-middle text-right border-t py-2 pr-8 border-slate-200">
+        <div
+          key={row.header}
+          className="table-cell align-middle text-right border-t py-2 pr-8 border-slate-200"
+        >
           {row.header}
         </div>
         <div key={row.value} className="table-cell align-middle border-t py-2 border-slate-200">
@@ -61,7 +65,9 @@ const MoveData = ({ moveInfo }) => {
   return (
     <>
       <SectionTitle text={'Move data'} />
-      <div className="w-full">{propsFlag ? <TableContainer child={tableRows} /> : <TabularSkeleton />}</div>
+      <div className="w-full">
+        {propsFlag ? <TableContainer child={tableRows} /> : <TabularSkeleton />}
+      </div>
     </>
   )
 }

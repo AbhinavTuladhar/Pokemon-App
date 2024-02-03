@@ -68,7 +68,10 @@ const PokeDexData = ({ pokemonData }) => {
     return (
       <li key={index}>
         <> {prefix} </>
-        <NavLink to={`/ability/${name}`} className="text-blue-400 duration-300 hover:text-red-400 hover:underline">
+        <NavLink
+          to={`/ability/${name}`}
+          className="text-blue-400 duration-300 hover:text-red-400 hover:underline"
+        >
           {formatName(name)}
         </NavLink>
         <> {hiddenExtraText} </>
@@ -79,7 +82,9 @@ const PokeDexData = ({ pokemonData }) => {
 
   // Now dealing with the Pokedex numbers for each region.
   // Omit the national region number and conquest gallery numbers, for the reasons specified before.
-  const nonNationalValues = pokedex_numbers?.filter((entry) => !excludedRegions.includes(entry.pokedex.name))
+  const nonNationalValues = pokedex_numbers?.filter(
+    (entry) => !excludedRegions.includes(entry.pokedex.name),
+  )
   const regionNumberValues = nonNationalValues?.map((entry, index) => {
     const regionName = entry.pokedex.name
     const entryNumber = entry.entry_number.toString().padStart(4, '0')
@@ -103,7 +108,9 @@ const PokeDexData = ({ pokemonData }) => {
     const gameNames = game?.gameNames
     const gameList = gameNames?.map((item) => {
       const individualGames = item.split('-').map((game) => game.toLowerCase())
-      const formattedIndividualGames = individualGames?.map((game) => game.charAt(0).toUpperCase() + game.slice(1))
+      const formattedIndividualGames = individualGames?.map(
+        (game) => game.charAt(0).toUpperCase() + game.slice(1),
+      )
       const gameListTemp = formattedIndividualGames?.join(' / ')
       return gameListTemp
     })
@@ -136,7 +143,9 @@ const PokeDexData = ({ pokemonData }) => {
     const spacing = row.label === 'Abilities' || row.label === 'Regional no.' ? 'min-h-14' : 'h-12'
     return (
       <div className={`table-row border-t border-gray-200 py-2 ${spacing}`} key={rowIndex}>
-        <div className="table-cell align-middle py-2 border-t border-gray-200 text-right w-3/12">{row.label}</div>
+        <div className="table-cell align-middle py-2 border-t border-gray-200 text-right w-3/12">
+          {row.label}
+        </div>
         <div className="table-cell align-middle py-2 border-t border-gray-200 pl-4 w-9/12">
           <div className="flex">{row.value}</div>
         </div>

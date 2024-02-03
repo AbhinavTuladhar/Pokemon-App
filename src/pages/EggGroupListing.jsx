@@ -6,15 +6,23 @@ import { NavLink } from 'react-router-dom'
 import useEggGroupList from '../hooks/useEggGroupList'
 
 const TableRow = ({ children, extraClassName }) => {
-  return <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
+  return (
+    <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
+  )
 }
 
 const LeftCell = ({ children }) => {
-  return <div className="table-cell w-2/5 pl-4 align-middle border-t border-gray-200">{children}</div>
+  return (
+    <div className="table-cell w-2/5 pl-4 align-middle border-t border-gray-200">{children}</div>
+  )
 }
 
 const RightCell = ({ children }) => {
-  return <div className="table-cell pr-4 text-right align-middle border-t border-gray-200">{children}</div>
+  return (
+    <div className="table-cell pr-4 text-right align-middle border-t border-gray-200">
+      {children}
+    </div>
+  )
 }
 
 const EggGroupListing = () => {

@@ -139,7 +139,10 @@ export const extractPokemonInformation = (data) => {
           'black-white': { front_default: fifthGenDefaultSprite, front_shiny: fifthGenShinySprite },
         },
         'generation-vi': {
-          'omegaruby-alphasapphire': { front_default: sixthGenDefaultSprite, front_shiny: sixthGenShinySprite },
+          'omegaruby-alphasapphire': {
+            front_default: sixthGenDefaultSprite,
+            front_shiny: sixthGenShinySprite,
+          },
         },
         'generation-vii': {
           'ultra-sun-ultra-moon': { front_default: gameSprite, front_shiny: sevenGenthShinySprite },
@@ -156,11 +159,31 @@ export const extractPokemonInformation = (data) => {
 
   const spriteCollection = [
     { generation: 'Generation 1', frontSprite: firstGenDefaultSprite, shinySprite: null },
-    { generation: 'Generation 2', frontSprite: secondGenDefaultSprite, shinySprite: secondGenShinySprite },
-    { generation: 'Generation 3', frontSprite: thirdGenDefaultSprite, shinySprite: thirdGenShinySprite },
-    { generation: 'Generation 4', frontSprite: fourthGenDefaultSprite, shinySprite: fourthGenShinySprite },
-    { generation: 'Generation 5', frontSprite: fifthGenDefaultSprite, shinySprite: fifthGenShinySprite },
-    { generation: 'Generation 6', frontSprite: sixthGenDefaultSprite, shinySprite: sixthGenShinySprite },
+    {
+      generation: 'Generation 2',
+      frontSprite: secondGenDefaultSprite,
+      shinySprite: secondGenShinySprite,
+    },
+    {
+      generation: 'Generation 3',
+      frontSprite: thirdGenDefaultSprite,
+      shinySprite: thirdGenShinySprite,
+    },
+    {
+      generation: 'Generation 4',
+      frontSprite: fourthGenDefaultSprite,
+      shinySprite: fourthGenShinySprite,
+    },
+    {
+      generation: 'Generation 5',
+      frontSprite: fifthGenDefaultSprite,
+      shinySprite: fifthGenShinySprite,
+    },
+    {
+      generation: 'Generation 6',
+      frontSprite: sixthGenDefaultSprite,
+      shinySprite: sixthGenShinySprite,
+    },
     { generation: 'Generation 7', frontSprite: gameSprite, shinySprite: sevenGenthShinySprite },
     { generation: 'Icon', frontSprite: icon, shinySprite: null },
   ]
@@ -369,12 +392,26 @@ const extractEncounterInformation = (encounterData) => {
 
     const extractedEncounterInformation = encounter_details.map(extractDetailedEncounterInformation)
 
-    return { iconSprite, pokemonName, gameName, generation, generationInternal, extractedEncounterInformation }
+    return {
+      iconSprite,
+      pokemonName,
+      gameName,
+      generation,
+      generationInternal,
+      extractedEncounterInformation,
+    }
   })
 
   // A flatmap to attach the pokemon name and game nome to each object in the array
   const expandedDetails = toReturn.flatMap(
-    ({ iconSprite, pokemonName, gameName, generation, generationInternal, extractedEncounterInformation }) => {
+    ({
+      iconSprite,
+      pokemonName,
+      gameName,
+      generation,
+      generationInternal,
+      extractedEncounterInformation,
+    }) => {
       return extractedEncounterInformation.map(({ ...rest }) => ({
         iconSprite,
         pokemonName,
@@ -391,7 +428,9 @@ const extractEncounterInformation = (encounterData) => {
   const reducedEncounterInformation = expandedDetails.reduce((acc, obj) => {
     const existingObject = acc.find(
       (item) =>
-        obj.pokemonName === item.pokemonName && obj.gameName === item.gameName && obj.generation === item.generation,
+        obj.pokemonName === item.pokemonName &&
+        obj.gameName === item.gameName &&
+        obj.generation === item.generation,
     )
 
     // If there's a matching object, find the lower value of minimum level, higher value of maximum level and accumulate the encounter chance.
@@ -439,7 +478,10 @@ export const extractLocationAreaInformation = (locationAreaData) => {
     return acc
   }, [])
 
-  return { subLocationName: properLocationAreaName, encounterDetails: groupedEncounterDetailsByGame }
+  return {
+    subLocationName: properLocationAreaName,
+    encounterDetails: groupedEncounterDetailsByGame,
+  }
 }
 
 export const extractEggGroupInformation = (data) => {

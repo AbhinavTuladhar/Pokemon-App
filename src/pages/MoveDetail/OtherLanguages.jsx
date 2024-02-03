@@ -27,7 +27,11 @@ const processLanuages = (arr) => {
 }
 
 const LanguageCell = ({ children }) => {
-  return <div className="table-cell w-2/5 font-thin text-right align-middle border-t border-gray-200">{children}</div>
+  return (
+    <div className="table-cell w-2/5 font-thin text-right align-middle border-t border-gray-200">
+      {children}
+    </div>
+  )
 }
 
 const NameCell = ({ children }) => {

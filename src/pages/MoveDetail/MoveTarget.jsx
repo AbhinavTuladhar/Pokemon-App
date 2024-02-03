@@ -40,12 +40,22 @@ const MoveTarget = ({ targetType }) => {
           <div className="flex flex-col items-center gap-y-2 mx-6">
             <div className="flex flex-row gap-x-2">
               {foeInformation.map((box, index) => (
-                <PokemonTargetBox flag={box.flag} text={box.text} targeted={box.targeted} key={index} />
+                <PokemonTargetBox
+                  flag={box.flag}
+                  text={box.text}
+                  targeted={box.targeted}
+                  key={index}
+                />
               ))}
             </div>
             <div className="flex flex-row gap-x-2">
               {allyInformation.map((box, index) => (
-                <PokemonTargetBox flag={box.flag} text={box.text} targeted={box.targeted} key={index} />
+                <PokemonTargetBox
+                  flag={box.flag}
+                  text={box.text}
+                  targeted={box.targeted}
+                  key={index}
+                />
               ))}
             </div>
           </div>

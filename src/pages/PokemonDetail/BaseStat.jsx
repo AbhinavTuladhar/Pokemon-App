@@ -103,21 +103,32 @@ const BaseStat = ({ data }) => {
 
     return (
       <div className="table-row border-t border-gray-200 py-2 h-12 max-h-24 pr-0" key={index}>
-        <div className="table-cell pr-2 text-right align-middle border-t border-gray-200">{stat.name}</div>
+        <div className="table-cell pr-2 text-right align-middle border-t border-gray-200">
+          {stat.name}
+        </div>
         <div className="table-cell px-1 text-right align-middle border-t border-gray-200">
           <span className={`${stringDecoration} text-left`}> {stat.value} </span>
         </div>
         <div className="table-cell min-w-[9.375rem] w-full h-full px-0 mx-0 align-middle border-t border-gray-200">
           <div
             className="h-3 my-0 ml-2 rounded"
-            style={{ width: stat.width, minWidth: '1rem', maxWidth: '100%', backgroundColor: stat.colour }}
+            style={{
+              width: stat.width,
+              minWidth: '1rem',
+              maxWidth: '100%',
+              backgroundColor: stat.colour,
+            }}
           >
             {' '}
             &nbsp;
           </div>
         </div>
-        <div className="table-cell px-1 pl-3 text-right align-middle border-t border-gray-200">{stat.min}</div>
-        <div className="table-cell px-1 text-right align-middle border-t border-gray-200">{stat.max}</div>
+        <div className="table-cell px-1 pl-3 text-right align-middle border-t border-gray-200">
+          {stat.min}
+        </div>
+        <div className="table-cell px-1 text-right align-middle border-t border-gray-200">
+          {stat.max}
+        </div>
       </div>
     )
   })
@@ -128,8 +139,9 @@ const BaseStat = ({ data }) => {
       <TableContainer child={rowValues} />
       {/* This is just some informative text. */}
       <div className="mt-4 font-extralight">
-        The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a beneficial nature, 252
-        EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs, 0 IVs.
+        The ranges shown on the right are for a level 100 Pokémon. Maximum values are based on a
+        beneficial nature, 252 EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs, 0
+        IVs.
       </div>
     </>
   )

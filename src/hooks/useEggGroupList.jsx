@@ -33,7 +33,9 @@ const useEggGroupList = () => {
       : [],
     combine: (results) => {
       return {
-        data: results?.map((result) => result?.data).sort((a, b) => a?.eggGroup.localeCompare(b?.eggGroup)),
+        data: results
+          ?.map((result) => result?.data)
+          .sort((a, b) => a?.eggGroup.localeCompare(b?.eggGroup)),
         isLoading: results.some((result) => result.isLoading),
       }
     },

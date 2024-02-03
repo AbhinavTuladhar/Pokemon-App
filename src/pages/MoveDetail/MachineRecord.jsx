@@ -84,7 +84,9 @@ const MachineRecord = ({ machineList }) => {
   return (
     <>
       <SectionTitle text={'Machine/Record'} />
-      <div className="w-full">{isLoading ? <TabularSkeleton /> : <TableContainer child={tableRows} />}</div>
+      <div className="w-full">
+        {isLoading ? <TabularSkeleton /> : <TableContainer child={tableRows} />}
+      </div>
     </>
   )
 }

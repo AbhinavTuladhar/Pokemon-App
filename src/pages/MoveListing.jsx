@@ -70,14 +70,27 @@ const MoveListing = () => {
                 effect_chance: effectChance,
                 machines,
               } = extractMoveInformation(data)
-              return { id, moveName, moveType, damageClass, power, accuracy, PP, shortEntry, effectChance, machines }
+              return {
+                id,
+                moveName,
+                moveType,
+                damageClass,
+                power,
+                accuracy,
+                PP,
+                shortEntry,
+                effectChance,
+                machines,
+              }
             },
           }
         })
       : [],
     combine: (results) => {
       return {
-        data: results?.map((result) => result?.data).sort((prev, curr) => (prev?.moveName > curr?.moveName ? 1 : -1)),
+        data: results
+          ?.map((result) => result?.data)
+          .sort((prev, curr) => (prev?.moveName > curr?.moveName ? 1 : -1)),
         isLoading: results.some((result) => result.isLoading),
         isFullyLoadedMoveData: results.every((result) => result.data !== undefined),
       }
@@ -141,7 +154,12 @@ const MoveListing = () => {
       },
       {
         key: 'damageClass',
-        value: index === 0 ? damageClass : <img src={moveClassImage} className="h-[20px] w-[30px]" alt={damageClass} />,
+        value:
+          index === 0 ? (
+            damageClass
+          ) : (
+            <img src={moveClassImage} className="h-[20px] w-[30px]" alt={damageClass} />
+          ),
       },
       {
         key: 'power',

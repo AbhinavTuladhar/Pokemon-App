@@ -109,7 +109,9 @@ const LocationDetail = () => {
     return (
       <div>
         <h1 className="text-3xl font-bold text-center">{formatName(locationName)}</h1>
-        <h1 className="text-2xl font-bold text-center">Could not find any encounter information for this location.</h1>
+        <h1 className="text-2xl font-bold text-center">
+          Could not find any encounter information for this location.
+        </h1>
       </div>
     )
   }
@@ -151,7 +153,9 @@ const LocationDetail = () => {
         } else {
           result.push({
             generation,
-            subLocations: [{ subLocationName, methods: [{ methodName, encounterDetails: [encounter] }] }],
+            subLocations: [
+              { subLocationName, methods: [{ methodName, encounterDetails: [encounter] }] },
+            ],
           })
         }
       })
@@ -179,89 +183,97 @@ const LocationDetail = () => {
   Since all the above information have already been rendered, we omit them from the table.
   */
   // Generation is at the highest level, so the generation divs come first.
-  const generationDiv = groupedByGenerationSubLocationAndMethod?.map(({ generation, subLocations }, divIndex) => {
-    // Next is the sub location div.
-    const subLocationDivNew = subLocations?.map(({ subLocationName, methods }, subIndex) => {
-      // Finally, the encounter methods.
-      const encounterMethodDiv = methods?.map(({ methodName, encounterDetails }, methodIndex) => {
-        // Find the name of the encounter method description
-        const encounterDescription = encounterMethodDescriptions?.find(
-          (method) => method?.name === methodName,
-        )?.description
+  const generationDiv = groupedByGenerationSubLocationAndMethod?.map(
+    ({ generation, subLocations }, divIndex) => {
+      // Next is the sub location div.
+      const subLocationDivNew = subLocations?.map(({ subLocationName, methods }, subIndex) => {
+        // Finally, the encounter methods.
+        const encounterMethodDiv = methods?.map(({ methodName, encounterDetails }, methodIndex) => {
+          // Find the name of the encounter method description
+          const encounterDescription = encounterMethodDescriptions?.find(
+            (method) => method?.name === methodName,
+          )?.description
 
-        const tableRows = [...header, ...encounterDetails]?.map((encounter, rowIndex) => {
-          const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } = encounter
-          // const trueChance = chance > 100 ? 100 : chance
-          const chanceImage = getRarityImage(chance, methodName)
-          const rarityString = getRarityString(chance, methodName)
+          const tableRows = [...header, ...encounterDetails]?.map((encounter, rowIndex) => {
+            const { iconSprite, pokemonName, generationInternal, gameName, levelRange, chance } =
+              encounter
+            // const trueChance = chance > 100 ? 100 : chance
+            const chanceImage = getRarityImage(chance, methodName)
+            const rarityString = getRarityString(chance, methodName)
 
-          // For the identifying div
-          const idDiv = (
-            <div className="flex flex-row items-center pr-16 md:pr-4">
-              <img src={iconSprite} alt={pokemonName} className="w-[66px]" />
-              <NavLink to={`/pokemon/${pokemonName}`} className="font-bold hoverable-link">
-                {formatName(pokemonName)}
-              </NavLink>
-            </div>
-          )
-
-          // For the game boxes
-          const gameBoxDiv =
-            rowIndex === 0 ? (
-              gameName
-            ) : (
-              <div className="flex flex-row">
-                {generationToGame[generationInternal].map((game, index) => (
-                  <GameBox gameName={game} activeFlag={gameName.includes(game)} key={index} />
-                ))}
+            // For the identifying div
+            const idDiv = (
+              <div className="flex flex-row items-center pr-16 md:pr-4">
+                <img src={iconSprite} alt={pokemonName} className="w-[66px]" />
+                <NavLink to={`/pokemon/${pokemonName}`} className="font-bold hoverable-link">
+                  {formatName(pokemonName)}
+                </NavLink>
               </div>
             )
 
-          // For the pie-chart rarity image
-          const rarityImage = (
-            <img src={chanceImage} alt={chance} className="w-[30px] hover:cursor-help" id={rarityString} />
-          )
+            // For the game boxes
+            const gameBoxDiv =
+              rowIndex === 0 ? (
+                gameName
+              ) : (
+                <div className="flex flex-row">
+                  {generationToGame[generationInternal].map((game, index) => (
+                    <GameBox gameName={game} activeFlag={gameName.includes(game)} key={index} />
+                  ))}
+                </div>
+              )
 
-          const cellData = [
-            { key: 'pokemon', value: rowIndex === 0 ? formatName(pokemonName) : idDiv },
-            { key: 'game', value: gameBoxDiv },
-            { key: 'chance', value: rowIndex === 0 ? 'Rarity' : rarityImage },
-            { key: 'level range', value: levelRange },
-          ]
-          return <TableRow rowData={cellData} rowIndex={rowIndex} key={rowIndex} />
-        })
-        // Now render the sub location name, with the generation as the prefix.
-        return (
-          <div key={methodIndex}>
-            {isLoadingSubLocationData ? (
-              <SimpleSkeletonRow width="20vw" />
-            ) : (
-              <div className="flex flex-col my-4 gap-y-1">
-                <h1 className="text-2xl font-bold">{`${formatName(methodName)}`}</h1>
-                <span className="text-sm text-gray-400">{encounterDescription}</span>
-              </div>
-            )}
-            <div className="flex justify-center">
-              <div className="w-full overflow-auto lg:w-7/12">
-                <div className="table mx-auto border-b border-slate-200">{tableRows}</div>
+            // For the pie-chart rarity image
+            const rarityImage = (
+              <img
+                src={chanceImage}
+                alt={chance}
+                className="w-[30px] hover:cursor-help"
+                id={rarityString}
+              />
+            )
+
+            const cellData = [
+              { key: 'pokemon', value: rowIndex === 0 ? formatName(pokemonName) : idDiv },
+              { key: 'game', value: gameBoxDiv },
+              { key: 'chance', value: rowIndex === 0 ? 'Rarity' : rarityImage },
+              { key: 'level range', value: levelRange },
+            ]
+            return <TableRow rowData={cellData} rowIndex={rowIndex} key={rowIndex} />
+          })
+          // Now render the sub location name, with the generation as the prefix.
+          return (
+            <div key={methodIndex}>
+              {isLoadingSubLocationData ? (
+                <SimpleSkeletonRow width="20vw" />
+              ) : (
+                <div className="flex flex-col my-4 gap-y-1">
+                  <h1 className="text-2xl font-bold">{`${formatName(methodName)}`}</h1>
+                  <span className="text-sm text-gray-400">{encounterDescription}</span>
+                </div>
+              )}
+              <div className="flex justify-center">
+                <div className="w-full overflow-auto lg:w-7/12">
+                  <div className="table mx-auto border-b border-slate-200">{tableRows}</div>
+                </div>
               </div>
             </div>
+          )
+        })
+        return (
+          <div key={subIndex}>
+            {isLoadingSubLocationData ? (
+              <SimpleSkeletonRow width="60vw" />
+            ) : (
+              <h1 className="mt-4 text-3xl font-bold">{`${generation} - ${subLocationName}`}</h1>
+            )}
+            <div key={subIndex}> {encounterMethodDiv} </div>
           </div>
         )
       })
-      return (
-        <div key={subIndex}>
-          {isLoadingSubLocationData ? (
-            <SimpleSkeletonRow width="60vw" />
-          ) : (
-            <h1 className="mt-4 text-3xl font-bold">{`${generation} - ${subLocationName}`}</h1>
-          )}
-          <div key={subIndex}> {encounterMethodDiv} </div>
-        </div>
-      )
-    })
-    return <div key={divIndex}>{subLocationDivNew}</div>
-  })
+      return <div key={divIndex}>{subLocationDivNew}</div>
+    },
+  )
 
   const tooltipData = [
     { id: '#common', text: 'Common' },
@@ -277,7 +289,11 @@ const LocationDetail = () => {
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
     >
       <h1 className="text-3xl font-bold text-center">
-        {isLoadingSubLocationData ? <SimpleSkeletonRow width="50vw" /> : <>{formatName(locationName)}</>}
+        {isLoadingSubLocationData ? (
+          <SimpleSkeletonRow width="50vw" />
+        ) : (
+          <>{formatName(locationName)}</>
+        )}
       </h1>
 
       <>

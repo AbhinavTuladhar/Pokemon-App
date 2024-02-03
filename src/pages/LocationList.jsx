@@ -42,7 +42,10 @@ const LocationList = () => {
         return { locationName: properLocationName, actualUrl, localUrl }
       })
       .sort((prev, curr) =>
-        prev.locationName.localeCompare(curr.locationName, undefined, { numeric: true, sensitivity: 'base' }),
+        prev.locationName.localeCompare(curr.locationName, undefined, {
+          numeric: true,
+          sensitivity: 'base',
+        }),
       )
 
     return { regionName, locations: locationsNew }
@@ -117,7 +120,9 @@ const LocationList = () => {
       <li
         key={index}
         className={`w-20 py-3 border-b-2 flex flex-1 justify-center ${
-          activeTab === id ? 'text-blue-500 border-blue-500' : 'border-transparent hover:text-white hover:border-white'
+          activeTab === id
+            ? 'text-blue-500 border-blue-500'
+            : 'border-transparent hover:text-white hover:border-white'
         } hover:cursor-pointer hover:brightness-110 bg-gray-900 duration-300`}
         onClick={() => handleClick(id)}
       >
@@ -152,13 +157,20 @@ const LocationList = () => {
               {Array(100)
                 .fill(0)
                 .map((_, index) => (
-                  <Skeleton width="50%" height="1.25rem" containerClassName="flex-1 w-full" key={index} />
+                  <Skeleton
+                    width="50%"
+                    height="1.25rem"
+                    containerClassName="flex-1 w-full"
+                    key={index}
+                  />
                 ))}
             </div>
           </div>
         ) : (
           <>
-            <ul className="flex flex-row flex-wrap items-center justify-center flex-1 my-4">{tabListItems}</ul>
+            <ul className="flex flex-row flex-wrap items-center justify-center flex-1 my-4">
+              {tabListItems}
+            </ul>
             {tabContainer}
           </>
         )}

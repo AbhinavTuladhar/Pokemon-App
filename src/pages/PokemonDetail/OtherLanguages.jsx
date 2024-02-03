@@ -25,7 +25,11 @@ function processLanuages(arr) {
 }
 
 const LanguageCell = ({ children }) => {
-  return <div className="table-cell w-2/5 font-thin text-right align-middle border-t border-gray-200">{children}</div>
+  return (
+    <div className="table-cell w-2/5 font-thin text-right align-middle border-t border-gray-200">
+      {children}
+    </div>
+  )
 }
 
 const NameCell = ({ children }) => {
@@ -76,9 +80,13 @@ const OtherLanguages = ({ data }) => {
     <>
       <SectionTitle text="Other languages" />
       <div className="grid grid-cols-2-flexible gap-x-10 gap-y-16">
-        <div className="flex-1 table min-w-full border-b border-gray-200 md:min-w-fit">{nameRows}</div>
+        <div className="flex-1 table min-w-full border-b border-gray-200 md:min-w-fit">
+          {nameRows}
+        </div>
 
-        <div className="flex-1 table min-w-full border-b border-gray-200 md:min-w-fit ">{genusRows}</div>
+        <div className="flex-1 table min-w-full border-b border-gray-200 md:min-w-fit ">
+          {genusRows}
+        </div>
       </div>
     </>
   )

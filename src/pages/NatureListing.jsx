@@ -8,7 +8,9 @@ import { motion } from 'framer-motion'
 import MoveListingSkeleton from '../components/MoveListingSkeleton'
 
 const TableRow = ({ children, extraClassName }) => {
-  return <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
+  return (
+    <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
+  )
 }
 
 const TableCell = ({ children, extraClassName }) => {
@@ -51,7 +53,9 @@ const NatureListing = () => {
       : [],
     combine: (results) => {
       return {
-        data: results?.map((result) => result?.data)?.sort((a, b) => a?.name?.localeCompare(b?.name)),
+        data: results
+          ?.map((result) => result?.data)
+          ?.sort((a, b) => a?.name?.localeCompare(b?.name)),
         isLoading: results.some((result) => result.isLoading),
         isFullyLoaded: results.every((result) => result.data !== undefined),
       }

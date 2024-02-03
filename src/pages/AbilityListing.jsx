@@ -146,7 +146,11 @@ const AbilityListing = () => {
       </div>
       {
         // Checking if data is present
-        !isFullyLoaded || isLoadingList ? <MoveListingSkeleton rowCount={20} /> : <TableContainer child={tableRows} />
+        !isFullyLoaded || isLoadingList ? (
+          <MoveListingSkeleton rowCount={20} />
+        ) : (
+          <TableContainer child={tableRows} />
+        )
       }
     </motion.div>
   )
