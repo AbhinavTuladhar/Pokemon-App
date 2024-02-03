@@ -9,14 +9,14 @@ import MoveListingSkeleton from '../components/MoveListingSkeleton'
 
 const TableRow = ({ children, extraClassName }) => {
   return (
-    <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
+    <div className={`${extraClassName} table-row h-12 border-t border-gray-200`}>{children}</div>
   )
 }
 
 const TableCell = ({ children, extraClassName }) => {
   return (
     <div
-      className={`table-cell px-2 py-1 align-middle border border-gray-200 ${extraClassName} w-36 whitespace-nowrap lg:whitespace-normal lg:max-w-xs`}
+      className={`table-cell border border-gray-200 px-2 py-1 align-middle ${extraClassName} w-36 whitespace-nowrap lg:max-w-xs lg:whitespace-normal`}
     >
       {children}
     </div>
@@ -115,7 +115,7 @@ const NatureListing = () => {
       <main className="block md:flex md:flex-col md:items-center">
         {isFullyLoadedNatureData && natureData?.length > 0 ? (
           <div className="overflow-x-auto overflow-y-hidden">
-            <div className="border-b border-slate-400 table">{tableData}</div>
+            <div className="table border-b border-slate-400">{tableData}</div>
           </div>
         ) : (
           <MoveListingSkeleton rowCount={20} />

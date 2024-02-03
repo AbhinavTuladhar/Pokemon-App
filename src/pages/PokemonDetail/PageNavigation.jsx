@@ -13,7 +13,7 @@ const PageNavigation = () => {
     { ref: '#languages', text: 'Languages' },
   ]
   return (
-    <div className="flex flex-row flex-wrap p-4 space-x-6 rounded-lg bg-cyan-300 justify-evenly">
+    <div className="flex flex-row flex-wrap justify-evenly space-x-6 rounded-lg bg-cyan-300 p-4">
       <span className="font-bold text-black"> Contents </span>
       {linkData.map((row, index) => {
         const { ref, text } = row

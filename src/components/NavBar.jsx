@@ -4,13 +4,13 @@ import { NavLink } from 'react-router-dom'
 const ListItem = ({ items, closeMenu, subMenuFlag }) => {
   return items.map((data, index) => (
     <li
-      className={`float-left min-h-full flex-1 w-full ${subMenuFlag && 'w-full'}`}
+      className={`float-left min-h-full w-full flex-1 ${subMenuFlag && 'w-full'}`}
       onClick={closeMenu}
       key={index}
     >
       <NavLink to={data.path}>
         <span
-          className={`hover:brightness-125 duration-300 text-white block text-center px-2 w-full bg-gray-800 ${subMenuFlag ? 'py-3 bg-black' : 'py-4'}`}
+          className={`block w-full bg-gray-800 px-2 text-center text-white duration-300 hover:brightness-125 ${subMenuFlag ? 'bg-black py-3' : 'py-4'}`}
         >
           {data.name}
         </span>
@@ -39,20 +39,20 @@ const DropDownMenu = ({ menuData, parentText }) => {
 
   return (
     <li
-      className="flex-1 float-left"
+      className="float-left flex-1"
       onMouseOver={openMenu}
       onMouseOut={closeMenu}
       onClick={toggleMenu}
     >
-      <div className="relative group">
-        <button className="block w-full px-2 py-4 text-center text-white duration-300 bg-gray-800 whitespace-nowrap hover:brightness-125">
+      <div className="group relative">
+        <button className="block w-full whitespace-nowrap bg-gray-800 px-2 py-4 text-center text-white duration-300 hover:brightness-125">
           <span> {parentText} </span>
           <span className="text-yellow-400">▼</span>
         </button>
         <ul
-          className={`z-10 absolute ${
-            isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          } text-white text-center w-full transition-opacity duration-300`}
+          className={`absolute z-10 ${
+            isMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+          } w-full text-center text-white transition-opacity duration-300`}
           onClick={closeMenu}
         >
           {navElements}
@@ -83,14 +83,14 @@ const NavBar = () => {
 
   return (
     <section className="mb-4">
-      <div className="flex flex-wrap justify-center p-2 text-5xl font-semibold tracking-tight text-center bg-gradient-to-t from-slate-900 to-slate-800 lg:text-6xl lg:font-bold">
+      <div className="flex flex-wrap justify-center bg-gradient-to-t from-slate-900 to-slate-800 p-2 text-center text-5xl font-semibold tracking-tight lg:text-6xl lg:font-bold">
         <NavLink to="/" className="text-sky-500">
           {' '}
           Pokémon Database{' '}
         </NavLink>
       </div>
       <nav>
-        <ul className="flex flex-wrap list-none">
+        <ul className="flex list-none flex-wrap">
           <DropDownMenu parentText="Pokédex" menuData={linkData.slice(0, 8)} />
           <DropDownMenu parentText="Lists" menuData={linkData.slice(8, 13)} />
           <ListItem items={linkData.slice(13)} subMenuFlag={false} />

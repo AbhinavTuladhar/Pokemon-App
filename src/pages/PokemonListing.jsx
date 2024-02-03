@@ -92,14 +92,14 @@ const MainPage = ({ offset, limit }) => {
     >
       <div className="flex items-center justify-center">
         <input
-          className="text-black rounded-xl mx-4 py-2 px-4 w-full md:w-[20rem]"
+          className="mx-4 w-full rounded-xl px-4 py-2 text-black md:w-[20rem]"
           type="search"
           placeholder="Search for a Pokemon"
           disabled={Boolean(isLoading) || Boolean(isLoadingList)}
           onChange={handleChange}
         />
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-8 px-0 py-4 mt-2">
+      <div className="mt-2 flex flex-wrap items-center justify-center gap-8 px-0 py-4">
         {!isFullyLoaded || isLoadingList ? (
           <PokeCardSkeleton cardCount={20} />
         ) : (

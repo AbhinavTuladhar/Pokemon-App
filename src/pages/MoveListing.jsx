@@ -187,7 +187,7 @@ const MoveListing = () => {
     const tableCells = tableCellData.map((cell, cellIndex) => {
       return (
         <div
-          className={`${cell.cellStyle} ${headerStyle} ${bgColourStyle} border-gray-500 border-t table-cell h-12 align-middle p-2`}
+          className={`${cell.cellStyle} ${headerStyle} ${bgColourStyle} table-cell h-12 border-t border-gray-500 p-2 align-middle`}
           key={cellIndex}
         >
           {cell.value}
@@ -211,7 +211,7 @@ const MoveListing = () => {
     >
       <div className="flex items-center justify-center">
         <input
-          className="text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]"
+          className="mx-4 mb-4 w-full rounded-xl px-4 py-2 text-black lg:w-[20rem]"
           type="search"
           placeholder="Search for a move"
           disabled={!isFullyLoadedMoveData || isLoadingList}

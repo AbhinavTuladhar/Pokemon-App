@@ -49,19 +49,19 @@ const AbilityDetail = () => {
         transitionTimingFunction: 'ease-in',
       }}
     >
-      <div className="flex justify-center text-4xl font-bold text-center">
+      <div className="flex justify-center text-center text-4xl font-bold">
         {abilityInfo.name ? (
           `${formatName(abilityInfo.name)} (ability)`
         ) : (
           <Skeleton width="100%" height="2.75rem" containerClassName="flex-1 w-full" />
         )}
       </div>
-      <div className="flex flex-row flex-wrap mt-4 gap-x-10">
-        <div className="flex flex-col w-full lg:w-475/1000">
+      <div className="mt-4 flex flex-row flex-wrap gap-x-10">
+        <div className="flex w-full flex-col lg:w-475/1000">
           <AbilityEffect entry={abilityInfo.longEntry} />
           <AbilityDescription descriptions={abilityInfo.descriptions} />
         </div>
-        <div className="flex flex-col w-full lg:w-475/1000">
+        <div className="flex w-full flex-col lg:w-475/1000">
           <PokemonList data={{ pokemonList, name }} />
         </div>
       </div>

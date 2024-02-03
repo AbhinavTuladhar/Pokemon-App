@@ -43,17 +43,17 @@ const PokeDexEntry = ({ data }) => {
     const gameListItems = entry.versionName.map((version, index) => {
       return <li key={index}> {version} </li>
     })
-    const gameList = <ul className="list-none list-inside"> {gameListItems} </ul>
+    const gameList = <ul className="list-inside list-none"> {gameListItems} </ul>
     return { versionName: gameList, description: entry.description }
   })
 
   const entryRows = finalEntry.map((entry, i) => {
     return (
-      <div className="table-row border-t border-gray-200 h-12" key={i}>
-        <div className="border-t align-middle border-gray-200 table-cell w-3/12 xl:w-1/5 text-right py-2">
+      <div className="table-row h-12 border-t border-gray-200" key={i}>
+        <div className="table-cell w-3/12 border-t border-gray-200 py-2 text-right align-middle xl:w-1/5">
           {entry.versionName}
         </div>
-        <div className="border-t align-middle border-gray-200 table-cell w-9/12 xl:w-4/5 pl-4 py-2">
+        <div className="table-cell w-9/12 border-t border-gray-200 py-2 pl-4 align-middle xl:w-4/5">
           {entry.description}
         </div>
       </div>
@@ -63,7 +63,7 @@ const PokeDexEntry = ({ data }) => {
   return (
     <>
       <SectionTitle text={'Pokédex Entries'} />
-      <div className="table border-b border-gray-200 w-full">{entryRows}</div>
+      <div className="table w-full border-b border-gray-200">{entryRows}</div>
     </>
   )
 }

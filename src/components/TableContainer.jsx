@@ -3,7 +3,7 @@ import React from 'react'
 const TableContainer = ({ child }) => {
   return (
     <div className="overflow-x-auto overflow-y-hidden">
-      <div className="border-none border-transparent min-w-full table">{child}</div>
+      <div className="table min-w-full border-none border-transparent">{child}</div>
     </div>
   )
 }

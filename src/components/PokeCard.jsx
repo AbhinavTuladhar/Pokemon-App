@@ -47,16 +47,16 @@ const PokeCard = ({ data }) => {
 
   return (
     <div
-      className={`${gradientStyle} flex flex-col items-center p-2 justify-center w-48 sm:w-56 duration-200 rounded-xl hover:scale-105 hover:shadow-xl hover:shadow-blue-400 hover:drop-shadow-lg`}
+      className={`${gradientStyle} flex w-48 flex-col items-center justify-center rounded-xl p-2 duration-200 hover:scale-105 hover:shadow-xl hover:shadow-blue-400 hover:drop-shadow-lg sm:w-56`}
     >
       <div className="font-bold">#{id}</div>
-      <NavLink to={targetLink} className="text-xl font-extrabold text-center">
+      <NavLink to={targetLink} className="text-center text-xl font-extrabold">
         {properName}
       </NavLink>
       <div>
         <img src={defaultSprite} className="h-[100px]" alt={name} />
       </div>
-      <div className="flex flex-row mt-4 mb-2">{typeDivs}</div>
+      <div className="mb-2 mt-4 flex flex-row">{typeDivs}</div>
     </div>
   )
 }

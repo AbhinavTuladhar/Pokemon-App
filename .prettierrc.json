@@ -2,6 +2,6 @@
   "singleQuote": true,
   "bracketSpacing": true,
   "printWidth": 100,
-  "plugins": [],
+  "plugins": ["prettier-plugin-tailwindcss"],
   "semi": false
 }

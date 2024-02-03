@@ -13,10 +13,10 @@ import multiplierToString from '../../utils/multiplierToString'
 
 const TypeDefenceRow = ({ typeDefenceInfo, extraClassName }) => (
   <div
-    className={`flex flex-row justify-center overflow-x-auto overflow-y-hidden mx-auto sm:mx-0 ${extraClassName}`}
+    className={`mx-auto flex flex-row justify-center overflow-x-auto overflow-y-hidden sm:mx-0 ${extraClassName}`}
   >
     {typeDefenceInfo.map((row, rowIndex) => (
-      <div className="flex flex-col text-center w-9" key={rowIndex}>
+      <div className="flex w-9 flex-col text-center" key={rowIndex}>
         <MiniTypeCard typeName={row.type} />
         <div id={row.type}>
           <TypeMultiplierBox multiplier={row.multiplier} />
@@ -82,7 +82,7 @@ const TypeChart = ({ data }) => {
       <SectionTitle text="Type Defenses" />
       <span> {`The effectiveness of each type on ${formatName(name)}: `} </span>
 
-      <div className="flex flex-col justify-center md:flex-row mdlg:flex-col sm:flex-row overflow-x-auto">
+      <div className="flex flex-col justify-center overflow-x-auto sm:flex-row md:flex-row mdlg:flex-col">
         <TypeDefenceRow
           typeDefenceInfo={typeDefenseInfo.slice(0, 9)}
           extraClassName={firstClassName}

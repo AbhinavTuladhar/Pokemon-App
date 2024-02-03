@@ -78,7 +78,7 @@ const PokeDexData = ({ pokemonData }) => {
       </li>
     )
   })
-  const abilityListFinal = <ol className="list-none list-inside">{abilityList}</ol>
+  const abilityListFinal = <ol className="list-inside list-none">{abilityList}</ol>
 
   // Now dealing with the Pokedex numbers for each region.
   // Omit the national region number and conquest gallery numbers, for the reasons specified before.
@@ -143,10 +143,10 @@ const PokeDexData = ({ pokemonData }) => {
     const spacing = row.label === 'Abilities' || row.label === 'Regional no.' ? 'min-h-14' : 'h-12'
     return (
       <div className={`table-row border-t border-gray-200 py-2 ${spacing}`} key={rowIndex}>
-        <div className="table-cell align-middle py-2 border-t border-gray-200 text-right w-3/12">
+        <div className="table-cell w-3/12 border-t border-gray-200 py-2 text-right align-middle">
           {row.label}
         </div>
-        <div className="table-cell align-middle py-2 border-t border-gray-200 pl-4 w-9/12">
+        <div className="table-cell w-9/12 border-t border-gray-200 py-2 pl-4 align-middle">
           <div className="flex">{row.value}</div>
         </div>
       </div>

@@ -6,19 +6,19 @@ const PokeCardSkeleton = ({ cardCount }) => {
     .fill(0)
     .map((_, index) => (
       <div
-        className="flex flex-col items-center justify-center w-48 p-2 duration-200 border sm:w-56 rounded-xl border-slate-200"
+        className="flex w-48 flex-col items-center justify-center rounded-xl border border-slate-200 p-2 duration-200 sm:w-56"
         key={index}
       >
-        <div className="flex-1 w-full">
+        <div className="w-full flex-1">
           <Skeleton width="100%" />
         </div>
-        <div className="flex-1 w-full text-xl">
+        <div className="w-full flex-1 text-xl">
           <Skeleton />
         </div>
         <div className="flex-1">
           <Skeleton circle width="100px" height="100px" />
         </div>
-        <div className="flex-1 w-full mt-4 mb-2">
+        <div className="mb-2 mt-4 w-full flex-1">
           <Skeleton />
         </div>
       </div>

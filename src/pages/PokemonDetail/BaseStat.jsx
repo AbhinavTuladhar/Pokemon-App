@@ -102,16 +102,16 @@ const BaseStat = ({ data }) => {
     const stringDecoration = index === statDetail.length - 1 ? 'font-bold' : ''
 
     return (
-      <div className="table-row border-t border-gray-200 py-2 h-12 max-h-24 pr-0" key={index}>
-        <div className="table-cell pr-2 text-right align-middle border-t border-gray-200">
+      <div className="table-row h-12 max-h-24 border-t border-gray-200 py-2 pr-0" key={index}>
+        <div className="table-cell border-t border-gray-200 pr-2 text-right align-middle">
           {stat.name}
         </div>
-        <div className="table-cell px-1 text-right align-middle border-t border-gray-200">
+        <div className="table-cell border-t border-gray-200 px-1 text-right align-middle">
           <span className={`${stringDecoration} text-left`}> {stat.value} </span>
         </div>
-        <div className="table-cell min-w-[9.375rem] w-full h-full px-0 mx-0 align-middle border-t border-gray-200">
+        <div className="mx-0 table-cell h-full w-full min-w-[9.375rem] border-t border-gray-200 px-0 align-middle">
           <div
-            className="h-3 my-0 ml-2 rounded"
+            className="my-0 ml-2 h-3 rounded"
             style={{
               width: stat.width,
               minWidth: '1rem',
@@ -123,10 +123,10 @@ const BaseStat = ({ data }) => {
             &nbsp;
           </div>
         </div>
-        <div className="table-cell px-1 pl-3 text-right align-middle border-t border-gray-200">
+        <div className="table-cell border-t border-gray-200 px-1 pl-3 text-right align-middle">
           {stat.min}
         </div>
-        <div className="table-cell px-1 text-right align-middle border-t border-gray-200">
+        <div className="table-cell border-t border-gray-200 px-1 text-right align-middle">
           {stat.max}
         </div>
       </div>

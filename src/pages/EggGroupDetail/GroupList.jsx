@@ -9,13 +9,13 @@ const GroupList = () => {
   const { groupPokemonCount, isLoading } = useEggGroupList()
 
   return (
-    <section className="bg-[#19272d] px-4 flex flex-col pb-4 self-start rounded">
+    <section className="flex flex-col self-start rounded bg-[#19272d] px-4 pb-4">
       {isLoading ? (
         <MoveListingSkeleton rowCount={20} />
       ) : (
         <>
           <SectionTitle text="Egg Groups" />
-          <ul className="list-disc list-inside">
+          <ul className="list-inside list-disc">
             {groupPokemonCount?.map((group, index) => {
               const { eggGroup, pokemonCount } = group
               return (

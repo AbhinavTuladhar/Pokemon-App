@@ -11,14 +11,14 @@ import { Tooltip } from 'react-tooltip'
 
 const TableRow = ({ children, extraClassName }) => {
   return (
-    <div className={`${extraClassName} table-row border-t border-gray-200 h-12`}>{children}</div>
+    <div className={`${extraClassName} table-row h-12 border-t border-gray-200`}>{children}</div>
   )
 }
 
 const TableCell = ({ children, extraClassName }) => {
   return (
     <div
-      className={`table-cell p-1 align-middle border border-gray-200 ${extraClassName} whitespace-nowrap lg:whitespace-normal lg:max-w-lg leading-6`}
+      className={`table-cell border border-gray-200 p-1 align-middle ${extraClassName} whitespace-nowrap leading-6 lg:max-w-lg lg:whitespace-normal`}
     >
       {children}
     </div>

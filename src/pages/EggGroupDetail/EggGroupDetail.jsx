@@ -105,7 +105,7 @@ const EggGroupDetail = () => {
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
-      <h1 className="my-5 text-3xl font-bold text-center">
+      <h1 className="my-5 text-center text-3xl font-bold">
         <span> {formatName(eggGroupid)} </span>
         <span className="text-gray-400"> (egg group) </span>
       </h1>
@@ -113,7 +113,7 @@ const EggGroupDetail = () => {
         <FadeInAnimationContainer className="w-full lg:w-1/3">
           <GroupList />
         </FadeInAnimationContainer>
-        <div className="flex justify-center w-full lg:w-5/12">
+        <div className="flex w-full justify-center lg:w-5/12">
           <FadeInAnimationContainer className="w-full">
             <PokemonTable
               data={finalData}

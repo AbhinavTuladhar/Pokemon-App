@@ -28,14 +28,14 @@ const processLanuages = (arr) => {
 
 const LanguageCell = ({ children }) => {
   return (
-    <div className="table-cell w-2/5 font-thin text-right align-middle border-t border-gray-200">
+    <div className="table-cell w-2/5 border-t border-gray-200 text-right align-middle font-thin">
       {children}
     </div>
   )
 }
 
 const NameCell = ({ children }) => {
-  return <div className="table-cell pl-4 align-middle border-t border-gray-200">{children}</div>
+  return <div className="table-cell border-t border-gray-200 pl-4 align-middle">{children}</div>
 }
 
 const OtherLanguages = ({ names }) => {

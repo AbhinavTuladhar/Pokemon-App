@@ -32,17 +32,17 @@ const entryVariantRight = {
 const ImageColumn = () => {
   return (
     <motion.div
-      className="flex flex-col items-center justify-center w-full h-full md:w-4/12 gap-y-10"
+      className="flex h-full w-full flex-col items-center justify-center gap-y-10 md:w-4/12"
       variants={entryVariantRight}
     >
       <img
         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/25.gif"
-        className="flex-grow h-40"
+        className="h-40 flex-grow"
         alt="Pikachu gif"
       />
       <img
         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif"
-        className="flex-grow h-40"
+        className="h-40 flex-grow"
         alt="Charizard gif"
       />
     </motion.div>
@@ -56,7 +56,7 @@ const TitleText = () => {
         <motion.span className="text-center" variants={entryVariantLeft}>
           <span className="text-5xl font-bold">Welcome to</span>
           <br />
-          <span className="text-5xl font-bold text-transparent bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text">
+          <span className="bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-5xl font-bold text-transparent">
             Pokémon Database
           </span>
         </motion.span>
@@ -127,7 +127,7 @@ const WelcomePage = () => {
       transition={{ ease: 'easeIn' }}
     >
       <motion.div
-        className="flex flex-col items-center justify-center py-4 md:flex-row gap-y-4"
+        className="flex flex-col items-center justify-center gap-y-4 py-4 md:flex-row"
         variants={welcomeVariant}
         initial="initial"
         animate="animate"
@@ -136,7 +136,7 @@ const WelcomePage = () => {
           <motion.div variants={entryVariantLeft}>
             <TitleText />
           </motion.div>
-          <motion.div className="flex flex-col py-4 space-y-4" variants={entryVariantLeft}>
+          <motion.div className="flex flex-col space-y-4 py-4" variants={entryVariantLeft}>
             <InformativeText />
             {/* <IssuesText /> */}
           </motion.div>

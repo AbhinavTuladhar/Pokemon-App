@@ -28,12 +28,12 @@ const PokemonCard = ({ pokemonData, splitEvoFlag }) => {
 
   return (
     <div
-      className={`flex ${splitEvoFlag ? 'flex-col' : 'flex-row sm:flex-row md:flex-col'} justify-center items-center gap-y-2 w-fit mx-auto`}
+      className={`flex ${splitEvoFlag ? 'flex-col' : 'flex-row sm:flex-row md:flex-col'} mx-auto w-fit items-center justify-center gap-y-2`}
     >
-      <img src={homeSprite} alt={name} className="h-32 aspect-square" />
-      <div className="flex flex-col items-center justify-center w-full">
+      <img src={homeSprite} alt={name} className="aspect-square h-32" />
+      <div className="flex w-full flex-col items-center justify-center">
         {formattedId}
-        <NavLink to={`/pokemon/${name}`} className="font-bold hoverable-link">
+        <NavLink to={`/pokemon/${name}`} className="hoverable-link font-bold">
           {formatName(name)}
         </NavLink>
         <span className="text-center">{typeDiv}</span>
@@ -78,32 +78,32 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
       return (
         <div className="flex flex-col md:flex-row" key={index}>
           {pokemon}
-          <div className="flex flex-row justify-between md:flex-col gap-y-10">
+          <div className="flex flex-row justify-between gap-y-10 md:flex-col">
             <div className="flex flex-col items-center justify-center text-center md:flex-row">
-              <div className="flex flex-col items-center justify-center mx-4 w-full md:w-48">
+              <div className="mx-4 flex w-full flex-col items-center justify-center md:w-48">
                 <BsArrowUpRight size={60} className="hidden md:flex" />
-                <BsArrowDown size={60} className="flex mx-4 md:hidden" />
+                <BsArrowDown size={60} className="mx-4 flex md:hidden" />
                 <span> {`(${evolutionExtractedInfo})`} </span>
               </div>
               {nextPokemon}
             </div>
             <div className="flex flex-col items-center justify-center text-center md:flex-row">
-              <div className="flex flex-col items-center justify-center mx-4 w-full md:w-48">
+              <div className="mx-4 flex w-full flex-col items-center justify-center md:w-48">
                 {finalPokemon ? (
                   <BsArrowRight size={60} className="hidden md:flex" />
                 ) : (
                   <BsArrowDownRight size={60} className="hidden md:flex" />
                 )}
-                <BsArrowDown size={60} className="flex mx-4 md:hidden" />
+                <BsArrowDown size={60} className="mx-4 flex md:hidden" />
                 <span> {`(${evolutionExtractedInfoNext})`} </span>
               </div>
               {nextNextPokemon}
             </div>
             {finalPokemon && (
               <div className="flex flex-col items-center justify-center text-center md:flex-row">
-                <div className="flex flex-col items-center justify-center mx-4 w-full md:w-48">
+                <div className="mx-4 flex w-full flex-col items-center justify-center md:w-48">
                   <BsArrowDownRight size={60} className="hidden md:flex" />
-                  <BsArrowDown size={60} className="flex mx-4 md:hidden" />
+                  <BsArrowDown size={60} className="mx-4 flex md:hidden" />
                   {evolutionExtractedInfoFinal
                     ? `(${evolutionExtractedInfoFinal})`
                     : `(${evolutionExtractedInfoNext})`}
@@ -119,17 +119,17 @@ const EvolutionDiv = ({ individualPokemon, finalPokemonData }) => {
     } else if (!currentPokemonData.isSplitEvo) {
       return (
         <div
-          className="flex flex-col items-center justify-center md:flex-row sm:flex-col"
+          className="flex flex-col items-center justify-center sm:flex-col md:flex-row"
           key={index}
         >
           {pokemon}
           {index !== individualPokemon.length - 1 && !currentPokemonData.nextEvoSplit && (
             <>
-              <div className="flex-col items-center justify-center hidden text-center md:flex sm:hidden w-full md:w-48">
+              <div className="hidden w-full flex-col items-center justify-center text-center sm:hidden md:flex md:w-48">
                 <BsArrowRight size={60} className="mx-4" />
                 {`(${evolutionExtractedInfo})`}
               </div>
-              <div className="flex flex-col items-center justify-center text-center md:hidden sm:flex w-full md:w-48">
+              <div className="flex w-full flex-col items-center justify-center text-center sm:flex md:hidden md:w-48">
                 <BsArrowDown size={60} className="my-2" />
                 {`(${evolutionExtractedInfo})`}
               </div>
@@ -368,14 +368,14 @@ const EvolutionChain = ({ url }) => {
       {isLoading || isLoadingPokemonData ? (
         <Skeleton width="100%" height="12rem" containerClassName="flex-1 w-full" />
       ) : finalEvolutionDiv ? (
-        <div className="flex flex-col justify-center md:flex-row sm:flex-col gap-x-5">
+        <div className="flex flex-col justify-center gap-x-5 sm:flex-col md:flex-row">
           {finalEvolutionDiv}
         </div>
       ) : eeveelutionDiv.length > 0 ? (
         eeveelutionDiv.map((div, index) => {
           return (
             <div
-              className="flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5"
+              className="flex flex-col justify-between gap-y-5 sm:flex-col sm:justify-center md:flex-row"
               key={index}
             >
               {div}
@@ -386,7 +386,7 @@ const EvolutionChain = ({ url }) => {
         wurmpleDiv.map((div, index) => {
           return (
             <div
-              className="flex flex-col justify-between md:flex-row sm:flex-col sm:justify-center gap-y-5"
+              className="flex flex-col justify-between gap-y-5 sm:flex-col sm:justify-center md:flex-row"
               key={index}
             >
               {div}

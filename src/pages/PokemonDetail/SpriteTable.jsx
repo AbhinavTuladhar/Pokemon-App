@@ -28,7 +28,7 @@ const SpriteTable = ({ data }) => {
       index === 0 ? (
         <span className="font-bold"> {frontSprite} </span>
       ) : (
-        <img src={frontSprite} alt={pokemonName} className="w-36 h-36" />
+        <img src={frontSprite} alt={pokemonName} className="h-36 w-36" />
       )
 
     const shinyImage =
@@ -38,7 +38,7 @@ const SpriteTable = ({ data }) => {
       ['Generation 1', 'Icon'].includes(generation) ? (
         <span className="text-3xl font-bold"> — </span>
       ) : (
-        <img src={shinySprite} alt={pokemonName} className="w-36 h-36" />
+        <img src={shinySprite} alt={pokemonName} className="h-36 w-36" />
       )
 
     // Cell data for each column.
@@ -53,7 +53,7 @@ const SpriteTable = ({ data }) => {
       const cellStyle = cellIndex === 0 ? 'h-16 bg-gray-900' : 'h-48'
       return (
         <div
-          className={`${cellStyle} object-center flex border border-slate-400 items-center justify-center align-middle text-center h-16 min-h-32 ${columnWidth}`}
+          className={`${cellStyle} min-h-32 flex h-16 items-center justify-center border border-slate-400 object-center text-center align-middle ${columnWidth}`}
           key={cellIndex}
         >
           {cell.value}

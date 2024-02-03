@@ -80,19 +80,19 @@ const TypeListing = () => {
     >
       <motion.section variants={typeVariant} initial="initial" animate="animate">
         <motion.h1
-          className="flex justify-center mb-8 text-5xl font-bold text-center"
+          className="mb-8 flex justify-center text-center text-5xl font-bold"
           variants={typeVariant}
         >
           Pokémon types & type chart
         </motion.h1>
         <motion.h1
-          className="flex justify-center mb-10 text-4xl font-bold text-center"
+          className="mb-10 flex justify-center text-center text-4xl font-bold"
           variants={typeVariant}
         >
           Type quick-list
         </motion.h1>
         <motion.div
-          className="flex flex-row flex-wrap justify-center gap-4 mb-4"
+          className="mb-4 flex flex-row flex-wrap justify-center gap-4"
           variants={typeVariant}
           initial="initial"
           animate="animate"
@@ -119,7 +119,7 @@ const TypeListing = () => {
               {chartKeyInfo}
             </div>
           </div>
-          <div className="flex justify-center w-full mt-4 mdlg:w-2/3 mdlg:justify-end mdlg:mt-0">
+          <div className="mt-4 flex w-full justify-center mdlg:mt-0 mdlg:w-2/3 mdlg:justify-end">
             <TypeChartFull />
           </div>
         </motion.section>

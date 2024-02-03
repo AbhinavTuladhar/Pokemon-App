@@ -38,7 +38,7 @@ const PokemonVarieties = ({ data }) => {
   return (
     <>
       <SectionTitle text={`${formatName(pokemonName)} has some other forms:`} />
-      <ul className="list-disc list-inside">{formsArray}</ul>
+      <ul className="list-inside list-disc">{formsArray}</ul>
     </>
   )
 }

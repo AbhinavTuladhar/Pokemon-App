@@ -16,9 +16,9 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-          <div className="max-w-full min-h-screen text-white bg-gray-950">
+          <div className="min-h-screen max-w-full bg-gray-950 text-white">
             <NavBar />
-            <section className="pb-4 mx-4 md:mx-8">
+            <section className="mx-4 pb-4 md:mx-8">
               <ScrollToTop />
               <AnimatedRoutes />
             </section>

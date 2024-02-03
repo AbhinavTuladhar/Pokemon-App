@@ -42,7 +42,7 @@ const DualTypeChart = ({ data }) => {
   // This is for the first row.
   const firstRow = [[], ...typeList]?.map((type, index) => {
     if (index === 0) {
-      return <div className="w-20 mx-1 border h-9 border-slate-900" key={index} />
+      return <div className="mx-1 h-9 w-20 border border-slate-900" key={index} />
     } else {
       return <MiniTypeCard typeName={type} key={index} />
     }
@@ -88,7 +88,7 @@ const DualTypeChart = ({ data }) => {
     })
 
     return (
-      <div className="flex flex-row gap-x items-end" key={rowIndex}>
+      <div className="gap-x flex flex-row items-end" key={rowIndex}>
         {cellDivs}
       </div>
     )
@@ -98,7 +98,7 @@ const DualTypeChart = ({ data }) => {
     <>
       <div className="overflow-auto">
         <div className="inline-flex flex-col">
-          <div className="flex flex-row gap-x">{firstRow}</div>
+          <div className="gap-x flex flex-row">{firstRow}</div>
           <>{tableRows}</>
           <>{toolTips}</>
         </div>

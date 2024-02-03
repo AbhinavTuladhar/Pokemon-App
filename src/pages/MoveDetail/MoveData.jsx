@@ -51,11 +51,11 @@ const MoveData = ({ moveInfo }) => {
       <div className="table-row h-12" key={rowIndex}>
         <div
           key={row.header}
-          className="table-cell align-middle text-right border-t py-2 pr-8 border-slate-200"
+          className="table-cell border-t border-slate-200 py-2 pr-8 text-right align-middle"
         >
           {row.header}
         </div>
-        <div key={row.value} className="table-cell align-middle border-t py-2 border-slate-200">
+        <div key={row.value} className="table-cell border-t border-slate-200 py-2 align-middle">
           {rowValue}
         </div>
       </div>

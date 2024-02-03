@@ -82,7 +82,7 @@ const PokemonList = ({ data }) => {
       {
         key: 'pokemonName',
         value: (
-          <NavLink to={`/pokemon/${name}`} className={index > 0 && 'font-bold hoverable-link'}>
+          <NavLink to={`/pokemon/${name}`} className={index > 0 && 'hoverable-link font-bold'}>
             {formatName(name)}
           </NavLink>
         ),
@@ -109,7 +109,7 @@ const PokemonList = ({ data }) => {
     const tableCells = cellData?.map((cell, cellIndex) => {
       return (
         <div
-          className={`${cell?.style} min-w-[10rem] table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle ${index === 0 && cellIndex !== cellData.length - 1 && 'border-r'} ${index === 0 && 'bg-gray-900 font-bold'}`}
+          className={`${cell?.style} table-cell h-12 min-w-[10rem] border-t border-slate-200 px-4 py-2 align-middle ${index === 0 && cellIndex !== cellData.length - 1 && 'border-r'} ${index === 0 && 'bg-gray-900 font-bold'}`}
           key={cellIndex}
         >
           {cell.value}
@@ -127,7 +127,7 @@ const PokemonList = ({ data }) => {
   return (
     <>
       {isLoading || !abilityName ? (
-        <div className="flex flex-col gap-y-2 mt-5">
+        <div className="mt-5 flex flex-col gap-y-2">
           <Skeleton width="90%" height="3rem" containerClassName="flex-1 w-full" />
           <TabularSkeleton />
         </div>

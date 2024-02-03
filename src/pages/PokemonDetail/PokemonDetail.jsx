@@ -196,7 +196,7 @@ const PokemonDetail = () => {
         <FadeInAnimationContainer className="col-span-2 md:col-span-1">
           <PokeDexData pokemonData={PokeDexDataProps} />
         </FadeInAnimationContainer>
-        <div className="flex flex-col gap-y-6 w-full col-span-2 mdlg:col-span-1">
+        <div className="col-span-2 flex w-full flex-col gap-y-6 mdlg:col-span-1">
           <FadeInAnimationContainer>
             <TrainingInfo data={TrainingInfoProps} />
           </FadeInAnimationContainer>
@@ -227,7 +227,7 @@ const PokemonDetail = () => {
         </FadeInAnimationContainer>
       </section>
 
-      <section className="py-4 gap-y-5" id="moves-learned">
+      <section className="gap-y-5 py-4" id="moves-learned">
         <FadeInAnimationContainer>
           <MovesLearned data={MovesLearnedProps} />
         </FadeInAnimationContainer>

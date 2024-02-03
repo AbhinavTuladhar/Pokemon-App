@@ -37,7 +37,7 @@ const GameBox = ({ gameName, generation, activeFlag }) => {
 
   return (
     <div
-      className={`${activeFlag && backgroundColour} ${activeFlag ? '' : 'text-gray-500'} w-14 h-14 text-lg font-bold flex justify-center items-center border border-slate-200`}
+      className={`${activeFlag && backgroundColour} ${activeFlag ? '' : 'text-gray-500'} flex h-14 w-14 items-center justify-center border border-slate-200 text-lg font-bold`}
     >
       {icon}
     </div>

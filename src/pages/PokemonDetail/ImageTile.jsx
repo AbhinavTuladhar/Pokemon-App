@@ -17,8 +17,8 @@ const ImageTile = ({ imageSources }) => {
   }
 
   return (
-    <div className="flex flex-col mt-5">
-      <div className="flex flex-row justify-center my-2 gap-x-4">
+    <div className="mt-5 flex flex-col">
+      <div className="my-2 flex flex-row justify-center gap-x-4">
         <button
           className={selectedImage === 'normal' ? selectedButtonStyle : unselectedButtonStyle}
           onClick={handleClick}

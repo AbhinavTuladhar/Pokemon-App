@@ -11,14 +11,14 @@ const TypeCard = ({ typeName, useTextOnly, className }) => {
     const fontColour = 'text-' + typeMapping[typeKey]
     const properName = typeName.charAt(0).toUpperCase() + typeName.slice(1)
     return (
-      <span className={`${fontColour} hover:underline w-min`}>
+      <span className={`${fontColour} w-min hover:underline`}>
         <NavLink to={targetLink}>{properName}</NavLink>
       </span>
     )
   }
   return (
     <div
-      className={`${backgroundColour} ${className} flex flex-col flex-wrap items-center justify-center w-20 px-2 py-1 mx-1 my-0 text-sm duration-200 rounded-md hover:brightness-110`}
+      className={`${backgroundColour} ${className} mx-1 my-0 flex w-20 flex-col flex-wrap items-center justify-center rounded-md px-2 py-1 text-sm duration-200 hover:brightness-110`}
     >
       <NavLink to={targetLink}>{typeName?.toUpperCase()}</NavLink>
     </div>

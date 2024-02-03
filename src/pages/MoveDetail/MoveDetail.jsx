@@ -51,7 +51,7 @@ const MoveDetail = () => {
         transitionTimingFunction: 'ease-in',
       }}
     >
-      <div className="flex justify-center text-4xl font-bold text-center">
+      <div className="flex justify-center text-center text-4xl font-bold">
         {moveInfo.moveName ? (
           `${formatName(moveInfo.moveName)} (move)`
         ) : (
@@ -59,22 +59,22 @@ const MoveDetail = () => {
         )}
       </div>
 
-      <div className="flex flex-row flex-wrap gap-x-4 lg:gap-x-8 mt-4">
-        <div className="flex flex-col grow-0 w-full md:w-auto md:grow-[2] md:basis-0">
+      <div className="mt-4 flex flex-row flex-wrap gap-x-4 lg:gap-x-8">
+        <div className="flex w-full grow-0 flex-col md:w-auto md:grow-[2] md:basis-0">
           <MoveData moveInfo={moveInfo} />
           {moveInfo?.machines?.length > 0 && <MachineRecord machineList={moveInfo.machines} />}
         </div>
-        <div className="grow-0 w-full md:w-auto md:grow-[6] md:basis-0 basis-full">
+        <div className="w-full grow-0 basis-full md:w-auto md:grow-[6] md:basis-0">
           <MoveEffect entry={moveInfo.longEntry} chance={moveInfo.effect_chance} />
         </div>
       </div>
 
-      <div className="flex flex-row flex-wrap gap-x-10 lg:gap-x-16 md:mt-2">
-        <div className="grow-0 w-full md:w-auto md:grow md:basis-0">
+      <div className="flex flex-row flex-wrap gap-x-10 md:mt-2 lg:gap-x-16">
+        <div className="w-full grow-0 md:w-auto md:grow md:basis-0">
           <MoveTarget targetType={moveInfo.targetType} />
           <OtherLanguages names={names} />
         </div>
-        <div className="grow-0 w-full md:w-auto md:grow-[3] md:basis-0 basis-full">
+        <div className="w-full grow-0 basis-full md:w-auto md:grow-[3] md:basis-0">
           <GameDescription descriptions={moveInfo.descriptions} />
         </div>
       </div>

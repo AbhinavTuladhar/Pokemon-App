@@ -57,7 +57,7 @@ const SimpleSkeletonRow = ({ width }) => {
 const TableCell = ({ value, isHeader }) => {
   return (
     <div
-      className={`${isHeader && 'bg-gray-900 font-bold'} whitespace-nowrap table-cell h-14 border-t border-slate-200 align-middle text-center px-4`}
+      className={`${isHeader && 'bg-gray-900 font-bold'} table-cell h-14 whitespace-nowrap border-t border-slate-200 px-4 text-center align-middle`}
     >
       {value}
     </div>
@@ -108,8 +108,8 @@ const LocationDetail = () => {
   if (subLocationData?.length === 0) {
     return (
       <div>
-        <h1 className="text-3xl font-bold text-center">{formatName(locationName)}</h1>
-        <h1 className="text-2xl font-bold text-center">
+        <h1 className="text-center text-3xl font-bold">{formatName(locationName)}</h1>
+        <h1 className="text-center text-2xl font-bold">
           Could not find any encounter information for this location.
         </h1>
       </div>
@@ -205,7 +205,7 @@ const LocationDetail = () => {
             const idDiv = (
               <div className="flex flex-row items-center pr-16 md:pr-4">
                 <img src={iconSprite} alt={pokemonName} className="w-[66px]" />
-                <NavLink to={`/pokemon/${pokemonName}`} className="font-bold hoverable-link">
+                <NavLink to={`/pokemon/${pokemonName}`} className="hoverable-link font-bold">
                   {formatName(pokemonName)}
                 </NavLink>
               </div>
@@ -247,14 +247,14 @@ const LocationDetail = () => {
               {isLoadingSubLocationData ? (
                 <SimpleSkeletonRow width="20vw" />
               ) : (
-                <div className="flex flex-col my-4 gap-y-1">
+                <div className="my-4 flex flex-col gap-y-1">
                   <h1 className="text-2xl font-bold">{`${formatName(methodName)}`}</h1>
                   <span className="text-sm text-gray-400">{encounterDescription}</span>
                 </div>
               )}
               <div className="flex justify-center">
                 <div className="w-full overflow-auto lg:w-7/12">
-                  <div className="table mx-auto border-b border-slate-200">{tableRows}</div>
+                  <div className="mx-auto table border-b border-slate-200">{tableRows}</div>
                 </div>
               </div>
             </div>
@@ -288,7 +288,7 @@ const LocationDetail = () => {
       animate={{ opacity: 1, transitionDuration: '0.8s' }}
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
     >
-      <h1 className="text-3xl font-bold text-center">
+      <h1 className="text-center text-3xl font-bold">
         {isLoadingSubLocationData ? (
           <SimpleSkeletonRow width="50vw" />
         ) : (
@@ -307,7 +307,7 @@ const LocationDetail = () => {
       {/* For rendering skeleton when the content has not been loaded */}
       <>
         {isLoadingSubLocationData || isLoadingEncounterDescriptions ? (
-          <div className="flex flex-col mt-4 gap-y-5">
+          <div className="mt-4 flex flex-col gap-y-5">
             <SimpleSkeletonRow width="50%" />
             <SimpleSkeletonRow width="30%" />
             <TabularSkeleton />

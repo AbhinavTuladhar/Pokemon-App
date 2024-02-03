@@ -9,7 +9,7 @@ import TableContainer from '../../components/TableContainer'
 const PokemonTable = ({ data, isLoading }) => {
   const headerNames = ['#', 'Name', 'Type', 'Other group']
   const tableHeaders = headerNames.map((header) => (
-    <div className="h-12 bg-[#1a1a1a] table-cell px-4 py-2 border-t font-bold border-slate-200 align-middle">
+    <div className="table-cell h-12 border-t border-slate-200 bg-[#1a1a1a] px-4 py-2 align-middle font-bold">
       {header}
     </div>
   ))
@@ -29,7 +29,7 @@ const PokemonTable = ({ data, isLoading }) => {
       },
       {
         value: (
-          <NavLink to={`/pokemon/${name}`} className="font-bold hoverable-link">
+          <NavLink to={`/pokemon/${name}`} className="hoverable-link font-bold">
             {' '}
             {formatName(name)}{' '}
           </NavLink>
@@ -48,7 +48,7 @@ const PokemonTable = ({ data, isLoading }) => {
         value: (
           <span>
             {otherEggGroup && (
-              <NavLink to={`/egg-group/${otherEggGroup}`} className="font-bold hoverable-link">
+              <NavLink to={`/egg-group/${otherEggGroup}`} className="hoverable-link font-bold">
                 {formatName(otherEggGroup)}
               </NavLink>
             )}
@@ -59,7 +59,7 @@ const PokemonTable = ({ data, isLoading }) => {
 
     const tableCells = cellData.map((cell, cellIndex) => (
       <div
-        className="min-w-[5rem] table-cell h-12 px-4 py-2 mx-4 align-middle border-t border-slate-200"
+        className="mx-4 table-cell h-12 min-w-[5rem] border-t border-slate-200 px-4 py-2 align-middle"
         key={cellIndex}
       >
         {cell.value}

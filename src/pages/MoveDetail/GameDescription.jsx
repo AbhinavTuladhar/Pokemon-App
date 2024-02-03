@@ -40,7 +40,7 @@ const GameDescription = ({ descriptions }) => {
   const tableRows = properGroupedData?.map((row, rowIndex) => {
     return (
       <div className="table-row" key={rowIndex}>
-        <div className="table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle text-right">
+        <div className="table-cell h-12 border-t border-slate-200 px-4 py-2 text-right align-middle">
           <ul>
             {row?.version?.map((version, index) => {
               return (
@@ -52,7 +52,7 @@ const GameDescription = ({ descriptions }) => {
             })}
           </ul>
         </div>
-        <div className="table-cell px-4 py-2 h-12 border-t border-slate-200 align-middle">
+        <div className="table-cell h-12 border-t border-slate-200 px-4 py-2 align-middle">
           {row?.description}
         </div>
       </div>

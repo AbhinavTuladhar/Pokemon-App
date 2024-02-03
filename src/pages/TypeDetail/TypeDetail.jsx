@@ -86,38 +86,38 @@ const TypeDetail = () => {
       {doubleDamageToList?.length > 0 && (
         <>
           <motion.div
-            className="flex flex-row items-center gap-2 py-2 my-2"
+            className="my-2 flex flex-row items-center gap-2 py-2"
             variants={simpleFadeInVariant}
           >
             <AiFillCheckCircle className="text-green-400" /> {formattedType} moves are
             super-effective against
           </motion.div>
-          <motion.div className="flex flex-row flex-wrap gap-2 ml-4">
+          <motion.div className="ml-4 flex flex-row flex-wrap gap-2">
             {doubleDamageToList}
           </motion.div>
         </>
       )}
 
       <motion.div
-        className="flex flex-row items-center gap-2 py-2 my-2"
+        className="my-2 flex flex-row items-center gap-2 py-2"
         variants={simpleFadeInVariant}
       >
         <AiFillCloseCircle className="text-red-400" /> {formattedType} moves are not very effective
         against
       </motion.div>
-      <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
+      <motion.div className="ml-4 flex flex-row flex-wrap gap-2" variants={simpleFadeInVariant}>
         {halfDamageToList}
       </motion.div>
 
       {noDamageToList?.length > 0 && (
         <>
           <motion.div
-            className="flex flex-row items-center gap-2 py-2 my-2"
+            className="my-2 flex flex-row items-center gap-2 py-2"
             variants={simpleFadeInVariant}
           >
             <AiFillCloseCircle className="text-red-400" /> {formattedType} moves have no effect on
           </motion.div>
-          <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
+          <motion.div className="ml-4 flex flex-row flex-wrap gap-2" variants={simpleFadeInVariant}>
             {noDamageToList}
           </motion.div>
         </>
@@ -133,13 +133,13 @@ const TypeDetail = () => {
       {doubleDamageFromList?.length > 0 && (
         <>
           <motion.div
-            className="flex flex-row items-center gap-2 py-2 my-2"
+            className="my-2 flex flex-row items-center gap-2 py-2"
             variants={simpleFadeInVariant}
           >
             <AiFillCheckCircle className="text-green-400" /> These types are super-effective against{' '}
             {formattedType} Pokemon.
           </motion.div>
-          <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
+          <motion.div className="ml-4 flex flex-row flex-wrap gap-2" variants={simpleFadeInVariant}>
             {doubleDamageFromList}
           </motion.div>
         </>
@@ -148,13 +148,13 @@ const TypeDetail = () => {
       {halfDamageFromList?.length > 0 && (
         <>
           <motion.div
-            className="flex flex-row items-center gap-2 py-2 my-2"
+            className="my-2 flex flex-row items-center gap-2 py-2"
             variants={simpleFadeInVariant}
           >
             <AiFillCloseCircle className="text-red-400" /> These types are not very effective
             against {formattedType} Pokemon.
           </motion.div>
-          <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
+          <motion.div className="ml-4 flex flex-row flex-wrap gap-2" variants={simpleFadeInVariant}>
             {halfDamageFromList}
           </motion.div>
         </>
@@ -163,13 +163,13 @@ const TypeDetail = () => {
       {noDamageFromList?.length > 0 && (
         <>
           <motion.div
-            className="flex flex-row items-center gap-2 py-2 my-2"
+            className="my-2 flex flex-row items-center gap-2 py-2"
             variants={simpleFadeInVariant}
           >
             <AiFillCloseCircle className="text-red-400" /> These types have no effect on{' '}
             {formattedType} Pokemon.
           </motion.div>
-          <motion.div className="flex flex-row flex-wrap gap-2 ml-4" variants={simpleFadeInVariant}>
+          <motion.div className="ml-4 flex flex-row flex-wrap gap-2" variants={simpleFadeInVariant}>
             {noDamageFromList}
           </motion.div>
         </>
@@ -201,7 +201,7 @@ const TypeDetail = () => {
         </motion.div>
 
         <motion.div
-          className="flex flex-row flex-wrap justify-between mt-4"
+          className="mt-4 flex flex-row flex-wrap justify-between"
           variants={simpleFadeInNoDelayVariant}
         >
           <motion.div variants={simpleFadeInNoDelayVariant} className="w-full mdlg:w-1/3">
@@ -213,7 +213,7 @@ const TypeDetail = () => {
 
           <motion.div
             variants={simpleFadeInNoDelayVariant}
-            className="flex flex-col w-full pl-0 mt-4 mdlg:w-2/3 mdlg:mt-0 mdlg:pl-16"
+            className="mt-4 flex w-full flex-col pl-0 mdlg:mt-0 mdlg:w-2/3 mdlg:pl-16"
           >
             <h1 className="text-3xl font-bold">Dual type attack pros & cons</h1>
             <p className="my-4">

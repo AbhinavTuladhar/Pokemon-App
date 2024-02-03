@@ -119,11 +119,11 @@ const LocationList = () => {
     return (
       <li
         key={index}
-        className={`w-20 py-3 border-b-2 flex flex-1 justify-center ${
+        className={`flex w-20 flex-1 justify-center border-b-2 py-3 ${
           activeTab === id
-            ? 'text-blue-500 border-blue-500'
-            : 'border-transparent hover:text-white hover:border-white'
-        } hover:cursor-pointer hover:brightness-110 bg-gray-900 duration-300`}
+            ? 'border-blue-500 text-blue-500'
+            : 'border-transparent hover:border-white hover:text-white'
+        } bg-gray-900 duration-300 hover:cursor-pointer hover:brightness-110`}
         onClick={() => handleClick(id)}
       >
         {' '}
@@ -148,12 +148,12 @@ const LocationList = () => {
       exit={{ opacity: 0, transitionDuration: '0.75s' }}
       className="pb-4"
     >
-      <h1 className="text-4xl font-bold text-center">Pokémon Location guide</h1>
+      <h1 className="text-center text-4xl font-bold">Pokémon Location guide</h1>
       <div>
         {isLoading ? (
-          <div className="flex flex-col my-4 gap-y-4">
-            <Skeleton containerClassName="flex-1 w-full" className="w-full h-12" />
-            <div className="grid grid-cols-2 gap-y-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-self-center">
+          <div className="my-4 flex flex-col gap-y-4">
+            <Skeleton containerClassName="flex-1 w-full" className="h-12 w-full" />
+            <div className="grid grid-cols-2 gap-y-2 justify-self-center sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {Array(100)
                 .fill(0)
                 .map((_, index) => (
@@ -168,7 +168,7 @@ const LocationList = () => {
           </div>
         ) : (
           <>
-            <ul className="flex flex-row flex-wrap items-center justify-center flex-1 my-4">
+            <ul className="my-4 flex flex-1 flex-row flex-wrap items-center justify-center">
               {tabListItems}
             </ul>
             {tabContainer}

@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton'
 
 const OneLineSkeleton = () => {
   return (
-    <div className="flex-1 w-full">
+    <div className="w-full flex-1">
       <Skeleton width="100%" />
     </div>
   )

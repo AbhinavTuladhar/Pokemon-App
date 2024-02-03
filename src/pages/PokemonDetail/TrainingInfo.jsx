@@ -41,12 +41,12 @@ const TrainingInfo = ({ data }) => {
 
   const tableDiv = tableData.map((row, rowIndex) => {
     return (
-      <div className="table-row border-t border-gray-200 py-2 h-12" key={rowIndex}>
-        <div className="table-cell border-t border-gray-200 align-middle text-right w-4/12">
+      <div className="table-row h-12 border-t border-gray-200 py-2" key={rowIndex}>
+        <div className="table-cell w-4/12 border-t border-gray-200 text-right align-middle">
           {' '}
           {row.label}{' '}
         </div>
-        <div className="table-cell border-t border-gray-200 pl-4 align-middle items-center">
+        <div className="table-cell items-center border-t border-gray-200 pl-4 align-middle">
           {' '}
           {row.value}{' '}
         </div>

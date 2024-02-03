@@ -31,7 +31,7 @@ const BasicIntro = ({ pokemonData }) => {
   })
 
   return (
-    <div className="flex flex-row flex-wrap mt-8 mb-2">
+    <div className="mb-2 mt-8 flex flex-row flex-wrap">
       {genus ? (
         <span>
           {`${properName} is ${article}`} &nbsp;

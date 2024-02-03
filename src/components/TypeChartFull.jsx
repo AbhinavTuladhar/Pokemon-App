@@ -80,7 +80,7 @@ const TypeChartFull = () => {
 
   // To show the defending and attacking types.
   const cornerDiv = (
-    <div className="flex flex-col items-center justify-center w-20 text-xs border rounded-md h-9 border-slate-700">
+    <div className="flex h-9 w-20 flex-col items-center justify-center rounded-md border border-slate-700 text-xs">
       <span> DEFENCE → </span>
       <span> ATTACK ↴ </span>
     </div>
@@ -96,7 +96,7 @@ const TypeChartFull = () => {
   })
 
   const finalTypeCards = fullTypeCards.map((typeCard, index) => (
-    <div className="flex justify-center items-center my-[2px]" key={`card-${index}`}>
+    <div className="my-[2px] flex items-center justify-center" key={`card-${index}`}>
       {typeCard}
     </div>
   ))
@@ -159,7 +159,7 @@ const TypeChartFull = () => {
       <div className="overflow-auto">
         <div className="inline-flex">
           <div className="flex flex-col">{finalTypeCards}</div>
-          <div className="flex flex-row gap py-[2px] justify-center">{tableColumns}</div>
+          <div className="gap flex flex-row justify-center py-[2px]">{tableColumns}</div>
         </div>
       </div>
 

@@ -112,7 +112,7 @@ const AbilityListing = () => {
     ]
     const tableCells = cellData.map((cell, cellIndex) => (
       <div
-        className={`${headerStyle} ${bgColour} ${cell?.cellStyle} table-cell border-gray-500 border-t h-12 align-middle py-2 px-4`}
+        className={`${headerStyle} ${bgColour} ${cell?.cellStyle} table-cell h-12 border-t border-gray-500 px-4 py-2 align-middle`}
         key={cellIndex}
       >
         {cell.value}
@@ -137,7 +137,7 @@ const AbilityListing = () => {
     >
       <div className="flex items-center justify-center">
         <input
-          className="text-black rounded-xl mx-4 mb-4 py-2 px-4 w-full lg:w-[20rem]"
+          className="mx-4 mb-4 w-full rounded-xl px-4 py-2 text-black lg:w-[20rem]"
           type="search"
           placeholder="Search for an ability..."
           disabled={!isFullyLoaded || isLoadingList}
